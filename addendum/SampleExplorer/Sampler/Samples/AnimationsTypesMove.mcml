@@ -1,0 +1,150 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:btn="resx://Sampler/Sampler.Resources/ControlsSimpleButton">
+
+  <!-- This sample demonstrates how the Move animation can animate the      -->
+  <!-- result of a change in layout coordinates.  Whenever an item is       -->
+  <!-- repositioned any attached animation of type Move will be played.     -->
+
+  <!-- Move animations generally make use of PositionKeyframes with         -->
+  <!-- RelativeTo="Current" for the first one and RelativeTo="Final" for    -->
+  <!-- the last one.  This essentially means "Move from where you are to    -->
+  <!-- where you're supposed to be."                                        -->
+
+  <!-- This sample demonstrates Move animations by presenting UI with four  -->
+  <!-- buttons along the edges of a square.  There is an item within the    -->
+  <!-- square that will move to an edge when the corresponding button is    -->
+  <!-- pressed.  The change in position from one edge to another is applied -->
+  <!-- with a Move animation.                                               -->
+  <UI Name="MoveAnimations">
+
+    <Locals>
+      <!-- Create layout inputs for the four poles.  We will be applying -->
+      <!-- these to multiple items, so it's more concise to just declare -->
+      <!-- them once.                                                    -->
+      <DockLayoutInput Name="Left"
+                       Position="Left"
+                       Alignment="Center"/>
+      <DockLayoutInput Name="Right"
+                       Position="Right"
+                       Alignment="Center"/>
+      <DockLayoutInput Name="Top"
+                       Position="Top"
+                       Alignment="Center"/>
+      <DockLayoutInput Name="Bottom"
+                       Position="Bottom"
+                       Alignment="Center"/>
+
+      <!-- These commands when invoked will change our target's position. -->
+      <!-- That will be wired up with our Rules below.                    -->
+      <Command Name="LeftCommand"
+               Description="Left"/>
+      <Command Name="RightCommand"
+               Description="Right"/>
+      <Command Name="TopCommand"
+               Description="Top"/>
+      <Command Name="BottomCommand"
+               Description="Bottom"/>
+    </Locals>
+
+    <Rules>
+      <!-- The bottom button was clicked - change the target's position. -->
+      <Changed Source="[BottomCommand.Invoked]">
+        <Actions>
+          <Set Target="[MyGraphic.LayoutInput]"
+               Value="[Bottom]"/>
+        </Actions>
+      </Changed>
+
+      <!-- The top button was clicked - change the target's position. -->
+      <Changed Source="[TopCommand.Invoked]">
+        <Actions>
+          <Set Target="[MyGraphic.LayoutInput]"
+               Value="[Top]"/>
+        </Actions>
+      </Changed>
+
+      <!-- The right button was clicked - change the target's position. -->
+      <Changed Source="[RightCommand.Invoked]">
+        <Actions>
+          <Set Target="[MyGraphic.LayoutInput]"
+               Value="[Right]"/>
+        </Actions>
+      </Changed>
+
+      <!-- The left button was clicked - change the target's position. -->
+      <Changed Source="[LeftCommand.Invoked]">
+        <Actions>
+          <Set Target="[MyGraphic.LayoutInput]"
+               Value="[Left]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="VerticalFlow"
+             Padding="10,50,10,100">
+        <Children>
+
+          <Text Content="Click one of the buttons to change where the graphic will move to.  A Move animation will animate the graphic from where it currently is to its new position."
+                Font="Arial, 20"
+                Color="White"
+                WordWrap="true"/>
+
+          <ColorFill Name="Test"
+                     Content="Azure"
+                     Layout="Dock">
+            <Children>
+
+              <!-- These buttons when invoked will change the position of -->
+              <!-- the target.                                            -->
+              <btn:SimpleButton Command="[LeftCommand]"
+                                LayoutInput="[Left]"/>
+              <btn:SimpleButton Command="[RightCommand]"
+                                LayoutInput="[Right]"/>
+              <btn:SimpleButton Command="[TopCommand]"
+                                LayoutInput="[Top]"/>
+              <btn:SimpleButton Command="[BottomCommand]"
+                                LayoutInput="[Bottom]"/>
+
+              <!-- The target of the animation... -->
+              <Graphic Name="MyGraphic"
+                       Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall"
+                       LayoutInput="[Top]">
+                <Animations>
+
+                  <!-- This animation will happen whenever a "Move" event -->
+                  <!-- happens (when our layout position changes).        -->
+                  <Animation Type="Move"
+                             CenterPointPercent="0.5,0.5,0.0">
+                    <Keyframes>
+
+                      <!-- Start the position at "Current", which is -->
+                      <!-- wherever it was left last.                -->
+                      <PositionKeyframe Time="0.00"
+                                        Value="0,0,0"
+                                        RelativeTo="Current"
+                                        Interpolation="Log"/>
+
+                      <!-- End the position at "Final", which is where       -->
+                      <!-- layout designated as the position we should have. -->
+                      <PositionKeyframe Time="0.50"
+                                        Value="0,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+              </Graphic>
+
+            </Children>
+          </ColorFill>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,151 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:btn="file://ControlsSimpleButton.mcml"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <UI Name="TestSimpleSpinner">
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:SimpleSpinner>
+            <Model>
+              <Choice>
+                <Options>
+                  <cor:String String="Never"/>
+                  <cor:String String="Always"/>
+                  <cor:String String="Sometimes"/>
+                </Options>
+              </Choice>
+            </Model>
+          </me:SimpleSpinner>
+          <me:SimpleSpinner>
+            <Model>
+              <Choice>
+                <Options>
+                  <cor:String String="Red"/>
+                  <cor:String String="Green"/>
+                  <cor:String String="Blue"/>
+                </Options>
+              </Choice>
+            </Model>
+          </me:SimpleSpinner>
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <UI Name="SimpleSpinner">
+
+    <Properties>
+      <!-- Spinner requires a model that has a value and can be incremented -->
+      <!-- to a next or previous value.  The IValueRange interface covers   -->
+      <!-- those requirements, and includes both RangedValue and Choice.    -->
+      <IValueRange Name="Model"
+                   IValueRange="$Required"/>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor"
+             Color="Transparent"/>
+
+      <!-- This transformer lets consumers of the spinner configure how to  -->
+      <!-- format the text representation of their value.                   -->
+      <FormatTransformer Name="LabelTransformer"
+                         Format="{0}"/>
+
+      <!-- Button color properties. -->
+      <Color Name="ButtonColor"
+             Color="DimGray"/>
+      <Color Name="ButtonFocusedColor"
+             Color="DarkGray"/>
+      <Color Name="ButtonHoverColor"
+             Color="PaleGoldenrod"/>
+      <Color Name="ButtonPressedColor"
+             Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor"
+             Color="White"/>
+      <Color Name="LabelFocusedColor"
+             Color="White"/>
+      <Color Name="LabelHoverColor"
+             Color="DimGray"/>
+      <Color Name="LabelPressedColor"
+             Color="Black"/>
+    </Properties>
+
+    <Locals>
+
+      <!-- Create two Commands to represent previous and next motion within -->
+      <!-- the value model.                                                 -->
+      <InvokeCommand Name="Previous"
+                     Description="-"
+                     Target="[Model.PreviousValue]"/>
+      <InvokeCommand Name="Next"
+                     Description="+"
+                     Target="[Model.NextValue]"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- Bind the current value to a label. -->
+      <Binding Source="[Model.Value]"
+               Target="[Value.Content]"
+               Transformer="[LabelTransformer]"/>
+
+      <!-- If we cannot navigate any further within the value range disable -->
+      <!-- the associated Command.                                          -->
+      <Binding Source="[Model.HasNextValue]"
+               Target="[Next.Available]"/>
+      <Binding Source="[Model.HasPreviousValue]"
+               Target="[Previous.Available]"/>
+
+    </Rules>
+
+    <Content>
+
+      <ColorFill Content="[BackgroundColor]"
+                 Padding="2,2,2,2">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"
+                      Spacing="3,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Current value -->
+          <Text Name="Value"
+                Font="Arial, 20"
+                Color="[LabelColor]"/>
+
+          <!-- Previous button -->
+          <btn:SimpleButton Command="[Previous]"
+                            BackgroundColor="[ButtonColor]"
+                            BackgroundFocusedColor="[ButtonFocusedColor]"
+                            BackgroundHoverColor="[ButtonHoverColor]"
+                            BackgroundPressedColor="[ButtonPressedColor]"
+                            LabelColor="[LabelColor]"
+                            LabelFocusedColor="[LabelFocusedColor]"
+                            LabelHoverColor="[LabelHoverColor]"
+                            LabelPressedColor="[LabelPressedColor]"/>
+
+          <!-- Next button -->
+          <btn:SimpleButton Command="[Next]"
+                            BackgroundColor="[ButtonColor]"
+                            BackgroundFocusedColor="[ButtonFocusedColor]"
+                            BackgroundHoverColor="[ButtonHoverColor]"
+                            BackgroundPressedColor="[ButtonPressedColor]"
+                            LabelColor="[LabelColor]"
+                            LabelFocusedColor="[LabelFocusedColor]"
+                            LabelHoverColor="[LabelHoverColor]"
+                            LabelPressedColor="[LabelPressedColor]"/>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+</Mcml>

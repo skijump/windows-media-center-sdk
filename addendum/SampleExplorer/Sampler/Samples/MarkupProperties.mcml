@@ -1,0 +1,78 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Properties can be used to pass parameters to a UI.                 -->
+
+  <!-- Properties allow an existing UI to be customized without the need  -->
+  <!-- of writing another UI to achieve a new look or behavior. A         -->
+  <!-- property can be any type (a built-in MCML type or a user defined   -->
+  <!-- type).                                                             -->
+
+  <!-- The Hyperlink UI below provides an example of how to use a Property -->
+  <!-- to enable customization of the text displayed by a UI.              -->
+
+  <UI Name="Properties">
+
+    <Content>
+
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <Text Content="UI and Properties"
+                Color="Red"/>
+
+          <!-- A child UI with customized parameters for Label and NormalColor. -->
+          <me:CustomText Label="My Custom Text"
+                        NormalColor="Green"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+
+  <!-- UI can be parameterized using Properties. -->
+  <UI Name="CustomText">
+
+    <!-- All Properties must be named. If the parent UI does not supply -->
+    <!-- a value for a property, the default value that is defined will -->
+    <!-- be used.  Properties can be marked as "$Required" if the       -->
+    <!-- parent must provide a value.                                   -->
+    <!-- This UI allows for customization via the Label (string),       -->
+    <!-- NormalColor (Color), and HoverColor (Color) properties.        -->
+    <Properties>
+      <cor:String Name="Label"
+                  String="$Required"/>
+      <Color Name="NormalColor"
+             Color="Firebrick"/>
+      <Color Name="HoverColor"
+             Color="Yellow"/>
+    </Properties>
+
+    <!-- UI property values are accessed using instance paths. -->
+    <!-- In this case, HoverColor is set on Display when the   -->
+    <!-- UI gains mouse focus.                                 -->
+    <Rules>
+      <Condition Source="[Input.MouseFocus]"
+                 SourceValue="true"
+                 Target="[Display.Color]"
+                 Value="[HoverColor]"/>
+    </Rules>
+
+    <Content>
+
+      <!-- Label and NormalColor are used here. -->
+      <Text Name="Display"
+            Content="[Label]"
+            Color="[NormalColor]"
+            Font="Arial,20"
+            MouseInteractive="true"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

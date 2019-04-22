@@ -1,0 +1,541 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me"
+      xmlns:mce="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting">
+
+  <Image Name="DefaultImage"
+         Source="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/Globe.png" />
+  <Image Name="BackgroundImage"
+         Source="http://retrosight.com/samples/veronicasradio/windowsvista/backgrounds/Background.png" />
+
+  <UI Name="Main">
+    <Properties>
+      <cor:String Name="Banner"
+                  String="Welcome" />
+      <cor:String Name="AppTitle"
+                  String="Veronicas Radio" />
+    </Properties>
+    <Locals>
+      <Choice Name="TestDataSource">
+        <Options>
+          <PropertySet>
+            <Entries>
+              <cor:String Name="Title"
+                          String="KEXP" />
+              <cor:String Name="Description"
+                          String="http://www.kexp.org/audio/kexp-uncomp.asx" />
+              <Image Name="Picture"
+                     Source="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/KEXP.png" />
+            </Entries>
+          </PropertySet>
+          <PropertySet>
+            <Entries>
+              <cor:String Name="Title"
+                          String="NPR" />
+              <cor:String Name="Description"
+                          String="http://www.npr.org/dmg/dmg.php?getProgramStream=true&amp;NPRMediaPref=WM" />
+              <Image Name="Picture"
+                     Source="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/NPR.png" />
+            </Entries>
+          </PropertySet>
+          <PropertySet>
+            <Entries>
+              <cor:String Name="Title"
+                          String="ABC Radio Australia" />
+              <cor:String Name="Description"
+                          String="http://www.abc.net.au/streaming/newsradio.asx" />
+              <Image Name="Picture"
+                     Source="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/ABCAustrailia.png" />
+            </Entries>
+          </PropertySet>
+          <PropertySet>
+            <Entries>
+              <cor:String Name="Title"
+                          String="BBC World Live News" />
+              <cor:String Name="Description"
+                          String="http://www.bbc.co.uk/worldservice/meta/tx/nb/live/www15.asx" />
+              <Image Name="Picture"
+                     Source="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/BBC.png" />
+            </Entries>
+          </PropertySet>
+          <PropertySet>
+            <Entries>
+              <cor:String Name="Title"
+                          String="KUOW" />
+              <cor:String Name="Description"
+                          String="http://www.kuow.org/kuow.asx" />
+              <Image Name="Picture"
+                     Image="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/kuow.png" />
+            </Entries>
+          </PropertySet>
+          <PropertySet>
+            <Entries>
+              <cor:String Name="Title"
+                          String="Radio Paradise" />
+              <cor:String Name="Description"
+                          String="http://www.radioparadise.com/musiclinks/rp_128.m3u" />
+              <Image Name="Picture"
+                     Image="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/RadioParadise.png" />
+            </Entries>
+          </PropertySet>
+          <PropertySet>
+            <Entries>
+              <cor:String Name="Title"
+                          String="CNN Radio" />
+              <cor:String Name="Description"
+                          String="http://www.cnn.com/audio/radio/liveaudio.asx" />
+              <Image Name="Picture"
+                     Image="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/cnn.png" />
+            </Entries>
+          </PropertySet>
+          <PropertySet>
+            <Entries>
+              <cor:String Name="Title"
+                          String="Sports Radio 97.1" />
+              <cor:String Name="Description"
+                          String="http://streamdata.dispatchbroadcast.com/1460TheFanLiveHigh.asx" />
+              <Image Name="Picture"
+                     Image="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/971TheFan.png" />
+            </Entries>
+          </PropertySet>
+          <PropertySet>
+            <Entries>
+              <cor:String Name="Title"
+                          String="KIRO FM 97.3" />
+              <cor:String Name="Description"
+                          String="http://c1.mp3.liquidcompass.net/KIROFM" />
+              <Image Name="Picture"
+                     Image="http://retrosight.com/samples/veronicasradio/windowsvista/tiles/KIRO.png" />
+            </Entries>
+          </PropertySet>
+        </Options>
+      </Choice>
+      <Command Name="SelectionNotify" />
+      <mce:AddInHost Name="MCEHost"/>
+    </Locals>
+    <Rules>
+      <Changed Source="[TestDataSource.Chosen]"
+               InitialEvaluate="true">
+        <Actions>
+          <Set Target="[TitleDisplay.Content]"
+               Value="[TestDataSource.Chosen!PropertySet.#Title!cor:String]" />
+          <Set Target="[DescriptionDisplay.Content]"
+               Value="[TestDataSource.Chosen!PropertySet.#Description!cor:String]" />
+        </Actions>
+      </Changed>
+      <Changed Source="[SelectionNotify.Invoked]">
+        <Actions>
+          <Set Target="[BannerDisplay.Content]"
+               Value="[TestDataSource.Chosen!PropertySet.#Title!cor:String]">
+            <Transformer>
+              <FormatTransformer Format="Now Playing: {0}" />
+            </Transformer>
+          </Set>
+
+          <Invoke Target="[MCEHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Audio"
+                  addToQueue="false">
+            <media>
+              <cor:String String="[TestDataSource.Chosen!PropertySet.#Description!cor:String]"/>
+            </media>
+          </Invoke>
+
+        </Actions>
+      </Changed>
+    </Rules>
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Text Alpha="0.3"
+                Content="[AppTitle]"
+                Font="Calibri Bold, 100"
+                Color="White">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0,20"
+                               Top="Parent,0,-20" />
+            </LayoutInput>
+          </Text>
+          <me:Helix Name="Helix"
+                    Choice="[TestDataSource]"
+                    Selection="[SelectionNotify]">
+            <LayoutInput>
+              <FormLayoutInput Top="Parent,0"
+                               Bottom="Parent,1" />
+            </LayoutInput>
+            <Animations>
+              <Animation Type="Show"
+                         CenterPointPercent="1,0,0">
+                <Keyframes>
+                  <RotateKeyframe Time="0"
+                                  Value="-1000deg;0,1,0"
+                                  RelativeTo="Final" />
+                  <RotateKeyframe Time="2"
+                                  Value="0deg;0,1,0"
+                                  RelativeTo="Final" />
+                  <AlphaKeyframe Time="0"
+                                 Value="0"
+                                 RelativeTo="Absolute" />
+                  <AlphaKeyframe Time=".5"
+                                 Value="0"
+                                 RelativeTo="Absolute" />
+                  <AlphaKeyframe Time="2"
+                                 RelativeTo="Final" />
+                  <PositionKeyframe Time="0"
+                                    Value="0,-1000,0"
+                                    RelativeTo="Final" />
+                  <PositionKeyframe Time="2"
+                                    RelativeTo="Final" />
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </me:Helix>
+          <Panel>
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0,50"
+                               Top="Parent,0,120" />
+            </LayoutInput>
+            <Children>
+              <Text Name="BannerDisplay"
+                    Content="[Banner]"
+                    Color="White"
+                    Font="Calibri,24">
+                <Animations>
+                  <Animation Type="ContentChangeShow">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0"
+                                     Value="0"
+                                     RelativeTo="Absolute" />
+                      <AlphaKeyframe Time="1"
+                                     RelativeTo="Final" />
+                    </Keyframes>
+                  </Animation>
+                  <Animation Type="Idle"
+                             Loop="-1">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0"
+                                     Value="1"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="2"
+                                     Value="0.5"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="4"
+                                     Value="1"
+                                     RelativeTo="Current"/>
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+              </Text>
+            </Children>
+          </Panel>
+          <Text Name="TitleDisplay"
+                Color="White"
+                Font="Calibri,30">
+            <LayoutInput>
+              <FormLayoutInput Left="Helix,1,20"
+                               Top="Helix,.45" />
+            </LayoutInput>
+            <Animations>
+              <TransformAnimation Delay="2">
+                <Source>
+                  <Animation Type="Show">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0"
+                                     Value="0"
+                                     RelativeTo="Absolute" />
+                      <AlphaKeyframe Time="1"
+                                     RelativeTo="Final" />
+                    </Keyframes>
+                  </Animation>
+                </Source>
+              </TransformAnimation>
+              <TransformAnimation Delay=".5">
+                <Source>
+                  <Animation Type="ContentChangeShow">
+                    <Keyframes>
+                      <PositionKeyframe Time="0"
+                                        Value="500,0,0"
+                                        RelativeTo="Final"
+                                        Interpolation="Log" />
+                      <PositionKeyframe Time=".1"
+                                        RelativeTo="Final" />
+                      <AlphaKeyframe Time="0"
+                                     Value="0"
+                                     RelativeTo="Absolute" />
+                      <AlphaKeyframe Time=".1"
+                                     RelativeTo="Final" />
+                    </Keyframes>
+                  </Animation>
+                </Source>
+              </TransformAnimation>
+              <Animation Type="ContentChangeHide"
+                         CenterPointPercent="0,1,1">
+                <Keyframes>
+                  <ScaleKeyframe Time="0"
+                                 RelativeTo="Current" />
+                  <ScaleKeyframe Time=".5"
+                                 Value="0,0,0"
+                                 RelativeTo="Absolute" />
+                  <AlphaKeyframe Time="0"
+                                 RelativeTo="Current" />
+                  <AlphaKeyframe Time=".5"
+                                 Value="0"
+                                 RelativeTo="Absolute" />
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Text>
+          <Text Name="DescriptionDisplay"
+                Content="This is the Description!"
+                Font="Calibri,15"
+                Color="Black"
+                WordWrap="true"
+                MaximumSize="350,350">
+            <LayoutInput>
+              <AnchorLayoutInput Left="TitleDisplay,0"
+                                 Top="TitleDisplay,1,10"
+                                 ContributesToWidth="false" />
+            </LayoutInput>
+            <Animations>
+              <TransformAnimation Delay="2.5">
+                <Source>
+                  <Animation Type="Show">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0"
+                                     Value="0"
+                                     RelativeTo="Absolute" />
+                      <AlphaKeyframe Time="1"
+                                     RelativeTo="Final" />
+                    </Keyframes>
+                  </Animation>
+                </Source>
+              </TransformAnimation>
+              <TransformAnimation Delay="1">
+                <Source>
+                  <Animation Type="ContentChangeShow">
+                    <Keyframes>
+                      <PositionKeyframe Time="0"
+                                        Value="0,500,0"
+                                        RelativeTo="Final"
+                                        Interpolation="Log" />
+                      <PositionKeyframe Time=".2"
+                                        RelativeTo="Final" />
+                      <AlphaKeyframe Time="0"
+                                     Value="0"
+                                     RelativeTo="Absolute" />
+                      <AlphaKeyframe Time=".2"
+                                     Value="1"
+                                     RelativeTo="Final" />
+                    </Keyframes>
+                  </Animation>
+                </Source>
+              </TransformAnimation>
+              <Animation Type="ContentChangeHide"
+                         CenterPointPercent="0,0,1">
+                <Keyframes>
+                  <ScaleKeyframe Time="0"
+                                 RelativeTo="Current" />
+                  <ScaleKeyframe Time=".5"
+                                 Value="0,0,0"
+                                 RelativeTo="Absolute" />
+                  <AlphaKeyframe Time="0"
+                                 RelativeTo="Current" />
+                  <AlphaKeyframe Time=".5"
+                                 Value="0"
+                                 RelativeTo="Absolute" />
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Text>
+          <Graphic Content="image://me:BackgroundImage"
+                   Layout="Form">
+            <Animations>
+              <Animation Loop="-1">
+                <Keyframes>
+                  <AlphaKeyframe Time="0"
+                                 Value=".7"
+                                 Interpolation="Log"/>
+                  <AlphaKeyframe Time="5"
+                                 Value="0.4"
+                                 Interpolation="Log"/>
+                  <AlphaKeyframe Time="10"
+                                 Value=".7"
+                                 Interpolation="Log"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Graphic>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="Helix">
+    <Properties>
+      <Choice Name="Choice"
+              Choice="$Required" />
+      <Command Name="Selection" />
+    </Properties>
+    <Locals>
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandlerStage="Bubbled" />
+      <ScrollingData Name="ScrollingData"
+                     LockedPosition=".5"
+                     LockedAlignment=".5" />
+      <IntRangedValue Name="SelectedIndex"
+                      Value="-1" />
+      <EditableText Name="SelectedTitle" />
+      <EditableText Name="SelectedDescription" />
+    </Locals>
+    <Rules>
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]" />
+      <Default Target="[ScrollingData.Repeater]"
+               Value="[ListRepeater]" />
+    </Rules>
+    <Content>
+      <Scroller Name="ItemList"
+                ScrollingData="[ScrollingData]"
+                Orientation="Vertical"
+                Margins="10,0,10,0">
+        <Children>
+          <Repeater Name="ListRepeater"
+                    Source="[Choice.Options]">
+            <Layout>
+              <GridLayout Orientation="Vertical"
+                          ReferenceSize="150,150" />
+            </Layout>
+            <Content>
+              <me:HelixItem Choice="[Choice]"
+                            Option="[RepeatedItem!PropertySet]"
+                            OptionIndex="[RepeatedItemIndex]"
+                            Selection="[Selection]" />
+            </Content>
+            <Animations>
+              <Animation Type="Move">
+                <Keyframes>
+                  <PositionKeyframe Time="0"
+                                    RelativeTo="Current" />
+                  <PositionKeyframe Time=".2"
+                                    RelativeTo="Final" />
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Repeater>
+        </Children>
+      </Scroller>
+    </Content>
+  </UI>
+  <UI Name="HelixItem">
+    <Properties>
+      <Choice Name="Choice"
+              Choice="$Required" />
+      <PropertySet Name="Option"
+                   PropertySet="$Required" />
+      <Index Name="OptionIndex"
+             Index="$Required" />
+      <Command Name="Selection"
+               Command="$Required" />
+      <cor:Int32 Name="AngleDelta"
+                 Int32="40" />
+    </Properties>
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    Command="[Selection]" />
+      <MathTransformer Name="ComputeNormalizedIndex" />
+      <MathTransformer Name="ComputeRotation"
+                       Type="Int32" />
+      <Rotation Name="Rotation"
+                AngleDegrees="0"
+                Axis="0,1,0" />
+    </Locals>
+    <Rules>
+      <Default Target="[Input.MakeTopmostOnFocus]"
+               Value="true" />
+      <Binding Source="[Option.#Picture!Image]"
+               Target="[PictureDisplay.Content]" />
+      <Changed Source="[Choice.ChosenIndex]"
+               InitialEvaluate="true">
+        <Actions>
+          <Set Target="[ComputeNormalizedIndex.SubtractInt]"
+               Value="[Choice.ChosenIndex]" />
+          <Set Target="[ComputeRotation.MultiplyInt]"
+               Value="[OptionIndex.Value]"
+               Transformer="[ComputeNormalizedIndex]" />
+          <Set Target="[Rotation.AngleDegrees]"
+               Value="[AngleDelta]"
+               Transformer="[ComputeRotation]" />
+          <Set Target="[Background.Rotation]"
+               Value="[Rotation]" />
+        </Actions>
+      </Changed>
+      <Condition Source="[Input.KeyFocus]"
+                 ConditionOp="ChangedTo"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Choice.ChosenIndex]"
+               Value="[OptionIndex.SourceValue]" />
+          <Set Target="[Background.Scale]"
+               Value="2,2,1" />
+        </Actions>
+      </Condition>
+    </Rules>
+    <Content>
+      <Panel Name="Background"
+             MouseInteractive="true"
+             Scale="1,1,1"
+             Layout="Anchor"
+             CenterPointPercent="1,.5,0">
+        <Children>
+          <Graphic Name="PictureDisplay"
+                   MinimumSize="150,150"
+                   SizingPolicy="SizeToConstraint"
+                   HorizontalAlignment="Fill"
+                   VerticalAlignment="Fill">
+            <Animations>
+              <Animation Type="ContentChangeShow">
+                <Keyframes>
+                  <AlphaKeyframe Time="0"
+                                 Value="0"
+                                 RelativeTo="Absolute" />
+                  <AlphaKeyframe Time=".3"
+                                 RelativeTo="Final" />
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Graphic>
+          <ColorFill Name="Placeholder"
+                     Content="DarkRed">
+            <LayoutInput>
+              <AnchorLayoutInput Left="PictureDisplay,0,4"
+                                 Top="PictureDisplay,0,4"
+                                 Right="PictureDisplay,1,-4"
+                                 Bottom="PictureDisplay,1,-4" />
+            </LayoutInput>
+          </ColorFill>
+        </Children>
+        <Animations>
+          <Animation Type="Rotate">
+            <Keyframes>
+              <RotateKeyframe Time="0"
+                              Value="0deg;0,1,0"
+                              RelativeTo="Current"
+                              Interpolation="Log" />
+              <RotateKeyframe Time=".5"
+                              Value="0deg;0,1,0"
+                              RelativeTo="Final" />
+            </Keyframes>
+          </Animation>
+          <Animation Type="Scale">
+            <Keyframes>
+              <ScaleKeyframe Time="0"
+                             RelativeTo="Current"
+                             Interpolation="Log" />
+              <ScaleKeyframe Time=".5"
+                             RelativeTo="Final" />
+            </Keyframes>
+          </Animation>
+        </Animations>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

@@ -1,0 +1,52 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System">
+
+  <!-- FormatTransformer is used in a variety of places where a conversion -->
+  <!-- of data is required. FormatTransformer can take any object and      -->
+  <!-- format it to a string. It supports "extended" formatting on objects -->
+  <!-- that implement IFormattable.                                        -->
+
+  <!-- NOTE: The target of the FormatTransformer must accept a string.     -->
+
+  <!-- Since transformers only operate on a single object, the Format      -->
+  <!-- property must contain a "{0}" to denote the location of the         -->
+  <!-- string representation. If a type-specific ExtendedFormat is         -->
+  <!-- provided, it will be applied before the Format is applied.          -->
+
+  <!-- The following tags support transformers:                            -->
+  <!--   Binding, Equality, Invoke, InvokeCommand, and Set                 -->
+
+  <!-- In this example, a numeric value is extended formatted (as a phone  -->
+  <!-- number) and then formatted with some additional text.               -->
+
+  <UI Name="FormatTransformer">
+
+    <Locals>
+      <cor:Double Name="PhoneNumber"
+                  Double="4255551212"/>
+    </Locals>
+
+    <Rules>
+      <!-- The target is Content on a Text which expects as string so -->
+      <!-- FormatTransformer can be used here.                        -->
+      <Binding Source="[PhoneNumber]"
+               Target="[Label.Content]">
+        <Transformer>
+          <FormatTransformer Format="The phone number is: {0}."
+                             ExtendedFormat="(###) ###-####"/>
+        </Transformer>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+
+      <Text Name="Label"
+            Color="Orchid"
+            Font="Verdana,30"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

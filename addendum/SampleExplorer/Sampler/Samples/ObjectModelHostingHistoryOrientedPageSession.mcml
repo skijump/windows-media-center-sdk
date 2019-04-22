@@ -1,0 +1,202 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls"
+      xmlns:cor="assembly://MSCorLib/System">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+  
+  <!-- Note: This sample will not load properly within the standalone      -->
+  <!-- Preview Tool because it maintains its own page sessions and does    -->
+  <!-- not make the HistoryOrientedPageSession available.                  -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <cor:Int32 Name="PageIndex"
+                 Int32="0" />
+      <addin:HistoryOrientedPageSession Name="Session"
+                                        HistoryOrientedPageSession="$Required" />
+    </Properties>
+
+    <Locals>
+      <cor:Int32 Name="NextPageIndex"
+                 Int32="[PageIndex]" />
+      <cor:Int32 Name="NumberOfPageLoads"
+                 cor:Int32="0" />
+      <cor:Int32 Name="NumberOfPageNavigations"
+                 cor:Int32="0" />
+      <cor:Boolean Name="PageAdded"
+                   cor:Boolean="false" />
+      <Environment Name="Environment"/>
+      <EditableText Name="InformationToSave"/>
+      <Command Name="NavigateWithPush"
+               Description="Navigate, PushOnStack=True" />
+      <Command Name="NavigateWithoutPush"
+               Description="Navigate, PushOnStack=False" />
+    </Locals>
+
+    <Rules>
+
+      <Changed Source="[NavigateWithPush.Invoked]">
+        <Actions>
+          <Set Target="[Session.CurrentPage.PushOnStack]"
+               Value="true"/>
+          <Navigate Source="@resx://Sampler/Sampler.Resources/ObjectModelHostingHistoryOrientedPageSession"
+                    PageIndex="[NextPageIndex]"
+                    Session="[Session]"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[NavigateWithoutPush.Invoked]">
+        <Actions>
+          <Set Target="[Session.CurrentPage.PushOnStack]"
+               Value="false"/>
+          <Navigate Source="@resx://Sampler/Sampler.Resources/ObjectModelHostingHistoryOrientedPageSession"
+                    PageIndex="[NextPageIndex]"
+                    Session="[Session]"/>
+        </Actions>
+      </Changed>
+
+      <Rule>
+        <Conditions>
+          <Equality Source="[Session.CurrentPage.State.#NumberOfPageLoads]"
+                    Value="null"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Session.CurrentPage.State.#NumberOfPageLoads]"
+               Value="[NumberOfPageLoads]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Equality Source="[Session.CurrentPage.State.#NumberOfPageNavigations]"
+                    Value="null"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Session.CurrentPage.State.#NumberOfPageNavigations]"
+               Value="[NumberOfPageNavigations]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Equality Source="[Session.CurrentPage.State.#NumberOfPageLoads]"
+                    Value="null"
+                    ConditionOp="NotEquals"/>
+          <Equality Source="[PageAdded]"
+                    Value="false"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Session.CurrentPage.State.#NumberOfPageLoads!cor:Int32]"
+               Value="[Session.CurrentPage.State.#NumberOfPageLoads!cor:Int32]">
+            <Transformer>
+              <MathTransformer AddInt="1"/>
+            </Transformer>
+          </Set>
+          <Set Target="[NextPageIndex]"
+               Value="[NextPageIndex]">
+            <Transformer>
+              <MathTransformer AddInt="1"/>
+            </Transformer>
+          </Set>
+          <Set Target="[PageAdded]"
+               Value="true"/>
+          <Set Target="[NumberOfPageLoads]"
+               Value="[Session.CurrentPage.State.#NumberOfPageLoads!cor:Int32]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Modified Source="[Environment.IsNavigating]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Session.CurrentPage.State.#NumberOfPageNavigations!cor:Int32]"
+               Value="[Session.CurrentPage.State.#NumberOfPageNavigations!cor:Int32]">
+            <Transformer>
+              <MathTransformer AddInt="1"/>
+            </Transformer>
+          </Set>
+          <Set Target="[NumberOfPageNavigations]"
+               Value="[Session.CurrentPage.State.#NumberOfPageNavigations!cor:Int32]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Equality Source="[Environment.IsNavigating]"
+                    Value="True"/>
+          <IsValid Source="[InformationToSave.Value]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Session.CurrentPage.State.#SavedInformation]"
+               Value="[InformationToSave.Value]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Equality Source="[Environment.IsNavigating]"
+                    Value="False"/>
+          <IsValid Source="[Session.CurrentPage.State.#SavedInformation]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[InformationToSave.Value]"
+               Value="[Session.CurrentPage.State.#SavedInformation!cor:String]"/>
+        </Actions>
+      </Rule>
+
+      <Binding Source="[NumberOfPageLoads!cor:String]"
+               Target="[MyLoadCount.PropertyValue]"/>
+
+      <Binding Source="[NumberOfPageNavigations!cor:String]"
+               Target="[MyNavigateCount.PropertyValue]"/>
+
+      <Binding Source="[Environment.IsNavigating!cor:String]"
+               Target="[MyIsNavigating.PropertyValue]"/>
+
+      <Binding Source="[Environment.NavigationDirection.ToString]"
+               Target="[MyNavigationDirection.PropertyValue]"/>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <ctrl:Button Command="[NavigateWithPush]"
+                           ButtonLabel="[NavigateWithPush.Description]" />
+              <ctrl:Button Command="[NavigateWithoutPush]"
+                           ButtonLabel="[NavigateWithoutPush.Description]"/>
+              <ctrl:Editbox EditableText="[InformationToSave]"
+                            LabelName="Information to be saved before navigation" />
+              <ctrl:PropertyAndValue Name="MyPageCount"
+                                     PropertyName="Page"
+                                     PropertyValue="[PageIndex.ToString]" />
+              <ctrl:PropertyAndValue Name="MyLoadCount"
+                                     PropertyName="Number of times this page has been loaded"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyNavigateCount"
+                                     PropertyName="Number of times IsNavigating has changed on this page"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyIsNavigating"
+                                     PropertyName="IsNavigating"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyNavigationDirection"
+                                     PropertyName="NavigationDirection"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

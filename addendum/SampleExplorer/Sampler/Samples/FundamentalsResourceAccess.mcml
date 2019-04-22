@@ -1,0 +1,124 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:b="resx://Sampler/Sampler.Resources/ControlsSimpleButton">
+
+  <!-- In MCML, images, sounds, and the markup itself can originate from a    -->
+  <!-- variety of source locations. They are all known as resources and are   -->
+  <!-- identified with a uri-formed string.                                   -->
+
+  <!-- For example:                                                           -->
+  <!--   file://c:\MyButton.mcml                                              -->
+  <!--   resx://MyAssembly/MyResources/MyButton                               -->
+  <!--   resx://MyAssembly/MyButton.mcml                                      -->
+  <!--   http://www.mydomain.com/MyButton.mcml                                -->
+
+  <!-- The above are all legal sources for MCML, Images (png/jpg/bmp) and     -->
+  <!-- Sounds (wav).                                                          -->
+
+  <!-- The following resource providers are supported:                        -->
+
+  <!-- 1) resx (format: resx://Assembly/ResourceContainer/Identifier):        -->
+  <!--    This is the default resource format for managed code. The           -->
+  <!--    assembly can be a partial or fully-qualified strong name. The       -->
+  <!--    ResourceContainer is the name of the .resources file within the     -->
+  <!--    Assembly. The Identifier is the name of the resource.               -->
+
+  <!-- 2) res (format: res://NativeDll!Identifier):                           -->
+  <!--    The native Windows resource format. Any resource stored as RCDATA   -->
+  <!--    within the .res file in the NativeDll is accessible via this        -->
+  <!--    method.                                                             -->
+
+  <!-- 3) file (format: file://c:\Directory\Identifier or file://Identifier): -->
+  <!--    File system-based resource access. A full path can be supplied,     -->
+  <!--    but it is optional. If a path is not supplied, the current working  -->
+  <!--    directory will be used when searching for the Identifier file.      -->
+
+  <!-- 4) http/https (format: http://Domain/Identifier):                      -->
+  <!--    Web-based resource access.                                          -->
+  
+  <!-- You can combine any of the previous examples with an additional UI     -->
+  <!-- identifier to point to a specifc UI resource within an MCML resource   -->
+  <!-- using the following format: -->
+
+  <!-- @resx://Assembly/ResourceContainer/Identifier#UIIdentifier             -->
+  
+  <!-- Example: @resx://Sampler/Sampler.Resources/Controls#Button -->
+  
+  <!-- In order for this to work properly you must use the @ escape symbol.   -->
+
+  <!-- External MCML markup can be referenced from an MCML file by            -->
+  <!-- specifying the resource path within xmlns statements. For example:     -->
+  <!--   xmlns:b="res://McmlSampler!Controls.SimpleButton.mcml, or            -->
+  <!--   xmlns:b="http://Domain/Controls.SimpleButton.mcml                    -->
+  <!-- Markup that refers to UI elements would use the form:                  -->
+  <!--   <b:SimpleButton/>                                                    -->
+
+  <!-- The following sample demonstrates resource access in a variety of      -->
+  <!-- scenarios.                                                             -->
+
+  <UI Name="ResourceAccess">
+
+    <Locals>
+      <Command Name="PlayIt"
+               Description="Let's hear it!"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[PlayIt.Invoked]">
+        <Actions>
+
+          <!-- Sound stored as a RESX resource and referenced using the full, strong name. -->
+          <PlaySound Sound="resx://Sampler,Version=7.0.2009.0228,Culture=Neutral,PublicKeyToken=27f898ecd1eb808a/Sampler.Resources/Launch"/>
+
+          <PlayAnimation Target="[Logo]">
+            <Animation>
+              <Animation CenterPointPercent=".5,.5,1">
+                <Keyframes>
+                  <ScaleKeyframe Time="0"
+                                 Value="1,1,1"/>
+                  <ScaleKeyframe Time=".35"
+                                 Value=".5,.5,1"/>
+                  <ScaleKeyframe Time=".4"
+                                 Value="2,2,1"/>
+                  <ScaleKeyframe Time="4"
+                                 Value="1,1,1"/>
+
+                  <RotateKeyframe Time="0"
+                                  Value="0deg;0,0,1"/>
+                  <RotateKeyframe Time="4"
+                                  Value="720deg;0,0,1"/>
+                </Keyframes>
+              </Animation>
+            </Animation>
+          </PlayAnimation>
+
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"
+                      Spacing="20,0"/>
+        </Layout>
+        <Children>
+          
+          <Text Content="Resource Access"
+                Color="White" />
+
+          <!-- Image stored as a RESX resource and referenced using the full, strong name. -->
+          <Graphic Name="Logo"
+                   Content="resx://Sampler,Version=7.0.2009.0228,Culture=Neutral,PublicKeyToken=27f898ecd1eb808a/Sampler.Resources/FourBoxGraphic"/>
+
+          <!-- Button MCML stored as a RESX resource referenced using an xmlns statement from above). -->
+          <b:SimpleButton Command="[PlayIt]"/>
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

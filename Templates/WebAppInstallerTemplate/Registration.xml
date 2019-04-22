@@ -1,0 +1,31 @@
+﻿<application id="PUT_GUID_1_HERE"
+             Title="PLACE_YOUR_APPLICATION_TITLE_HERE"
+             Description="PLACE_YOUR_APPLICATION_DESCRIPTION_HERE">
+  
+  <!-- Use one or the other of the following entrypoints.          -->
+  <!-- Trying to use both will result in the registration failing. -->
+  
+  <!-- This is the entry point for a web MCML application.         -->
+  <!-- If you have an HTML web application delete this entrypoint  -->
+  <!-- and uncomment the following entrypoint.                     -->
+
+  <entrypoint id="PUT_GUID_2_HERE"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="PLACE_YOUR_ENTRYPOINT_TITLE_HERE"
+              Description="PLACE_YOUR_ENTRYPOINT_DESCRIPTION_HERE"
+              ImageUrl="PLACE_THE_HTTP_URI_OF_THE_APPLICATION_IMAGE_HERE"
+              context="PLACE_THE_HTTP_HOME_PAGE_OF_THE_APPLICATION_HERE">
+    <category category="More Programs"/>
+  </entrypoint>
+  
+  <!-- This is the entrypoint for an HTML web application.         -->
+
+  <!--<entrypoint id="PUT_GUID_2_HERE"
+              Url="PLACE_THE_HTTP_HOME_PAGE_OF_THE_APPLICATION_HERE"
+              title="PLACE_YOUR_ENTRYPOINT_TITLE_HERE"
+              Description="PLACE_YOUR_ENTRYPOINT_DESCRIPTION_HERE"
+              ImageUrl="Application.png">
+    <category category="More Programs"/>
+  </entrypoint>-->
+  
+</application>

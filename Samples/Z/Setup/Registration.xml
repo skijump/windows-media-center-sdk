@@ -1,0 +1,10 @@
+<application title="Z"
+             id="{11ffb644-572d-4a2f-9a19-38289e8e5466}">
+  <entrypoint id="{d916397f-491e-4aa9-aabf-c8957e6bba40}"
+              addin="Z.ZAddIn, Z,Version=7.0.0.0,PublicKeyToken=2f4e6f203aa84589,Culture=neutral"
+              title="Z"
+              description="Z"
+              ImageUrl=".\ZLogoProgramLibrary.png">
+    <category category="More Programs"/>
+  </entrypoint>
+</application>

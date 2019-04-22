@@ -1,0 +1,517 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:me="Me">
+
+  <!-- The Main Menu page -->
+  <UI Name="MainMenu">
+    <Properties>
+      <ArrayListDataSet Name="Menu"
+                        ArrayListDataSet="$Required"/>
+      <z:Application Name="Application"
+                     Application="$Required"/>
+    </Properties>
+
+    <Locals>
+      <IntRangedValue Name="SelectedCategory"/>
+    </Locals>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <core:Header Name="Header"
+                       Application="[Application]"
+                       InputEnabled="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Top="Parent,0,40"/>
+            </LayoutInput>
+          </core:Header>
+
+          <core:Footer Name="Footer"
+                       Application="[Application]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Bottom="Parent,1,-40"/>
+            </LayoutInput>
+          </core:Footer>
+
+          <!-- Menu categories -->
+          <Repeater Layout="VerticalFlow"
+                    Source="[Menu]"
+                    FocusOrder="0">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,60"
+                                 Right="Parent,1,-60"
+                                 Horizontal="Fill"
+                                 Top="Parent,0,120"
+                                 Bottom="Parent,1,-120"
+                                 Vertical="Center"/>
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:Move"/>
+            </Animations>
+            <Content>
+              <me:MenuCategory Category="[RepeatedItem!z:MenuCategory]"
+                               Index="[RepeatedItemIndex.Value]"
+                               SelectedCategory="[SelectedCategory]">
+                <Animations>
+                  <Animation Animation="animation://me:Move"/>
+                </Animations>
+              </me:MenuCategory>
+            </Content>
+          </Repeater>
+
+          <core:Background/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+
+  <!-- A single category in the Main Menu -->
+  <UI Name="MenuCategory">
+    <Properties>
+      <z:MenuCategory Name="Category"
+                      MenuCategory="$Required"/>
+
+      <sys:Int32 Name="Index"/>
+      <IntRangedValue Name="SelectedCategory"
+                      IntRangedValue="$Required"/>
+
+      <!-- Metrics for item alignment. Needed to be in properties as  -->
+      <!-- an atomic object to enable Rules processing.               -->
+      <AnchorLayoutInput Name="ItemsSelected"
+                         Left="Labels,1"
+                         Top="Labels,0,30"/>
+      <AnchorLayoutInput Name="ItemsNonSelected"
+                         Left="Labels,1"
+                         Top="Labels,0,0"/>
+    </Properties>
+
+    <Locals>
+      <!-- A simple boolean for whether or not we're the selected category.  -->
+      <!-- Passed down to our child items.                                   -->
+      <BooleanChoice Name="IsSelectedCategory"/>
+
+      <!-- Tier of this category. -->
+      <IntRangedValue Name="Tier"
+                      Value="3"/>
+    </Locals>
+
+    <Rules>
+      <!-- The selected category is whichever one has focus somewhere -->
+      <!-- inside of it.                                              -->
+      <Condition Source="[Input.DeepKeyFocus]"
+                 SourceValue="true"
+                 Target="[SelectedCategory.Value]"
+                 Value="[Index]"/>
+
+      <!-- Set a nice boolean value based on whether we're the        -->
+      <!-- selected category.                                         -->
+      <Condition Source="[SelectedCategory.Value]"
+                 SourceValue="[Index]"
+                 Target="[IsSelectedCategory.Value]"
+                 Value="true"/>
+      <Default Target="[IsSelectedCategory.Value]"
+               Value="false"/>
+
+      <!-- Tier 3: 2 or more steps away from selection in either direction -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Equality Source="[SelectedCategory.Value]"
+                    ConditionOp="LessThanOrEquals"
+                    Value="[Index]">
+            <SourceTransformer>
+              <MathTransformer Add="2"/>
+            </SourceTransformer>
+          </Equality>
+          <Equality Source="[SelectedCategory.Value]"
+                    ConditionOp="GreaterThanOrEquals"
+                    Value="[Index]">
+            <SourceTransformer>
+              <MathTransformer Subtract="2"/>
+            </SourceTransformer>
+          </Equality>
+        </Conditions>
+        <Actions>
+          <Set Target="[Tier.Value]"
+               Value="3"/>
+        </Actions>
+      </Rule>
+
+      <!-- Tier 2: 1 or more steps away from selection in either direction  -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Equality Source="[SelectedCategory.Value]"
+                    Value="[Index]">
+            <SourceTransformer>
+              <MathTransformer Add="1"/>
+            </SourceTransformer>
+          </Equality>
+          <Equality Source="[SelectedCategory.Value]"
+                    Value="[Index]">
+            <SourceTransformer>
+              <MathTransformer Subtract="1"/>
+            </SourceTransformer>
+          </Equality>
+        </Conditions>
+        <Actions>
+          <Set Target="[Tier.Value]"
+               Value="2"/>
+        </Actions>
+      </Rule>
+
+      <!-- Tier 1: the current selected category -->
+      <Default Target="[Tier.Value]"
+               Value="1"/>
+
+
+      <!-- Set styling based on the Tier value -->
+      <Condition Source="[Tier.Value]"
+                 SourceValue="3">
+        <Actions>
+          <Set Target="[Labels.Scale]"
+               Value="0.36,0.36,1.0"/>
+          <Set Target="[Content.Alpha]"
+               Value="0.36"/>
+        </Actions>
+      </Condition>
+      <Condition Source="[Tier.Value]"
+                 SourceValue="2">
+        <Actions>
+          <Set Target="[Labels.Scale]"
+               Value="0.6,0.6,1.0"/>
+          <Set Target="[Content.Alpha]"
+               Value="0.8"/>
+        </Actions>
+      </Condition>
+
+      <!-- Styling for when we're the selected category. -->
+      <Condition Source="[Tier.Value]"
+                 SourceValue="1">
+        <Actions>
+          <Set Target="[Labels.Scale]"
+               Value="1.0,1.0,1.0"/>
+          <Set Target="[Content.Alpha]"
+               Value="1.0"/>
+          <Set Target="[Background.Visible]"
+               Value="true"/>
+          <Set Target="[SubTitle.Visible]"
+               Value="true"/>
+          <Set Target="[Items.LayoutInput]"
+               Value="[ItemsSelected]"/>
+          <Set Target="[Content.Margins]"
+               Value="45,25,40,15"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor"
+             Navigation="Row,PreferFocusOrder">
+        <Animations>
+
+          <!-- Delayed Show animation based on Tier -->
+          <TransformByAttributeAnimation Override="[Tier.Value!sys:Single]"
+                                         Source="animation://me:Show"
+                                         Delay="0.1">
+            <ValueTransformer>
+              <MathTransformer Subtract="1"/>
+            </ValueTransformer>
+          </TransformByAttributeAnimation>
+
+        </Animations>
+        <Children>
+
+          <Panel Name="Content"
+                 Layout="Anchor"
+                 Margins="45,0,45,0">
+            <Animations>
+              <Animation Animation="animation://me:Move"/>
+              <Animation Animation="animation://me:Alpha"/>
+            </Animations>
+            <Children>
+
+              <!-- Primary Title and SubTitle -->
+              <Panel Name="Labels"
+                     Layout="VerticalFlow" >
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0"
+                                     Right="Parent,0,260"
+                                     Horizontal="Fill"
+                                     Top="Parent,0"/>
+                </LayoutInput>
+                <Animations>
+                  <Animation Animation="animation://me:Scale"/>
+                </Animations>
+                <Children>
+
+                  <core:Button Name="Title"
+                               Model="[Category]"
+                               FocusOrder="0"
+                               Image="null"
+                               FocusImage="null"
+                               TextFont="font://styles:MainMenuSectionTitle"
+                               TextColor="color://styles:Text.Copy"
+                               TextFocusColor="color://styles:Accent.B"
+                               TextMargins="0,0,0,0"
+                               Margins="-4,0,0,0"
+                               TileMinSize="260,0"
+                               TileMaxSize="260,0"/>
+
+                  <Text Name="SubTitle"
+                        Content="[Category.SubTitle]"
+                        Color="color://styles:Text.Copy"
+                        Font="font://styles:SecondaryText"
+                        Margins="0,-12,0,0"
+                        Visible="false"/>
+
+                </Children>
+              </Panel>
+
+              <!-- Thumbnail items -->
+              <Repeater Name="Items"
+                        Source="[Category.Items]"
+                        LayoutInput="[ItemsNonSelected]">
+                <Layout>
+                  <FlowLayout Orientation="Horizontal"
+                              Spacing="8,0"/>
+                </Layout>
+                <Animations>
+                  <Animation Animation="animation://me:Move"/>
+                </Animations>
+                <Content>
+
+                  <me:MainMenuItem Model="[RepeatedItem!z:ThumbnailCommand]"
+                                   IsInSelectedCategory="[IsSelectedCategory]"
+                                   Tier="[Tier]"
+                                   Index="[RepeatedItemIndex]">
+                    <Animations>
+                      <Animation Animation="animation://me:Move"/>
+                    </Animations>
+                  </me:MainMenuItem>
+
+                </Content>
+              </Repeater>
+
+            </Children>
+          </Panel>
+
+          <!-- Container graphic -->
+          <Graphic Name="Background"
+                   Content="image://styles:ContainerImage"
+                   Alpha="0.5"
+                   Visible="false"
+                   SizingPolicy="SizeToConstraint">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Content,0"
+                                 Right="Content,1"
+                                 Top="Content,0"
+                                 Bottom="Content,1,10"/>
+            </LayoutInput>
+            <Animations>
+              <TransformAnimation Source="animation://me:Show"
+                                  Delay="0.15"/>
+              <Animation Animation="animation://me:Hide"/>
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- An item in a menu category -->
+  <UI Name="MainMenuItem"
+      BaseUI="core:ThumbnailButton">
+    <Properties>
+      <!-- Information about the category -->
+      <BooleanChoice Name="IsInSelectedCategory"
+                     BooleanChoice="$Required"/>
+      <IntRangedValue Name="Tier"
+                      IntRangedValue="$Required"/>
+
+      <!-- Information about our placement relative to our peers -->
+      <Index Name="Index"
+             Index="$Required"/>
+
+      <sys:Int32 Name="LabelPanelMinHeight"
+                 Int32="48"/>
+    </Properties>
+
+    <Locals>
+      <!-- Delayed show animation based on our Index -->
+      <TransformByAttributeAnimation Name="StaggeredShow"
+                                     Override="[Index.Value!sys:Single]"
+                                     Source="animation://me:Show"
+                                     Delay="0.2"/>
+
+      <!-- Delayed show animation for our label based on our Index -->
+      <TransformByAttributeAnimation Name="StaggeredLabelShow"
+                                     Override="[Index.Value!sys:Single]"
+                                     Delay="0.1">
+        <Source>
+          <TransformAnimation Source="animation://me:Show"
+                              Delay="0.2"/>
+        </Source>
+      </TransformByAttributeAnimation>
+
+      <Environment Name="Environment"/>
+    </Locals>
+
+    <Rules>
+      <!-- Only show the label for the selected category -->
+      <Binding Source="[IsInSelectedCategory.Value]"
+               Target="[ShowLabel]"/>
+
+      <!-- Sizing based on Tier -->
+      <Condition Source="[Tier.Value]"
+                 SourceValue="3"
+                 Target="[TileSize]"
+                 Value="94,54"/>
+      <Condition Source="[Tier.Value]"
+                 SourceValue="2"
+                 Target="[TileSize]"
+                 Value="157,90"/>
+      <Default Target="[TileSize]"
+               Value="262,150"/>
+
+      <!-- Display only the first 2 items if in 4:3 mode -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Environment.IsWidescreen]"
+                    Value="false"/>
+          <Equality Source="[Index.Value]"
+                    ConditionOp="GreaterThan"
+                    Value="1"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ItemPanel.Visible]"
+               Value="false"/>
+        </Actions>
+      </Rule>
+      <!-- Display only the first 3 items if in widescreen mode -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Environment.IsWidescreen]"
+                    Value="true"/>
+          <Equality Source="[Index.Value]"
+                    ConditionOp="GreaterThan"
+                    Value="2"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ItemPanel.Visible]"
+               Value="false"/>
+        </Actions>
+      </Rule>
+      <Default Target="[ItemPanel.Visible]"
+               Value="true"/>
+
+      <!-- Only show the "no image" text if we're the selected tier. -->
+      <Condition Source="[Tier.Value]"
+                 SourceValue="1"
+                 Target="[NoImageText.Visible]"
+                 Value="true"/>
+      <Default Target="[NoImageText.Visible]"
+               Value="false"/>
+
+      <!-- Attach some animations -->
+      <Rule>
+        <Actions>
+          <Invoke Target="[ItemPanel.AttachAnimation]"
+                  animation="[StaggeredShow]"/>
+          <Invoke Target="[Label.AttachAnimation]"
+                  animation="[StaggeredLabelShow]"/>
+          <Invoke Target="[Image.AttachAnimation]"
+                  animation="animation://me:Size"/>
+          <Invoke Target="[NoImage.AttachAnimation]"
+                  animation="animation://me:Size"/>
+          <Invoke Target="[NoImageText.AttachAnimation]"
+                  animation="[StaggeredLabelShow]"/>
+        </Actions>
+      </Rule>
+    </Rules>
+  </UI>
+
+
+  <!-- Animations -->
+
+  <Animation Name="Move"
+             Type="Move">
+    <Keyframes>
+      <PositionKeyframe Time="0.0"
+                        RelativeTo="Current"/>
+      <PositionKeyframe Time="0.3"
+                        RelativeTo="Final"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="SmoothMove"
+             Type="Move">
+    <Keyframes>
+      <PositionKeyframe Time="0.0"
+                        RelativeTo="Current"
+                        Interpolation="SCurve,0.5"/>
+      <PositionKeyframe Time="0.3"
+                        RelativeTo="Final"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="Show"
+             Type="Show">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0"
+                     Value="0.0"
+                     Interpolation="Exp, 2.0"/>
+      <AlphaKeyframe Time="0.3"
+                     RelativeTo="Final"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="Hide"
+             Type="Hide">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0"
+                     RelativeTo="Current"
+                     Interpolation="Log, 2.0"/>
+      <AlphaKeyframe Time="0.1"
+                     Value="0.0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="Size"
+             Type="Size">
+    <Keyframes>
+      <SizeKeyframe Time="0.0"
+                    RelativeTo="Current"/>
+      <SizeKeyframe Time="0.3"
+                    RelativeTo="Final"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="Scale"
+             Type="Scale">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     RelativeTo="Current"/>
+      <ScaleKeyframe Time="0.3"
+                     RelativeTo="Final"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="Alpha"
+             Type="Alpha">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0"
+                     RelativeTo="Current"/>
+      <AlphaKeyframe Time="0.3"
+                     RelativeTo="Final"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

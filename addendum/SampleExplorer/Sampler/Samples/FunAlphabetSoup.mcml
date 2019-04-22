@@ -1,0 +1,285 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me ="Me">
+
+  <UI Name="Main">
+    <Locals>
+      <cor:Random Name="Random"/>
+
+      <Rotation Name="IconRotate"
+                Axis="1,0,0"/>
+      <Rotation Name="ClockRotate"
+                Axis="0,1,0"/>
+      <Rotation Name="TitleRotate"
+                Axis="0,0,1"/>
+    </Locals>
+
+    <Content>
+
+      <Panel Layout="Form">
+        <Children>
+          <Panel>
+            <LayoutInput>
+              <AnchorLayoutInput Horizontal="Near"
+                                 Vertical="Near"/>
+            </LayoutInput>
+            <Children>
+              <Repeater Name="Loop">
+                <Source>
+                  <cor:String String="A"/>
+                  <cor:String String="B"/>
+                  <cor:String String="C"/>
+                  <cor:String String="D"/>
+                  <cor:String String="E"/>
+                  <cor:String String="F"/>
+                  <cor:String String="G"/>
+                  <cor:String String="H"/>
+                  <cor:String String="I"/>
+                  <cor:String String="J"/>
+                  <cor:String String="K"/>
+                  <cor:String String="L"/>
+                  <cor:String String="M"/>
+                  <cor:String String="N"/>
+                  <cor:String String="O"/>
+                  <cor:String String="P"/>
+                  <cor:String String="Q"/>
+                  <cor:String String="R"/>
+                  <cor:String String="S"/>
+                  <cor:String String="T"/>
+                  <cor:String String="U"/>
+                  <cor:String String="V"/>
+                  <cor:String String="W"/>
+                  <cor:String String="X"/>
+                  <cor:String String="Y"/>
+                  <cor:String String="Z"/>
+                  <cor:String String="a"/>
+                  <cor:String String="b"/>
+                  <cor:String String="c"/>
+                  <cor:String String="d"/>
+                  <cor:String String="e"/>
+                  <cor:String String="F"/>
+                  <cor:String String="g"/>
+                  <cor:String String="h"/>
+                  <cor:String String="i"/>
+                  <cor:String String="j"/>
+                  <cor:String String="k"/>
+                  <cor:String String="l"/>
+                  <cor:String String="m"/>
+                  <cor:String String="n"/>
+                  <cor:String String="o"/>
+                  <cor:String String="p"/>
+                  <cor:String String="q"/>
+                  <cor:String String="r"/>
+                  <cor:String String="s"/>
+                  <cor:String String="t"/>
+                  <cor:String String="u"/>
+                  <cor:String String="v"/>
+                  <cor:String String="w"/>
+                  <cor:String String="x"/>
+                  <cor:String String="y"/>
+                  <cor:String String="z"/>
+                </Source>
+                <Content>
+                  <Panel>
+                    <Children>
+                      <me:Spinner Name="IconItem"
+                                  Content="[RepeatedItem.ToString]"
+                                  Rotator="[IconRotate]"
+                                  Random="[Random]"/>
+                      <me:Spinner Name="ClockItem"
+                                  Content="[RepeatedItem.ToString]"
+                                  Rotator="[ClockRotate]"
+                                  Random="[Random]"/>
+                      <me:Spinner Name="TitleItem"
+                                  Content="[RepeatedItem.ToString]"
+                                  Rotator="[TitleRotate]"
+                                  Random="[Random]"/>
+                    </Children>
+                  </Panel>
+                </Content>
+              </Repeater>
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <UI Name="Spinner">
+    <Properties>
+      <Rotation Name="Rotator"
+                Axis="1, 0, 0"/>
+      <cor:String Name="Content"
+                  String=""/>
+      <Color Name="Color"
+             Color="0, 0, 0"/>
+
+      <cor:Random Name="Random"/>
+    </Properties>
+
+    <Locals>
+      <cor:Int32 Name="rand"
+                 Int32="0"/>
+      <cor:Int32 Name="temp"
+                 Int32="0"/>
+
+      <MathTransformer Name="Unity"
+                       Add="0"/>
+      <MathTransformer Name="TimerMod"
+                       Mod="8"/>
+      <MathTransformer Name="TimerAdd"
+                       Add="2"/>
+      <MathTransformer Name="Milliseconds"
+                       Multiply="1000"/>
+
+      <MathTransformer Name="RotationMod"
+                       Mod="9"/>
+      <MathTransformer Name="RotationMult"
+                       Multiply="360"
+                       Add="360"/>
+
+      <MathTransformer Name="WidthMod"
+                       Mod="1024"/>
+      <MathTransformer Name="HeightMod"
+                       Mod="768"/>
+
+      <MathTransformer Name="ColorMod"
+                       Mod="256"
+                       Type="Byte"/>
+
+      <Timer Name="TimesUp"
+             Interval="10000"
+             Enabled="true"
+             AutoRepeat="true"/>
+
+      <Vector3 Name="IconPositionEndVector"/>
+      <PositionKeyframe Name="IconPositionStart"
+                        Time="0.0"
+                        RelativeTo="Current"
+                        Interpolation="SCurve"/>
+      <PositionKeyframe Name="IconPositionEnd"
+                        Time="10"
+                        RelativeTo="Absolute"/>
+
+      <Rotation Name="RotateZero"
+                Rotation="0deg; 1, 0, 0"/>
+      <RotateKeyframe Name="IconRotationStart"
+                      Time="0.0"
+                      Value="0deg;1,0,0"
+                      Interpolation="SCurve"/>
+      <RotateKeyframe Name="IconRotationEnd"
+                      Value="0deg;1,0,0"/>
+
+      <Animation Name="IconAni"
+                 Type="Idle"
+                 Loop="-1"
+                 CenterPointPercent="0.5, 0.5, 0.5">
+        <Keyframes>
+          <PositionKeyframe Time="0.0"
+                            RelativeTo="Current"
+                            Interpolation="SCurve"/>
+        </Keyframes>
+      </Animation>
+    </Locals>
+
+    <Rules>
+
+      <Rule>
+        <Conditions>
+          <Modified Source="[TimesUp.Tick]"
+                    InitialEvaluate="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[rand]"
+               Value="[Random.Next]"
+               Transformer="[TimerMod]"/>
+          <Set Target="[temp]"
+               Value="[rand]"
+               Transformer="[TimerAdd]"/>
+          <Set Target="[TimesUp.Interval]"
+               Value="[temp]"
+               Transformer="[Milliseconds]"/>
+          <Set Target="[IconPositionEnd.Time]"
+               Value="[temp]"
+               Transformer="[Unity]"/>
+          <Set Target="[IconRotationEnd.Time]"
+               Value="[temp]"
+               Transformer="[Unity]"/>
+
+          <Set Target="[IconPositionEndVector.X]"
+               Value="[Random.Next]"
+               Transformer="[WidthMod]"/>
+          <Set Target="[IconPositionEndVector.Y]"
+               Value="[Random.Next]"
+               Transformer="[HeightMod]"/>
+          <Set Target="[IconPositionEnd.Value]"
+               Value="[IconPositionEndVector]"/>
+
+          <Set Target="[temp]"
+               Value="[Random.Next]"
+               Transformer="[RotationMod]"/>
+          <Set Target="[RotateZero.Axis]"
+               Value="[Rotator.Axis]"/>
+          <Set Target="[IconRotationStart.Value]"
+               Value="[RotateZero]"/>
+          <Set Target="[Rotator.AngleDegrees]"
+               Value="[temp]"
+               Transformer="[RotationMult]"/>
+          <Set Target="[IconRotationEnd.Value]"
+               Value="[Rotator]"/>
+
+          <Invoke Target="[IconAni.Keyframes.Clear]"/>
+
+          <Invoke Target="[IconAni.Keyframes.Add]"
+                  value="[IconPositionStart]"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[IconAni.Keyframes.Add]"
+                  value="[IconPositionEnd]"
+                  ExclusiveApply="false"/>
+
+          <Invoke Target="[IconAni.Keyframes.Add]"
+                  value="[IconRotationStart]"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[IconAni.Keyframes.Add]"
+                  value="[IconRotationEnd]"
+                  ExclusiveApply="false"/>
+
+          <Invoke Target="[IconPanel.AttachAnimation]"
+                  animation="[IconAni]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Actions>
+          <Set Target="[Color.R]"
+               Value="[Random.Next]"
+               Transformer="[ColorMod]"/>
+          <Set Target="[Color.G]"
+               Value="[Random.Next]"
+               Transformer="[ColorMod]"/>
+          <Set Target="[Color.B]"
+               Value="[Random.Next]"
+               Transformer="[ColorMod]"/>
+        </Actions>
+      </Rule>
+      <Binding Target="[IconItem.Color]"
+               Source="[Color]"/>
+      <Binding Target="[IconItem.Content]"
+               Source="[Content]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Name="IconPanel">
+        <Children>
+          <Text Name="IconItem"
+                Font="Comic Sans MS,48"/>
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+</Mcml>

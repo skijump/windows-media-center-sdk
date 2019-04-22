@@ -1,0 +1,56 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test the application of ShowNear and ShowFar to control Fade on Clip items. -->
+
+  <UI Name="ClipShowFade">
+    <Content>
+      <Panel Layout="VerticalFlow" >
+        <Children>
+
+          <me:ClipItem ShowFar="true"
+                       ShowNear="true"
+                       Description="Clip with Fade at both ends"/>
+          <me:ClipItem ShowFar="false"
+                       ShowNear="true"
+                       Description="Clip with Fade at beginning only"/>
+          <me:ClipItem ShowFar="true"
+                       ShowNear="false"
+                       Description="Clip with Fade at end only"/>
+          <me:ClipItem ShowFar="false"
+                       ShowNear="false"
+                       Description="This Clip has no Fade"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name ="ClipItem">
+    <Properties>
+      <cor:String Name="Description"
+                  String="Description"/>
+      <cor:Boolean Name="ShowFar"
+                   Boolean="true"/>
+      <cor:Boolean Name="ShowNear"
+                   Boolean="true"/>
+    </Properties>
+
+    <Content>
+      <Clip Name="ClipItem"
+            FadeSize="100"
+            ShowFar="[ShowFar]"
+            ShowNear="[ShowNear]"
+            MaximumSize="800,0">
+        <Children>
+          <Text Color="Yellow"
+                Content="[Description]"/>
+        </Children>
+      </Clip>
+    </Content>
+
+  </UI>
+
+</Mcml>
+

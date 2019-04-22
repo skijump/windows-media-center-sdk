@@ -1,0 +1,4 @@
+Applications should make the license terms available to those customers who use accessibility tools such as a screen reader. Accessibility software can read up to 8,000 characters from the onscreen display of the license terms in Windows Media Center.
+If the license terms are less than 8,000 characters you can omit this file (LicenseAccessible.txt) from your setup program -- accessibility tools will use License.txt.
+If the license terms are equal to or greater than 8,000 characters, you should post your license terms to a web site and direct customers who are using accessibility tools to that web page to read the terms. For example, replace the contents of this LicenseAccessible.txt file using text similar to the following:
+It is not possible to read the terms of this license with accessibility software in Windows Media Center. To read this End User License Agreement, go to http://www.yourwebsite.com.

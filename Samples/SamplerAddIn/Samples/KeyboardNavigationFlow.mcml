@@ -1,0 +1,252 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:kfi="resx://Sampler/Sampler.Resources/InputKeyFocus">
+
+  <!-- Navigation Flow modes sample                                          -->
+  <!--                                                                       -->
+  <!-- When you have a container of items that are flowed out into groups of -->
+  <!-- logical columns/rows the default navigation may not work well because -->
+  <!-- it has no knowledge of these groupings.  So for instance, if you're   -->
+  <!-- flowing items into columns, and one of the columns is shorter than    -->
+  <!-- the ones around it, East/West navigations between the two longer      -->
+  <!-- columns will bypass the shorter one completely, since it has no items -->
+  <!-- that are perfectly aligned with your navigation direction.  To change -->
+  <!-- this behavior, you can mark items as Navigation=FlowHorizontal or     -->
+  <!-- Navigation=FlowVertical, depending on which way your items are flowed.-->
+  <!-- This causes the Navigation system to logically group the children     -->
+  <!-- into rows or columns, forces Navigations parallel to the flow to      -->
+  <!-- remain within the current strip or leave the container, and           -->
+  <!-- Navigations perpendicular to the flow to move among the strips        -->
+  <!-- sequentially (or leave the container).                                -->
+  <!--                                                                       -->
+  <!-- The Main UI consists of two blocks of focusable items.  Each block    -->
+  <!-- contains three columns of items, where the center column is shorter   -->
+  <!-- than the other two.  The left block is left with default Navigation   -->
+  <!-- and the right is marked as Navigation=FlowVertical.                   -->
+  <!-- In the left block, if you focus on the bottom item in the left        -->
+  <!-- column, the default Navigation will pick the bottom item in the third -->
+  <!-- column as the best choice (since it's directly inline with your       -->
+  <!-- Navigation direction, skipping the center column entirely. In the     -->
+  <!-- right block, an East Navigation from the leftmost column will never   -->
+  <!-- skip the center column.                                               -->
+  <UI Name="Main">
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"
+                      Spacing="55,0"/>
+        </Layout>
+
+        <Children>
+          <Panel >
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="50,0"/>
+            </Layout>
+            <Children>
+
+
+              <!-- Create a block, leaving it with default Navigation. -->
+              <me:Sample StartingIndex="1"/>
+
+
+              <!-- Create the right block and have it mark itself as -->
+              <!-- Navigation=FlowVertical                           -->
+              <me:Sample MyNavigation="FlowVertical"
+                         StartingIndex="9"/>
+
+
+            </Children>
+          </Panel>
+
+          <!-- Panel for the descriptive text. -->
+          <Panel Padding="10,10,10,10">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          Spacing="15,0"/>
+            </Layout>
+
+            <Children>
+              <Text Color="White"
+                    WordWrap="true"
+                    Font="Arial,22"
+                    Content="An &#34;East&#34; Navigation from &#34;3&#34; takes you to &#34;8&#34;, whereas an &#34;East&#34; Navigation from &#34;11&#34; takes you to &#34;13&#34;.  Similarly, a &#34;West&#34; Navigation from &#34;8&#34; takes you to &#34;3&#34;, whereas a &#34;West&#34; Navigation from &#34;16&#34; takes you to &#34;13&#34;."/>
+              <Text Color="White"
+                    WordWrap="true"
+                    Font="Arial,22"
+                    Content="This is because FlowVertical causes children to be organized into logical columns, so that North/South Navigations either stay within the current column or leave the container and East/West Navigations move sequentially among the columns (or leave the container)."/>
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- The Sample UI creates three columns of focusable items.  -->
+  <!-- The center column is shorter than the outer columns.  It -->
+  <!-- allows you to pass in a Navigation mode to use for the   -->
+  <!-- block, and a starting index to use for numbering the     -->
+  <!-- blocks.                                                  -->
+  <!-- It creates a text item, displaying the Navigation mode   -->
+  <!-- that was passed in.                                      -->
+  <UI Name="Sample">
+
+    <Properties>
+      <NavigationPolicies Name="MyNavigation"/>
+      <cor:Int32 Name="StartingIndex"/>
+    </Properties>
+
+    <Rules>
+
+      <!-- Set the content of the text describing our Navigation mode. -->
+      <Rule>
+        <Actions>
+          <Set Target="[Description.Content]"
+               Value="[MyNavigation]">
+            <Transformer>
+              <FormatTransformer Format="Navigation={0}"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+      <!-- Rules for setting the starting index of each strip -->
+      <Rule>
+        <Actions>
+          <Set Target="[Strip3.StartingIndex]"
+               Value="[StartingIndex]">
+            <Transformer>
+              <MathTransformer Add="5"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Actions>
+          <Set Target="[Strip2.StartingIndex]"
+               Value="[StartingIndex]">
+            <Transformer>
+              <MathTransformer Add="3"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Actions>
+          <Set Target="[Strip1.StartingIndex]"
+               Value="[StartingIndex]"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <!-- This is the actual container that is marked with the navigation -->
+      <!-- mode that is passed in.                                         -->
+      <ColorFill Content="Blue"
+                 Navigation="[MyNavigation]"
+                 Padding="10,10,10,10">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="5,0"/>
+            </Layout>
+            <Children>
+
+              <!-- Create our three strips, marking the center one as a -->
+              <!-- short strip.                                         -->
+              <me:Strip Name="Strip1"/>
+              <me:Strip Name="Strip2"
+                        IsLongStrip="false"/>
+              <me:Strip Name="Strip3"/>
+
+            </Children>
+          </Panel>
+          <Text Color="White"
+                Name="Description"/>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- The Strip UI creates a column of focusable items.  It allows you to   -->
+  <!-- pass in a starting index to use for numbering the items, as well as a -->
+  <!-- flag indicating whether there should be two or three items in the     -->
+  <!-- strip.                                                                -->
+  <UI Name="Strip">
+    <Properties>
+      <cor:Boolean Name="IsLongStrip"
+                   Boolean="true"/>
+      <cor:Int32 Name="StartingIndex"/>
+    </Properties>
+
+    <Rules>
+
+      <!-- Set the index text on each item. -->
+      <Rule>
+        <Actions>
+          <Set Target="[Item3.Text]"
+               Value="[StartingIndex]">
+            <Transformer>
+              <MathTransformer Add="2"
+                               Type="string"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Actions>
+          <Set Target="[Item2.Text]"
+               Value="[StartingIndex]">
+            <Transformer>
+              <MathTransformer Add="1"
+                               Type="string"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Actions>
+          <Set Target="[Item1.Text]"
+               Value="[StartingIndex]">
+            <Transformer>
+              <MathTransformer Type="string"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+      <Panel Navigation="Column">
+        <Layout>
+          <FlowLayout Spacing="5,0"
+                      Orientation="Vertical"/>
+        </Layout>
+        <Children>
+
+          <kfi:KeyFocusIndicator Name="Item1"/>
+          <kfi:KeyFocusIndicator Name="Item2"/>
+          <kfi:KeyFocusIndicator Name="Item3"
+                                 Visible="[IsLongStrip]"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

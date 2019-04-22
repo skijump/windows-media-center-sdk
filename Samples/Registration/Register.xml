@@ -1,0 +1,153 @@
+﻿<application id="{5D97995E-4722-4f21-B3B6-4C6916DEB871}"
+             Title="Application.1.Title"
+             Description="Application.1.Description"
+             CompanyName="Application.1.CompanyName"
+             StartMenuStripTitle="StartMenuTitle1"
+             StartMenuStripCategory="Custom Start Menu\Application1">
+  <entrypoint id="{C7B16396-6716-4036-A89B-ED267D19BBAD}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.1.MorePrograms"
+              Description="Description.1.MorePrograms"
+              ImageUrl="Image.MorePrograms.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More Programs"/>
+  </entrypoint>
+  <entrypoint id="{167B7E76-16C1-412b-8A72-F3CA8641637F}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.MoreWithThis.Audio.Album"
+              Description="Description.MoreWithThis.Audio.Album"
+              ImageUrl="Image.MoreWithThis.Audio.Album.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More With This\Audio\Album"/>
+  </entrypoint>
+  <entrypoint id="{F5C7DF8E-CC02-4b16-B0A9-AC2F11ED5769}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.MoreWithThis.Audio.Artist"
+              Description="Description.MoreWithThis.Audio.Artist"
+              ImageUrl="Image.MoreWithThis.Audio.Artist.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More With This\Audio\Artist"/>
+  </entrypoint>
+  <entrypoint id="{CF5F0976-E36F-4080-84E2-AC12FC3A75AB}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.MoreWithThis.Audio.Playlist"
+              Description="Description.MoreWithThis.Audio.Playlist"
+              ImageUrl="Image.MoreWithThis.Audio.Playlist.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More With This\Audio\Playlist"/>
+  </entrypoint>
+  <entrypoint id="{848622B0-7E20-4bee-8543-9664F928B9FE}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.MoreWithThis.Audio.Song"
+              Description="Description.MoreWithThis.Audio.Song"
+              ImageUrl="Image.MoreWithThis.Audio.Song.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More With This\Audio\Song"/>
+  </entrypoint>
+  <entrypoint id="{F7452924-3B26-4ade-A4B8-20EF498E9F07}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.MoreWithThis.Audio.Genre"
+              Description="Description.MoreWithThis.Audio.Genre"
+              ImageUrl="Image.MoreWithThis.Audio.Genre.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More With This\Audio\Genre"/>
+  </entrypoint>
+  <entrypoint id="{51B85780-86FD-4c59-B02D-02137E229AA1}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.MoreWithThis.DVD"
+              Description="Description.MoreWithThis.DVD"
+              ImageUrl="Image.MoreWithThis.DVD.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More With This\DVD"/>
+  </entrypoint>
+  <entrypoint id="{7C147A8C-190A-4ba6-AD2A-9ACDB97A3444}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.MoreWithThis.Picture"
+              Description="Description.MoreWithThis.Picture"
+              ImageUrl="Image.MoreWithThis.Picture.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More With This\Picture"/>
+  </entrypoint>
+  <entrypoint id="{257C6272-8B44-4256-8F4A-37C5E3B394D9}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.MoreWithThis.Video"
+              Description="Description.MoreWithThis.Video"
+              ImageUrl="Image.MoreWithThis.Video.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More With This\Video"/>
+  </entrypoint>
+  <entrypoint id="{ee0e05cd-7b33-4e7f-af8f-0479d438f7f7}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.MoreWithThis.TV"
+              Description="Description.MoreWithThis.TV"
+              ImageUrl="Image.MoreWithThis.TV.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More With This\TV"/>
+  </entrypoint>
+  <entrypoint id="{EC608AE7-A784-4d48-89FC-FF75209FF464}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.InternetRadio"
+              Description="Description.InternetRadio"
+              ImageUrl="Image.InternetRadio.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Internet Radio"/>
+  </entrypoint>
+  <entrypoint id="{AD025A5D-4849-4e5c-8831-0B42DD9BFB1D}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.InternetRadio.Presets"
+              Description="Description.InternetRadio.Presets"
+              ImageUrl="Image.InternetRadio.Presets.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Internet Radio\Presets"/>
+  </entrypoint>
+  <entrypoint id="{B4A74AD0-3BE2-43d8-A738-82398887FAA6}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.1.1"
+              description="description.StartMenuTile.1.1"
+              imageURL="Image.Start.App.1.1.Focus.png"
+              inactiveImageURL="Image.Start.App.1.1.NonFocus.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application1"
+              order="0"/>
+  </entrypoint>
+  <entrypoint id="{40511877-009C-4c19-B54C-EB87CAD4642F}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.1.2"
+              description="description.StartMenuTile.1.2"
+              imageURL="Image.Start.App.1.2.Focus.png"
+              inactiveImageURL="Image.Start.App.1.2.NonFocus.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application1"
+              order="1"/>
+  </entrypoint>
+  <entrypoint id="{260D5143-3A46-47a4-ACBE-3E8EC032B541}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.1.3"
+              description="description.StartMenuTile.1.3"
+              imageURL="Image.Start.App.1.3.Focus.png"
+              inactiveImageURL="Image.Start.App.1.3.NonFocus.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application1"
+              order="2"/>
+  </entrypoint>
+  <entrypoint id="{B0DB2083-3544-4280-BE01-046679711B34}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.1.4"
+              description="description.StartMenuTile.1.4"
+              imageURL="Image.Start.App.1.4.Focus.png"
+              inactiveImageURL="Image.Start.App.1.4.NonFocus.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application1"
+              order="3"/>
+  </entrypoint>
+  <entrypoint id="{8D2793FE-6857-428d-9A7C-D535E4C673AE}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.1.5"
+              description="description.StartMenuTile.1.5"
+              imageURL="Image.Start.App.1.5.Focus.png"
+              inactiveImageURL="Image.Start.App.1.5.NonFocus.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application1"
+              order="4"/>
+  </entrypoint>
+</application>

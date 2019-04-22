@@ -1,0 +1,97 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <Command Name="MyVolumeUpCommand"
+               Description="Volume Up" />
+      <Command Name="MyVolumeDownCommand"
+               Description="Volume Down" />
+      <Command Name="MyMuteTrueCommand"
+               Description="Mute" />
+      <Command Name="MyMuteFalseCommand"
+               Description="UnMute" />
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.AudioMixer.Volume]" />
+        </Conditions>
+        <Actions>
+          <Set Target="[MyVolume.PropertyValue]"
+               Value="[AddInHost.MediaCenterEnvironment.AudioMixer.Volume.ToString]" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute]" />
+        </Conditions>
+        <Actions>
+          <Set Target="[MyMute.PropertyValue]"
+               Value="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute.ToString]" />
+        </Actions>
+      </Rule>
+      <Changed Source="[MyVolumeUpCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.AudioMixer.VolumeUp]" />
+        </Actions>
+      </Changed>
+      <Changed Source="[MyVolumeDownCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.AudioMixer.VolumeDown]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyMuteTrueCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute]"
+               Value="True"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyMuteFalseCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute]"
+               Value="False"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:Button Command="[MyVolumeUpCommand]"
+                       ButtonLabel="[MyVolumeUpCommand.Description]" />
+          <ctrl:Button Command="[MyVolumeDownCommand]"
+                       ButtonLabel="[MyVolumeDownCommand.Description]" />
+          <ctrl:Button Command="[MyMuteTrueCommand]"
+                       ButtonLabel="[MyMuteTrueCommand.Description]" />
+          <ctrl:Button Command="[MyMuteFalseCommand]"
+                       ButtonLabel="[MyMuteFalseCommand.Description]" />
+          <ctrl:PropertyAndValue Name="MyVolume"
+                                 PropertyName="Volume"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyMute"
+                                 PropertyName="Mute"
+                                 PropertyValue="" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

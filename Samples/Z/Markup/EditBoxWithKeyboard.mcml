@@ -1,0 +1,74 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:button="resx://Z/Z.Resources/Button"
+      xmlns:edit="resx://Z/Z.Resources/EditBox"
+      xmlns:me="Me">
+
+  <!-- An edit box with the a link to onscreen keyboard alongside it -->
+  <UI Name="EditBoxWithKeyboard">
+    <Properties>
+      <EditableText Name="Model"
+                    EditableText="$Required"/>
+      <z:Application Name="Application"
+                     Application="$Required"/>
+      <sys:Boolean Name="Password"
+                   Boolean="false"/>
+      <sys:Boolean Name="SubmitWhenDone"
+                   Boolean="false"/>
+    </Properties>
+
+    <Locals>
+      <!-- When invoked this command will show the onscreen keyboard -->
+      <Command Name="ShowKeyboardCommand"
+               Description="resx://Z/Z.Resources/Shell_KeyboardButton"/>
+    </Locals>
+
+    <Rules>
+      <!-- If we have key focus on either the edit control or the button,
+				 show the button. -->
+      <Condition Source="[Input.DeepKeyFocus]"
+                 SourceValue="true"
+                 Target="[ShowButton.Alpha]"
+                 Value="1.0"/>
+
+      <!-- When the button is clicked, show the keyboard. -->
+      <Changed Source="[ShowKeyboardCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[Application.GoToKeyboard]"
+                  text="[Model]"
+                  password="[Password]"
+                  submitWhenDone="[SubmitWhenDone]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Navigation="PreferFocusOrder, TabGroup">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- The input field -->
+          <edit:Editbox Name="Edit"
+                        EditableText="[Model]"
+                        PasswordMasked="[Password]"
+                        FocusOrder="1"/>
+
+          <!-- A button that when clicked will show the keyboard -->
+          <button:Button Name="ShowButton"
+                         Model="[ShowKeyboardCommand]"
+                         Alpha="0.0"
+                         Image="image://styles:ButtonNonFocusImage"
+                         Margins="5,0,0,0"
+                         FocusOrder="2"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

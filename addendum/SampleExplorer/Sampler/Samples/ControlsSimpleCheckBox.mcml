@@ -1,0 +1,194 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- Test data for SimpleCheckBox. -->
+  <UI Name="TestSimpleCheckBox">
+
+    <Content>
+
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:SimpleCheckBox>
+            <Model>
+              <!-- Test model -->
+              <BooleanChoice Description="Checkbox1"/>
+            </Model>
+          </me:SimpleCheckBox>
+          <me:SimpleCheckBox>
+            <Model>
+              <!-- Test model -->
+              <BooleanChoice Description="Checkbox2"/>
+            </Model>
+          </me:SimpleCheckBox>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+
+  <!-- Simple button -->
+  <UI Name="SimpleCheckBox">
+
+    <Properties>
+
+      <!-- Command is a required parameter. -->
+      <BooleanChoice Name="Model"
+                     BooleanChoice="$Required"/>
+
+      <Size Name="BoxSize"
+            Size="50,50"/>
+
+      <!-- Box color properties. -->
+      <Color Name="BoxColor"
+             Color="DimGray"/>
+      <Color Name="BoxFocusedColor"
+             Color="DarkGray"/>
+      <Color Name="BoxHoverColor"
+             Color="PaleGoldenrod"/>
+      <Color Name="BoxPressedColor"
+             Color="White"/>
+
+      <!-- Checked box color properties. -->
+      <Color Name="CheckColor"
+             Color="White"/>
+      <Color Name="CheckFocusedColor"
+             Color="White"/>
+      <Color Name="CheckHoverColor"
+             Color="White"/>
+      <Color Name="CheckPressedColor"
+             Color="DimGray"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor"
+             Color="White"/>
+      <Color Name="LabelFocusedColor"
+             Color="White"/>
+      <Color Name="LabelHoverColor"
+             Color="White"/>
+      <Color Name="LabelPressedColor"
+             Color="White"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="Arial,20"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- React to "click" input. -->
+      <ClickHandler Name="Clicker"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- Bind the model value to the check visibility. -->
+      <Binding Source="[Model.Value]"
+               Target="[Check.Visible]"/>
+
+      <!-- The command description is displayed by the text box. A  -->
+      <!-- binding is used in case the description changes at       -->
+      <!-- runtime.                                                 -->
+      <Binding Source="[Model.Description]"
+               Target="[Label.Content]"/>
+
+      <!-- The checkbox has been clicked - toggle the value. -->
+      <Changed Source="[Clicker.Invoked]">
+        <Actions>
+          <Set Target="[Model.Value]"
+               Value="[Model.Value]">
+            <Transformer>
+              <BooleanTransformer Inverse="true"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Changed>
+
+      <!-- Change color on mouse focus. -->
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Box.Content]"
+               Value="[BoxPressedColor]"/>
+          <Set Target="[Check.Content]"
+               Value="[CheckPressedColor]"/>
+          <Set Target="[Label.Color]"
+               Value="[LabelPressedColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Change color on mouse focus. -->
+      <Condition Source="[Input.MouseFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Box.Content]"
+               Value="[BoxHoverColor]"/>
+          <Set Target="[Check.Content]"
+               Value="[CheckHoverColor]"/>
+          <Set Target="[Label.Color]"
+               Value="[LabelHoverColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Change color on key focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Box.Content]"
+               Value="[BoxFocusedColor]"/>
+          <Set Target="[Check.Content]"
+               Value="[CheckFocusedColor]"/>
+          <Set Target="[Label.Color]"
+               Value="[LabelFocusedColor]"/>
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- The box around the check -->
+          <ColorFill Name="Box"
+                     Content="[BoxColor]"
+                     MouseInteractive="true"
+                     Margins="0,0,5,0"
+                     MaximumSize="[BoxSize]"
+                     Layout="Form">
+            <Children>
+
+              <!-- A check mark; if it is visible, the value is true. -->
+              <ColorFill Name="Check"
+                         Content="[CheckColor]">
+                <LayoutInput>
+                  <FormLayoutInput Left="Parent,0.2"
+                                   Right="Parent,0.8"
+                                   Top="Parent,0.2"
+                                   Bottom="Parent,0.8"/>
+                </LayoutInput>
+              </ColorFill>
+
+            </Children>
+          </ColorFill>
+
+          <!-- The label to display. -->
+          <Text Name="Label"
+                Color="[LabelColor]"
+                Font="[LabelFont]"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,194 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test ScrollingData's BeginPadding and EndPadding for a Horizontally oriented 
+       Scroller ViewItem.  -->
+
+  <UI Name="PaddingHorizontal">
+
+    <Locals>
+
+      <!-- Create list of data to repeat. -->
+      <ArrayListDataSet Name="Locations">
+        <Source>
+          <cor:String String="Living Room"/>
+          <cor:String String="Den"/>
+          <cor:String String="Master Bedroom"/>
+          <cor:String String="Second Bedroom"/>
+          <cor:String String="Third Bedroom"/>
+          <cor:String String="Fourth Bedroom"/>
+          <cor:String String="Fifth Bedroom"/>
+          <cor:String String="Sixth Bedroom"/>
+          <cor:String String="Kitchen"/>
+          <cor:String String="Dining Room"/>
+          <cor:String String="Bonus Room"/>
+          <cor:String String="Media Room"/>
+          <cor:String String="Sitting Room"/>
+          <cor:String String="Library"/>
+          <cor:String String="Wine Cellar"/>
+          <cor:String String="Bathroom"/>
+          <cor:String String="Second Bathroom"/>
+          <cor:String String="Third Bathroom"/>
+          <cor:String String="Fourth Bathroom"/>
+          <cor:String String="Closet"/>
+          <cor:String String="Indoor Swimming Pool"/>
+          <cor:String String="Jacuzzi"/>
+          <cor:String String="Garage First Stall"/>
+          <cor:String String="Garage Second Stall"/>
+          <cor:String String="Garage Third Stall"/>
+          <cor:String String="Garage Fourth Stall"/>
+          <cor:String String="Garage Fifth Stall"/>
+          <cor:String String="Garage Sixth Stall"/>
+          <cor:String String="Guest House"/>
+          <cor:String String="Tennis Court"/>
+          <cor:String String="Basketball Court"/>
+          <cor:String String="Gazebo"/>
+          <cor:String String="Tool Shed"/>
+          <cor:String String="Attic"/>
+          <cor:String String="Location 1"/>
+          <cor:String String="Location 2"/>
+          <cor:String String="Location 3"/>
+          <cor:String String="Location 4"/>
+          <cor:String String="Location 5"/>
+          <cor:String String="Location 6"/>
+          <cor:String String="Location 7"/>
+          <cor:String String="Location 8"/>
+          <cor:String String="Location 9"/>
+          <cor:String String="Location 10"/>
+          <cor:String String="Location 11"/>
+          <cor:String String="Location 12"/>
+          <cor:String String="Location 13"/>
+          <cor:String String="Location 14"/>
+          <cor:String String="Location 15"/>
+          <cor:String String="Location 16"/>
+          <cor:String String="Location 17"/>
+          <cor:String String="Location 18"/>
+          <cor:String String="Location 19"/>
+          <cor:String String="Location 20"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <!-- The ScrollingHandler which reacts to user keyboard input. -->
+      <!-- NOTE: HandlerStage must be "Bubbled".                     -->
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandlerStage="Bubbled"/>
+
+      <!-- ScrollingData contains many ways to customize how scrolling -->
+      <!-- should behave. It has methods to change the current scroll  -->
+      <!-- position and it also reports the position. In this case,    -->
+      <!-- the default values are used for the sample.                 -->
+      <ScrollingData Name="ScrollingData"
+                     BeginPadding="100"
+                     EndPadding="100"/>
+    </Locals>
+
+    <!-- This is where the scrolling objects get hooked up to each     -->
+    <!-- other. Default rules are a good place to do this since Rules  -->
+    <!-- get run after the rest of the UI is created and ready to go.  -->
+    <Rules>
+      <!-- Give ScrollingData to ScrollingHandler. -->
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+
+      <!-- Give Repeater to ScrollingData. -->
+      <Default Target="[ScrollingData.Repeater]"
+               Value="[ListRepeater]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <Text Color="SlateGray"
+                Font="Tahoma,20"
+                WordWrap="true"
+                Content="Test 'BeginPadding' and 'EndPadding' for a Horizontally Oriented Scroller. The Yellow Focus box should stay 100 pixels from the Right and Left of the Light colored fill"/>
+
+          <ColorFill Padding="30,30,30,30"
+                     Content="AntiqueWhite"
+                     Margins="0,10,0,10">
+            <Children>
+
+              <!-- The Scroller. It referrs to the ScrollingData too. -->
+              <Scroller Orientation="Horizontal"
+                        MaximumSize="0,400"
+                        FadeSize="-30"
+                        ScrollingData="[ScrollingData]">
+                <Children>
+
+                  <!-- The Repeater. A direct child of the Scroller. -->
+                  <Repeater Name="ListRepeater"
+                            Source="[Locations]">
+                    <Layout>
+                      <GridLayout Orientation="Horizontal"
+                                  AllowWrap="true"
+                                  Spacing="10,10"/>
+                    </Layout>
+                    <Content>
+                      <!-- Repeating out the items. -->
+                      <me:ListItem Description="[RepeatedItem!cor:String]"/>
+                    </Content>
+                  </Repeater>
+
+                </Children>
+              </Scroller>
+
+            </Children>
+          </ColorFill>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <!-- A UI that is key-interactive for demonstrating the Scroller. -->
+  <!-- It is what is used within the Repeater's Content for the     -->
+  <!-- list items.                                              -->
+  <UI Name="ListItem">
+    <Properties>
+      <cor:String Name="Description"
+                  String="null"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="Yellow"/>
+          <Set Target="[Label.Color]"
+               Value="Black"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <ColorFill Name="Background"
+                 Content="SlateGray"
+                 Padding="5,5,5,5"
+                 MouseInteractive="true">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+          <ColorFill Content="Aqua"
+                     MinimumSize="100,100"/>
+          <Text Name="Label"
+                Content="[Description]"
+                Color="White"
+                Font="Verdana,10"/>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+</Mcml>
+

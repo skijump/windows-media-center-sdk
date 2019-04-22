@@ -1,0 +1,9 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+  <UI Name="Default">
+    <Content>
+      <Text Content="This sample should be opened in the Preview Tool from the file system."
+            Color="White"
+            WordWrap="true" />
+    </Content>
+  </UI>
+</Mcml>

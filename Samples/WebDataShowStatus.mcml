@@ -1,0 +1,137 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:ctrl="http://retrosight.com/samples/windowsmediacentersdk/6/Controls.mcml"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:sys="assembly://System/System">
+
+  <!-- This sample demonstrates how to fetch various            -->
+  <!-- properties of XmlRemoteResource class. Most of them are  -->
+  <!-- read only. These values provide useful information       -->
+  <!-- for the request.                                         -->
+
+  <UI Name="Default">
+    
+    <Properties>
+      <!-- Construct Data Access Model Item -->
+      <da:RemoteResourceUri Name="RequestUri"/>
+      <da:XmlRemoteResource Name="MyResource">
+        <Mappings>
+          <da:XmlRemoteValue Name="Title"
+                             Source="/feed/title" />
+        </Mappings>
+      </da:XmlRemoteResource>
+    </Properties>
+
+    <Locals>
+      <!-- Resource URI-->
+      <EditableText Name="MyEditableText"
+                    Value="http://retrosight.com/samples/windowsmediacentersdk/6/WebDataResponseDocumentData01.xml"/>
+
+      <Command Name="RequestCommand"
+               Description="Request Data"/>
+      <Command Name="UpdateStatusCommand"
+               Description="Update Status"/>
+      <cor:Boolean Name="MyGetDataResult"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[RequestUri.FullString]"
+               Source="[MyEditableText.Value.ToString]" />
+      <Changed Source="[RequestCommand.Invoked]">
+        <Actions>
+          <!-- Invoke data request -->
+          <!-- Request Method is the default: GET -->
+          <Set Target="[MyResource.RequestUri]"
+               Value="[RequestUri]"/>
+          <Invoke Target="[MyResource.GetDataFromResource]"
+                  ResultTarget="[MyGetDataResult]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <!-- Update status data which do not fire property changed when they change-->
+      <Changed Source="[UpdateStatusCommand.Invoked]">
+        <Actions>
+          <Set Target="[RequestChanged.PropertyValue]"
+               Value="[MyResource.RequestChanged.ToString]"/>
+          <Set Target="[RequestComplete.PropertyValue]"
+               Value="[MyResource.RequestComplete.ToString]"/>
+          <Set Target="[RequestGeneration.PropertyValue]"
+               Value="[MyResource.RequestGeneration.ToString]"/>
+        </Actions>
+      </Changed>
+      <!-- Binding status data to view items -->
+      <Binding Target="[RequestFullString.PropertyValue]"
+               Source="[RequestUri.FullString]"/>
+      <Binding Target="[DefaultRequestMethod.PropertyValue]"
+               Source="[MyResource.DefaultRequestMethod]"/>
+      <Binding Target="[RequestMethod.PropertyValue]"
+               Source="[MyResource.RequestMethod]"/>
+      <Binding Target="[RequestChanged.PropertyValue]"
+               Source="[MyResource.RequestChanged.ToString]"/>
+      <Binding Target="[RequestComplete.PropertyValue]"
+               Source="[MyResource.RequestComplete.ToString]"/>
+      <Binding Target="[RequestGeneration.PropertyValue]"
+               Source="[MyResource.RequestGeneration.ToString]"/>
+      <Binding Target="[Status.PropertyValue]"
+               Source="[MyResource.Status.ToString]"/>
+      <Binding Target="[HasError.PropertyValue]"
+               Source="[MyResource.HasError.ToString]"/>
+      <Binding Target="[ResponseStatusCode.PropertyValue]"
+               Source="[MyResource.ResponseStatusCode.ToString]" />
+      <Binding Target="[ResponseStatusDescription.PropertyValue]"
+               Source="[MyResource.ResponseStatusDescription]"/>
+      <Binding Target="[GetDataFromResourceReturnedValue.PropertyValue]"
+               Source="[MyGetDataResult.ToString]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:Editbox EditableText="[MyEditableText]"
+                        LabelName="URI: "/>
+          <ctrl:Button Command="[RequestCommand]"
+                       ButtonLabel="[RequestCommand.Description]"/>
+          <!-- display status data -->
+          <ctrl:PropertyAndValue Name="RequestFullString"
+                                 PropertyName="RequestUri"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="DefaultRequestMethod"
+                                 PropertyName="DefaultRequestMethod"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="RequestMethod"
+                                 PropertyName="RequestMethod"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="Status"
+                                 PropertyName="Status"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="HasError"
+                                 PropertyName="HasError"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="ResponseStatusCode"
+                                 PropertyName="ResponseStatusCode"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="ResponseStatusDescription"
+                                 PropertyName="ResponseStatusDescription"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="GetDataFromResourceReturnedValue"
+                                 PropertyName="GetDataFromResource Returned Value"
+                                 PropertyValue=""/>
+          <ctrl:Button Command="[UpdateStatusCommand]"
+                       ButtonLabel="[UpdateStatusCommand.Description]"/>
+          <ctrl:PropertyAndValue Name="RequestChanged"
+                                 PropertyName="RequestChanged"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="RequestComplete"
+                                 PropertyName="RequestComplete"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="RequestGeneration"
+                                 PropertyName="RequestGeneration"
+                                 PropertyValue=""/>
+        </Children>
+      </Panel>
+    </Content>
+    
+  </UI>
+  
+</Mcml>

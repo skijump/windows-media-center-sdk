@@ -1,0 +1,93 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- IsType conditions are used in "expanded" rule syntax for        -->
+  <!-- adding type comparison to rules. A type is supplied to the      -->
+  <!-- condition which is used to determine if the specified Source    -->
+  <!-- represents that type.                                           -->
+
+  <!-- IsType checks if an object "is-a" type (where the type can be   -->
+  <!-- any type, including interfaces).                                -->
+
+  <!-- This example implements a "TypeChecker" UI which will display a -->
+  <!-- different message depending on what type of object that's       -->
+  <!-- passed into it.                                                 -->
+
+  <UI Name="IsTypeCondition">
+
+    <Content>
+
+      <!-- Pass a value into the type checker. Since "Value" is an -->
+      <!-- object-typed property, full property value syntax must  -->
+      <!-- be used so that the parser knows the type you want (in  -->
+      <!-- this case an integer).                                  -->
+      <me:TypeChecker>
+        <Value>
+          <cor:Int32 Int32="4"/>
+        </Value>
+      </me:TypeChecker>
+
+    </Content>
+
+  </UI>
+
+  <!-- TypeChecker: Displays a different message based on type. -->
+  <UI Name="TypeChecker">
+
+    <Properties>
+      <cor:Object Name="Value"
+                  Object="$Required"/>
+    </Properties>
+
+    <Rules>
+
+      <!-- Check for strings. -->
+      <Rule>
+        <Conditions>
+          <IsType Source="[Value]"
+                  Type="cor:String"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="IsType says it's a string!"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check for integers. -->
+      <Rule>
+        <Conditions>
+          <IsType Source="[Value]"
+                  Type="cor:Int32"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="IsType says it's an integer!"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check for floats. -->
+      <Rule>
+        <Conditions>
+          <IsType Source="[Value]"
+                  Type="cor:Single"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="IsType says it's a float!"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <Text Name="Label"
+            Color="SeaShell"
+            Font="Verdana,30"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

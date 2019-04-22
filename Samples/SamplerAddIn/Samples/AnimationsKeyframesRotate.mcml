@@ -1,0 +1,46 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to animate an item's rotation.          -->
+  <!-- We build an Animation object and add it to the item's Animations     -->
+  <!-- collection.  We populate that Animation object with two or more      -->
+  <!-- keyframes, starting at time "0.0".                                   -->
+  <UI Name="RotateKeyframe">
+
+    <Content>
+
+      <!-- The target of the animation... -->
+      <Graphic Name="MyGraphic"
+               Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+        <Animations>
+
+          <!-- Create an animation that will loop forever. -->
+          <Animation Loop="-1">
+            <Keyframes>
+
+              <!-- Start in the "neutral" rotation -->
+              <RotateKeyframe Time="0.0"
+                              Value="0deg;0,0,1"/>
+
+              <!-- Rotate to the left... -->
+              <RotateKeyframe Time="1.0"
+                              Value="-360deg;0,0,1"/>
+
+              <!-- Rotate to the right...  -->
+              <RotateKeyframe Time="3.0"
+                              Value="360deg;0,0,1"/>
+
+              <!-- Back to the "neutral" rotation  -->
+              <RotateKeyframe Time="4.0"
+                              Value="0deg;0,0,1"/>
+
+            </Keyframes>
+          </Animation>
+
+        </Animations>
+      </Graphic>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

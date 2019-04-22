@@ -1,0 +1,112 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:kfi="resx://Sampler/Sampler.Resources/InputKeyFocus">
+
+  <!-- Container focus sample                                                -->
+  <!-- There are two modes that you can specify to override the default      -->
+  <!-- focus behavior when entering a container - "RememberFocus" and        -->
+  <!-- "PreferFocusOrder".                                                   -->
+  <!-- "RememberFocus" indicates that this container should remember which   -->
+  <!-- descendant is focused; if you then leave that container and re-enter  -->
+  <!-- it, focus will go to the item that was previously focused (if it is   -->
+  <!-- still available).                                                     -->
+  <!-- "PreferFocusOrder" indicates that when navigating into this container -->
+  <!-- the navigation system should *always* treat it as a "default" type of -->
+  <!-- Navigation, preferring the item with the lowest focus order.          -->
+
+  <!-- The Main UI displays three rows of focusable items to demonstrate the -->
+  <!-- effects of these different modes.  The first row has neither set;     -->
+  <!-- navigating from the middle row to the top row will always move to the -->
+  <!-- nearest item.                                                         -->
+  <!-- The middle row is marked as "RememberFocus" moving from the top row   -->
+  <!-- to the middle should move to the nearest item the *first* time.  If   -->
+  <!-- you leave the middle row, it will remember which item was focused.    -->
+  <!-- If you then move back to it, focus will move to the previously        -->
+  <!-- focused item, even if it's not the closest one.                       -->
+  <!-- The bottom row is marked as "PreferFocusOrder".  Since the middle     -->
+  <!-- item in the row is marked with the lowest focus order, navigations    -->
+  <!-- into the bottom row will *always* go to that item, irregardless of    -->
+  <!-- where they originated from.                                           -->
+  <UI Name="Main">
+    <Content>
+      <ColorFill Content="Gray"
+                 Padding="10,10,10,10">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="15,0"
+                      ItemAlignment="Near"/>
+        </Layout>
+        <Children>
+
+          <!-- No focus behavior set - navigations always go to the nearest -->
+          <!-- item.  The "Row" UI should really be the one marking itself  -->
+          <!-- as Navigation="Row."  However, this syntax is intended to    -->
+          <!-- demonstrate that you can combine the navigation modes as     -->
+          <!-- necessary.                                                   -->
+          <Text WordWrap="true"
+                Font="Arial,22"
+                MaximumSize="760,0"
+                Content="Navigation into this row will always go to the nearest item."/>
+          <me:Row Navigation="Row"
+                  Margins="0,0,0,80"/>
+
+          <!-- Navigation="Row, RememberFocus"  This is a row that will     -->
+          <!-- also remember focus when leave and re-enter the container.   -->
+          <Text WordWrap="true"
+                Font="Arial,22"
+                MaximumSize="760,0"
+                Content="This row will remember the last item that had focus; if you leave it, focus will always go to that item when you re-enter."/>
+          <me:Row Navigation="Row, RememberFocus"
+                  Margins="0,0,0,80"/>
+
+          <!-- Navigation="Row, PreferFocusOrder" Default focus will always -->
+          <!-- go to the child with the lowest focus order within the       -->
+          <!-- when entering.                                               -->
+          <Text WordWrap="true"
+                Font="Arial,22"
+                Content="Navigation into this row will always go to the center item."/>
+          <me:Row Navigation="Row, PreferFocusOrder"/>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- The "Row" UI displays a row of focusable items, applying a focus   -->
+  <!-- order to the middle item in the group.  It really doesn't do much, -->
+  <!-- all of the work is done above.                                     -->
+  <UI Name="Row">
+
+    <Locals>
+      <Size Name="MinimumTileSize"
+            Size="100, 40"/>
+    </Locals>
+    <Content>
+
+      <ColorFill Content="AliceBlue"
+                 Padding="10,10,10,10">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      Spacing="3,0"/>
+        </Layout>
+        <Children>
+          <kfi:KeyFocusIndicator MinimumTileSize="[MinimumTileSize]"/>
+          <kfi:KeyFocusIndicator MinimumTileSize="[MinimumTileSize]"/>
+          <kfi:KeyFocusIndicator MinimumTileSize="[MinimumTileSize]"/>
+
+          <!-- Note that this item has a focus order - this means that it -->
+          <!-- will get default focus when necessary.                     -->
+          <kfi:KeyFocusIndicator FocusOrder="1"
+                                 MinimumTileSize="[MinimumTileSize]"/>
+
+          <kfi:KeyFocusIndicator MinimumTileSize="[MinimumTileSize]"/>
+          <kfi:KeyFocusIndicator MinimumTileSize="[MinimumTileSize]"/>
+          <kfi:KeyFocusIndicator MinimumTileSize="[MinimumTileSize]"/>
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+
+</Mcml>

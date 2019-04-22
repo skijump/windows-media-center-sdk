@@ -1,0 +1,51 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Binding rules are used to track changes to a Source value and   -->
+  <!-- transfer the value to a Target.                                 -->
+
+  <!-- If the Source does not fire property change notifications, then -->
+  <!-- the value is only bound at UI creation time. Otherwise,         -->
+  <!-- whenever the Source changes, the Target will be updated.        -->
+
+  <!-- This UI will create several child UIs. These child UIs show     -->
+  <!-- how the Binding rule works.                                     -->
+  <UI Name="Binding">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:ValueDisplayer Value="4"/>
+          <me:ValueDisplayer Value="8"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="ValueDisplayer">
+
+    <!-- UI "Value" property. -->
+    <Properties>
+      <cor:Int32 Name="Value"/>
+    </Properties>
+
+    <Rules>
+
+      <!-- Bind property value to label. If the Value property changes -->
+      <!-- (via a parent UI hosting this UI) it will automatially be   -->
+      <!-- reflected in the Text.                                      -->
+      <Binding Source="[Value.ToString]"
+               Target="[Label.Content]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Text Name="Label"
+            Color="Moccasin"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

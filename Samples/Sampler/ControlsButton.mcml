@@ -1,0 +1,130 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:me="Me">
+
+  <UI Name="ButtonTest">
+    <Locals>
+      <Command Name="MyCommand"
+               Description="My Test Button" />
+    </Locals>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:Button Command="[MyCommand]"
+                     ButtonLabel="Button1" />
+          <me:Button Command="[MyCommand]"
+                     ButtonLabel="Button2"/>
+          <me:Button Command="[MyCommand]"
+                     ButtonLabel="Button3"/>
+          <me:Button Command="[MyCommand]"
+                     ButtonLabel="Button4"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="Button">
+
+    <Properties>
+      <ICommand Name="Command"
+                ICommand="$Required" />
+      <cor:String Name="ButtonLabel"
+                  String="Test" />
+      <Color Name="LabelFocusedColor"
+             Color="White" />
+      <Color Name="LabelPressedColor"
+             Color="Green" />
+      <Font Name="LabelFont"
+            Font="Calibri,16" />
+      <Size Name="ButtonMinimumSize"
+            Size="300,30"/>
+      <Size Name="ButtonMaximumSize"
+            Size="300,30"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[ButtonLabel]"
+               Target="[Label.Content]"/>
+      <Binding Source="[Command]"
+               Target="[Clicker.Command]"/>
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Color]"
+               Value="[LabelPressedColor]"/>
+        </Actions>
+      </Condition>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="false">
+        <Actions>
+          <Set Target="[Label.Alpha]"
+               Value="0.5" />
+        </Actions>
+      </Condition>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Color]"
+               Value="[LabelFocusedColor]"/>
+          <Set Target="[Label.Alpha]"
+               Value="1.0" />
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <Panel Name="Background"
+             Margins="2,2,2,2"
+             MinimumSize="[ButtonMinimumSize]"
+             MaximumSize="[ButtonMaximumSize]">
+        <Animations>
+          <Animation Animation="animation://me:Focus"/>
+          <Animation Animation="animation://me:NoFocus"/>
+        </Animations>
+        <Children>
+          <Text Name="Label"
+                Color="[LabelFocusedColor]"
+                Font="[LabelFont]">
+          </Text>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <Animation Name="Focus"
+             Loop="0"
+             CenterPointPercent="0,0.5,1.0"
+             Type="GainFocus">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     Value="1,1,1"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+      <ScaleKeyframe Time="0.1"
+                     Value="1.1,1.1,1"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="NoFocus"
+             Loop="0"
+             CenterPointPercent="0,0.5,1.0"
+             Type="LoseFocus">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+      <ScaleKeyframe Time="0.04"
+                     Value="1,1,1"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>
+

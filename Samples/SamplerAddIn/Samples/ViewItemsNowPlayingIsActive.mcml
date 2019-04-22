@@ -1,0 +1,115 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- Test the IsActive Property of the NowPlaying View Item 
+       IsActive is True when the viewitem is visible and False
+       when it is not visible.
+       Also test multiple NowPlaying view items. -->
+
+  <UI Name="MultiPiP">
+    <Locals>
+      <FormatTransformer Name="Transformer"
+                         Format="{0}"/>
+      <BooleanTransformer Inverse="true"
+                          Name="BooleanTransformer"/>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <!-- Rules to control the Visible/Active button to swap the active PiP window-->
+    <Rules>
+      <Rule>
+        <Conditions>
+          <Modified Source="[Clicker.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[PiP1.Visible]"
+               Value="[PiP1.Visible]"
+               Transformer="[BooleanTransformer]"/>
+          <Set Target="[PiP2.Visible]"
+               Value="[PiP2.Visible]"
+               Transformer="[BooleanTransformer]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Display current status on the page -->
+      <Binding Source="[PiP1.IsActive]"
+               Target="[IsPiP1Active.Content]"
+               Transformer="[Transformer]"/>
+      <Binding Source="[PiP2.IsActive]"
+               Target="[IsPiP2Active.Content]"
+               Transformer="[Transformer]"/>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Dock">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <DockLayoutInput  Alignment="Center"
+                                Position="Top"/>
+            </LayoutInput>
+            <Children>
+              <Text Name="Button"
+                    Content="Toggle Active PiP"
+                    Color="Yellow"
+                    BackColor="Blue"
+                    MouseInteractive="true"
+                    Margins="0,0,0,25"/>
+
+              <Panel Layout="HorizontalFlow"
+                     Margins="0,30,0,0">
+                <Children>
+                  <Text Content="Is Pip1 Active = "
+                        Color="Yellow"/>
+                  <Text Name="IsPiP1Active"
+                        Color="Yellow"/>
+                </Children>
+              </Panel>
+
+              <Panel Layout="HorizontalFlow"
+                     Margins="0,30,0,0">
+                <Children>
+                  <Text Content="Is Pip2 Active = "
+                        Color="Yellow"/>
+                  <Text Name="IsPiP2Active"
+                        Color="Yellow"/>
+                </Children>
+              </Panel>
+            </Children>
+          </Panel>
+
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <!-- PiP 1 Will always show Metadata-->
+              <NowPlaying Name="PiP1"
+                          ShowFullMetadata="Always"
+                          MinimumSize="500,350"
+                          Visible="true">
+                <LayoutInput>
+                  <DockLayoutInput Alignment="Near"
+                                   Position="Bottom"/>
+                </LayoutInput>
+              </NowPlaying>
+
+              <!-- PiP 2 Will show Metadata on when focused-->
+              <NowPlaying Name="PiP2"
+                          ShowFullMetadata="OnFocus"
+                          MinimumSize="500,350"
+                          Visible="false">
+                <LayoutInput>
+                  <DockLayoutInput Alignment="Far"
+                                   Position="Bottom"/>
+                </LayoutInput>
+              </NowPlaying>
+
+            </Children>
+          </Panel>
+
+        </Children>
+
+      </Panel>
+    </Content>
+
+  </UI>
+</Mcml>

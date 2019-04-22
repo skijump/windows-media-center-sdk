@@ -1,0 +1,439 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <UI Name="Background">
+    <Content>
+      <Graphic Content="resx://Z/Z.Resources/Background"
+               Layout="Fill">
+        <Children>
+
+          <Graphic Content="resx://Z/Z.Resources/BackgroundItem1">
+            <Animations>
+
+              <Animation Loop="-1"
+                         CenterPointPercent=".5,.5,.5">
+                <Keyframes>
+                  <AlphaKeyframe Time="0"
+                                 Value="0"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <AlphaKeyframe Time="7.5"
+                                 Value=".3"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <AlphaKeyframe Time="15"
+                                 Value="0"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+
+                  <RotateKeyframe Time="0"
+                                  Value="0deg;.5,.5,.5"
+                                  Interpolation="Bezier"
+                                  RelativeTo="Current"/>
+                  <RotateKeyframe Time="60"
+                                  Value="360deg;.5,.5,.5"
+                                  Interpolation="Bezier"
+                                  RelativeTo="Current"/>
+
+                  <ScaleKeyframe Time="0"
+                                 Value="1,1,1"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <ScaleKeyframe Time="15"
+                                 Value=".5,.5,.5"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <ScaleKeyframe Time="30"
+                                 Value="1,1,1"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <ScaleKeyframe Time="45"
+                                 Value="2.0,2.0,2.0"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <ScaleKeyframe Time="60"
+                                 Value="1,1,1"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+
+                  <PositionKeyframe Time="0"
+                                    Value="0,0,0"
+                                    Interpolation="Bezier"
+                                    RelativeTo="Current"/>
+                  <PositionKeyframe Time="30"
+                                    Value="600,600,600"
+                                    Interpolation="Bezier"
+                                    RelativeTo="Current"/>
+                  <PositionKeyframe Time="60"
+                                    Value="-600,-600,-600"
+                                    Interpolation="Bezier"
+                                    RelativeTo="Current"/>
+                </Keyframes>
+              </Animation>
+
+            </Animations>
+          </Graphic>
+
+          <Graphic Content="resx://Z/Z.Resources/BackgroundItem2">
+            <Animations>
+
+              <Animation Loop="-1"
+                         CenterPointPercent=".5,.5,.5">
+                <Keyframes>
+                  <AlphaKeyframe Time="0"
+                                 Value="0"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <AlphaKeyframe Time="6"
+                                 Value=".6"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <AlphaKeyframe Time="15"
+                                 Value="0"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+
+                  <RotateKeyframe Time="0"
+                                  Value="0deg;.5,.5,.5"
+                                  Interpolation="Bezier"
+                                  RelativeTo="Current"/>
+                  <RotateKeyframe Time="60"
+                                  Value="360deg;.5,.5,.5"
+                                  Interpolation="Bezier"
+                                  RelativeTo="Current"/>
+
+                  <ScaleKeyframe Time="0"
+                                 Value="1,1,1"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <ScaleKeyframe Time="15"
+                                 Value=".5,.5,.5"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <ScaleKeyframe Time="30"
+                                 Value="1,1,1"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <ScaleKeyframe Time="45"
+                                 Value="2.0,2.0,2.0"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+                  <ScaleKeyframe Time="60"
+                                 Value="1,1,1"
+                                 Interpolation="Bezier"
+                                 RelativeTo="Current"/>
+
+                  <PositionKeyframe Time="0"
+                                    Value="0,0,0"
+                                    Interpolation="Bezier"
+                                    RelativeTo="Current"/>
+                  <PositionKeyframe Time="30"
+                                    Value="-600,-600,0"
+                                    Interpolation="Bezier"
+                                    RelativeTo="Current"/>
+                  <PositionKeyframe Time="60"
+                                    Value="600,600,0"
+                                    Interpolation="Bezier"
+                                    RelativeTo="Current"/>
+                </Keyframes>
+              </Animation>
+
+            </Animations>
+          </Graphic>
+
+          <Panel Layout="Form">
+            <Children>
+
+              <Graphic Content="resx://Z/Z.Resources/BackgroundItem1">
+                <Animations>
+
+                  <Animation Loop="-1"
+                             CenterPointPercent=".5,.5,.5">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="8"
+                                     Value=".3"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="10"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+
+                      <RotateKeyframe Time="0"
+                                      Value="0deg;.5,.5,.5"
+                                      Interpolation="Bezier"
+                                      RelativeTo="Current"/>
+                      <RotateKeyframe Time="30"
+                                      Value="360deg;.5,.5,.5"
+                                      Interpolation="Bezier"
+                                      RelativeTo="Current"/>
+
+                      <ScaleKeyframe Time="0"
+                                     Value=".5,.5,.5"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="15"
+                                     Value="1.5,1.5,1.5"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="30"
+                                     Value="1,1,1"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="45"
+                                     Value="3.0,3.0,3.0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="60"
+                                     Value="1,1,1"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+
+                      <PositionKeyframe Time="0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="30"
+                                        Value="-400,200,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="60"
+                                        Value="400,-200,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+              </Graphic>
+
+              <Graphic Content="resx://Z/Z.Resources/BackgroundItem1">
+                <Animations>
+
+                  <Animation Loop="-1"
+                             CenterPointPercent=".5,.5,.5">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="2"
+                                     Value=".3"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="10"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+
+                      <RotateKeyframe Time="0"
+                                      Value="0deg;.5,.5,.5"
+                                      Interpolation="Bezier"
+                                      RelativeTo="Current"/>
+                      <RotateKeyframe Time="45"
+                                      Value="-360deg;.5,.5,.5"
+                                      Interpolation="Bezier"
+                                      RelativeTo="Current"/>
+
+                      <ScaleKeyframe Time="0"
+                                     Value="1,1,1"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="10"
+                                     Value="3,3,3"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="20"
+                                     Value="1,1,1"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="30"
+                                     Value="2.0,2.0,2.0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="40"
+                                     Value="1,1,1"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+
+                      <PositionKeyframe Time="0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="30"
+                                        Value="400,-200,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="60"
+                                        Value="-400,200,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+              </Graphic>
+
+              <Graphic Content="resx://Z/Z.Resources/BackgroundItem1">
+                <Animations>
+
+                  <Animation Loop="-1"
+                             CenterPointPercent=".5,.5,.5">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="30"
+                                     Value=".3"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="45"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="60"
+                                     Value=".3"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="65"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+
+                      <RotateKeyframe Time="0"
+                                      Value="0deg;.5,.5,.5"
+                                      Interpolation="Bezier"
+                                      RelativeTo="Current"/>
+                      <RotateKeyframe Time="65"
+                                      Value="-360deg;.5,.5,.5"
+                                      Interpolation="Bezier"
+                                      RelativeTo="Current"/>
+
+                      <ScaleKeyframe Time="0"
+                                     Value="1,1,1"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="20"
+                                     Value="3,3,3"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="40"
+                                     Value="2,2,2"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="65"
+                                     Value="3,3,3"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+
+                      <PositionKeyframe Time="0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="35"
+                                        Value="-300,-300,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="65"
+                                        Value="300,300,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+              </Graphic>
+
+              <Graphic Content="resx://Z/Z.Resources/BackgroundItem2">
+                <Animations>
+
+                  <Animation Loop="-1"
+                             CenterPointPercent=".5,.5,.5">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="5"
+                                     Value=".4"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="10"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="15"
+                                     Value=".3"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="55"
+                                     Value=".8"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <AlphaKeyframe Time="60"
+                                     Value="0"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+
+                      <ScaleKeyframe Time="0"
+                                     Value="1,1,1"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="10"
+                                     Value="3,3,3"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+                      <ScaleKeyframe Time="20"
+                                     Value="1,1,1"
+                                     Interpolation="Bezier"
+                                     RelativeTo="Current"/>
+
+                      <PositionKeyframe Time="0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="20"
+                                        Value="800,800,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="40"
+                                        Value="-800,800,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="50"
+                                        Value="-800,-800,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="60"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier"
+                                        RelativeTo="Current"/>
+
+                      <RotateKeyframe Time="0"
+                                      Value="0deg;.5,.5,.5"
+                                      Interpolation="Bezier"
+                                      RelativeTo="Current"/>
+                      <RotateKeyframe Time="60"
+                                      Value="-360deg;.5,.5,.5"
+                                      Interpolation="Bezier"
+                                      RelativeTo="Current"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+              </Graphic>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+</Mcml>

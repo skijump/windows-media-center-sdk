@@ -1,0 +1,525 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- A Section is one of the main Columns in the UI.-->
+  <!-- Sections have three primary states: Expanded, Standard and Disabled -->
+
+  <!-- We Reuse the following LayoutInputs -->
+  <FormLayoutInput Name="LeftLayoutInput"
+                   Left="Parent,0,100"
+                   Right="Parent,0,200"
+                   Top="Parent,0,0"
+                   Bottom="Parent,1,0"
+                   Vertical="Center"
+                   Horizontal="Center"/>
+  <FormLayoutInput Name="CenterLayoutInput"
+                   Left="Parent,0,300"
+                   Right="Parent,1,-300"
+                   Top="Parent,0,0"
+                   Bottom="Parent,1,0"
+                   Vertical="Center"
+                   Horizontal="Center"/>
+  <FormLayoutInput Name="RightLayoutInput"
+                   Left="Parent,1,-200"
+                   Right="Parent,1,100"
+                   Top="Parent,0,0"
+                   Bottom="Parent,1,0"
+                   Vertical="Center"
+                   Horizontal="Center"/>
+
+  <FormLayoutInput Name="RightOffLayoutInput"
+                   Left="Parent,1,100"
+                   Right="Parent,1,200"
+                   Top="Parent,0,0"
+                   Bottom="Parent,1,0"
+                   Vertical="Center"
+                   Horizontal="Center"
+                   ContributesToWidth="false" />
+  <FormLayoutInput Name="LeftOffLayoutInput"
+                   Left="Parent,0,-200"
+                   Right="Parent,0,-100"
+                   Top="Parent,0,0"
+                   Bottom="Parent,1,0"
+                   Vertical="Center"
+                   Horizontal="Center"
+                   ContributesToWidth="false" />
+
+
+  <!-- Below are descriptions of Positions -->
+  <!-- Each Position has a LayoutInput as well an Index that describes which State this Position would like -->
+  <!-- for the UI to change to so that it may be featured -->
+  <!-- These positions resolve to look like this: -->
+  <!-- Position Definitions: 0 | 1 2 3 | 4 5 -->
+
+  <PropertySet Name="Position_0">
+    <Entries>
+      <cor:Int32 Name="ExpandedStateOffset"
+                 Int32="-2" />
+      <cor:Boolean Name="Visible"
+                   Boolean="false" />
+      <cor:Boolean Name="IsExpanded"
+                   Boolean="false" />
+      <FormLayoutInput Name="LayoutInput"
+                       FormLayoutInput="global://me:LeftOffLayoutInput" />
+    </Entries>
+  </PropertySet>
+  <PropertySet Name="Position_1">
+    <Entries>
+      <cor:Int32 Name="ExpandedStateOffset"
+                 Int32="-1" />
+      <cor:Boolean Name="Visible"
+                   Boolean="true" />
+      <cor:Boolean Name="IsExpanded"
+                   Boolean="false" />
+      <FormLayoutInput Name="LayoutInput"
+                       FormLayoutInput="global://me:LeftLayoutInput" />
+    </Entries>
+  </PropertySet>
+  <PropertySet Name="Position_2">
+    <Entries>
+      <cor:Int32 Name="ExpandedStateOffset"
+                 Int32="0" />
+      <cor:Boolean Name="Visible"
+                   Boolean="true" />
+      <cor:Boolean Name="IsExpanded"
+                   Boolean="true" />
+      <FormLayoutInput Name="LayoutInput"
+                       FormLayoutInput="global://me:CenterLayoutInput" />
+    </Entries>
+  </PropertySet>
+  <PropertySet Name="Position_3">
+    <Entries>
+      <cor:Int32 Name="ExpandedStateOffset"
+                 Int32="1" />
+      <cor:Boolean Name="Visible"
+                   Boolean="true" />
+      <cor:Boolean Name="IsExpanded"
+                   Boolean="false" />
+      <FormLayoutInput Name="LayoutInput"
+                       FormLayoutInput="global://me:RightLayoutInput" />
+    </Entries>
+  </PropertySet>
+  <PropertySet Name="Position_4">
+    <Entries>
+      <cor:Int32 Name="ExpandedStateOffset"
+                 Int32="2" />
+      <cor:Boolean Name="Visible"
+                   Boolean="false" />
+      <cor:Boolean Name="IsExpanded"
+                   Boolean="false" />
+      <FormLayoutInput Name="LayoutInput"
+                       FormLayoutInput="global://me:RightOffLayoutInput" />
+    </Entries>
+  </PropertySet>
+  <PropertySet Name="Position_5">
+    <Entries>
+      <cor:Int32 Name="ExpandedStateOffset"
+                 Int32="3" />
+      <cor:Boolean Name="Visible"
+                   Boolean="false" />
+      <cor:Boolean Name="IsExpanded"
+                   Boolean="false" />
+      <FormLayoutInput Name="LayoutInput"
+                       FormLayoutInput="global://me:RightOffLayoutInput" />
+    </Entries>
+  </PropertySet>
+
+
+
+
+  <UI Name="SectionManager">
+    <Properties>
+      <!-- MenuStates is a Choice that describes All of the Layout positions and states of -->
+      <!-- all sections for a given time.  Only one set of Section Positions can be selected at a-->
+      <!-- time.  Each SectionPosition Option contains a Propertyset that is named for a specific -->
+      <!-- section.  That propertyset contains a fixed set of properties describing the state of -->
+      <!-- the targeted section -->
+      <Choice Name="MenuStates"
+              Wrap="true">
+        <Options>
+          <!-- Position Definitions: 0 | 1 2 3 | 4 5  -->
+          <!-- State Definition:     0 | 1 2 0'| 1' 2' -->
+          <PropertySet>
+            <Entries>
+              <PropertySet Name="Section0a"
+                           PropertySet="global://me:Position_0" />
+              <PropertySet Name="Section1a"
+                           PropertySet="global://me:Position_1"  />
+              <PropertySet Name="Section2a"
+                           PropertySet="global://me:Position_2"  />
+              <PropertySet Name="Section0b"
+                           PropertySet="global://me:Position_3"  />
+              <PropertySet Name="Section1b"
+                           PropertySet="global://me:Position_4"  />
+              <PropertySet Name="Section2b"
+                           PropertySet="global://me:Position_5"  />
+            </Entries>
+          </PropertySet>
+          <!-- Position Definitions: 0 | 1 2 3 | 4 5  -->
+          <!-- State Definition:     1 | 2 0'1'| 2' 0 -->
+          <PropertySet>
+            <Entries>
+              <PropertySet Name="Section0a"
+                           PropertySet="global://me:Position_5" />
+              <PropertySet Name="Section1a"
+                           PropertySet="global://me:Position_0"  />
+              <PropertySet Name="Section2a"
+                           PropertySet="global://me:Position_1"  />
+              <PropertySet Name="Section0b"
+                           PropertySet="global://me:Position_2"  />
+              <PropertySet Name="Section1b"
+                           PropertySet="global://me:Position_3"  />
+              <PropertySet Name="Section2b"
+                           PropertySet="global://me:Position_4"  />
+            </Entries>
+          </PropertySet>
+          <!-- Position Definitions: 0 | 1 2 3 | 4 5  -->
+          <!-- State Definition:     2 | 0'1'2'| 0 1 -->
+          <PropertySet>
+            <Entries>
+              <PropertySet Name="Section0a"
+                           PropertySet="global://me:Position_4" />
+              <PropertySet Name="Section1a"
+                           PropertySet="global://me:Position_5"  />
+              <PropertySet Name="Section2a"
+                           PropertySet="global://me:Position_0"  />
+              <PropertySet Name="Section0b"
+                           PropertySet="global://me:Position_1"  />
+              <PropertySet Name="Section1b"
+                           PropertySet="global://me:Position_2"  />
+              <PropertySet Name="Section2b"
+                           PropertySet="global://me:Position_3"  />
+            </Entries>
+          </PropertySet>
+          <!-- Position Definitions: 0 | 1 2 3 | 4 5  -->
+          <!-- State Definition:     0'| 1'2'0 | 1 2 -->
+          <PropertySet>
+            <Entries>
+              <PropertySet Name="Section0a"
+                           PropertySet="global://me:Position_3" />
+              <PropertySet Name="Section1a"
+                           PropertySet="global://me:Position_4"  />
+              <PropertySet Name="Section2a"
+                           PropertySet="global://me:Position_5"  />
+              <PropertySet Name="Section0b"
+                           PropertySet="global://me:Position_0"  />
+              <PropertySet Name="Section1b"
+                           PropertySet="global://me:Position_1"  />
+              <PropertySet Name="Section2b"
+                           PropertySet="global://me:Position_2"  />
+            </Entries>
+          </PropertySet>
+
+
+          <!-- Position Definitions: 0 | 1 2 3 | 4 5  -->
+          <!-- State Definition:     1'| 2'0 1 | 2 0' -->
+          <PropertySet>
+            <Entries>
+              <PropertySet Name="Section0a"
+                           PropertySet="global://me:Position_2" />
+              <PropertySet Name="Section1a"
+                           PropertySet="global://me:Position_3"  />
+              <PropertySet Name="Section2a"
+                           PropertySet="global://me:Position_4"  />
+              <PropertySet Name="Section0b"
+                           PropertySet="global://me:Position_5"  />
+              <PropertySet Name="Section1b"
+                           PropertySet="global://me:Position_0"  />
+              <PropertySet Name="Section2b"
+                           PropertySet="global://me:Position_1"  />
+            </Entries>
+          </PropertySet>
+          <!-- Position Definitions: 0 | 1 2 3 | 4 5 -->
+          <!-- State Definition:    2' | 0 1 2 | 0' 1' -->
+          <PropertySet>
+            <Entries>
+              <PropertySet Name="Section0a"
+                           PropertySet="global://me:Position_1" />
+              <PropertySet Name="Section1a"
+                           PropertySet="global://me:Position_2"  />
+              <PropertySet Name="Section2a"
+                           PropertySet="global://me:Position_3"  />
+              <PropertySet Name="Section0b"
+                           PropertySet="global://me:Position_4"  />
+              <PropertySet Name="Section1b"
+                           PropertySet="global://me:Position_5"  />
+              <PropertySet Name="Section2b"
+                           PropertySet="global://me:Position_0"  />
+            </Entries>
+          </PropertySet>
+        </Options>
+      </Choice>
+    </Properties>
+    <Rules>
+      <Binding Target="[Section0a.Position]"
+               Source="[MenuStates.Chosen!PropertySet.#Section0a!PropertySet]"/>
+      <Binding Target="[Section1a.Position]"
+               Source="[MenuStates.Chosen!PropertySet.#Section1a!PropertySet]"/>
+      <Binding Target="[Section2a.Position]"
+               Source="[MenuStates.Chosen!PropertySet.#Section2a!PropertySet]"/>
+
+
+      <Binding Target="[Section0b.Position]"
+               Source="[MenuStates.Chosen!PropertySet.#Section0b!PropertySet]"/>
+      <Binding Target="[Section1b.Position]"
+               Source="[MenuStates.Chosen!PropertySet.#Section1b!PropertySet]"/>
+      <Binding Target="[Section2b.Position]"
+               Source="[MenuStates.Chosen!PropertySet.#Section2b!PropertySet]"/>
+    </Rules>
+    <Content>
+      <Panel>
+        <Children>
+          <!-- Here is the legend which will tell you what you are looking at -->
+          <!-- when you load the sample. -->
+          <Text Name="Legend"
+                Font="Calibri,14"
+                Color="White"
+                Content="White=Focus | Blue=Standard Panel | Green=Expansion Panel" />
+          <me:SectionHost Name="Section0a"
+                          States="[MenuStates]"
+                          Position="[MenuStates.Chosen!PropertySet.#Section0a!PropertySet]"/>
+          <me:SectionHost Name="Section1a"
+                          States="[MenuStates]"
+                          Position="[MenuStates.Chosen!PropertySet.#Section1a!PropertySet]"/>
+          <me:SectionHost Name="Section2a"
+                          States="[MenuStates]"
+                          Position="[MenuStates.Chosen!PropertySet.#Section2a!PropertySet]"/>
+
+          <me:SectionHost Name="Section0b"
+                          States="[MenuStates]"
+                          Position="[MenuStates.Chosen!PropertySet.#Section0b!PropertySet]"/>
+          <me:SectionHost Name="Section1b"
+                          States="[MenuStates]"
+                          Position="[MenuStates.Chosen!PropertySet.#Section1b!PropertySet]"/>
+          <me:SectionHost Name="Section2b"
+                          States="[MenuStates]"
+                          Position="[MenuStates.Chosen!PropertySet.#Section2b!PropertySet]"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+
+  <!-- The Base UI for a Section, This handles State Management -->
+  <UI Name="SectionHost">
+    <Properties>
+      <PropertySet Name="Position"
+                   PropertySet="$Required" />
+      <Choice Name="States"
+              Choice="$Required" />
+      <Color Name="Content"
+             Color="White" />
+    </Properties>
+    <Locals>
+      <MathTransformer Name="Adder" />
+    </Locals>
+
+    <Rules>
+      <Binding Target="[Section.LayoutInput]"
+               Source="[Position.#LayoutInput!FormLayoutInput]" />
+      <Rule>
+        <Conditions>
+          <Equality Source="[Input.DeepKeyFocus]"
+                    Value="true" />
+          <Equality Source="[Position.#ExpandedStateOffset!cor:Int32]"
+                    ConditionOp="GreaterThan"
+                    Value="0" />
+        </Conditions>
+        <Actions>
+          <Invoke Target="[States.NextValue]" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Input.DeepKeyFocus]"
+                    Value="true" />
+          <Equality Source="[Position.#ExpandedStateOffset!cor:Int32]"
+                    ConditionOp="LessThan"
+                    Value="0" />
+        </Conditions>
+        <Actions>
+          <Invoke Target="[States.PreviousValue]" />
+        </Actions>
+      </Rule>
+
+      <Binding Target="[Section.IsExpanded]"
+               Source="[Position.#IsExpanded!cor:Boolean]" />
+      <Binding Target="[Section.IsVisible]"
+               Source="[Position.#Visible!cor:Boolean]" />
+
+      <Default Target="[Section.Source]"
+               Value="me:Section1" />
+
+    </Rules>
+
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <me:SectionBase Name="Section">
+            <Animations>
+              <Animation Type="Size">
+                <Keyframes>
+                  <SizeKeyframe Time="0.0"
+                                RelativeTo="Current" />
+                  <SizeKeyframe Time="0.5"
+                                RelativeTo="Final" />
+                </Keyframes>
+              </Animation>
+              <Animation Type="Move">
+                <Keyframes>
+                  <PositionKeyframe Time="0.0"
+                                    RelativeTo="Current" />
+                  <PositionKeyframe Time="0.5"
+                                    RelativeTo="Final" />
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </me:SectionBase>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+
+  <UI Name="SectionBase">
+    <Properties>
+      <cor:Boolean Name="IsExpanded"
+                   Boolean="false" />
+      <cor:Boolean Name="IsVisible"
+                   Boolean="false" />
+    </Properties>
+    <Rules>
+      <Default Target="[Input.KeyFocusOnMouseEnter]"
+               Value="false" />
+    </Rules>
+  </UI>
+
+
+  <UI Name="Section1"
+      BaseUI="me:SectionBase">
+    <Rules>
+      <Condition Source="[IsExpanded]"
+                 SourceValue="true"
+                 Target="[ExpandedMenu.Visible]"
+                 Value="true" />
+      <Default Target="[ExpandedMenu.Visible]"
+               Value="false" />
+
+      <Condition Source="[IsVisible]"
+                 SourceValue="true"
+                 Target="[Root.Alpha]"
+                 Value="1" />
+      <Condition Source="[IsVisible]"
+                 SourceValue="true"
+                 Target="[Input.Enabled]"
+                 Value="true" />
+      <Default Target="[Root.Alpha]"
+               Value="0" />
+      <Default Target="[Input.Enabled]"
+               Value="false" />
+
+    </Rules>
+    <Content>
+      <ColorFill Content="Blue"
+                 Name="Root"
+                 Layout="HorizontalFlow">
+        <Animations>
+          <Animation Type="Alpha">
+            <Keyframes>
+              <AlphaKeyframe Time="0.0"
+                             RelativeTo="Current" />
+              <AlphaKeyframe Time="0.5"
+                             RelativeTo="Final" />
+            </Keyframes>
+          </Animation>
+        </Animations>
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <me:Button Text="Button S a" />
+              <me:Button Text="Button S b" />
+              <me:Button Text="Button S c" />
+              <me:Button Text="Button S d" />
+              <me:Button Text="Button S e" />
+            </Children>
+          </Panel>
+          <ColorFill Content="Green"
+                     Name="ExpandedMenu"
+                     Layout="VerticalFlow" >
+            <Animations>
+              <Animation Type="Hide">
+                <Keyframes>
+                  <AlphaKeyframe Time="0.0"
+                                 RelativeTo="Current" />
+                  <AlphaKeyframe Time="0.5"
+                                 Value="0"
+                                 RelativeTo="Absolute" />
+
+                  <PositionKeyframe Time="0.0"
+                                    Value="0,0,0"
+                                    RelativeTo="Final" />
+                  <PositionKeyframe Time="0.5"
+                                    Value="-200,0,0"
+                                    RelativeTo="Final" />
+                </Keyframes>
+              </Animation>
+              <Animation Type="Show">
+                <Keyframes>
+                  <AlphaKeyframe Time="0.0"
+                                 RelativeTo="Current" />
+                  <AlphaKeyframe Time="0.5"
+                                 Value="1"
+                                 RelativeTo="Absolute" />
+
+                  <PositionKeyframe Time="0.0"
+                                    Value="-200,0,0"
+                                    RelativeTo="Final" />
+                  <PositionKeyframe Time="0.5"
+                                    Value="0,0,0"
+                                    RelativeTo="Final" />
+                </Keyframes>
+              </Animation>
+            </Animations>
+            <Children>
+              <me:Button Text="Button E a" />
+              <me:Button Text="Button E b" />
+              <me:Button Text="Button E c" />
+              <me:Button Text="Button E d" />
+              <me:Button Text="Button E e" />
+            </Children>
+          </ColorFill>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <UI Name="Button">
+    <Properties>
+      <cor:String Name="Text"
+                  String="$Required" />
+    </Properties>
+    <Locals>
+      <ClickHandler Name="Clicker" />
+    </Locals>
+    <Rules>
+      <Default Target="[Input.KeyFocusOnMouseEnter]"
+               Value="false" />
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Root.Content]"
+                 Value="White" />
+    </Rules>
+    <Content>
+      <ColorFill Name="Root"
+                 Content="Transparent">
+        <Children>
+          <Text Content="[Text]" />
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+</Mcml>

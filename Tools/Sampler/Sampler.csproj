@@ -1,0 +1,449 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0CA2E4B8-3666-447E-8A71-49D47B777B5A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sampler</RootNamespace>
+    <AssemblyName>Sampler</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <AssemblyOriginatorKeyFile>test.snk</AssemblyOriginatorKeyFile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <FullyQualifiedOutputPath>$(MSBuildProjectDirectory)\bin\Debug</FullyQualifiedOutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <FullyQualifiedOutputPath>$(MSBuildProjectDirectory)\bin\Release</FullyQualifiedOutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <StartWorkingDirectory>$(windir)\eHome</StartWorkingDirectory>
+    <StartArguments>-load:"resx://Sampler/Sampler.Resources/Default" -assemblyredirect:"$(FullyQualifiedOutputPath)" -markupredirect:"resx://Sampler/Sampler.Resources/,file://$(MSBuildProjectDirectory)\Markup\,.mcml"</StartArguments>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(windir)\eHome\McmlPad.exe</StartProgram>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.MediaCenter" />
+    <Reference Include="Microsoft.MediaCenter.UI" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Samples\CodeDataModelItems.cs" />
+    <Compile Include="Samples\CodeDataThreading.cs" />
+    <Compile Include="Samples\CodeDataVirtualization.cs" />
+    <Compile Include="Samples\CodeDataVirtualizationUtility.cs" />
+    <Compile Include="Samples\ViewItemsGraphicFromCode.cs" />
+    <Compile Include="Samples\FundamentalsModelViewSeparation.cs" />
+    <Compile Include="Code\Launch.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DevInstall.cmd" />
+    <None Include="test.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DevInstallationFolder.reg" />
+    <Content Include="Sampler.png" />
+    <Content Include="Samples\ControlsRadioGroup.mcml" />
+    <Content Include="Samples\ControlsScrollingText.mcml" />
+    <Content Include="Samples\ControlsSimpleCheckBox.mcml" />
+    <Content Include="Samples\FourBoxGraphicNoBorder.png" />
+    <Content Include="Samples\FourBoxGraphicTransparent.png" />
+    <Content Include="Samples\FourBoxGraphicTransparentNoBorder.png" />
+    <Content Include="Samples\FundamentalsObjectModelAccess.mcml" />
+    <Content Include="Samples\ObjectModelAddInHostApplicationControlEnabled.mcml" />
+    <Content Include="Samples\ObjectModelAddInHostEntryPointParameters.mcml" />
+    <Content Include="Samples\ObjectModelAddInHostMetadataAccessEnabled.mcml" />
+    <Content Include="Samples\ObjectModelApplicationContextIsCurrentlyVisible.mcml" />
+    <Content Include="Samples\ObjectModelApplicationContextIsEntryPointRegistered.mcml" />
+    <Content Include="Samples\ObjectModelApplicationContextIsForegroundApplication.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAddInHostMediaContextDVD.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAddInHostMediaContextVideo.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAddInHostMediaContextPicture.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterEnvironmentLaunchEntryPoint.mcml" />
+    <Content Include="Samples\ViewItemsGraphicFromCode.mcml" />
+    <Content Include="Samples\FourBoxGraphic.png" />
+    <Content Include="Markup\Test.mcml" />
+    <None Include="Markup\ControlsSpinner.mcml" />
+    <Content Include="Markup\Samples.mcml" />
+    <Content Include="Markup\ControlsGroupHeader.mcml" />
+    <None Include="Samples\ActionsInvoke.mcml" />
+    <None Include="Samples\ActionsPlayAnimation.mcml" />
+    <None Include="Samples\ActionsPlaySound.mcml" />
+    <None Include="Samples\ActionsSet.mcml" />
+    <None Include="Samples\ControlsColorPicker.mcml" />
+    <None Include="Samples\ControlsColorPickerWithConstants.mcml" />
+    <None Include="Samples\ControlsGreenBallButton.mcml" />
+    <None Include="Samples\ControlsListMarquee.mcml" />
+    <None Include="Samples\ControlsMarquee.mcml" />
+    <None Include="Samples\ControlsSimpleButton.mcml" />
+    <None Include="Samples\ControlsSimpleClock.mcml" />
+    <None Include="Samples\ControlsSimpleEditbox.mcml" />
+    <None Include="Samples\ControlsSimpleRadioGroup.mcml" />
+    <Content Include="Samples\FunColumnExpansion.mcml" />
+    <Content Include="Samples\InputHandlersKeyHandlerAny.mcml" />
+    <Content Include="Samples\KeyboardNavigationArrowRight.png" />
+    <Content Include="Samples\ObjectModelMediaCenterEnvironmentCpuClass.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterEnvironmentPlayMediaAudio.mcml" />
+    <Content Include="Samples\ObjectModelMediaExperienceTransport.mcml" />
+    <Content Include="Samples\ObjectModelMediaExperienceGoToFullscreen.mcml" />
+    <Content Include="Samples\ObjectModelMediaExperienceMediaMetadataSong.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAddInHostMediaContextSong.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAddInHostMediaContextAlbum.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAddInHostMediaContextArtist.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAddInHostMediaContextGenre.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAddInHostMediaContextPlaylist.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAddInHostMediaContextTV.mcml" />
+    <Content Include="Samples\ObjectModelMediaExperienceMediaType.mcml" />
+    <Content Include="Samples\ObjectModelEnvironmentIsWidescreen.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterAudioMixer.mcml" />
+    <None Include="Samples\InputHandlersGesturePan.mcml" />
+    <None Include="Samples\InputHandlersGesturePanEnabledScrolling.mcml" />
+    <None Include="Samples\ObjectModelApplicationContextReturnToApplication.mcml" />
+    <None Include="Samples\ObjectModelApplicationContextSingleInstance.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterEnvironmentCreateDesktopShortcut.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterEnvironmentCurrentCulture.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterMediaCollectionMixed.mcml" />
+    <None Include="Samples\ObjectModelMediaExperienceUrl.mcml" />
+    <None Include="Samples\ObjectModelMediaExperienceEntryPointID.mcml" />
+    <None Include="Samples\MarkupResourceGroup.mcml" />
+    <None Include="Samples\SystemTextStringBuilder.mcml" />
+    <None Include="Samples\FundamentalsObjectPaths.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterEnvironmentShowOnScreenKeyboard.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterEnvironmentNavigateToPage.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterEnvironmentCapabilities.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterEnvironmentDialogNotification.mcml" />
+    <None Include="Samples\FocusFocusOrder.mcml" />
+    <None Include="Samples\FocusNavigateInto.mcml" />
+    <None Include="Samples\FunAlphabetSoup.mcml" />
+    <None Include="Samples\FundamentalsMarkupLibraries.mcml" />
+    <None Include="Samples\FundamentalsResourceAccess.mcml" />
+    <None Include="Samples\FundamentalsXMLSyntax.mcml" />
+    <None Include="Samples\FunHelix.mcml" />
+    <None Include="Samples\FunMelt.mcml" />
+    <None Include="Samples\FunMovement.mcml" />
+    <None Include="Samples\FunOthello.mcml" />
+    <None Include="Samples\InputHandlersClickHandler.mcml" />
+    <None Include="Samples\InputHandlersKeyHandler.mcml" />
+    <None Include="Samples\InputHandlersMouseWheelHandler.mcml" />
+    <None Include="Samples\InputHandlersShortcutHandler.mcml" />
+    <None Include="Samples\InputHandlersStagesHandling.mcml" />
+    <None Include="Samples\InputHandlersTypingHandler.mcml" />
+    <None Include="Samples\InputKeyFocus.mcml" />
+    <None Include="Samples\InputMouseFocus.mcml" />
+    <None Include="Samples\KeyboardNavigationContain.mcml" />
+    <None Include="Samples\KeyboardNavigationContainerFocus.mcml" />
+    <None Include="Samples\KeyboardNavigationFlow.mcml" />
+    <None Include="Samples\KeyboardNavigationGroups.mcml" />
+    <None Include="Samples\KeyboardNavigationRowColumn.mcml" />
+    <None Include="Samples\KeyboardNavigationWrap.mcml" />
+    <None Include="Samples\LayoutAnchor.mcml" />
+    <None Include="Samples\LayoutAnchorToFocus.mcml" />
+    <None Include="Samples\LayoutBorder.mcml" />
+    <None Include="Samples\LayoutCenter.mcml" />
+    <None Include="Samples\LayoutDefault.mcml" />
+    <None Include="Samples\LayoutFill.mcml" />
+    <None Include="Samples\LayoutForm.mcml" />
+    <None Include="Samples\LayoutGrid.mcml" />
+    <None Include="Samples\LayoutHorizontalFlow.mcml" />
+    <None Include="Samples\LayoutMarginsPadding.mcml" />
+    <None Include="Samples\LayoutMinimumSizeMaximumSize.mcml" />
+    <None Include="Samples\LayoutRotate.mcml" />
+    <None Include="Samples\LayoutScale.mcml" />
+    <None Include="Samples\LayoutVerticalFlow.mcml" />
+    <None Include="Samples\MarkupAccessibility.mcml" />
+    <None Include="Samples\MarkupAggregates.mcml" />
+    <None Include="Samples\MarkupBaseUIs.mcml" />
+    <None Include="Samples\MarkupColorSchemes.mcml" />
+    <None Include="Samples\MarkupDebugging.mcml" />
+    <None Include="Samples\MarkupGlobalization.mcml" />
+    <None Include="Samples\MarkupHostViewItem.mcml" />
+    <None Include="Samples\MarkupInvokeCommand.mcml" />
+    <None Include="Samples\MarkupLocals.mcml" />
+    <None Include="Samples\MarkupProperties.mcml" />
+    <None Include="Samples\MarkupStringTableAccess.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterBackgroundModes.mcml" />
+    <None Include="Samples\FundamentalsHelloWorld.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterEnvironmentDialog.mcml" />
+    <None Include="Samples\ObjectModelMediaCenterMediaCollectionBasic.mcml" />
+    <None Include="Samples\RulesBinding.mcml" />
+    <None Include="Samples\RulesChanged.mcml" />
+    <None Include="Samples\RulesCondition.mcml" />
+    <None Include="Samples\RulesCustomRuleEqualityCondition.mcml" />
+    <None Include="Samples\RulesCustomRuleModifiedCondition.mcml" />
+    <None Include="Samples\RulesDefault.mcml" />
+    <None Include="Samples\RulesIsTypeCondition.mcml" />
+    <None Include="Samples\RulesIsValidCondition.mcml" />
+    <None Include="Samples\RulesMixedSample.mcml" />
+    <None Include="Samples\TransformersBooleanTransformer.mcml" />
+    <None Include="Samples\TransformersDateTimeTransformer.mcml" />
+    <None Include="Samples\TransformersFormatTransformer.mcml" />
+    <None Include="Samples\TransformersMathTransformer.mcml" />
+    <None Include="Samples\TransformersTimeSpanTransformer.mcml" />
+    <None Include="Samples\ViewItemsClip.mcml" />
+    <None Include="Samples\ViewItemsClipAlpha.mcml" />
+    <None Include="Samples\ViewItemsClipColorFilter.mcml" />
+    <None Include="Samples\ViewItemsClipColorMask.mcml" />
+    <None Include="Samples\ViewItemsClipFadeAmount.mcml" />
+    <None Include="Samples\ViewItemsClipFadeSize.mcml" />
+    <None Include="Samples\ViewItemsClipOffsets.mcml" />
+    <None Include="Samples\ViewItemsClipOrientation.mcml" />
+    <None Include="Samples\ViewItemsClipRotation.mcml" />
+    <None Include="Samples\ViewItemsClipShowFade.mcml" />
+    <None Include="Samples\ViewItemsColorFill.mcml" />
+    <None Include="Samples\ViewItemsColorFillColors.mcml" />
+    <None Include="Samples\ViewItemsGraphic.mcml" />
+    <None Include="Samples\ViewItemsNowPlaying.mcml" />
+    <None Include="Samples\ViewItemsNowPlayingMetadata.mcml" />
+    <None Include="Samples\ViewItemsPanel.mcml" />
+    <None Include="Samples\ViewItemsScrollingDataLockedHorizontal.mcml" />
+    <None Include="Samples\ViewItemsScrollingDataLockedVertical.mcml" />
+    <None Include="Samples\ViewItemsScrollingDataRelativePaddingNear.mcml" />
+    <None Include="Samples\ViewItemsText.mcml" />
+    <None Include="Samples\ViewItemsVideo.mcml" />
+    <Content Include="Samples\AnimationsCenterPoint.mcml" />
+    <Content Include="Samples\AnimationsInterpolationsBezierHandles.mcml" />
+    <Content Include="Samples\AnimationsInterpolationsEaseInOut.mcml" />
+    <Content Include="Samples\AnimationsInterpolationsTypes.mcml" />
+    <Content Include="Samples\AnimationsInterpolationsWeight.mcml" />
+    <Content Include="Samples\AnimationsKeyframesAlpha.mcml" />
+    <Content Include="Samples\AnimationsKeyframesColor.mcml" />
+    <Content Include="Samples\AnimationsKeyframesMixedSample.mcml" />
+    <Content Include="Samples\AnimationsKeyframesPosition.mcml" />
+    <Content Include="Samples\AnimationsKeyframesRotate.mcml" />
+    <Content Include="Samples\AnimationsKeyframesScale.mcml" />
+    <Content Include="Samples\AnimationsKeyframesSize.mcml" />
+    <Content Include="Samples\AnimationsMergeAnimation.mcml" />
+    <Content Include="Samples\AnimationsRelativeTo.mcml" />
+    <Content Include="Samples\AnimationsSwitchAnimation.mcml" />
+    <Content Include="Samples\AnimationsTransformAnimationDelay.mcml" />
+    <Content Include="Samples\AnimationsTransformAnimationFilter.mcml" />
+    <Content Include="Samples\AnimationsTransformAnimationMagnitude.mcml" />
+    <Content Include="Samples\AnimationsTransformAnimationTimeScale.mcml" />
+    <Content Include="Samples\AnimationsTransformByAttributeAnimationDelay.mcml" />
+    <Content Include="Samples\AnimationsTransformByAttributeAnimationMagnitude.mcml" />
+    <Content Include="Samples\AnimationsTransformByAttributeAnimationOverride.mcml" />
+    <Content Include="Samples\AnimationsTransformByAttributeAnimationTimeScale.mcml" />
+    <Content Include="Samples\AnimationsTransformByAttributeAnimationValueTransformer.mcml" />
+    <Content Include="Samples\AnimationsTypesAlpha.mcml" />
+    <Content Include="Samples\AnimationsTypesContentChangeShowHide.mcml" />
+    <Content Include="Samples\AnimationsTypesGainLoseFocus.mcml" />
+    <Content Include="Samples\AnimationsTypesIdle.mcml" />
+    <Content Include="Samples\AnimationsTypesMixedSample.mcml" />
+    <Content Include="Samples\AnimationsTypesMove.mcml" />
+    <Content Include="Samples\AnimationsTypesRotate.mcml" />
+    <Content Include="Samples\AnimationsTypesScale.mcml" />
+    <Content Include="Samples\AnimationsTypesShowHide.mcml" />
+    <Content Include="Samples\AnimationsTypesSize.mcml" />
+    <Content Include="Samples\ControlsSimpleSpinner.mcml" />
+    <Content Include="Samples\AnimationsCenterPointDunkingBirdBody.png" />
+    <Content Include="Samples\AnimationsCenterPointDunkingBirdLegs.png" />
+    <Content Include="Samples\FourBoxGraphicSmall.png" />
+    <Content Include="Samples\GraphicsAlignmentDog.png" />
+    <Content Include="Samples\GraphicsAlignmentDogTiny.png" />
+    <Content Include="Samples\GraphicsAlignment.mcml" />
+    <Content Include="Samples\GraphicsImage.mcml" />
+    <Content Include="Samples\GraphicsImageStringCast.mcml" />
+    <Content Include="Samples\GraphicsImageRedRectangle.png" />
+    <Content Include="Samples\AnimationsInterpolationsTypesRaceHorse.png" />
+    <Content Include="Samples\AnimationsTypesGainLoseFocusBagTop.png" />
+    <Content Include="Samples\AnimationsTypesGainLoseFocusBagBottom.png" />
+    <Content Include="Samples\AnimationsTypesGainLoseFocusPeanut1.png" />
+    <Content Include="Samples\AnimationsTypesGainLoseFocusPeanut2.png" />
+    <Content Include="Samples\AnimationsTypesGainLoseFocusPeanut3.png" />
+    <Content Include="Samples\ControlsGreenBallButtonDark.png" />
+    <Content Include="Samples\ControlsGreenBallButtonGlow.png" />
+    <Content Include="Samples\ControlsGreenBallButtonLight.png" />
+    <Content Include="Samples\ControlsGreenBallButtonShadow.png" />
+    <Content Include="Samples\FunMeltGraphic.png" />
+    <Content Include="Samples\FunOthelloBlack.png" />
+    <Content Include="Samples\FunOthelloBlank.png" />
+    <Content Include="Samples\FunOthelloRed.png" />
+    <Content Include="Samples\ObjectModelNavigateAndNavigateCommand.mcml" />
+    <Content Include="Samples\RepeaterContentSelectorsCD.png" />
+    <Content Include="Samples\ControlsJellyButtonBrownRectangle.png" />
+    <Content Include="Samples\ControlsJellyButtonAquaHover.wav" />
+    <Content Include="Samples\ControlsJellyButtonAquaSelected.wav" />
+    <Content Include="Samples\ControlsJellyButtonAquaSelecting.wav" />
+    <Content Include="Samples\ControlsJellyButton.mcml" />
+    <Content Include="Samples\ControlsJellyButtonRedRectangle.png" />
+    <Content Include="Samples\RepeaterDivider.png" />
+    <Content Include="Samples\RepeaterFlowLayoutBlueStar.png" />
+    <Content Include="Samples\RepeaterFlowLayoutGreenStar.png" />
+    <Content Include="Samples\RepeaterFlowLayoutPurpleStar.png" />
+    <Content Include="Samples\RepeaterFlowLayoutYellowStar.png" />
+    <Content Include="Samples\RepeaterGridLayoutBlueStar.png" />
+    <Content Include="Samples\RepeaterGridLayoutGreenStar.png" />
+    <Content Include="Samples\RepeaterGridLayoutPurpleStar.png" />
+    <Content Include="Samples\RepeaterContentSelectors.mcml" />
+    <Content Include="Samples\RepeaterDividers.mcml" />
+    <Content Include="Samples\RepeaterFlowLayout.mcml" />
+    <Content Include="Samples\RepeaterGridLayout.mcml" />
+    <Content Include="Samples\RepeaterListDataSet.mcml" />
+    <Content Include="Samples\RepeaterRepeaterViewItem.mcml" />
+    <Content Include="Samples\ScrollingLockingPurpleStar.png" />
+    <Content Include="Samples\ScrollingLockingYellowStar.png" />
+    <Content Include="Samples\KeyboardNavigationCenterGradient.png" />
+    <Content Include="Samples\KeyboardNavigationArrowDown.png" />
+    <Content Include="Samples\InputMouseFocusFlowerBlue.png" />
+    <Content Include="Samples\InputMouseFocusFlowerGreen.png" />
+    <Content Include="Samples\LayoutGraphicArrow.png" />
+    <Content Include="Samples\LayoutGraphic.png" />
+    <Content Include="Samples\LayoutGraphicOutlineRounded.png" />
+    <Content Include="Samples\KeyboardNavigationArrowUp.png" />
+    <Content Include="Samples\KeyboardNavigationArrowLeft.png" />
+    <Content Include="Samples\ObjectModelMediaCenterEnvironmentPlayMediaVideo.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterEnvironmentVersion.mcml" />
+    <Content Include="Samples\ScrollingPaddingPurpleStar.png" />
+    <Content Include="Samples\ScrollingLists.mcml" />
+    <Content Include="Samples\ScrollingLocking.mcml" />
+    <Content Include="Samples\ScrollingPadding.mcml" />
+    <Content Include="Samples\ScrollingScrollerViewItem.mcml" />
+    <Content Include="Samples\ScrollingStaticContent.mcml" />
+    <Content Include="Samples\ViewItemsDateTimeTransformerDatesBasic.mcml" />
+    <Content Include="Samples\ViewItemsDateTimeTransformerDatesComplex.mcml" />
+    <Content Include="Samples\ViewItemsDateTimeTransformerTimes.mcml" />
+    <Content Include="Samples\ViewItemsFormatTransformer.mcml" />
+    <Content Include="Samples\ViewItemsGraphicAcquiringImageHTTP.mcml" />
+    <Content Include="Samples\ViewItemsNowPlayingIsActive.mcml" />
+    <Content Include="Samples\ViewItemsScrollingDataNoRepeaterHorizontal.mcml" />
+    <Content Include="Samples\ViewItemsScrollingDataNoRepeaterVertical.mcml" />
+    <Content Include="Samples\ViewItemsScrollingDataPaddingHorizontal.mcml" />
+    <Content Include="Samples\ViewItemsScrollingDataPaddingVertical.mcml" />
+    <Content Include="Samples\ViewItemsScrollingDataPageStepNoRepeater.mcml" />
+    <Content Include="Samples\ViewItemsScrollingDataRelativePaddingFar.mcml" />
+    <Content Include="Samples\ViewItemsScrollingDataRepeaterHorizontal.mcml" />
+    <Content Include="Samples\ViewItemsScrollingDataRepeaterVertical.mcml" />
+    <Content Include="Samples\ViewItemsScrollingDataScrollStepNoRepeater.mcml" />
+    <Content Include="Samples\ViewItemsSecureEditableText.mcml" />
+    <Content Include="Samples\ViewItemsTextAlignment.mcml" />
+    <Content Include="Samples\ViewItemsTextBackGroundColor.mcml" />
+    <Content Include="Samples\ViewItemsTextBigFontCharacter.mcml" />
+    <Content Include="Samples\ViewItemsTextColor.mcml" />
+    <Content Include="Samples\ViewItemsTextContent.mcml" />
+    <Content Include="Samples\ViewItemsTextFont.mcml" />
+    <Content Include="Samples\ViewItemsTextMaxLines.mcml" />
+    <Content Include="Samples\ViewItemsTextWordWrap.mcml" />
+    <Content Include="Samples\ViewItemsTimeSpanTransformer.mcml" />
+    <Content Include="Samples\ViewItemsVideoGlassBreaking.wav" />
+    <Content Include="Samples\ViewItemsVideoCrackedTube.png" />
+    <Content Include="Samples\ViewItemsVideoTV.png" />
+    <Content Include="Samples\ViewItemsGraphicDogSmall.png" />
+    <Content Include="Samples\MarkupGlobalizationCart.png" />
+    <Content Include="Samples\ObjectModelApplicationContextInstallApplication.mcml" />
+    <Content Include="Samples\CodeDataModelItems.mcml" />
+    <Content Include="Samples\CodeDataThreading.mcml" />
+    <Content Include="Samples\CodeDataVirtualization.mcml" />
+    <Content Include="Markup\ControlsPropertyAndValue.mcml" />
+    <Content Include="Markup\ControlsButton.mcml" />
+    <Content Include="Markup\ControlsEditbox.mcml" />
+    <Content Include="Markup\Default.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterMediaCollectionAddItemRepeater.mcml" />
+    <Content Include="Samples\FundamentalsModelViewSeparation.mcml" />
+    <Content Include="Markup\Header.mcml" />
+    <Content Include="Samples\ObjectModelMediaExperienceMediaMetadataVideo.mcml" />
+    <Content Include="Samples\ObjectModelMediaCenterMediaCollectionAddItem.mcml" />
+    <Content Include="Samples\ObjectModelHostingHistoryOrientedPageSession.mcml" />
+    <Content Include="Markup\Controls.mcml" />
+    <Content Include="Markup\Styles.mcml" />
+    <Content Include="SamplerRegistration.xml" />
+    <Content Include="Samples\MarkupGlobalizationRaceHorse.png" />
+    <Content Include="Samples\ViewItemsGraphicDog.png" />
+    <Content Include="Samples\ScrollingPaddingYellowStar.png" />
+    <Content Include="Samples\ScrollingListsXbox360.png" />
+    <Content Include="Samples\RepeaterGridLayoutYellowStar.png" />
+    <Content Include="Samples\WhiteGraphic.png" />
+    <Content Include="Samples\WhiteGraphicSmall.png" />
+    <Content Include="Samples\Launch.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,147 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:me="Me">
+
+  <!-- The page where the user logs in -->
+  <UI Name="LogInPage">
+    <Properties>
+      <z:Application Name="Application"
+                     Application="$Required"/>
+
+      <!-- The username - Put in Properties instead of Locals so that -->
+      <!-- it is shared across page navigation.  This is necessary as -->
+      <!-- that the keyboard entry UI is actually a different page.   -->
+      <EditableText Name="User"
+                    Description="resx://Z/Z.Resources/Shell_LoginUsername"
+                    Value=""/>
+
+      <!-- The password - Similar to User this must be in Properties. -->
+      <EditableText Name="Password"
+                    Description="resx://Z/Z.Resources/Shell_LoginPassword"
+                    Value=""/>
+
+      <!-- Note that there's no actual support for the "remember"     -->
+      <!-- feature.  That would require saving that state somewhere   -->
+      <!-- and having the Application pass that value into            -->
+      <!-- GoToLogIn().                                               -->
+      <sys:Boolean Name="RememberPassword"
+                   Boolean="false"/>
+    </Properties>
+
+    <Locals>
+      <BooleanChoice Name="Remember"
+                     Description="resx://Z/Z.Resources/Shell_LoginRemember"
+                     Value="[RememberPassword]"/>
+      <Command Name="LogIn"
+               Description="resx://Z/Z.Resources/Shell_Login"/>
+    </Locals>
+
+    <Rules>
+      <!-- When enter is pressed in the User field, move focus to the Password field -->
+      <Changed Source="[User.Submitted]">
+        <Actions>
+          <Invoke Target="[PasswordEdit.NavigateInto]"/>
+        </Actions>
+      </Changed>
+
+      <!-- When enter is Password in the User field, try to log in -->
+      <Changed Source="[Password.Submitted]">
+        <Actions>
+          <Invoke Target="[LogIn.Invoke]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Log in -->
+      <Changed Source="[LogIn.Invoked]">
+        <Actions>
+          <Invoke Target="[Application.LogIn]"
+                  username="[User.Value]"
+                  password="[Password.Value]"
+                  rememberPassword="[Remember.Value]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <core:Button Name="LogInButton"
+                       Model="[LogIn]"
+                       FocusOrder="5"
+                       Margins="10,0,10,0"
+                       Image="image://styles:ButtonNonFocusImage"
+                       CenterText="true">
+            <LayoutInput>
+              <AnchorLayoutInput Right="ContentArea,0"
+                                 Top="ContentArea,0,34"/>
+            </LayoutInput>
+          </core:Button>
+
+          <Graphic Name="Logo"
+                   Content="resx://Z/Z.Resources/ZLogo_Full">
+            <LayoutInput>
+              <AnchorLayoutInput Left="ContentArea,0"
+                                 Top="Parent,0,120"/>
+            </LayoutInput>
+          </Graphic>
+
+          <Panel Name="ContentArea"
+                 Layout="VerticalFlow">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,120"
+                                 Top="Parent,0,270"
+                                 Bottom="Parent,1,-100"
+                                 Horizontal="Fill"/>
+            </LayoutInput>
+            <Children>
+
+              <!-- Username -->
+              <Text Content="[User.Description]"
+                    Color="color://styles:Text.Copy"
+                    Font="font://styles:SecondaryText"/>
+              <core:EditBoxWithKeyboard Name="UserEdit"
+                                        Model="[User]"
+                                        Application="[Application]"
+                                        FocusOrder="0"/>
+
+              <!-- Password -->
+              <Text Content="[Password.Description]"
+                    Color="color://styles:Text.Copy"
+                    Font="font://styles:SecondaryText"/>
+              <core:EditBoxWithKeyboard Name="PasswordEdit"
+                                        Model="[Password]"
+                                        Application="[Application]"
+                                        Password="true"
+                                        FocusOrder="2"/>
+
+              <!-- Remember checkbox -->
+              <core:CheckBox Model="[Remember]"
+                             Margins="0,40,0,0"
+                             FocusOrder="3"/>
+
+              <!-- Login message -->
+              <Text Margins="0,80,0,0"
+                    MaximumSize="430,0"
+                    Color="color://styles:Text.Copy"
+                    Font="font://styles:SecondaryText"
+                    WordWrap="true"
+                    Content="resx://Z/Z.Resources/Shell_LoginMessage"/>
+
+            </Children>
+          </Panel>
+
+          <core:Background/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+
+
+
+</Mcml>

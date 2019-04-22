@@ -1,0 +1,47 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:b="file://Controls.mcml">
+
+  <!-- PlaySound actions are used in "expanded" rule syntax for adding -->
+  <!-- sound effects.                                                  -->
+
+  <!-- This sample demonstrates how to use the PlaySound action to     -->
+  <!-- play a sound when a user clicks a button.                       -->
+
+  <UI Name="PlaySoundAction">
+
+    <Locals>
+      <Command Name="PlaySound"
+               Description="Play Sound"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- Watch for the click event. -->
+      <Changed Source="[PlaySound.Invoked]">
+        <Actions>
+
+          <!-- Play a sound. -->
+          <PlaySound Sound="file://Launch.wav"/>
+
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Center">
+
+        <Children>
+
+          <b:Button Command="[PlaySound]"
+                    ButtonLabel="[PlaySound.Description]"/>
+
+        </Children>
+
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

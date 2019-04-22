@@ -1,0 +1,93 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- Object paths are the primary form of data binding in MCML. They   -->
+  <!-- let you use "dot" notation to refer to any .NET Framework object. -->
+  <!-- They are of the form: [ObjectName.Member. ... .Member]            -->
+
+  <!-- ObjectName is the first part of the path. It always refers to a   -->
+  <!-- named object within the scope of the UI. Depending on which       -->
+  <!-- section of the UI that the path exists in, it has access to       -->
+  <!-- objects with the following restrictions:                          -->
+
+  <!-- Paths in Properties section: Not supported.                       -->
+  <!-- Paths in Locals section:     Access to objects in the Properties  -->
+  <!--                              section.                             -->
+  <!-- Paths in Content section:    Access to objects in the Properties  -->
+  <!--                              and Locals section.                  -->
+  <!-- Paths in Rules section:      Access to objects in the Properties, -->
+  <!--                              Locals, and Content sections.        -->
+
+  <!-- Object paths can be used to refer to property, method, and        -->
+  <!-- indexer members. Indexers can be used to access dictionaries      -->
+  <!-- where the syntax is MyDictionary.#IndexerValue (the '#' denotes   -->
+  <!-- the indexer).                                                     -->
+
+  <!-- Object paths support both type casting and type conversions.      -->
+
+  <!-- Type casting is used when the author wants to declare that the    -->
+  <!-- type of the current member is actually another type. For example: -->
+  <!-- Data.Item!cor:String (where the Item property is actually of type -->
+  <!-- 'object'). The '!' denotes a type cast. The 'cor:String' (where   -->
+  <!-- 'cor' is a namespace prefix) provides a type hint to the system.  -->
+  <!-- Type casting is allowed in the following scenarios:               -->
+  <!--   1) casting to or from an interface                              -->
+  <!--   2) casting to a valid derived type (up-cast)                    -->
+  <!--   3) casting to a valid base type (down-cast).                    -->
+
+  <!-- Type conversions are used to convert an object to a different     -->
+  <!-- type. It uses the same casting syntax ('!') and is considered if  -->
+  <!-- type casting is not allowed. For example: [MyString!Image] will   -->
+  <!-- convert a string to an Image (via the built-in type converter for -->
+  <!-- the Image object).                                                -->
+
+  <!-- NOTE: Type conversions are only allowed for primitive and string  -->
+  <!--       types.                                                      -->
+
+  <!-- NOTE: Since neither type casts nor conversions cannot be          -->
+  <!--       validated at parsing time, both techniques can result in    -->
+  <!--       fatal runtime errors (exceptions).                          -->
+
+  <!-- Most object paths are evaluated at UI build time and their        -->
+  <!-- resultant values are set on the associated properties. However,   -->
+  <!-- some tags hold on to the object path and will re-evaluate it at   -->
+  <!-- runtime when needed.                                              -->
+
+  <!-- The following tags hold on to object paths and re-evaluate them   -->
+  <!-- at runtime (all of which are discussed in other samples):         -->
+  <!--   1) All Rules tags                                               -->
+  <!--   2) InvokeCommand                                                -->
+  <!--   3) NavigateCommand                                              -->
+
+  <!-- There are a few reserved names within the scope of a UI that      -->
+  <!-- object paths refer to. You may not name any of the objects in     -->
+  <!-- your UI with a reserved name. The special ObjectNames are         -->
+  <!--   1)  Input                                                       -->
+  <!--   2)  RepeatedItem                                                -->
+  <!--   3)  RepeatedItemIndex                                           -->
+  <!--   4)  Accessibile                                                 -->
+
+  <UI Name="ObjectPaths">
+
+    <Locals>
+      <cor:String Name="MyString"
+                  String="The Lazy Fox Jumped Over The Brown Dog."/>
+    </Locals>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <!-- Path to "MyString". -->
+          <Text Content="[MyString]"
+                Color="White" />
+          <!-- This Text object will call the Length property which exists  -->
+          <!-- on the String type and report the length.                    -->
+          <Text Content="[MyString.Length.ToString]"
+                Color="White" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

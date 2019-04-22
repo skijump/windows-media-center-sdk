@@ -1,0 +1,724 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:menu="resx://Z/Z.Resources/MainMenu"
+      xmlns:details="resx://Z/Z.Resources/DetailsPage"
+      xmlns:gallery="resx://Z/Z.Resources/GalleryPage"
+      xmlns:login="resx://Z/Z.Resources/LogInPage"
+      xmlns:search="resx://Z/Z.Resources/SearchPage"
+      xmlns:download="resx://Z/Z.Resources/DownloadsPage"
+      xmlns:data="resx://Z/Z.Resources/SampleData"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:content="resx://Z/Z.Resources/ContentList"
+      xmlns:keyboard="resx://Z/Z.Resources/KeyboardPage"
+      xmlns:me="Me">
+
+  <!-- This markup file contains helpful views when running this app in   -->
+  <!-- McmlPad. These are not views that will are used in the actual app. -->
+  <!-- To see those run Z as an add-in.                                   -->
+
+  <!-- This is the UI that McmlPad will load. -->
+  <UI Name="Main">
+    <Content>
+      <!-- Modify this to change your default view in McmlPad.        -->
+      <!-- For example:                                               -->
+      <!--	<me:DetailsPage_Test_Movies/>                           -->
+      <!-- This is useful to test your UIs fullscreen.                -->
+      <me:ZTest/>
+    </Content>
+  </UI>
+
+
+  <!-- A launch pad for testing all the Z pages simultaneously. -->
+  <UI Name="ZTest">
+    <Locals>
+      <z:Application Name="Application"/>
+
+      <!-- This list contains possible standalone UIs that we can run. -->
+      <!-- The only requirement is that they do not require any input  -->
+      <!-- properties.                                                 -->
+      <Choice Name="Tests">
+        <Options>
+          <sys:String String="@resx://Z/Z.Resources/Default#MainMenu_Test"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#GalleryPage_Test_Movies"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#GalleryPage_Test_TV"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#GalleryPage_Test_TVShow"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#GalleryPage_Test_Music"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#DetailsPage_Test_Movies"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#DetailsPage_Test_TVEpisode"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#DownloadsPage_Test"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#SearchPage_Test"/>
+
+          <sys:String String="@resx://Z/Z.Resources/Default#LogInPage_FakeDataTest"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#MainMenu_FakeDataTest"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#GalleryPage_FakeDataTest"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#DetailsPage_FakeDataTest"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#DownloadsPage_FakeDataTest"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#SearchPage_FakeDataTest"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#KeyboardPage_Test"/>
+
+          <sys:String String="@resx://Z/Z.Resources/Default#Button_Test"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#ThumbnailButton_Test"/>
+          <sys:String String="@resx://Z/Z.Resources/Default#CheckBox_Test"/>
+        </Options>
+        <!-- Set the default UI to display with this index here -->
+        <ChosenIndex>9</ChosenIndex>
+      </Choice>
+    </Locals>
+
+    <Rules>
+      <!-- Apply the currently selected test to the main window. -->
+      <Binding Source="[Tests.Chosen!sys:String]"
+               Target="[MainView.UIName]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+
+          <!-- UI for selecting other tests -->
+          <me:TestList Tests="[Tests]">
+            <LayoutInput>
+              <FormLayoutInput Left="MainView,1"
+                               Right="Parent,1"
+                               Horizontal="Fill"
+                               Top="Parent,0"
+                               Bottom="Parent,1"
+                               Vertical="Fill"/>
+            </LayoutInput>
+          </me:TestList>
+
+          <!-- The currently selected test -->
+          <me:TestWrapper Name="MainView"
+                          UIName="null">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,0.75"
+                               Horizontal="Center"
+                               Top="Parent,0"
+                               Bottom="Parent,1"
+                               Vertical="Center"/>
+            </LayoutInput>
+          </me:TestWrapper>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- A scrolling list of available tests -->
+  <UI Name="TestList">
+    <Properties>
+      <Choice Name="Tests"
+              Choice="$Required"/>
+    </Properties>
+
+    <Locals>
+      <ScrollingHandler Name="ScrollHandler"
+                        HandlerStage="Bubbled"/>
+      <ScrollingData Name="ScrollData"/>
+
+      <Command Name="ScrollUp"
+               Description="Up"/>
+      <Command Name="ScrollDown"
+               Description="Down"/>
+    </Locals>
+
+    <Rules>
+      <!-- Associate all the scrolling objects -->
+      <Default Target="[ScrollHandler.ScrollingData]"
+               Value="[ScrollData]"/>
+      <Default Target="[ScrollData.Repeater]"
+               Value="[Repeater]"/>
+
+      <!-- Only show the scroll buttons if we can scroll in that direction -->
+      <Binding Source="[ScrollData.CanScrollUp]"
+               Target="[ScrollUpButton.Visible]"/>
+      <Binding Source="[ScrollData.CanScrollDown]"
+               Target="[ScrollDownButton.Visible]"/>
+
+      <!-- Scroll up/left -->
+      <Changed Source="[ScrollUp.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollData.ScrollUp]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Scroll down/right -->
+      <Changed Source="[ScrollDown.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollData.ScrollDown]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <!-- Scroll up -->
+          <Graphic Name="ScrollUpButton"
+                   Content="resx://Z/Z.Resources/Gradient_Top"
+                   Layout="Center"
+                   MaximumSize="0,50">
+            <LayoutInput>
+              <AnchorLayoutInput
+                Top="Parent,0,-5"
+                Vertical="Near"
+                Left="Scroller,0,-5"
+                Right="Scroller,1,5"
+                ContributesToHeight="false"/>
+            </LayoutInput>
+            <Children>
+              <content:ScrollButton Model="[ScrollUp]"
+                                    Image="resx://Z/Z.Resources/MouseNavUp"
+                                    FocusImage="resx://Z/Z.Resources/MouseNavUpFocus"/>
+            </Children>
+          </Graphic>
+
+          <!-- Scroll down -->
+          <Graphic Name="ScrollDownButton"
+                   Content="resx://Z/Z.Resources/Gradient_Bottom"
+                   Layout="Center"
+                   MaximumSize="0,50">
+            <LayoutInput>
+              <AnchorLayoutInput
+                Bottom="Parent,1,5"
+                Vertical="Far"
+                Left="Scroller,0,-5"
+                Right="Scroller,1,5"
+                ContributesToHeight="false"/>
+            </LayoutInput>
+            <Children>
+              <content:ScrollButton Model="[ScrollDown]"
+                                    Image="resx://Z/Z.Resources/MouseNavDown"
+                                    FocusImage="resx://Z/Z.Resources/MouseNavDownFocus"/>
+            </Children>
+          </Graphic>
+
+          <!-- Scrolling area -->
+          <Scroller Name="Scroller"
+                    Orientation="Vertical"
+                    ScrollingData="[ScrollData]"
+                    Margins="0,50,0,50">
+            <Children>
+
+              <!-- Test repeater -->
+              <Repeater Name="Repeater"
+                        Source="[Tests.Options]">
+                <Layout>
+                  <GridLayout Orientation="Vertical"
+                              Rows="3"
+                              Spacing="0,4"/>
+                </Layout>
+                <Animations>
+
+                  <!-- Scrolling animation -->
+                  <Animation Type="Move">
+                    <Keyframes>
+                      <PositionKeyframe Time="0.0"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time=".3"/>
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+                <Content>
+
+                  <me:TestWrapperButton Tests="[Tests]"
+                                        UIName="[RepeatedItem!sys:String]"/>
+
+                </Content>
+              </Repeater>
+
+            </Children>
+          </Scroller>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+
+  <!-- A wrapper around a test UI that applies a reference size.  This        -->
+  <!-- enables testing the UI at specific constraints (4:3, widescreen, etc.) -->
+  <UI Name="TestWrapper">
+    <Properties>
+      <!-- The source of the UI -->
+      <sys:String Name="UIName"
+                  String="$Required"/>
+
+      <!-- The size to display the pages at -->
+      <Size Name="ReferenceSize"
+            Size="1024,768"/>
+    </Properties>
+
+    <Rules>
+      <!-- Point the Host to our UI -->
+      <Binding Source="[UIName]"
+               Target="[Host.Source]"/>
+    </Rules>
+
+    <Content>
+
+      <ColorFill Name="Background"
+                 Content="Black">
+        <Layout>
+          <ScaleLayout MaintainAspectRatio="true"
+                       AllowScaleUp="false"/>
+        </Layout>
+        <Children>
+
+          <Host Name="Host"
+                Layout="Fill"
+                MaximumSize="[ReferenceSize]"/>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+
+  <!-- A clickable test wrapper -->
+  <UI Name="TestWrapperButton"
+      BaseUI="me:TestWrapper">
+    <Properties>
+      <!-- The list of tests that this test is a member of -->
+      <Choice Name="Tests"
+              Choice="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- Make this UI clickable -->
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <!-- When clicked, make ourselves the selected test. -->
+      <Changed Source="[Clicker.Invoked]">
+        <Actions>
+          <Set Target="[Tests.Chosen]"
+               Value="[UIName]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Focused styling -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Background.Content]"
+                 Value="Yellow"/>
+
+      <!-- Selected styling -->
+      <Condition Source="[Tests.Chosen]"
+                 SourceValue="[UIName]"
+                 Target="[Background.Content]"
+                 Value="White"/>
+
+      <!-- Border -->
+      <Default Target="[Background.Padding]"
+               Value="3,3,3,3"/>
+
+      <!-- Disable input the test UI -->
+      <Default Target="[Host.InputEnabled]"
+               Value="false"/>
+    </Rules>
+  </UI>
+
+
+  <!-- Test UI -->
+
+  <!-- The following UIs are designed to wrap other UIs as to make them -->
+  <!-- not require any input properties.                                -->
+
+  <UI Name="LogInPage_FakeDataTest">
+    <Content>
+      <login:LogInPage Application="global://data:SampleApplication"/>
+    </Content>
+  </UI>
+
+  <UI Name="MainMenu_FakeDataTest">
+    <Content>
+      <menu:MainMenu Menu="global://data:SampleMainMenu"
+                     Application="global://data:SampleApplication"/>
+    </Content>
+  </UI>
+
+  <UI Name="GalleryPage_FakeDataTest">
+    <Content>
+      <gallery:GalleryPage Page="global://data:SampleGalleryPage.Movies"
+                           Application="global://data:SampleApplication"/>
+    </Content>
+  </UI>
+
+  <UI Name="DetailsPage_FakeDataTest">
+    <Content>
+      <details:DetailsPage Page="global://data:SampleDetailsPage.Movie"
+                           Application="global://data:SampleApplication"/>
+    </Content>
+  </UI>
+
+  <UI Name="DownloadsPage_FakeDataTest">
+    <Content>
+      <download:DownloadsPage Page="global://data:SampleDownloadsPage"
+                              Application="global://data:SampleApplication"/>
+    </Content>
+  </UI>
+
+  <UI Name="SearchPage_FakeDataTest">
+    <Content>
+      <search:SearchPage Page="global://data:SampleSearchPage"
+                         Application="global://data:SampleApplication"/>
+    </Content>
+  </UI>
+
+  <UI Name="KeyboardPage_Test">
+    <Content>
+      <keyboard:KeyboardPage Layout="Center"
+                             Application="global://data:SampleApplication">
+        <Model>
+          <EditableText Value="Hello my name is "/>
+        </Model>
+      </keyboard:KeyboardPage>
+    </Content>
+  </UI>
+
+
+  <!-- Test the MainMenu -->
+  <UI Name="MainMenu_Test">
+    <Properties>
+      <z:Application Name="Application"/>
+    </Properties>
+
+    <Content>
+      <menu:MainMenu Menu="[Application.MainMenu]"
+                     Application="[Application]"/>
+    </Content>
+  </UI>
+
+  <!-- Test the search page -->
+  <UI Name="SearchPage_Test">
+    <Properties>
+      <z:Application Name="Application"/>
+    </Properties>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[Application.CreateSearchPage]"
+                  ResultTarget="[Page.Page]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <search:SearchPage Name="Page"
+                         Page="null"
+                         Application="[Application]"/>
+    </Content>
+  </UI>
+
+  <!-- Test the downloads page -->
+  <UI Name="DownloadsPage_Test">
+    <Properties>
+      <z:Application Name="Application"/>
+    </Properties>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[Application.CreateDownloadsPage]"
+                  ResultTarget="[Page.Page]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <download:DownloadsPage Name="Page"
+                              Page="null"
+                              Application="[Application]"/>
+    </Content>
+  </UI>
+
+  <!-- Test the Movies experience's gallery -->
+  <UI Name="GalleryPage_Test_Movies">
+    <Properties>
+      <z:Application Name="Application"/>
+    </Properties>
+
+    <Locals>
+      <z:Movies Name="Movies" />
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[Movies.CreateGalleryPage]"
+                  ResultTarget="[Page.Page]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <gallery:GalleryPage Name="Page"
+                           Page="null"
+                           Application="[Application]"/>
+    </Content>
+  </UI>
+
+  <!-- Test the Movies experience's details page -->
+  <UI Name="DetailsPage_Test_Movies">
+    <Properties>
+      <z:Application Name="Application"/>
+    </Properties>
+
+    <Locals>
+      <z:Movies Name="Movies" />
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[Movies.CreateDetailsPage]"
+                  movieId="1"
+                  ResultTarget="[Page.Page]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <details:DetailsPage Name="Page"
+                           Page="null"
+                           Application="[Application]"/>
+    </Content>
+  </UI>
+
+  <!-- Test the TV experience's show gallery -->
+  <UI Name="GalleryPage_Test_TV">
+    <Properties>
+      <z:Application Name="Application"/>
+    </Properties>
+
+    <Locals>
+      <z:TV Name="TV" />
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[TV.CreateShowGalleryPage]"
+                  ResultTarget="[Page.Page]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <gallery:GalleryPage Name="Page"
+                           Page="null"
+                           Application="[Application]"/>
+    </Content>
+  </UI>
+
+  <!-- Test the TV experience's episode gallery -->
+  <UI Name="GalleryPage_Test_TVShow">
+    <Properties>
+      <z:Application Name="Application"/>
+    </Properties>
+
+    <Locals>
+      <z:TV Name="TV" />
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[TV.CreateEpisodeGalleryPage]"
+                  showId="1"
+                  ResultTarget="[Page.Page]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <gallery:GalleryPage Name="Page"
+                           Page="null"
+                           Application="[Application]"/>
+    </Content>
+  </UI>
+
+  <!-- Test the TV experience's details page -->
+  <UI Name="DetailsPage_Test_TVEpisode">
+    <Properties>
+      <z:Application Name="Application"/>
+    </Properties>
+
+    <Locals>
+      <z:TV Name="TV" />
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[TV.CreateEpisodeDetailsPage]"
+                  episodeId="1"
+                  ResultTarget="[Page.Page]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <details:DetailsPage Name="Page"
+                           Page="null"
+                           Application="[Application]"/>
+    </Content>
+  </UI>
+
+  <!-- Test the Music experience's gallery page -->
+  <UI Name="GalleryPage_Test_Music">
+    <Properties>
+      <z:Application Name="Application"/>
+    </Properties>
+
+    <Locals>
+      <z:Music Name="Music" />
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[Music.CreateGalleryPage]"
+                  path="\Users\Public\Music"
+                  ResultTarget="[Page.Page]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <gallery:GalleryPage Name="Page"
+                           Page="null"
+                           Application="[Application]"/>
+    </Content>
+  </UI>
+
+
+  <!-- Test the button UI -->
+  <UI Name="Button_Test">
+    <Locals>
+      <Command Name="ShortCommand"
+               Description="short"/>
+      <Command Name="LongCommand"
+               Description="long long long long long long long"/>
+    </Locals>
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="4,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Standard button with normal sized text -->
+          <core:Button Model="[ShortCommand]"/>
+
+          <!-- Standard button with long text -->
+          <core:Button Model="[LongCommand]"/>
+
+          <!-- NonFocus image -->
+          <core:Button Model="[ShortCommand]"
+                       Image="image://styles:ButtonNonFocusImage"/>
+
+          <!-- Minimum tile size -->
+          <core:Button Model="[ShortCommand]"
+                       TileMinSize="300,0"/>
+
+          <!-- Large font -->
+          <core:Button Model="[ShortCommand]"
+                       TextFont="Courier New, 48"
+                       TileMaxSize="0,0"/>
+
+          <!-- Color styling -->
+          <core:Button Model="[ShortCommand]"
+                       TextColor="Green"
+                       TextFocusColor="Purple"
+                       FocusImage="null"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- Test the thumbnail button UI -->
+  <UI Name="ThumbnailButton_Test">
+    <Locals>
+      <z:ThumbnailCommand Name="Command"
+                          Description="Hello"
+                          Metadata="World"
+                          Image="resx://Z/Z.Resources/Background"/>
+    </Locals>
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="4,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Standard button with no customization -->
+          <core:ThumbnailButton Model="[Command]"/>
+
+          <!-- Different tile size -->
+          <core:ThumbnailButton Model="[Command]"
+                                TileSize="300,100"/>
+
+          <!-- Different fonts -->
+          <core:ThumbnailButton Model="[Command]"
+                                LabelFont="Courier New, 24"
+                                LabelFocusFont="Courier New, 24, Bold"
+                                MetadataLabelFont="Courier New, 24"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- Test the checkbox UI -->
+  <UI Name="CheckBox_Test">
+    <Locals>
+      <BooleanChoice Name="Model"
+                     Description="value"
+                     Value="false"/>
+    </Locals>
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="4,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Standard checkbox with no customization -->
+          <core:CheckBox Model="[Model]"/>
+
+          <!-- Different box size -->
+          <core:CheckBox Model="[Model]"
+                         BoxSize="200,200"/>
+
+          <!-- Different fonts -->
+          <core:CheckBox Model="[Model]"
+                         LabelFont="Courier New, 48"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

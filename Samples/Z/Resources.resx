@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Default" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Markup\default.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\button.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ThumbnailButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\thumbnailbutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DetailsPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\detailspage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GalleryPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\gallerypage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MainMenu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\mainmenu.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SampleData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\sampledata.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Footer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\footer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Header" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\header.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CheckBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\checkbox.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EditBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\editbox.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LogInPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\loginpage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Styles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\styles.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DownloadsPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\downloadspage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SearchPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\searchpage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Images\Background.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Container" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Images\Container.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ContentList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\contentlist.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FilterList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\filterlist.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Movies" xml:space="preserve">
+    <value>Movies</value>
+  </data>
+  <data name="Movies_Category_SubTitle" xml:space="preserve">
+    <value>view all {0} movies</value>
+    <comment>0: Number of movies</comment>
+  </data>
+  <data name="Movies_Details_Metadata" xml:space="preserve">
+    <value>{0}
+cast: {1}
+{2} min, {3}, {4}</value>
+    <comment>0: Genre, 1: Cast, 2: Length, 4: Country, 5: Year</comment>
+  </data>
+  <data name="Movies_DownloadDialog_Caption" xml:space="preserve">
+    <value>Download Movie</value>
+  </data>
+  <data name="Movies_DownloadDialog_Text" xml:space="preserve">
+    <value>"{0}" has been added to your download queue.</value>
+    <comment>0: Movie title</comment>
+  </data>
+  <data name="Movies_Filter_All" xml:space="preserve">
+    <value>all</value>
+  </data>
+  <data name="Shell_GoToMain" xml:space="preserve">
+    <value>back to main</value>
+  </data>
+  <data name="BackgroundLayer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\background.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Downloads" xml:space="preserve">
+    <value>Downloads</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="CoreControls" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\corecontrols.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Shell_KeyboardButton" xml:space="preserve">
+    <value>Show onscreen keyboard</value>
+  </data>
+  <data name="Shell_LoginMessage" xml:space="preserve">
+    <value>Use either the number keys on your remote or the onscreen keyboard to enter text</value>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>Music</value>
+  </data>
+  <data name="TV" xml:space="preserve">
+    <value>TV</value>
+  </data>
+  <data name="TV_Category_SubTitle" xml:space="preserve">
+    <value>view all {0} tv shows</value>
+  </data>
+  <data name="TV_Details_Metadata" xml:space="preserve">
+    <value>{0}, Season {1}
+{2}
+{3} min, {4}, {5}</value>
+    <comment>0: Provider, 1: Season, 3: Genre, 4: Length, 5: Country, 6: Year</comment>
+  </data>
+  <data name="TV_Filter_All" xml:space="preserve">
+    <value>all</value>
+  </data>
+  <data name="Movies_Details_Preview" xml:space="preserve">
+    <value>preview</value>
+  </data>
+  <data name="Movies_Search_Metadata1" xml:space="preserve">
+    <value>{0}
+cast: {1}</value>
+    <comment>0: Genre, 1: Cast, 2: Length, 4: Country, 5: Year</comment>
+  </data>
+  <data name="Movies_Search_Metadata2" xml:space="preserve">
+    <value>{2} min, {3}, {4}</value>
+    <comment>0: Genre, 1: Cast, 2: Length, 4: Country, 5: Year</comment>
+  </data>
+  <data name="Movies_Search_Type" xml:space="preserve">
+    <value>Movie</value>
+  </data>
+  <data name="SearchResult" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\searchresult.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Gradient_Bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\gradient.bottom.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Gradient_Top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\gradient.top.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TV_Search_Type_Episode" xml:space="preserve">
+    <value>TV Episode</value>
+  </data>
+  <data name="TV_Search_Type_Show" xml:space="preserve">
+    <value>TV Show</value>
+  </data>
+  <data name="Shell_ItemCounterSeperator" xml:space="preserve">
+    <value> of </value>
+  </data>
+  <data name="ZLogo_Full" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\zlogo.full.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ZLogo_Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\zlogo.left.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ZLogo_Right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\zlogo.right.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Shell_NoImage" xml:space="preserve">
+    <value>No image available</value>
+  </data>
+  <data name="EditBoxFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\editboxfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EditBoxNonFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\editboxnonfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GalleryFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\galleryfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ButtonFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\buttonfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ButtonNonFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\buttonnonfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CheckBoxChecked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\checkboxchecked.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CheckBoxFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\checkboxfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CheckBoxNonFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\checkboxnonfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MouseNavDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\mousenavdown.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MouseNavDownFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\mousenavdownfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MouseNavLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\mousenavleft.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MouseNavLeftFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\mousenavleftfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MouseNavRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\mousenavright.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MouseNavRightFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\mousenavrightfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MouseNavUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\mousenavup.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MouseNavUpFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\mousenavupfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Shell_Login" xml:space="preserve">
+    <value>log in</value>
+  </data>
+  <data name="Shell_LoginPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Shell_LoginRemember" xml:space="preserve">
+    <value>Remember my password</value>
+  </data>
+  <data name="Shell_LoginUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="KeyboardContents" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\keyboardcontents.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Shell_Keyboard_Backspace" xml:space="preserve">
+    <value>Backspace</value>
+  </data>
+  <data name="Shell_Keyboard_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Shell_Keyboard_ChannelDown" xml:space="preserve">
+    <value>Ch -</value>
+  </data>
+  <data name="Shell_Keyboard_ChannelUp" xml:space="preserve">
+    <value>Ch +</value>
+  </data>
+  <data name="Shell_Keyboard_Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Shell_Keyboard_Instructions1" xml:space="preserve">
+    <value>Remote Shortcuts:</value>
+  </data>
+  <data name="Shell_Keyboard_Space" xml:space="preserve">
+    <value>Space</value>
+  </data>
+  <data name="KeyboardPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\keyboardpage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EditBoxWithKeyboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\editboxwithkeyboard.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Keyboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\keyboard.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MusicDirectory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\musicdirectory.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MusicFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\musicfile.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Music_PlayDialog_Text" xml:space="preserve">
+    <value>This track has been added to your queue.</value>
+  </data>
+  <data name="ProgressBarNonFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\progressbarnonfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundItem1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\backgrounditem1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundItem2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\backgrounditem2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ProgressBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\progressbar.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProgressBarFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\progressbarfocus.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TV_RecordDialog_Text" xml:space="preserve">
+    <value>This TV show is now scheduled to record.</value>
+  </data>
+  <data name="TV_RecordDialog_ViewScheduled" xml:space="preserve">
+    <value>View Scheduled</value>
+  </data>
+  <data name="DownloadFailedDialog_Caption" xml:space="preserve">
+    <value>Download Manager Not Available</value>
+  </data>
+  <data name="DownloadFailedDialog_Text" xml:space="preserve">
+    <value>The Download Manager Service has not been installed;  downloads not possible.</value>
+  </data>
+  <data name="Shell_Keyboard_Instructions2" xml:space="preserve">
+    <value>0=Space | Clear=Backspace | Back=Cancel | Play=Done</value>
+  </data>
+  <data name="TV_NotSetUpDialog_Caption" xml:space="preserve">
+    <value>TV Not Configured</value>
+  </data>
+  <data name="TV_NotSetUpDialog_Text" xml:space="preserve">
+    <value>You must set up TV before using this feature.</value>
+  </data>
+  <data name="ZLogoProgramLibrary" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\zlogoprogramlibrary.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>

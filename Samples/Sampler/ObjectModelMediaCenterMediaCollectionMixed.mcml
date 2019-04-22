@@ -1,0 +1,322 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:ctrl="file://Controls.mcml"
+      xmlns:me="Me">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost" />
+      <mc:MediaCollection Name="TestCollection" />
+    </Locals>
+
+    <Rules>
+
+      <!-- Start playback on the MediaCollection when there is at least one item present. -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[TestCollection.Count]"
+                    ConditionOp="GreaterThan"
+                    Value="0" />
+        </Conditions>
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="MediaCollection"
+                  media="[TestCollection]"
+                  addToQueue="false" />
+        </Actions>
+      </Rule>
+
+      <!-- Set the BackgroundMode as appropriate for MediaType=Video -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaType]" />
+          <Equality Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaType.ToString]"
+                    Value="Video" />
+        </Conditions>
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="Video" />
+        </Actions>
+      </Rule>
+
+      <!-- Set the BackgroundMode as appropriate for MediaType=Audio -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaType]" />
+          <Equality Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaType.ToString]"
+                    Value="Audio" />
+        </Conditions>
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="AlbumArtMosaic" />
+        </Actions>
+      </Rule>
+
+      <!-- Set the BackgroundMode as appropriate for MediaType=Unknown -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaType]" />
+          <Equality Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaType.ToString]"
+                    Value="Unknown" />
+        </Conditions>
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="StandardAnimated" />
+        </Actions>
+      </Rule>
+
+      <!-- Set the EntryPointID so selecting the Now Playing object in Windows Media Center -->
+      <!-- returns us to the application. -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[TestCollection.IsActive]" />
+          <Equality Source="[TestCollection.IsActive]"
+                    Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.MediaExperience.EntryPointId]"
+               Value="{4CDB8FC9-06E1-4F4A-9E76-3EFAC3E225E2}\{110FDB8C-25F3-4BC2-BB1D-A393E952B8A9}" />
+        </Actions>
+      </Rule>
+
+      <!-- If the MediaCollection encounters an invalid file or can't play skip to the next item. -->
+      <Rule>
+        <Actions>
+          <Set Target="[TestCollection.ContinueOnError]"
+               Value="True" />
+        </Actions>
+      </Rule>
+
+      <!-- Turn off the screensaver for this page. -->
+      <Rule>
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.ScreenSaverEnabledHint]"
+               Value="False" />
+        </Actions>
+      </Rule>
+
+      <!-- Display the number of items in the MediaCollection in our user interface. -->
+      <Binding Target="[Count.PropertyValue]"
+               Source="[TestCollection.Count.ToString]" />
+
+      <!-- Display the MediaCollection current index in our user interface. -->
+      <Binding Target="[CurrentIndex.PropertyValue]"
+               Source="[TestCollection.CurrentIndex.ToString]" />
+
+      <!-- Display the duration of the currently playing item in our user interface. -->
+      <Binding Target="[MyDuration.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Duration.ToString]">
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Duration]" />
+        </Conditions>
+      </Binding>
+
+      <!-- Display the MPAA rating (if present) of the currently playing item in our user interface. -->
+      <Binding Target="[MyMPAARating.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#MPAARating.ToString]">
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#MPAARating]" />
+        </Conditions>
+      </Binding>
+
+      <!-- Display the title of the currently playing item in our user interface. -->
+      <Binding Target="[MyTitle.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Title.ToString]">
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Title]" />
+        </Conditions>
+      </Binding>
+
+      <!-- Display the Uri of the currently playing item in our user interface. -->
+      <Binding Target="[MyUri.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Uri.ToString]">
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Uri]" />
+        </Conditions>
+      </Binding>
+
+      <!-- Display the current Play Rate in our user interface. -->
+      <Binding Target="[MyPlayRate.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate.ToString]">
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]" />
+        </Conditions>
+      </Binding>
+
+      <!-- Display the current Play State in our user interface. -->
+      <Binding Target="[MyPlayState.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState.ToString]">
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState]" />
+        </Conditions>
+      </Binding>
+
+      <!-- Display the position of the currently playing item in our user interface. -->
+      <Binding Target="[MyPosition.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position.ToString]">
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position]" />
+        </Conditions>
+      </Binding>
+
+      <!-- Display the Buffering Progress of the currently playing item in our user interface. -->
+      <Binding Target="[MyBufferingProgress.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.BufferingProgress.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.BufferingProgress]" />
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+        </Conditions>
+      </Binding>
+
+      <!-- Display the Media Type of the currently playing item in our user interface. -->
+      <Binding Target="[MyMediaType.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaType.ToString]">
+        <Conditions>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true" />
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaType]" />
+        </Conditions>
+      </Binding>
+
+      <!-- Note the current state of IsForegroundApplication which can be picked up by a listener like DbgView. -->
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.ApplicationContext.IsForegroundApplication]" />
+        </Conditions>
+        <Actions>
+          <DebugTrace Message="IsForegroundApplication={0}">
+            <Params>
+              <ObjectPath ObjectPath="[AddInHost.ApplicationContext.IsForegroundApplication.ToString]"/>
+            </Params>
+          </DebugTrace>
+        </Actions>
+      </Rule>
+
+      <!-- Note the current state of IsCurrentlyVisible which can be picked up by a listener like DbgView. -->
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.ApplicationContext.IsCurrentlyVisible]" />
+        </Conditions>
+        <Actions>
+          <DebugTrace Message="IsCurrentlyVisible={0}">
+            <Params>
+              <ObjectPath ObjectPath="[AddInHost.ApplicationContext.IsCurrentlyVisible.ToString]"/>
+            </Params>
+          </DebugTrace>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <!-- The controls which will be used to display various states and properties to the user. -->
+          <ctrl:PropertyAndValue Name="Count"
+                                 PropertyName="Items in the collection"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="CurrentIndex"
+                                 PropertyName="CurrentIndex"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyDuration"
+                                 PropertyName="Duration"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyMPAARating"
+                                 PropertyName="MPAARating"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyTitle"
+                                 PropertyName="Title"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyUri"
+                                 PropertyName="Uri"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyPlayRate"
+                                 PropertyName="PlayRate"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyPlayState"
+                                 PropertyName="PlayState"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyPosition"
+                                 PropertyName="Position"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyBufferingProgress"
+                                 PropertyName="BufferingProgress"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyMediaType"
+                                 PropertyName="MediaType"
+                                 PropertyValue="" />
+          <Repeater>
+            <!-- The individual items we will add to the MediaCollection for playback. -->
+            <Source>
+              <cor:String String="C:\Users\Public\Videos\Windows Media Center SDK\Video01.wmv" />
+              <cor:String String="C:\Users\Public\Music\Windows Media Center SDK\Audio01.mp3" />
+              <cor:String String="C:\Users\Public\Videos\Windows Media Center SDK\Video02.wmv" />
+              <cor:String String="C:\Users\Public\Music\Windows Media Center SDK\Audio02.mp3" />
+              <cor:String String="C:\Users\Public\Videos\Windows Media Center SDK\Video03.wmv" />
+              <cor:String String="C:\Users\Public\Music\Windows Media Center SDK\Audio03.mp3" />
+              <cor:String String="C:\Users\Public\Videos\Windows Media Center SDK\Video04.wmv" />
+            </Source>
+            <Content>
+              <me:RepeatItem Item="[RepeatedItem!cor:String]"
+                             TestCollection="[TestCollection]" />
+            </Content>
+          </Repeater>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <UI Name="RepeatItem">
+
+    <Properties>
+      <cor:String Name="Item"
+                  String="Test" />
+      <mc:MediaCollection Name="TestCollection" />
+    </Properties>
+
+    <Rules>
+      <!-- Add the item to the MediaCollection. -->
+      <Rule>
+        <Actions>
+          <Invoke Target="[TestCollection.AddItem]"
+                  media="[Item]" />
+        </Actions>
+      </Rule>
+    </Rules>
+
+  </UI>
+
+</Mcml>

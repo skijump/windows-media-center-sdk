@@ -1,0 +1,242 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System" >
+
+  <!-- StagesHandling sample.                                               -->
+  <!-- Stages handling demonstrates how to use handle the flow of input     -->
+  <!-- events in the UI object hierarchy. When you have a UI object chain,   -->
+  <!-- the HandlerStage is used to determine when an event passes from      -->
+  <!-- parent to child UI objects.                                          -->
+  <!-- For example, the parent UI object could choose to handle the event   -->
+  <!-- and not pass it to it's children. The parent would in this case set  -->
+  <!-- HandlerStage="Routed" and set Handled="True".                        -->
+  <!-- HandleStage="Routed" : Parent receives the event before the children -->
+  <!-- HandleStage="Bubbled" : Parent receives the event after the children -->
+  <!-- HandleStage="Direct" : UI object receives the event when it has focus-->
+  <!-- A UI object can stop the event flow at any time by setting           -->
+  <!-- Handle="true".                                                       -->
+
+  <!-- In this example, we have two UI objects of type 'HandleEnterUI'.     -->
+  <!-- Both these objects handle the Enter key.                             -->
+  <!-- In the first object, the parent handles the 'Enter' key on           -->
+  <!-- HandleStage=Routed and does not pass the event to it's child.        -->
+  <!-- In the second object, the parent handles the 'Enter' key on          -->
+  <!-- HandleStage=Bubbled. So it's child receives the event and stops the  -->
+  <!-- event flow. Hence the parent does not receive the event.             -->
+
+  <UI Name="Main">
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:InfoUI />
+          <Panel Layout="HorizontalFlow" >
+            <Children>
+              <me:HandleEnterUI Name="First"
+                                Layout="HorizontalFlow"
+                                LabelText="Routed- I handle Enter"
+                                ChildText="I don't receive the Enter"
+                                HandlerStage="Routed" />
+              <me:HandleEnterUI Name="Second"
+                                Layout="HorizontalFlow"
+                                LabelText="Bubbled-I don't receive the Enter"
+                                ChildText="I handle the Enter"
+                                HandlerStage="Bubbled" />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <!-- This UI object hosts child colorfills that can handle the Enter      -->
+  <!-- key. It takes the handler stage as a parameter. That will determine  -->
+  <!-- if the Enter key will be handled by the parent or child.             -->
+  <UI Name="HandleEnterUI">
+    <Properties>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor"
+             Color="DimGray"/>
+      <Color Name="BackgroundPressedColor"
+             Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor"
+             Color="White"/>
+      <Color Name="LabelPressedColor"
+             Color="FireBrick"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="Arial,20"/>
+
+      <!-- The text that will be displayed in the parent and child objects. -->
+      <cor:String Name="LabelText"
+                  String="MyLabel" />
+      <cor:String Name="ChildText"
+                  String="Child" />
+
+      <!-- This is initialized to Direct. This will be replaced by the      -->
+      <!-- value passed in.                                                 -->
+      <InputHandlerStage Name="HandlerStage"
+                         InputHandlerStage="Direct" />
+
+    </Properties>
+
+    <Locals>
+
+      <!-- Use the key handler to handle key press events. -->
+      <KeyHandler Name="EnterHandler"
+                  Key="Enter"
+                  Handle="true"
+                  HandlerStage="[HandlerStage]"/>
+
+    </Locals>
+
+    <!-- Define how to handle the input using rules. -->
+    <Rules>
+
+      <!-- When we receive Key Focus, change our outline color -->
+      <Condition Source="[Input.DeepKeyFocus]"
+                 SourceValue="True">
+        <Actions>
+          <Set Target="[Outline.Content]"
+               Value="Lawngreen"/>
+        </Actions>
+      </Condition>
+
+      <!-- Rule to define the behavior when Enter key is pressed.        -->
+      <!-- Change the background and label color using the colors above. -->
+      <Condition Source="[EnterHandler.Pressing]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[BackgroundPressedColor]" />
+          <Set Target="[Label.Color]"
+               Value="[LabelPressedColor]" />
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+      <!-- Solid background color. -->
+      <ColorFill Name="Outline"
+                 Content="Firebrick"
+                 Padding="10,10,10,10"
+                 Margins="10,10,10,10">
+
+        <Children>
+          <ColorFill Name="Background"
+                     Content="[BackgroundColor]"
+                     MouseInteractive="true"
+                     Margins="10,10,10,10"
+                     Padding="5,5,5,5"
+                     Layout="VerticalFlow">
+            <Children>
+
+              <!-- The label to display. -->
+              <Text Name="Label"
+                    Content="[LabelText]"
+                    Color="[LabelColor]"
+                    Font="[LabelFont]"
+                    Margins="30,30,30,30"/>
+              <me:Child LabelText="[ChildText]" />
+
+            </Children>
+          </ColorFill>
+        </Children>
+
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+  <!-- This implements the child object that can handle the Enter key press. -->
+  <!-- When it gets the event, it sets Handle=True and stops the event flow. -->
+  <UI Name="Child">
+
+    <Properties>
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="Arial,20"/>
+
+      <cor:String Name="LabelText"
+                  String="MyLabel" />
+
+    </Properties>
+
+    <Locals>
+      <KeyHandler Name="Handler"
+                  Key="Enter"
+                  Handle="true" />
+    </Locals>
+
+    <Rules>
+      <Condition Source="[Handler.Pressing]"
+                 SourceValue="true"
+                 Target="[Background.Content]"
+                 Value="Blue" />
+    </Rules>
+
+    <Content>
+      <ColorFill Name="Background"
+                 Content="Yellow"
+                 MinimumSize="50,50" >
+        <Children>
+
+          <!-- The label to display. -->
+          <Text Content="[LabelText]"
+                Color="Black"
+                Font="[LabelFont]"
+                Margins="30,30,30,30"/>
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+
+  <!-- This implements InfoUI object that will explain usage for the sample. -->
+  <UI Name="InfoUI">
+
+    <Properties>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="Arial,16"/>
+
+    </Properties>
+
+    <Content>
+
+      <ColorFill Name="InfoPanel"
+                 Content="White"
+                 Padding="2,2,2,2">
+        <Children>
+
+          <ColorFill Name="Background"
+                     Content="Black"
+                     Padding="3,3,3,3"
+                     Layout="VerticalFlow">
+            <Children>
+
+              <Text Font="[LabelFont]"
+                    Color="White"
+                    Content="Press the Enter key to see the event handled"/>
+              <Text Font="[LabelFont]"
+                    Color="White"
+                    Content="Press the left and right arrows to move between panels"/>
+
+            </Children>
+          </ColorFill>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

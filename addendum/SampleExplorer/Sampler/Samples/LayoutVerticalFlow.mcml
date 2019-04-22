@@ -1,0 +1,117 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- A VerticalFlow layout is used to layout child objects in a          -->
+  <!-- top-to-bottom flowing manner. By default, VerticalFlow layout is    -->
+  <!-- a "size-to-children" layout. This means that it will only take as   -->
+  <!-- much space as it needs to layout its children.                      -->
+
+  <!-- VerticalFlow layout can be defined in 2 forms: inline and expanded. -->
+  <!-- Inline form is specified by setting Layout="VerticalFlow" in the    -->
+  <!-- ViewItem. When using inline form, the VerticalFlow layout is        -->
+  <!-- configured with default settings (no wrapping, near item alignment  -->
+  <!-- and no spacing between items). Expanded form is specified by        -->
+  <!-- defining a Layout block and setting attributes and values in it.    -->
+  <!-- When using expanded form, the VerticalFlow layout can be fully      -->
+  <!-- configured and does not force default settings to be used.          -->
+
+  <!-- This example has children with flow layouts within a single parent  -->
+  <!-- flow layout. It demonstrates both inline and expanded form and the  -->
+  <!-- use of item alignment, strip alignment, wrapping  and spacing.      -->
+
+  <UI Name="VerticalFlow">
+
+    <Content>
+
+      <!-- Parent that uses a horizontal flow in expanded form. It is      -->
+      <!-- configured for wrapping and spacing between items/lines.        -->
+      <ColorFill Content="White"
+                 Padding="10,10,10,10">
+        <Layout>
+          <FlowLayout Spacing="5,5"
+                      AllowWrap="true"/>
+        </Layout>
+        <Children>
+
+          <!-- Child that uses a vertical flow in inline form. -->
+          <ColorFill Layout="VerticalFlow"
+                     Content="Goldenrod">
+            <Children>
+              <me:LayoutItem Display="A"
+                             MinimumSize="10,150"/>
+              <me:LayoutItem Display="B"
+                             MinimumSize="150,10"/>
+              <me:LayoutItem Display="C"
+                             MinimumSize="200,200"/>
+            </Children>
+          </ColorFill>
+
+          <!-- Child that uses a vertical flow with a non-default  -->
+          <!-- item alignment.                                     -->
+          <ColorFill Content="Goldenrod">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+              <me:LayoutItem Display="A"
+                             MinimumSize="10,150"/>
+              <me:LayoutItem Display="B"
+                             MinimumSize="150,10"/>
+              <me:LayoutItem Display="C"
+                             MinimumSize="200,200"/>
+            </Children>
+          </ColorFill>
+
+          <!-- Child that uses a vertical flow with a non-default  -->
+          <!-- item alignment and strip alignment.                 -->
+          <ColorFill Content="Goldenrod">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          ItemAlignment="Center"
+                          StripAlignment="Center"/>
+            </Layout>
+            <Children>
+              <me:LayoutItem Display="A"
+                             MinimumSize="10,150"/>
+              <me:LayoutItem Display="B"
+                             MinimumSize="150,10"/>
+              <me:LayoutItem Display="C"
+                             MinimumSize="200,200"/>
+            </Children>
+          </ColorFill>
+
+        </Children>
+
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- UI that displays an image with some text. The image content -->
+  <!-- fills to the size of the Graphic.                           -->
+  <UI Name="LayoutItem">
+
+    <Properties>
+      <cor:String Name="Display"
+                  String="null"/>
+    </Properties>
+
+    <Content>
+      <Graphic Content="image://me:LayoutItemImage"
+               Padding="5,5,5,5">
+        <Children>
+          <Text Content="[Display]"
+                Color="White"
+                Font="Tahoma,12"
+                WordWrap="true"/>
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+  <Image Name="LayoutItemImage"
+         Source="resx://Sampler/Sampler.Resources/LayoutGraphic"
+         NineGrid="4,4,4,4"/>
+
+</Mcml>

@@ -1,0 +1,48 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <cor:String Name="MediaPath"
+                  String="c:\users\public\videos\Windows Media Center SDK\Video01.wmv"/>
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[MediaPath]"
+                  addToQueue="false"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Video MinimumSize="400,300"/>
+          <ctrl:Button ButtonLabel="Go To Fullscreen">
+            <Command>
+              <InvokeCommand Target="[AddInHost.MediaCenterEnvironment.MediaExperience.GoToFullScreen]"/>
+            </Command>
+          </ctrl:Button>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

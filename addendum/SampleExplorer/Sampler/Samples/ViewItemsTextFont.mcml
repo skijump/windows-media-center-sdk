@@ -1,0 +1,38 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <UI Name="Default">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="Font=Arial,12"
+                Color="White"/>
+          <Text Content="ABCDEFGHIJKLMNOPRSTUVXZabcdefghijklmnoprstuvxz1234567890"
+                Font="Arial,12"
+                Color="Yellow"/>
+          <Text Content="Font=Verdana,12"
+                Color="White"/>
+          <Text Content="ABCDEFGHIJKLMNOPRSTUVXZabcdefghijklmnoprstuvxz1234567890"
+                Font="Verdana,12"
+                Color="Yellow"/>
+          <Text Content="Font=Tahoma,12"
+                Color="White"/>
+          <Text Content="ABCDEFGHIJKLMNOPRSTUVXZabcdefghijklmnoprstuvxz1234567890"
+                Font="Tahoma,12"
+                Color="Yellow"/>
+          <Text Content="Font=Courier New,12"
+                Color="White"/>
+          <Text Content="ABCDEFGHIJKLMNOPRSTUVXZabcdefghijklmnoprstuvxz1234567890"
+                Font="Courier New,12"
+                Color="Yellow"/>
+          <Text Content="Font=Impact,12"
+                Color="White"/>
+          <Text Content="ABCDEFGHIJKLMNOPRSTUVXZabcdefghijklmnoprstuvxz1234567890"
+                Font="Impact,12"
+                Color="Yellow"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

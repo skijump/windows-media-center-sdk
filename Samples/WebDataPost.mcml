@@ -1,0 +1,115 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:ctrl="http://retrosight.com/samples/windowsmediacentersdk/6/Controls.mcml"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:sys="assembly://System/System">
+
+  <!-- A common scenario using Data Access Model Item is to send   -->
+  <!-- information and request relevant data. For example, in the  -->
+  <!-- following sample, users send a string of user name and      -->
+  <!-- receive a welcome statement and a user ID.                  -->
+
+  <!-- Sending and fetching data from a web server can be done in   -->
+  <!-- several ways, using different request method. This sample    -->
+  <!-- demonstrates how to send and request data from a web server  -->
+  <!-- using POST method. Request document contains the data to be  -->
+  <!-- sent to the server.                                          -->
+
+  <!-- When using POST method with a empty request document, you    -->
+  <!-- will get an error response.                                  -->
+
+  <!-- Web samples are designed to work when loaded       -->
+  <!-- via the HTTP:// or HTTPS:// protocol. Generally    -->
+  <!-- speaking, opening these samples using FILE:// will -->
+  <!-- not produce the desired results.                   -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <!-- Construct Data Access Model Item -->
+      <da:RemoteResourceUri Name="RequestURI"/>
+      <da:XmlRemoteResource Name="MyResource">
+        <Mappings>
+          <da:XmlRemoteValue Name="UserName"
+                             Source="/users/@name" />
+          <da:XmlRemoteValue Name="WelcomeInformation"
+                             Source="/users/WelcomeInformation"/>
+          <da:XmlRemoteValue Name="UserID"
+                             Source="/users/ID"/>
+        </Mappings>
+      </da:XmlRemoteResource>
+    </Properties>
+
+    <Locals>
+      <!-- Resource URI-->
+      <cor:String Name="ResourceString"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/WebDataService.aspx"/>
+      <Command Name="RequestCommand"
+               Description="Register"/>
+      <EditableText Name="UserNameEditableText"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[RequestCommand.Invoked]">
+        <Actions>
+          <!-- Set and display request URI-->
+          <Set Target="[RequestURI.FullString]"
+               Value="[ResourceString]"/>
+          <Set Target="[RequestFullString.PropertyValue]"
+               Value="[RequestURI.FullString]"/>
+          <!-- Generate request document -->
+          <Set Target="[MyResource.RequestDocument]"
+               Value="[UserNameEditableText.Value]"  />
+          <!-- Invoke data request -->
+          <!-- Request Method is POST -->
+          <Set Target="[MyResource.RequestUri]"
+               Value="[RequestURI]"/>
+          <Set Target="[MyResource.RequestMethod]"
+               Value="POST"/>
+          <Invoke Target="[MyResource.GetDataFromResource]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <!-- Binding response data to view items -->
+      <Binding Source="[MyResource.Status.ToString]"
+               Target="[RequestStatus.PropertyValue]"/>
+      <Binding Source="[MyResource.Mappings.#UserName!da:XmlRemoteValue.String]"
+               Target="[ResponseUserName.PropertyValue]"/>
+      <Binding Source="[MyResource.Mappings.#WelcomeInformation!da:XmlRemoteValue.String]"
+               Target="[ResponseWelcomeInfo.PropertyValue]"/>
+      <Binding Source="[MyResource.Mappings.#UserID!da:XmlRemoteValue.String]"
+               Target="[ResponseUserID.PropertyValue]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <!--Editable Box: Input User Name-->
+          <ctrl:Editbox EditableText="[UserNameEditableText]"
+                        LabelName="Name: "/>
+          <!-- Request Button -->
+          <ctrl:Button Command="[RequestCommand]"
+                       ButtonLabel="[RequestCommand.Description]"/>
+          <!-- Display data -->
+          <ctrl:PropertyAndValue Name="RequestFullString"
+                                 PropertyName="Rrequest URI"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="RequestStatus"
+                                 PropertyName="Status"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="ResponseUserName"
+                                 PropertyName="User Name"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="ResponseWelcomeInfo"
+                                 PropertyName="Welcome Information"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="ResponseUserID"
+                                 PropertyName="User ID"
+                                 PropertyValue=""/>
+        </Children>
+      </Panel>
+    </Content>
+    
+  </UI>
+  
+</Mcml>

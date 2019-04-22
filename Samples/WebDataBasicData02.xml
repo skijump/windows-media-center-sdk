@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<album artist="Album 02 Artist"
+       title="Album 02 Title">
+  <url>http://retrosight.com/samples/windowsmediacentersdk/6/</url>
+  <releasedate>29 Aug 2001, 00:00</releasedate>
+  <coverart>http://retrosight.com/samples/windowsmediacentersdk/6/FourBoxGraphic.png</coverart>
+  <tracks>
+    <track title="Blues"
+           art="http://retrosight.com/samples/windowsmediacentersdk/6/audio02.jpg">
+      <url>http://retrosight.com/samples/windowsmediacentersdk/6/audio02.mp3</url>
+    </track>
+    <track title="Rock"
+           art="http://retrosight.com/samples/windowsmediacentersdk/6/audio03.jpg">
+      <url>http://retrosight.com/samples/windowsmediacentersdk/6/audio03.mp3</url>
+    </track>
+    <track title="Groove"
+           art="http://retrosight.com/samples/windowsmediacentersdk/6/audio01.jpg">
+      <url>http://retrosight.com/samples/windowsmediacentersdk/6/audio01.mp3</url>
+    </track>
+  </tracks>
+</album>

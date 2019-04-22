@@ -1,0 +1,174 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:ctrl="http://retrosight.com/samples/windowsmediacentersdk/6/Controls.mcml"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:sys="assembly://System/System"
+      xmlns:me="Me">
+
+  <UI Name="Default">
+
+    <!-- Web samples are designed to work when loaded       -->
+    <!-- via the HTTP:// or HTTPS:// protocol. Generally    -->
+    <!-- speaking, opening these samples using FILE:// will -->
+    <!-- not produce the desired results.                   -->
+
+    <Properties>
+      <da:RemoteResourceUri Name="MyUri"/>
+      <da:XmlRemoteResource Name="MyResource">
+        <Mappings>
+          <da:XmlRemoteValue Name="Artist"
+                             Source="/album/@artist" />
+          <da:XmlRemoteValue Name="Title"
+                             Source="/album/@title" />
+          <da:XmlRemoteValue Name="URL"
+                             Source="/album/url" />
+          <da:XmlRemoteValue Name="ReleaseDate"
+                             Source="/album/releasedate" />
+          <da:XmlRemoteValue Name="CoverArt"
+                             Source="/album/coverart" />
+          <da:XmlRemoteValueList Name="Tracks"
+                                 RepeatedType="PropertySet"
+                                 Source="/album/tracks/track" >
+            <Mappings>
+              <da:XmlRemoteValue Property="Entries.#Title"
+                                 Source="/@title" />
+              <da:XmlRemoteValue Property="Entries.#Art"
+                                 Source="/@art" />
+              <da:XmlRemoteValue Property="Entries.#URL"
+                                 Source="/url"    />
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+    </Properties>
+
+    <Locals>
+      <cor:String Name="TestUriOne"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/WebDataBasicData01.xml"/>
+      <cor:String Name="TestUriTwo"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/WebDataBasicData02.xml"/>
+      <Command Name="MyCommand"
+               Description="Request Data"/>
+      <Command Name="MyCommand2"
+               Description="Request Data"/>
+      <Image Name="MyImage" />
+    </Locals>
+
+    <Rules>
+      <Changed Source="[MyCommand.Invoked]">
+        <Actions>
+          <Set Target="[MyUri.FullString]"
+               Value="[TestUriOne]"
+               InvokePolicy="Synchronous" />
+          <Set Target="[MyResource.RequestUri]"
+               Value="[MyUri]"
+               InvokePolicy="Synchronous"/>
+          <Invoke Target="[MyResource.GetDataFromResource]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyCommand2.Invoked]">
+        <Actions>
+          <Set Target="[MyUri.FullString]"
+               Value="[TestUriTwo]"
+               InvokePolicy="Synchronous" />
+          <Set Target="[MyResource.RequestUri]"
+               Value="[MyUri]"
+               InvokePolicy="Synchronous"/>
+          <Invoke Target="[MyResource.GetDataFromResource]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <Binding Target="[MyArtist.PropertyValue]"
+               Source="[MyResource.Mappings.#Artist!da:XmlRemoteValue.String]" />
+      <Binding Target="[MyTitle.PropertyValue]"
+               Source="[MyResource.Mappings.#Title!da:XmlRemoteValue.String]" />
+      <Binding Target="[MyURL.PropertyValue]"
+               Source="[MyResource.Mappings.#URL!da:XmlRemoteValue.String]" />
+      <Binding Target="[MyReleaseDate.PropertyValue]"
+               Source="[MyResource.Mappings.#ReleaseDate!da:XmlRemoteValue.String]" />
+      <Binding Target="[MyGraphic.Content]"
+               Source="[MyResource.Mappings.#CoverArt!da:XmlRemoteValue.Image]" />
+      <Changed Source="[MyResource.ResponseStatusCode]">
+        <Actions>
+          <Set Target="[MyResponseStatusCode.PropertyValue]"
+               Value="[MyResource.ResponseStatusCode.ToString]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyResource.ResponseStatusDescription]">
+        <Conditions>
+          <IsValid Source="[MyResource.ResponseStatusDescription]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[MyResponseStatusDescription.PropertyValue]"
+               Value="[MyResource.ResponseStatusDescription]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <ctrl:Button Command="[MyCommand]"/>
+              <ctrl:Button Command="[MyCommand2]"/>
+              <ctrl:PropertyAndValue Name="MyResponseStatusCode"
+                                     PropertyName="ResponseStatusCode"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyResponseStatusDescription"
+                                     PropertyName="ResponseStatusDescription"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyArtist"
+                                     PropertyName="Artist"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyTitle"
+                                     PropertyName="Title"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyURL"
+                                     PropertyName="URL"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyReleaseDate"
+                                     PropertyName="ReleaseDate"
+                                     PropertyValue="" />
+              <Graphic Name="MyGraphic" />
+              <Repeater Source="[MyResource.Mappings.#Tracks!da:XmlRemoteValueList.List]"
+                        Layout="VerticalFlow">
+                <Content>
+                  <Panel Layout="HorizontalFlow">
+                    <Children>
+                      <me:RepeatedItem MyTitle="[RepeatedItem!PropertySet.Entries.#Title!cor:String]"
+                                       MyUrl="[RepeatedItem!PropertySet.Entries.#URL!cor:String]" />
+                    </Children>
+                  </Panel>
+                </Content>
+              </Repeater>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <UI Name="RepeatedItem">
+
+    <Properties>
+      <cor:String Name="MyTitle"
+                  String="$Required" />
+      <cor:String Name="MyUrl"
+                  String="$Required" />
+    </Properties>
+
+    <Content>
+      <Panel Layout="HorizontalFlow">
+        <Children>
+          <ctrl:PropertyAndValue PropertyName="[MyTitle]"
+                                 PropertyValue="[MyUrl]" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

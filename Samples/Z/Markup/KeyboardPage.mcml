@@ -1,0 +1,50 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:keyboard="resx://Z/Z.Resources/Keyboard"
+      xmlns:me="Me">
+
+  <!-- A dedicated page for keyboard input -->
+  <UI Name="KeyboardPage">
+    <Properties>
+      <!-- The text that we're currently editing. -->
+      <EditableText Name="Model"
+                    EditableText="$Required"/>
+
+      <!-- The application - necessary for causing a backward navigation -->
+      <z:Application Name="Application"
+                     Application="$Required"/>
+
+      <!-- Is this a password field? -->
+      <sys:Boolean Name="Password"
+                   Boolean="false"/>
+
+      <!-- When the user selects "Done" should that also submit? -->
+      <sys:Boolean Name="SubmitWhenDone"
+                   Boolean="false"/>
+    </Properties>
+
+    <Locals>
+      <!-- When the user is done go back a page -->
+      <InvokeCommand Name="Exit"
+                     Target="[Application.GoBack]"/>
+    </Locals>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+
+          <keyboard:Keyboard Model="[Model]"
+                             Password="[Password]"
+                             Exit="[Exit]"/>
+
+          <core:Background/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

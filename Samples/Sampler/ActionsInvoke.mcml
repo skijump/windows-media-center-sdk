@@ -1,0 +1,72 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Invoke actions are used in expanded rule syntax for adding      -->
+  <!-- support for calling arbitrary methods on any object. Invoke is  -->
+  <!-- a powerful tool in that supports methods with any number of     -->
+  <!-- parameters, and handles return results.                         -->
+
+  <!-- Invoke actions are a great way to interact with data or code    -->
+  <!-- objects when a user clicks on something in the UI.              -->
+
+  <!-- This UI demonstrates the Invoke action. A random number is      -->
+  <!-- generated on every Tick of the Timer. The .NET Framework        -->
+  <!-- Random object is used by calling Next and passing in a maximum  -->
+  <!-- value. Every parameter passed to the method is referenced by    -->
+  <!-- name (in this case, the parameter name is maxValue). The        -->
+  <!-- parameter names must exactly match the actual method signature  -->
+  <!-- (including upper and lower casing). The result of the Next      -->
+  <!-- method will be placed in the Value local variable (which is     -->
+  <!-- bound to a Text box).                                           -->
+
+  <UI Name="InvokeAction">
+
+    <!-- Accept a maximum value. -->
+    <Properties>
+      <cor:Int32 Name="MaximumValue"
+                 Int32="100"/>
+    </Properties>
+
+    <!-- Build a Timer, a Random number generator, and the current value. -->
+    <Locals>
+      <Timer Name="Timer"
+             Enabled="true"
+             Interval="500"/>
+      <cor:Random Name="Random"/>
+      <cor:Int32 Name="Value"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- Value is bound to the Text content. -->
+      <Binding Source="[Value.ToString]"
+               Target="[Label.Content]"/>
+
+      <!-- On every tick, generate a new random number. -->
+      <Changed Source="[Timer.Tick]">
+        <Actions>
+
+          <!-- The Invoke action will call the Next method on the Random -->
+          <!-- object. maxValue is the only parameter and is set by a UI -->
+          <!-- property. The return result of Next will be placed in     -->
+          <!-- the Value local (which is bound to the Text content).     -->
+          <Invoke Target="[Random.Next]"
+                  maxValue="[MaximumValue]"
+                  ResultTarget="[Value]"/>
+
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+          <!-- Text that displays the random number value. -->
+          <Text Name="Label"
+                Color="LightSlateBlue"/>
+
+    </Content>
+  </UI>
+
+</Mcml>

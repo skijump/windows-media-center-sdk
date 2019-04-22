@@ -1,0 +1,115 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:b="resx://Sampler/Sampler.Resources/ControlsSimpleButton"
+      xmlns:me="Me">
+
+  <!-- UI tags are the most common top-level tag within an MCML resource.   -->
+  <!-- However, MCML supports any .NET Framework object at the top-level.   -->
+  <!-- All top-level tags must be named, and all of them are placed in a    -->
+  <!-- markup library. These markup libraries are accessible both inside    -->
+  <!-- and outside of the MCML file and are accessed using this syntax:     -->
+
+  <!--   library://namespace:identifier                                     -->
+  <!--   (For example: image://me:MyLogo)                                   -->
+
+  <!-- You can use this markup library syntax in a value for any property   -->
+  <!-- that accepts that type. In the above 'image://' example, that value  -->
+  <!-- can be used for the Graphic Content property because it takes an     -->
+  <!-- Image value.                                                         -->
+
+  <!-- NOTE: Values from markup libraries are shared.                       -->
+
+  <!-- The set of predefined libraries are as follows:                      -->
+
+  <!-- 1) Image     (image://):     Stores Image types.                     -->
+  <!-- 2) Sound     (sound://):     Stores Sound types.                     -->
+  <!-- 3) Font      (font://):      Stores Font types.                      -->
+  <!-- 4) Color     (color://):     Stores Color types.                     -->
+  <!-- 5) Animation (animation://): Stores Animation types.                 -->
+  <!-- 6) Global    (global://):    Stores all other types.                 -->
+
+  <!-- This sample demonstrates how to reference top-level objects within   -->
+  <!-- the markup. Notice the use of the "Me" namespace. In order to access -->
+  <!-- objects within the context of an MCML file, the "Me" namespace is    -->
+  <!-- used. This namespace can also refer to another MCML resource that is -->
+  <!-- specified using an xmlns statement.                                  -->
+
+  <!-- Markup libraries are typically used for storing common objects (such -->
+  <!-- as Images and Animations) in separate files (typically for reuse and -->
+  <!-- maintainability).                                                    -->
+
+  <!-- Top-level Image. -->
+  <Image Name="Logo"
+         Source="resx://Sampler/Sampler.Resources/FourBoxGraphic"/>
+
+  <!-- Top-level Sound. -->
+  <Sound Name="Intro"
+         Source="resx://Sampler/Sampler.Resources/Launch"/>
+
+  <!-- Top-level Animation. -->
+  <Animation Name="Boing"
+             CenterPointPercent=".5,.5,1">
+    <Keyframes>
+      <ScaleKeyframe Time="0"
+                     Value="1,1,1"/>
+      <ScaleKeyframe Time=".35"
+                     Value=".5,.5,1"/>
+      <ScaleKeyframe Time=".4"
+                     Value="2,2,1"/>
+      <ScaleKeyframe Time="2"
+                     Value="1,1,1"/>
+      <RotateKeyframe Time="0"
+                      Value="0deg;0,0,1"/>
+      <RotateKeyframe Time="2"
+                      Value="720deg;0,0,1"/>
+    </Keyframes>
+  </Animation>
+
+  <!-- Sample UI. -->
+  <UI Name="MarkupLibraries">
+
+    <Locals>
+      <Command Name="PlayIt"
+               Description="Let's hear it, again!"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[PlayIt.Invoked]">
+        <Actions>
+
+          <!-- Play a sound (reference to a Sound outside this scope).   -->
+          <PlaySound Sound="sound://me:Intro"/>
+
+          <!-- Do animation (reference to Animation outside this scope). -->
+          <PlayAnimation Target="[Logo]"
+                         Animation="animation://me:Boing"/>
+
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"
+                      Spacing="20,0"/>
+        </Layout>
+        <Children>
+
+          <Text Content="Markup Libraries"
+                Color="White" />
+
+          <!-- Display image (reference Image outside this scope.) -->
+          <Graphic Name="Logo"
+                   Content="image://me:Logo"/>
+
+          <b:SimpleButton Command="[PlayIt]"/>
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

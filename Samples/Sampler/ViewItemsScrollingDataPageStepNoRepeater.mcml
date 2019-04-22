@@ -1,0 +1,249 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:ctrl="file://Controls.mcml"
+      xmlns:me="Me">
+
+  <!-- Test ScrollingData's 'PageStep' for a 
+       Scroller ViewItem with No Repeater.  -->
+  <UI Name="ScrollingDataPageStep_NoRepeater">
+
+    <Locals>
+      <!-- Set PageStep to .5 which means to scroll .5 pages each time PageUp/PageDown is pressed-->
+      <ScrollingData Name="ScrollingData"
+                     PageStep=".5"/>
+
+      <Command Name="Command"
+               Description="Toggle Orientation"/>
+
+      <ModelItem Name="Model"
+                 Description="Horizontal"/>
+    </Locals>
+
+    <!-- This is where the scrolling objects get hooked up to each     -->
+    <!-- other. Default rules are a good place to do this since Rules  -->
+    <!-- get run after the rest of the UI is created and ready to go.  -->
+    <Rules>
+      <!-- When ScrollingData changes, update Total Pages -->
+      <Binding Source="[ScrollingData.TotalPages]"
+               Target="[TotalPagesText.PropertyValue]">
+        <Transformer>
+          <FormatTransformer Format="TotalPages is: {0}"
+                             ExtendedFormat="#"/>
+        </Transformer>
+      </Binding>
+
+      <!-- When ScrollingData changes, update the current page -->
+      <Binding Source="[ScrollingData.CurrentPage]"
+               Target="[CurrentPageText.PropertyValue]">
+        <Transformer>
+          <FormatTransformer Format="CurrentPage is: {0}"
+                             ExtendedFormat="#"/>
+        </Transformer>
+      </Binding>
+
+      <!-- Rules to toggle between Vertical and Horizontal orientation
+           Also sets the PageStep size -->
+
+      <Rule>
+        <Conditions>
+          <Modified  Source="[Command.Invoked]"/>
+          <Equality  Source="[Model.Description]"
+                     Value="Vertical"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Model.Description]"
+               Value="Horizontal"/>
+          <Set Target="[ScrollingData.PageStep]"
+               Value=".5"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Modified  Source="[Command.Invoked]"/>
+          <Equality  Source="[Model.Description]"
+                     Value="Horizontal"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Model.Description]"
+               Value="Vertical"/>
+          <Set Target="[ScrollingData.PageStep]"
+               Value="2"/>
+        </Actions>
+      </Rule>
+
+      <!-- Set the CanScrollUp and CanScrollDown values -->
+      <Condition Source="[ScrollingData.CanScrollUp]"
+                 ConditionOp="Equals"
+                 SourceValue="true"
+                 Target="[CanScrollUp.PropertyValue]"
+                 Value="CanScrollUp is true"/>
+      <Condition Source="[ScrollingData.CanScrollDown]"
+                 ConditionOp="Equals"
+                 SourceValue="true"
+                 Target="[CanScrollDown.PropertyValue]"
+                 Value="CanScrollDown is true"/>
+      <Condition Source="[ScrollingData.CanScrollUp]"
+                 ConditionOp="Equals"
+                 SourceValue="false"
+                 Target="[CanScrollUp.PropertyValue]"
+                 Value="CanScrollUp is false"/>
+      <Condition Source="[ScrollingData.CanScrollDown]"
+                 ConditionOp="Equals"
+                 SourceValue="false"
+                 Target="[CanScrollDown.PropertyValue]"
+                 Value="CanScrollDown is false"/>
+
+      <Binding Source="[Model.Description]"
+               Target="[CurrentOrientation.PropertyValue]">
+        <Transformer>
+          <FormatTransformer Format="Current Orientation is: {0}"/>
+        </Transformer>
+      </Binding>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:Button Name="ToggleOrientation"
+                       Command="[Command]"
+                       ButtonLabel="Toggle Orientation"/>
+          <ctrl:PropertyAndValue Name="CurrentOrientation"
+                                 PropertyName="CurrentOrientation"
+                                 PropertyValue=""/>
+
+          <Text Color="SlateGray"
+                Font="Tahoma,20"
+                WordWrap="true"
+                Content="Test 'PageStep' for a Scroller with No Repeater."/>
+
+          <me:TextScroller FocusOrder="0"
+                           Name="TextScroller"
+                           Model="[Model]"
+                           ScrollingData="[ScrollingData]" />
+
+          <ctrl:PropertyAndValue Name="TotalPagesText"
+                                 PropertyName="TotalPagesText"
+                                 PropertyValue="TotalPages is undefined"/>
+          <ctrl:PropertyAndValue Name="CurrentPageText"
+                                 PropertyName="CurrentPageText"
+                                 PropertyValue="CurrentPage is undefined"/>
+          <ctrl:PropertyAndValue Name="CanScrollUp"
+                                 PropertyName="CanScrollUp"
+                                 PropertyValue="CanScrollUp is undefined"/>
+          <ctrl:PropertyAndValue Name="CanScrollDown"
+                                 PropertyName="CanScrollDown"
+                                 PropertyValue="CanScrollDown is undefined"/>
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <UI Name="TextScroller">
+    <Properties>
+      <ModelItem Name="Model"/>
+
+      <!-- The ScrollingData object controls Scrolling state and configuration -->
+      <ScrollingData Name="ScrollingData"/>
+    </Properties>
+    <Locals>
+      <!-- The ScrollingHandler which reacts to user keyboard input. -->
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandleDirectionalKeys="true"/>
+    </Locals>
+    <Rules>
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Background.Content]"
+                 Value="LightGray"/>
+
+      <Rule>
+        <Conditions>
+          <Equality  Source="[ScrollerItem.Orientation]"
+                     Value="Horizontal"/>
+          <Equality Source="[Model.Description]"
+                    Value="Vertical" />
+        </Conditions>
+        <Actions>
+          <Set Target="[ScrollerItem.Orientation]"
+               Value="Vertical"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Equality  Source="[ScrollerItem.Orientation]"
+                     Value="Vertical"/>
+          <Equality Source="[Model.Description]"
+                    Value="Horizontal" />
+        </Conditions>
+        <Actions>
+          <Set Target="[ScrollerItem.Orientation]"
+               Value="Horizontal"/>
+        </Actions>
+      </Rule>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="ScrollingData_PageStepPane"/>
+      <Default Target="[Accessible.Role]"
+               Value="Pane"/>
+
+      <!-- Give ScrollingData to ScrollingHandler. -->
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+    </Rules>
+    <Content>
+      <!-- Scroller's parent which displays background color. It offsets -->
+      <!-- the Scroller using padding and the Scroller fades the clipped -->
+      <!-- text outside itself (negative fade size).                     -->
+      <!-- This piece of the UI is MouseInteractive. Always specify      -->
+      <!-- parts of the UI's content tree react to mouse input. This is  -->
+      <!-- true for any UI with an input handler set to "Direct".        -->
+      <ColorFill Name="Background"
+                 Content="Gray"
+                 MouseInteractive="true"
+                 Padding="30,30,30,30"
+                 MaximumSize="0,400"
+                 Margins="30,0,30,0"
+                 Navigation="ContainDirectional">
+        <Children>
+
+          <!-- The Scroller. It referrs to the ScrollingData too. -->
+          <Scroller  Name="ScrollerItem"
+                     FadeSize="-30"
+                     ScrollingData="[ScrollingData]">
+            <Children>
+
+              <!-- Text to scroll. Filled with rich text content (RTF). -->
+              <!-- Use Wordpad to generate your RTF content.            -->
+              <Text Color="Black"
+                    Font="Tahoma,30"
+                    WordWrap="true"
+                    Content="Incidunt improbis defuturum tenetur inportuno suam confidet hominum aliquam fugit civium confidet noctesque harum factis diis mollitia legum umquam fugit. Sic utilitatibus supplicii animadversionis collegisti hoc. Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu. In nisl sumo principes eam. In vis modo essent persius. Id pro nisl veritus salutatus, sed natum nostrud aliquyam et, suscipit recteque duo ut pri. Apeirian verterem cu vim, tritani verterem sed id. Vero movet te nec, ea sed dicit quando prodesset, tota ponderum ne per! Est ad kasd ridens. Facer vocent disputando id quo, nemore scribentur eu has! Cim ut stet ludus inimicus, aliquid argumentum et sea. Unum oratio quo id! Ius kasd tantas. Eos ad utamur convenire, veritus mentitum facilisis cim no! Ex justo etiam vix, affert possit usu ne? Choro verear eu mel, ad veri soleat quo. Everti deterruisset ex sea, duo. Firmissima odioque neque nullo ruant. Voluptates tanta voluptate et oratio animadversionis illum evertitur tanta laudantium perspiciatis. Semper ut in quae nam eorum totum eveniet possint dubio factis nesciunt res quamvis voluptate quia itaque accessio indicaverunt improborum vestra nollem umquam. Perspiciatis quippiam eaque est laudem hominum. Segniorem accessio. Ipsam tamque inventore labore consecutus legum non quorum nam deleniti fugiat gravissimo ferae inmortalibus imperii minima poena emolumento magnam laudantium copulatas dignissimos eius commemorandis natus. Commemorandis fugiat sint. Sollicitant hanc metu rem.">
+
+                <!-- Smooth scrolling. -->
+                <Animations>
+                  <Animation Type="Move">
+                    <Keyframes>
+                      <PositionKeyframe Time="0"
+                                        RelativeTo="Current"
+                                        Interpolation="Exp"/>
+                      <PositionKeyframe Time=".1"
+                                        RelativeTo="Final"/>
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+              </Text>
+
+            </Children>
+          </Scroller>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+</Mcml>
+

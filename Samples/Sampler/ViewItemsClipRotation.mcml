@@ -1,0 +1,57 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- Test the application of various Rotation settings on Clip items.
+       Both Radians and Degrees can be used to control rotation
+       Test inline construction in the last case -->
+
+  <UI Name="ClipRotation">
+    <Properties>
+      <Rotation Name="RotationValue1"
+                AngleRadians="5"
+                Axis="1.0,1.0,1.0"/>
+      <Rotation Name="RotationValue2"
+                AngleDegrees="75"
+                Axis="1.0,1.0,1.0"/>
+      <Vector3 Name="VectorValue"
+               X="1.0"
+               Y="1.0"
+               Z="1.0"/>
+    </Properties>
+
+    <Content>
+      <Panel Layout="VerticalFlow"
+             Margins="200,200,200,200">
+        <Children>
+
+          <!-- Test using Radians -->
+          <Clip MaximumSize="800,0"
+                Rotation="[RotationValue1]">
+            <Children>
+              <Text Color="Yellow"
+                    Content="Rotate this text using Radians"/>
+            </Children>
+          </Clip>
+
+          <!-- Test using Degrees -->
+          <Clip MaximumSize="800,0"
+                Rotation="[RotationValue2]">
+            <Children>
+              <Text Color="Yellow"
+                    Content="Rotate this text using Degrees"/>
+            </Children>
+          </Clip>
+
+          <!-- Test using Radians with In-Line construction -->
+          <Clip MaximumSize="800,0"
+                Rotation="-50rad;1.0,1.0,1.0">
+            <Children>
+              <Text Color="Yellow"
+                    Content="This text is rotated inline"/>
+            </Children>
+          </Clip>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

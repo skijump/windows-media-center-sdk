@@ -1,0 +1,89 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- Repeater sample                                                   -->
+  <!-- Repeater provides a simple way to display UI for a list of data   -->
+  <!-- objects.  This sample takes a list of strings and shows the       -->
+  <!-- fundamentals of how to hook them up to a Repeater.                -->
+  <UI Name="RepeaterViewItem">
+
+    <Content>
+
+      <!-- Repeater allows you to supply a list of data objects, and     -->
+      <!-- have some UI created for each item in the list.  There are    -->
+      <!-- three essential properties that you want to specify on        -->
+      <!-- Repeater:                                                     -->
+      <!--                                                               -->
+      <!--  Layout - The default layout would place each repeated item   -->
+      <!--           on top of the previous one, so you probably want to -->
+      <!--           specify some sort of Flow or Grid layout to display -->
+      <!--           the items in a list.                                -->
+      <!--                                                               -->
+      <!-- Source  - This is the list of data items that the Repeater    -->
+      <!--           will be repeating.  Without a list of data, there   -->
+      <!--           is no point to having a repeater.                   -->
+      <!--                                                               -->
+      <!-- Content - This specifies the ViewItems that will be created   -->
+      <!--           for each data object in the list.  This is similar  -->
+      <!--           to the Content section of a UI.  In addition, the   -->
+      <!--           following special reserved words are available      -->
+      <!--           to object paths within Content blocks for           -->
+      <!--           repeating:                                          -->
+      <!--                                                               -->
+      <!--           1) RepeatedItem: The data item that is currently    -->
+      <!--              being repeated (type Object).                    -->
+      <!--                                                               -->
+      <!--           2) RepeatedItemIndex: The index of the data item    -->
+      <!--              currently being repeated (type Index).           -->
+      <Repeater>
+
+        <!-- Typically, you'll give a repeater either a flow layout or   -->
+        <!-- a grid layout, for displaying a list of items.              -->
+        <Layout>
+          <FlowLayout Spacing="5,0"
+                      Orientation="Vertical"/>
+        </Layout>
+
+        <!-- Repeater needs a list of data items to repeat.  In this     -->
+        <!-- case, we'll be repeating out a list of strings.             -->
+        <Source>
+          <cor:String String="Repeater is cool, it's true."/>
+          <cor:String String="Yet there are things it simply can't do."/>
+          <cor:String String="It won't make your bed, or bake you nut bread."/>
+          <cor:String String="Alas, there's always V2."/>
+        </Source>
+
+        <!-- Content specifies what view items should be repeated for    -->
+        <!-- each data item.  You can put anything in here that you      -->
+        <!-- would put in the Content section of a UI.  In addition, you -->
+        <!-- can access the "Item" path, which is the actual data        -->
+        <!-- instance being repeated.                                    -->
+        <!-- In this case, we're repeating a list of strings, so we're   -->
+        <!-- simply going to create a Text item for each, and set the    -->
+        <!-- Content property to be the value of the string being        -->
+        <!-- repeated.                                                   -->
+        <!-- (Note that we have to explicitly cast the Item to type      -->
+        <!-- String.  This is because Item is defined to be of type      -->
+        <!-- System.Object)                                              -->
+        <Content>
+          <Text Content="[RepeatedItem!cor:String]"
+                Color="LawnGreen"
+                Margins="5,5,5,5"/>
+        </Content>
+
+      </Repeater>
+
+    </Content>
+
+    <Rules>
+
+      <!-- Make ourselves key interactive, since we don't have any focusable -->
+      <!-- child content.                                                    -->
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+    </Rules>
+
+  </UI>
+</Mcml>

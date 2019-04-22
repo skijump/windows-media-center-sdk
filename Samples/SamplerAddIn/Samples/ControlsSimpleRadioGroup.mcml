@@ -1,0 +1,227 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Simple Radio Group sample.                                           -->
+
+  <!-- This example implements a RadioGroup UI element.                    -->
+  <!-- This RadioGroup UI element takes a choice model item, and uses a    -->
+  <!-- repeater to display all of the choices.                             -->
+  <!-- When the user selects one choice from the list, it will show the    -->
+  <!-- currently selected choice.                                          -->
+
+  <!-- The choices can only be selected using the mouse to keep the sample -->
+  <!-- small and specific to the radio group concept.                      -->
+
+  <!-- Initially, the 0th option within the Choice is chosen by default.   -->
+  <!-- To specify a different initial value, set the DefaultIndex property -->
+  <!-- on Choice to the desired index. Then, using a conditionless Rule    -->
+  <!-- with an Invoke action, call the DefaultValue method on Choice. This -->
+  <!-- will set the initial value when the UI is created. DefaultValue can -->
+  <!-- be used at any time to reset back to the default.                   -->
+
+  <UI Name="TestSimpleRadioGroup">
+
+    <Content>
+      <!-- Use the Radio Group UI element with some sample data.           -->
+      <me:RadioGroup>
+        <Model>
+          <!-- Test model: an option with three values -->
+          <Choice Description="My Radio Group">
+            <Options>
+              <cor:String String="Choice 1" />
+              <cor:String String="Choice 2" />
+              <cor:String String="Choice 3" />
+            </Options>
+          </Choice>
+        </Model>
+      </me:RadioGroup>
+    </Content>
+
+  </UI>
+
+  <!--  This implementation of the RadioGroup -->
+  <UI Name="RadioGroup" >
+
+    <Properties>
+      <Choice Name="Model"
+              Choice="$Required" />
+    </Properties>
+
+    <Rules>
+
+      <!-- Bind the selected choice to the 'Selection' text element.          -->
+      <Binding Source="[Model.Chosen!cor:String]"
+               Target="[Selection.Content]" />
+
+      <!-- Bind the sample data as a source to the repeater.                  -->
+      <Binding Source="[Model.Options]"
+               Target="[Repeater.Source]" />
+
+    </Rules>
+
+    <Content>
+
+      <Panel Name="RootPanel"
+             Layout="VerticalFlow"
+             MinimumSize="300,300">
+
+        <Children>
+
+          <!-- Text element to display the usage information.                 -->
+          <Text Content="Use the mouse to select a choice"
+                Color="LightGray"
+                Font="Arial,24"
+                Padding="0,0,0,20"/>
+
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="5,0" />
+            </Layout>
+            <Children>
+
+              <!-- Text elements to show the choice selection.                -->
+              <Text Content="Your choice is: "
+                    Color="LightGray"
+                    Font="Arial,20"
+                    Margins="0,0,0,30" />
+              <Text Name="Selection"
+                    Color="Red"
+                    Font="Arial,20"
+                    Margins="0,0,0,30" />
+
+            </Children>
+          </Panel>
+
+          <Repeater Name="Repeater"
+                    ContentName="RadioButton" >
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          Spacing="5,0"
+                          ItemAlignment="Near"
+                          AllowWrap="true"/>
+            </Layout>
+          </Repeater>
+
+        </Children>
+
+      </Panel>
+
+    </Content>
+
+    <Content Name="RadioButton">
+      <me:SimpleRadioButton Model="[Model]"
+                            Option="[RepeatedItem!cor:String]" />
+    </Content>
+  </UI>
+
+
+  <!-- Implementation of a simple radio button.                             -->
+  <!-- This takes a Choice Model item and displays various choice options.  -->
+  <UI Name="SimpleRadioButton">
+
+    <Properties>
+
+      <Choice       Name="Model"
+                    Choice="$Required"/>
+      <cor:String   Name="Option"
+                    String="$Required"/>
+
+      <Size Name="BoxSize"
+            Size="50,50"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- React to "click" input. -->
+      <ClickHandler Name="Clicker"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- The radio button has been clicked - update the model.            -->
+      <Changed Source="[Clicker.Invoked]">
+        <Actions>
+          <Set Target="[Model.Chosen]"
+               Value="[Option]"/>
+        </Actions>
+      </Changed>
+
+      <!-- If the UI is losing the selection, show it as unselected.        -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Model.Chosen]"
+                    ConditionOp="NotEquals"
+                    Value="[Option]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Check.Visible]"
+               Value="false" />
+        </Actions>
+      </Rule>
+
+      <!-- If the UI is getting the selection, show it as selected.         -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Model.Chosen]"
+                    Value="[Option]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Check.Visible]"
+               Value="true" />
+        </Actions>
+      </Rule>
+
+      <!-- Show the choice label. -->
+      <Binding Source="[Option]"
+               Target="[Label.Content]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- The box around the selection.                                -->
+          <ColorFill Name="Box"
+                     Content="Green"
+                     Layout="Form"
+                     Margins="0,0,5,0"
+                     MaximumSize="[BoxSize]">
+            <Children>
+
+              <!-- Colorfill that becomes visible on selection.             -->
+              <ColorFill Name="Check"
+                         Content="yellow"
+                         Visible="false">
+                <LayoutInput>
+                  <FormLayoutInput Left="Parent,0.2"
+                                   Right="Parent,0.8"
+                                   Top="Parent,0.2"
+                                   Bottom="Parent,0.8"/>
+                </LayoutInput>
+              </ColorFill>
+
+            </Children>
+          </ColorFill>
+
+          <!-- The label to display choice.                                 -->
+          <Text Name="Label"
+                Color="White"
+                Font="Arial, 25"/>
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

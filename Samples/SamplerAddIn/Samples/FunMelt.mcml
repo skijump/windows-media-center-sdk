@@ -1,0 +1,252 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me ="Me">
+
+  <UI Name="Main">
+
+    <Locals>
+      <cor:Random Name="Random"/>
+    </Locals>
+
+    <Content>
+
+      <Panel>
+
+        <Layout>
+          <AnchorLayout SizeToHorizontalChildren="false"
+                        SizeToVerticalChildren="false"/>
+        </Layout>
+
+        <Children>
+
+          <Repeater Name="Loop">
+
+            <Layout>
+              <FlowLayout Orientation="Horizontal"/>
+            </Layout>
+            <LayoutInput>
+              <AnchorLayoutInput Horizontal="Center"
+                                 Left="Parent,0"
+                                 Top="Parent,0,-100"
+                                 Right="Parent,1"
+                                 Bottom="Parent,1"/>
+            </LayoutInput>
+
+            <Source>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+              <cor:Int32 Int32="0"/>
+            </Source>
+
+            <Content>
+              <me:Melter Name="IconItem"
+                         Random="[Random]"/>
+            </Content>
+
+          </Repeater>
+
+        </Children>
+
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <UI Name="Melter">
+
+    <Properties>
+      <cor:Random Name="Random"/>
+    </Properties>
+
+    <Locals>
+
+      <cor:Int32 Name="TimerRand"
+                 Int32="0"/>
+      <cor:Int32 Name="TimerTemp"
+                 Int32="0"/>
+      <cor:Int32 Name="HeightRand"
+                 Int32="0"/>
+      <cor:Int32 Name="HeightTemp"
+                 Int32="0"/>
+
+      <MathTransformer Name="Unity"
+                       Add="0"/>
+      <MathTransformer Name="TimerMod"
+                       Mod="3"/>
+      <MathTransformer Name="TimerAdd"
+                       Add="1"/>
+      <MathTransformer Name="TimerSub"
+                       Subtract="0.5"/>
+      <MathTransformer Name="Milliseconds"
+                       Multiply="1000"/>
+      <MathTransformer Name="HeightMod"
+                       Mod="384"/>
+      <MathTransformer Name="HeightAdd"
+                       Add="384"/>
+      <MathTransformer Name="HeightType"
+                       Type="Single"/>
+
+      <Timer Name="TimesUp"
+             Interval="4000"
+             Enabled="true"
+             AutoRepeat="true"/>
+      <Vector3 Name="IconPositionEndVector"/>
+      <PositionKeyframe Name="IconPositionStart"
+                        Time="0.0"
+                        RelativeTo="Final"/>
+      <PositionKeyframe Name="IconPositionEnd"
+                        Time="0.0"
+                        RelativeTo="Final"/>
+      <AlphaKeyframe Name="IconAlphaStart"
+                     Value="1.0"
+                     Time="0.0"/>
+      <AlphaKeyframe Name="IconAlphaBegin"
+                     Value="1.0"
+                     Time="0.0"/>
+      <AlphaKeyframe Name="IconAlphaEnd"
+                     Value="0.0"
+                     Time="0.0"/>
+
+      <Animation Name="IconAni"
+                 Type="Idle"
+                 Loop="-1">
+        <Keyframes>
+          <PositionKeyframe Time="0.0"
+                            RelativeTo="Current"/>
+        </Keyframes>
+      </Animation>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- Always set a random timeout at the start. -->
+      <Rule>
+        <Actions>
+          <Set Target="[TimerRand]"
+               Value="[Random.Next]"
+               Transformer="[TimerMod]"/>
+          <Set Target="[TimerTemp]"
+               Value="[TimerRand]"
+               Transformer="[TimerAdd]"/>
+          <Set Target="[TimesUp.Interval]"
+               Value="[TimerTemp]"
+               Transformer="[Milliseconds]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+
+        <!-- When timer ticks. -->
+        <Conditions>
+          <Modified Source="[TimesUp.Tick]"/>
+        </Conditions>
+
+        <Actions>
+
+          <!-- Set new timer interval. -->
+          <Set Target="[TimerRand]"
+               Value="[Random.Next]"
+               Transformer="[TimerMod]"/>
+          <Set Target="[TimerTemp]"
+               Value="[TimerRand]"
+               Transformer="[TimerAdd]"/>
+          <Set Target="[TimesUp.Interval]"
+               Value="[TimerTemp]"
+               Transformer="[Milliseconds]"/>
+
+          <!-- Set animation end time. -->
+          <Set Target="[IconPositionEnd.Time]"
+               Value="[TimerTemp]"
+               Transformer="[Unity]"/>
+
+          <!-- Set animation y end position. -->
+          <Set Target="[HeightRand]"
+               Value="[Random.Next]"
+               Transformer="[HeightMod]"/>
+          <Set Target="[HeightTemp]"
+               Value="[HeightRand]"
+               Transformer="[HeightAdd]"/>
+          <Set Target="[IconPositionEndVector.Y]"
+               Value="[HeightTemp]"
+               Transformer="[HeightType]"/>
+          <Set Target="[IconPositionEnd.Value]"
+               Value="[IconPositionEndVector]"/>
+
+          <!-- Set alpha start and end times. -->
+          <Set Target="[IconAlphaBegin.Time]"
+               Value="[IconPositionEnd.Time]"
+               Transformer="[TimerSub]"/>
+          <Set Target="[IconAlphaEnd.Time]"
+               Value="[IconPositionEnd.Time]"/>
+
+          <!-- Clear animation keyframes. -->
+          <Invoke Target="[IconAni.Keyframes.Clear]"/>
+
+          <!-- Set animation keyframes. -->
+          <Invoke Target="[IconAni.Keyframes.Add]"
+                  value="[IconPositionStart]"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[IconAni.Keyframes.Add]"
+                  value="[IconPositionEnd]"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[IconAni.Keyframes.Add]"
+                  value="[IconAlphaStart]"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[IconAni.Keyframes.Add]"
+                  value="[IconAlphaBegin]"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[IconAni.Keyframes.Add]"
+                  value="[IconAlphaEnd]"
+                  ExclusiveApply="false"/>
+
+          <!-- Attach new animation to our panel. -->
+          <Invoke Target="[IconPanel.AttachAnimation]"
+                  animation="[IconAni]"/>
+
+        </Actions>
+
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Name="IconPanel">
+        <Children>
+          <Graphic Name="MyGraphic"
+                   Content="resx://Sampler/Sampler.Resources/FunMeltGraphic"/>
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

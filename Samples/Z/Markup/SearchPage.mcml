@@ -1,0 +1,147 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:content="resx://Z/Z.Resources/ContentList"
+      xmlns:gallery="resx://Z/Z.Resources/GalleryPage"
+      xmlns:result="resx://Z/Z.Resources/SearchResult"
+      xmlns:me="Me">
+
+
+  <!-- A search page -->
+  <UI Name="SearchPage">
+    <Properties>
+      <z:SearchPage Name="Page"
+                    SearchPage="$Required"/>
+      <z:Application Name="Application"
+                     Application="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- An object to track which item in the list currently has focus. -->
+      <IntRangedValue Name="FocusedIndex"/>
+    </Locals>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <core:Header Name="Header"
+                       Application="[Application]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Top="Parent,0,40"/>
+            </LayoutInput>
+          </core:Header>
+
+          <Panel Name="Content"
+                 Layout="VerticalFlow"
+                 FocusOrder="0">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Right="Parent,1,-105"
+                                 Vertical="Fill"
+                                 Top="Parent,0,100"
+                                 Bottom="Parent,1,-40"
+                                 Horizontal="Fill"/>
+            </LayoutInput>
+            <Children>
+
+              <Text Font="font://styles:SectionTitle"
+                    Color="color://styles:Text.Copy"
+                    Content="[Page.Description]"/>
+
+              <Repeater Source="[Page.Filters]"
+                        Navigation="ContainHorizontal"
+                        Margins="0,-2,0,2"
+                        FocusOrder="3">
+                <Layout>
+                  <FlowLayout Orientation="Horizontal"
+                              Spacing="20,0"/>
+                </Layout>
+                <Content>
+
+                  <core:CheckBox Model="[RepeatedItem!BooleanChoice]"
+                                 BoxSize="40,40"/>
+
+                </Content>
+              </Repeater>
+
+              <core:EditBoxWithKeyboard Model="[Page.SearchValue]"
+                                        Application="[Application]"
+                                        SubmitWhenDone="true"
+                                        FocusOrder="1"/>
+
+              <me:SearchList Page="[Page]"
+                             Margins="0,35,0,35"
+                             FocusedIndex="[FocusedIndex]"
+                             FocusOrder="2"/>
+
+            </Children>
+          </Panel>
+
+          <!-- Item counter -->
+          <content:ItemCounter Page="[Page]"
+                               FocusedIndex="[FocusedIndex]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Content,0,20"
+                                 Right="Content,1"/>
+            </LayoutInput>
+          </content:ItemCounter>
+
+          <core:Background/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+
+  <!-- The scrolling area of a search page -->
+  <UI Name="SearchList"
+      BaseUI="content:ContentList">
+    <Properties>
+      <z:ContentPage Name="Page"
+                     ContentPage="$Required"/>
+      <Orientation Name="ScrollOrientation"
+                   Orientation="Vertical"/>
+      <GridLayout Name="GridLayout"
+                  Orientation="Vertical"
+                  Spacing="0,6"
+                  Columns="1"/>
+    </Properties>
+
+    <Rules>
+      <Default Target="[Scroller.FadeSize]"
+               Value="-25"/>
+    </Rules>
+
+    <Content Name="Item">
+      <me:SearchResult Model="[RepeatedItem!z:SearchResult]"
+                       Index="[RepeatedItemIndex]"
+                       FocusedIndex="[FocusedIndex]"/>
+    </Content>
+  </UI>
+
+
+  <!-- A wrapper around the search result that adds focus tracking -->
+  <UI Name="SearchResult"
+      BaseUI="result:SearchResult">
+    <Properties>
+      <Index Name="Index"
+             Index="$Required"/>
+      <IntRangedValue Name="FocusedIndex"
+                      IntRangedValue="$Required"/>
+    </Properties>
+
+    <Rules>
+      <!-- Inform any listeners of FocusedIndex that we have received -->
+      <!-- key focus.-->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[FocusedIndex.Value]"
+                 Value="[Index.Value]"/>
+    </Rules>
+  </UI>
+
+</Mcml>

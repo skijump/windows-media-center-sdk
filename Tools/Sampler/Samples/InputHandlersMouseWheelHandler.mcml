@@ -1,0 +1,99 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml" >
+
+  <!-- MouseWheelHandler sample.                                            -->
+
+  <!-- MouseWheel handler provides mouse wheel input behavior.              -->
+  <!-- They also have commands associated and the Invoke method on the      -->
+  <!-- command will be called when the mouse wheel moves.                   -->
+
+  <!--  This example implements UI element (WheelUI) that has the           -->
+  <!--  text 'Move the mouse wheel.'                                        -->
+
+  <!--  When the mouse wheel is moved up or down it changes the background  -->
+  <!--  label colors of the ui element                                      -->
+  <UI Name="WheelUI">
+
+    <!-- Define the properties for this object. -->
+    <Properties>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor"
+             Color="DimGray"/>
+      <Color Name="BackgroundUpColor"
+             Color="White"/>
+      <Color Name="BackgroundDownColor"
+             Color="CornflowerBlue"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor"
+             Color="White"/>
+      <Color Name="LabelUpColor"
+             Color="FireBrick"/>
+      <Color Name="LabelDownColor"
+             Color="Black"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="Arial,20"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- Use the MouseWheel handler to handle the mouse wheel.  -->
+      <MouseWheelHandler Name="WheelHandler" />
+
+    </Locals>
+
+    <!-- Define how to handle the input using rules. -->
+    <Rules>
+
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+      <!-- Rule to define the behavior when the mouse wheel is moved down. -->
+      <!-- Change the background and label color using the colors above.   -->
+      <Changed Source="[WheelHandler.DownInvoked]">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[BackgroundDownColor]" />
+          <Set Target="[Label.Color]"
+               Value="[LabelDownColor]" />
+        </Actions>
+      </Changed>
+
+      <!-- Rule to define the behavior when the mouse wheel is moved up. -->
+      <!-- Change the background and label color using the colors above. -->
+      <Changed Source="[WheelHandler.UpInvoked]">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[BackgroundUpColor]" />
+          <Set Target="[Label.Color]"
+               Value="[LabelUpColor]" />
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Solid background color. -->
+      <ColorFill Name="Background"
+                 Content="[BackgroundColor]"
+                 Padding="5,5,5,5">
+        <Children>
+
+          <!-- The label to display. -->
+          <Text Name="Label"
+                Content="Move the mouse wheel!"
+                Color="[LabelColor]"
+                Font="[LabelFont]"/>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

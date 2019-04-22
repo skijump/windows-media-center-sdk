@@ -1,0 +1,91 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- This sample demonstrates how to leverage the various overloads -->
+  <!-- of the DialogNotification() Method. -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <Command Name="DialogA"
+               Description="DialogNotification (4 Arguments)"/>
+      <Command Name="DialogB"
+               Description="DialogNotification (5 Arguments)"/>
+
+      <!-- The dialog result is stored here. The type is in another   -->
+      <!-- namespace, so it has a different xmlns prefix than the     -->
+      <!-- AddInHost type.                                            -->
+      <mc:DialogResultHandler Name="ResultHandler"/>
+      <cor:String Name="ImagePath"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/FourBoxGraphic.png" />
+
+      <!-- This is the list of buttons that will be displayed by the -->
+      <!-- Dialog Methods which take developer specified buttons.    -->
+      <ArrayListDataSet Name="DialogButtons">
+        <Source>
+          <cor:String cor:String="Custom Button A"/>
+          <cor:String cor:String="Custom Button B"/>
+        </Source>
+      </ArrayListDataSet>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- If you do not wish to include an imagePath -->
+      <!-- set it to "null" as an empty length string -->
+      <!-- will not work. -->
+      <Changed Source="[DialogA.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.DialogNotification]"
+                  text="The Text"
+                  buttons="[DialogButtons]"
+                  timeout="0"
+                  imagePath="null"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[DialogB.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.DialogNotification]"
+                  text="The Text"
+                  buttons="[DialogButtons]"
+                  timeout="0"
+                  imagePath="null"
+                  callback="[ResultHandler.Callback]"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[ResultHandler.DialogDismissed]">
+        <Actions>
+          <Set Target="[MyDialogResult.PropertyValue]"
+               Value="[ResultHandler.Result.ToString]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:Button Command="[DialogA]"
+                       ButtonLabel="[DialogA.Description]" />
+          <ctrl:Button Command="[DialogB]"
+                       ButtonLabel="[DialogB.Description]" />
+          <ctrl:PropertyAndValue Name="MyDialogResult"
+                                 PropertyName="DialogResult"
+                                 PropertyValue="" />
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

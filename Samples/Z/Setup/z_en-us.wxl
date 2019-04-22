@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us"
+                 xmlns="http://schemas.microsoft.com/wix/2006/localization">
+
+  <String Id="LaunchCondition_AdminPrivs">You must have Administrative rights on this machine to install [ProductName].</String>
+  <String Id="LaunchCondition_LaterVersion">A later version of [ProductName] is already installed.</String>
+  <String Id="LaunchCondition_WrongOSVersion">[ProductName] was not designed for this version of Windows Media Center or you don't have Windows Media Center.</String>
+
+  <String Id="Property_ArpHelpLink">http://msdn.microsoft.com/mce/</String>
+  <String Id="Property_ArpUrlInfoAbout">http://msdn.microsoft.com/mce/</String>
+  <String Id="Property_ProductLanguage">1033</String>
+  <String Id="Property_ProductName">Z Windows Media Center Sample Application</String>
+  <String Id="Property_CompanyName">Microsoft Corporation</String>
+
+  <String Id="Package_Description">Z Windows Media Center Sample Application</String>
+  <String Id="Package_Comments">This Installer database contains the logic and data required to install the Z Windows Media Center Sample Application.</String>
+
+  <String Id="Z_Shortcut_Title">Z Sample Application</String>
+  <String Id="Z_Shortcut_Description">Click to launch the Z Windows Media Center Sample Application in Windows Media Center</String>
+
+  <String Id="DownloadManager_DisplayName">Z Download Manager</String>
+  <String Id="DownloadManager_Description">Manages file downloads for the Z Windows Media Center Sample Application</String>
+
+</WixLocalization>

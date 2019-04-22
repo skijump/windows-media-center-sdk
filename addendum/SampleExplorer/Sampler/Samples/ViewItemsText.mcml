@@ -1,0 +1,166 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- The Text ViewItem allows you to display arbitrary text.             -->
+  <!-- For Text, you can specify the following properties:                 -->
+  <!--  Content: The string of text you would like to display.             -->
+
+  <!--  Font: The Name, Size and Style of the text font.                   -->
+  <!--  Color: The foreground color of the text.                           -->
+  <!--  BackColor: The background color for the text.                      -->
+  <!--  WordWrap: Whether or not to enable word wrapping.                  -->
+  <!--  MaximumLines: The maximum number of visible lines.                 -->
+  <!--  FadeSize: The size of the fade to be used if the text does not     -->
+  <!--            fit into the constraints of the view item.               -->
+
+  <!-- The Main UI contains a few examples to demonstrate how to use Text. -->
+  <UI Name="Text">
+
+    <Properties>
+      <!-- Fonts can be specified as Locals, Properties, or inline. -->
+      <Font Name="NormalFont"
+            FontName="Verdana"
+            FontSize="20"/>
+      <Font Name="BoldFont"
+            FontName="Verdana"
+            FontSize="20"
+            FontStyle="Bold"/>
+      <Font Name="ItalicFont"
+            FontName="Verdana"
+            FontSize="20"
+            FontStyle="Italic"/>
+    </Properties>
+
+    <Content>
+      <ColorFill Name="Samples"
+                 Content="Silver"
+                 Padding="15,15,15,15">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="15,0"
+                      AllowWrap="true"/>
+        </Layout>
+        <Children>
+
+          <!-- Styles Sample                                         -->
+          <!-- This sample demonstrates the different Styles that    -->
+          <!-- can be applied to text using Fonts.                   -->
+          <ColorFill Content="Snow"
+                     Padding="10,10,10,10">
+            <Layout>
+              <FlowLayout Spacing="15,0"/>
+            </Layout>
+            <Children>
+
+              <!-- Normal. -->
+              <Text Content="Font Styles:"
+                    Color="Black"
+                    Font="[NormalFont]"/>
+
+              <!-- Bold. -->
+              <Text Content="Bold"
+                    Color="Black"
+                    Font="[BoldFont]"/>
+
+              <!-- Italic. -->
+              <Text Content="Italic"
+                    Color="Black"
+                    Font="[ItalicFont]"/>
+
+            </Children>
+          </ColorFill>
+
+          <!-- Colors Sample                                             -->
+          <!-- This sample demonstrates a subset of the colors that can  -->
+          <!-- be used for Text foreground and background colors.        -->
+          <ColorFill Content="Snow"
+                     Padding="10,10,10,10">
+            <Layout>
+              <FlowLayout Spacing="15,0"/>
+            </Layout>
+            <Children>
+
+              <Text Content="Colors:"
+                    Color="Black"
+                    Font="[NormalFont]"/>
+
+              <Text Content="White"
+                    Color="AntiqueWhite"
+                    BackColor="Blue"
+                    Font="[NormalFont]"/>
+
+              <Text Content="Chocolate"
+                    Color="Chocolate"
+                    BackColor="Purple"
+                    Font="[NormalFont]"/>
+
+              <Text Content="Blue"
+                    Color="CornflowerBlue"
+                    BackColor="Orange"
+                    Font="[NormalFont]"/>
+
+              <Text Content="Red"
+                    Color="AntiqueWhite"
+                    BackColor="Blue"
+                    Font="[NormalFont]"/>
+
+            </Children>
+          </ColorFill>
+
+          <!-- Alignment Sample                                     -->
+          <!-- This sample demonstrates HorizontalAlignment.        -->
+          <ColorFill Layout="VerticalFlow"
+                     Content="Snow">
+            <Children>
+
+              <!-- Left alignment. -->
+              <Text Content="Left Align"
+                    HorizontalAlignment="Near"
+                    Font="[NormalFont]"
+                    MinimumSize="400,0"/>
+
+              <!-- Center alignment. -->
+              <Text Content="Center Align"
+                    HorizontalAlignment="Center"
+                    Font="[NormalFont]"
+                    MinimumSize="400,0"/>
+
+              <!-- Right alignment. -->
+              <Text Content="Right Align"
+                    HorizontalAlignment="Far"
+                    Font="[NormalFont]"
+                    MinimumSize="400,0"/>
+
+            </Children>
+          </ColorFill>
+
+          <!-- Advanced Sample                                       -->
+          <!-- This sample demonstrates WordWrap and MaximumLines.   -->
+
+          <!-- Clipping. -->
+          <Text Font="[NormalFont]"
+                MaximumSize="400,0"
+                BackColor="Snow"
+                Content="This is text that will be clipped."/>
+
+          <!-- Word wrap. -->
+          <Text Font="[NormalFont]"
+                MaximumSize="400,0"
+                BackColor="Snow"
+                WordWrap="true"
+                Content="This is text that is set up to word wrap when it reaches the constraint."/>
+
+          <!-- Word wrap with maximum lines. -->
+          <Text Font="[NormalFont]"
+                MaximumSize="400,0"
+                BackColor="Snow"
+                WordWrap="true"
+                MaximumLines="2"
+                Content="This is text that has max lines set to 2. It will not exceed two lines."/>
+
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+
+</Mcml>

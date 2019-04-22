@@ -1,0 +1,46 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to animate an item's scale.             -->
+  <!-- We build an Animation object and add it to the item's Animations     -->
+  <!-- collection.  We populate that Animation object with two or more      -->
+  <!-- keyframes, starting at time "0.0".                                   -->
+  <UI Name="ScaleKeyframe">
+
+    <Content>
+
+      <!-- The target of the animation... -->
+      <Graphic Name="MyGraphic"
+               Content="file://FourBoxGraphicSmall.png">
+        <Animations>
+
+          <!-- Create an animation that will loop forever. -->
+          <Animation Loop="-1">
+            <Keyframes>
+
+              <!-- Start in the "neutral" scale -->
+              <ScaleKeyframe Time="0.0"
+                             Value="1.0,1.0,1.0"/>
+
+              <!-- Scale up to double size... -->
+              <ScaleKeyframe Time="1.0"
+                             Value="1.5,1.5,1.5"/>
+
+              <!-- Scale down to half size... -->
+              <ScaleKeyframe Time="3.0"
+                             Value="0.5,0.5,0.5"/>
+
+              <!-- Back to the "neutral" scale  -->
+              <ScaleKeyframe Time="4.0"
+                             Value="1.0,1.0,1.0"/>
+
+            </Keyframes>
+          </Animation>
+
+        </Animations>
+      </Graphic>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,29 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System">
+
+  <UI Name="Default">
+
+    <Locals>
+      <Image Name="MyImage" />
+      <cor:String Name="MyString"
+                  String="file://FourBoxGraphic.png" />
+    </Locals>
+
+    <Rules>
+      <Default Target="[MyImage]"
+               Value="[MyString!Image]" />
+      <Binding Source="[MyImage]"
+               Target="[MyGraphic.Content]" />
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Children>
+          <Graphic Name="MyGraphic" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,94 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:btn="resx://Sampler/Sampler.Resources/ControlsButton"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <UI Name="TestSimpleSpinner">
+
+    <Content>
+
+      <!-- Single spinner-->
+      <me:Spinner>
+        <Model>
+          <!-- Test model: an option with three values -->
+          <Choice>
+            <Options>
+              <cor:String String="Never"/>
+              <cor:String String="Always"/>
+              <cor:String String="Sometimes"/>
+            </Options>
+          </Choice>
+        </Model>
+      </me:Spinner>
+
+    </Content>
+
+  </UI>
+
+  <UI Name="Spinner">
+
+    <Properties>
+      <IValueRange Name="Model"
+                   IValueRange="$Required"/>
+
+      <FormatTransformer Name="LabelTransformer"
+                         Format="{0}"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- Create two Commands to represent previous and next motion within -->
+      <!-- the value model.                                                 -->
+      <InvokeCommand Name="Previous"
+                     Description="-"
+                     Target="[Model.PreviousValue]"/>
+      <InvokeCommand Name="Next"
+                     Description="+"
+                     Target="[Model.NextValue]"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- Bind the current value to a label. -->
+      <Binding Source="[Model.Value]"
+               Target="[Value.Content]"
+               Transformer="[LabelTransformer]"/>
+
+      <!-- If we cannot navigate any further within the value range disable -->
+      <!-- the associated Command.                                          -->
+      <Binding Source="[Model.HasNextValue]"
+               Target="[Next.Available]"/>
+      <Binding Source="[Model.HasPreviousValue]"
+               Target="[Previous.Available]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Padding="2,2,2,2">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"
+                      Spacing="3,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Current value -->
+          <Text Name="Value"
+                Font="Arial, 20"
+                Color="[LabelColor]"/>
+
+          <!-- Previous button -->
+          <btn:Button Command="[Previous]"/>
+
+          <!-- Next button -->
+          <btn:Button Command="[Next]"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

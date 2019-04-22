@@ -1,0 +1,214 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:kfi="file://InputKeyFocus.mcml">
+
+  <!-- Navigation Wrapping sample                                           -->
+  <!--                                                                      -->
+  <!-- There are several navigation modes that you can use which cause      -->
+  <!-- navigations that would normally leave a container to wrap instead.   -->
+  <!-- WrapHorizontal causes East/West navigations that would leave a       -->
+  <!-- container to instead re-enter from the opposite side.  Similarly,    -->
+  <!-- WrapVertical does the same for North/South navigations.              -->
+  <!-- WrapTabOrder causes tab navigations to wrap.  WrapDirectional is a   -->
+  <!-- combination of WrapVertical and WrapHorizontal, and WrapAll is a     -->
+  <!-- combination of WrapDirectional and WrapTabOrder.                     -->
+  <!--                                                                      -->
+  <!-- The Main UI creates a number of strips of focusable items, in order  -->
+  <!-- to demonstrate the various wrapping modes, as well as a legend       -->
+  <!-- showing which strip is marked in what way.  In addition, the item    -->
+  <!-- containing *all* of the strips is marked as WrapDirectional.         -->
+  <UI Name="Main">
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="35,0"
+                      ItemAlignment="Center"/>
+        </Layout>
+
+        <Children>
+
+          <!-- The background item is marked as WrapDirectional - that means -->
+          <!-- that East/West and North/South navigations off of it will all -->
+          <!-- wrap around to the opposite side.                             -->
+          <ColorFill Content="[WrapDirectionalColor]"
+                     Navigation="WrapDirectional"
+                     Padding="20,20,20,20">
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="[SpacingBetweenStrips]"/>
+            </Layout>
+
+            <Children>
+
+              <!-- Create a vertical strip marked as WrapVertical -         -->
+              <!-- North/South navigations will wrap, East/West navigations -->
+              <!-- will leave the container.                                -->
+              <me:Strip FlowDirection="Vertical"
+                        BackgroundColor="[WrapVerticalColor]"
+                        Navigation="WrapVertical"
+                        FlowSpacing="[WideStripSpacing]"
+                        StripPadding="[StripPadding]"/>
+
+              <!-- Need to change the flow direction for our three -->
+              <!-- horizontal strips.                              -->
+              <Panel>
+                <Layout>
+                  <FlowLayout Orientation="Vertical"
+                              Spacing="[SpacingBetweenStrips]"/>
+                </Layout>
+
+                <Children>
+
+                  <!-- Create a horizontal strip marked as WrapTabOrder -   -->
+                  <!-- Tab navigations will wrap, but all others will leave -->
+                  <!-- the container.                                       -->
+                  <me:Strip FlowDirection="Horizontal"
+                            BackgroundColor="[WrapTabOrderColor]"
+                            Navigation="WrapTabOrder"
+                            FlowSpacing="[NormalStripSpacing]"
+                            StripPadding="[StripPadding]"/>
+
+                  <!-- Create a horizontal strip marked as WrapHorizontal - -->
+                  <!-- East/West navigations will wrap, all others leave the-->
+                  <!-- strip.                                               -->
+                  <me:Strip FlowDirection="Horizontal"
+                            BackgroundColor="[WrapHorizontalColor]"
+                            Navigation="WrapHorizontal"
+                            FlowSpacing="[NormalStripSpacing]"
+                            StripPadding="[StripPadding]"/>
+
+                  <!-- Create a horizontal strip with no explicit wrapping -->
+                  <!-- set.  None of the navigations wrap within this      -->
+                  <!-- container.                                          -->
+                  <me:Strip FlowDirection="Horizontal"
+                            FlowSpacing="[NormalStripSpacing]"
+                            StripPadding="[StripPadding]"/>
+                </Children>
+              </Panel>
+            </Children>
+          </ColorFill>
+
+          <!-- Legend that shows the wrapping modes for each of the panels  -->
+          <!-- we've set them on.                                           -->
+          <ColorFill Content="White"
+                     Padding="2,2,2,2">
+            <Children>
+              <ColorFill Content="Black"
+                         Padding="10,10,10,10" >
+                <Layout>
+                  <FlowLayout Orientation="Vertical"
+                              Spacing="20,0"/>
+                </Layout>
+                <Children>
+                  <me:LegendItem LegendColor="[WrapDirectionalColor]"
+                                 LegendText="Navigation=WrapDirectional"/>
+                  <me:LegendItem LegendColor="[WrapVerticalColor]"
+                                 LegendText="Navigation=WrapVertical"/>
+                  <me:LegendItem LegendColor="[WrapTabOrderColor]"
+                                 LegendText="Navigation=WrapTabOrder"/>
+                  <me:LegendItem LegendColor="[WrapHorizontalColor]"
+                                 LegendText="Navigation=WrapHorizontal"/>
+                </Children>
+              </ColorFill>
+
+            </Children>
+          </ColorFill>
+
+        </Children>
+      </Panel>
+    </Content>
+
+    <Locals>
+
+      <!-- Spacing between tiles in our horizontal strips.-->
+      <MajorMinor Name="NormalStripSpacing"
+                  MajorMinor="15,0"/>
+
+      <!-- Spacing used between each strip. -->
+      <MajorMinor Name="SpacingBetweenStrips"
+                  MajorMinor="15,0"/>
+
+      <!-- Amount of padding to be applied to each strip. -->
+      <Inset Name="StripPadding"
+             Inset="10,10,10,10"/>
+
+      <!-- Spacing between tiles in our vertical strip.  It's larger than    -->
+      <!-- the normal spacing because we also have to account for the space  -->
+      <!-- between strips as well.                                           -->
+      <!-- To get the tiles to line up, the major component needs to be      -->
+      <!-- NormalStripSpacing.Major + StripPadding.Top + StripPadding.Bottom -->
+      <MajorMinor Name="WideStripSpacing"
+                  MajorMinor="35,0"/>
+
+      <!-- Define colors to use here so that we can reuse them in our legend -->
+      <Color Name="WrapDirectionalColor"
+             Color="Gray"/>
+      <Color Name="WrapVerticalColor"
+             Color="Blue"/>
+      <Color Name="WrapHorizontalColor"
+             Color="Beige"/>
+      <Color Name="WrapTabOrderColor"
+             Color="Aquamarine"/>
+    </Locals>
+  </UI>
+
+  <!-- Simple UI for displaying an item in our legend - a color fill and -->
+  <!-- descriptive text.                                                 -->
+  <UI Name="LegendItem">
+
+    <Properties>
+      <Color Name="LegendColor"/>
+      <cor:String Name="LegendText"
+                  cor:String="$Required"/>
+    </Properties>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+          <ColorFill MinimumSize="80,30"
+                     Content="[LegendColor]"/>
+          <Text Color="White"
+                Font="Arial,22"
+                Content="[LegendText]"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- The strip UI displays a strip of focusable items with an optional -->
+  <!-- background color.                                                 -->
+  <UI Name="Strip">
+
+    <Properties>
+      <Orientation Name="FlowDirection"/>
+      <Color Name="BackgroundColor"
+             Color="Transparent"/>
+      <MajorMinor Name="FlowSpacing"/>
+      <Inset Name="StripPadding"/>
+    </Properties>
+
+    <Content>
+      <ColorFill Name="Background"
+                 Content="[BackgroundColor]"
+                 Padding="[StripPadding]">
+        <Layout>
+          <FlowLayout Orientation="[FlowDirection]"
+                      Spacing="[FlowSpacing]"/>
+        </Layout>
+
+        <Children>
+          <kfi:KeyFocusIndicator/>
+          <kfi:KeyFocusIndicator/>
+          <kfi:KeyFocusIndicator/>
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+</Mcml>

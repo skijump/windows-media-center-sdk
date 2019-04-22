@@ -1,0 +1,138 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to further control a TransformAnimation -->
+  <!-- to only target specific keyframe types.                              -->
+
+  <!-- A TransformAnimation allows you to modify the Times and Values of    -->
+  <!-- reference animation in many interesting ways, but sometimes you      -->
+  <!-- don't want to transform all of the source.  In this situation, you   -->
+  <!-- can use the Filter property to specify which specific keyframe types -->
+  <!-- to apply the transform to.                                           -->
+
+  <!-- For example, if you only wanted the PositionKeyframes to be delayed, -->
+  <!-- you would specfify Filter="Position".                                -->
+  <UI Name="TransformAnimationFilter">
+
+    <Properties>
+
+      <!-- This is our reference animation.  It contains both Position and  -->
+      <!-- Scale keyframes.  We will use a TransformAnimation with a Filter -->
+      <!-- below to control which keyframe types get magnified and which do -->
+      <!-- not.                                                             -->
+      <Animation Name="Reference"
+                 Loop="-1"
+                 CenterPointPercent="0.5, 0.5, 0.0">
+        <Keyframes>
+
+          <PositionKeyframe Time="0.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="2.0"
+                            Value="100,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="4.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+
+          <RotateKeyframe Time="0.0"
+                          Value="0deg;0,0,1"
+                          Interpolation="SCurve"/>
+          <RotateKeyframe Time="2.0"
+                          Value="360deg;0,0,1"
+                          Interpolation="SCurve"/>
+          <RotateKeyframe Time="4.0"
+                          Value="0deg;0,0,1"
+                          Interpolation="SCurve"/>
+
+        </Keyframes>
+      </Animation>
+
+    </Properties>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Demonstrate what the unmodified reference animation looks    -->
+          <!-- like.                                                        -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="Reference animation"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <Animation Animation="[Reference]"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Take the reference animation and apply a Magnitude of 2.0.   -->
+          <!-- This will cause the position motion to be more extreme.      -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="4.0 Magnitude, no filter"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <TransformAnimation Source="[Reference]"
+                                  Magnitude="4.0"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Take the reference animation and apply a Magnitude of 2.0,   -->
+          <!-- but Filter to only Position keyframes.  The Rotate keyframes -->
+          <!-- will remain untransformed.                                   -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="4.0 Magnitude, Position only"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <TransformAnimation Source="[Reference]"
+                                  Magnitude="4.0"
+                                  Filter="Position"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Take the reference animation and apply a Magnitude of 2.0,   -->
+          <!-- but Filter to only Rotate keyframes.  The Position keyframes -->
+          <!-- will remain untransformed.                                   -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="4.0 Magnitude, Rotate only"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <TransformAnimation Source="[Reference]"
+                                  Magnitude="4.0"
+                                  Filter="Rotate"/>
+
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,316 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:kfi="file://InputKeyFocus.mcml">
+
+  <!-- Navigation Row/Column sample                                          -->
+  <!-- You can mark a container with Navigation="Row" or Navigation="Column" -->
+  <!-- to instruct the navigation system to treat children of that item as a -->
+  <!-- single logical row or column.  For example, if you mark a container   -->
+  <!-- as Navigation="Row", East/West navigations will compare *only* the x  -->
+  <!-- coordinates of each child when determining where to navigate to.  A   -->
+  <!-- North/South navigation will either enter or leave the container, but  -->
+  <!-- never navigate among two items within it.  Columns behave identically -->
+  <!-- in the opposite orientation.                                          -->
+  <!--                                                                       -->
+  <!-- This sample repeats a group of 3 tiles laid out in an identical       -->
+  <!-- manner, but with a different Navigation mode applied to each group    -->
+  <!-- in order to demonstrate the effect it has on Navigations among the    -->
+  <!-- items.                                                                -->
+  <UI Name="Main">
+
+    <Content>
+      <ColorFill Content="AliceBlue"
+                 Padding="15,15,15,15">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="30,0"/>
+        </Layout>
+        <Children>
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="30,0"/>
+            </Layout>
+            <Children>
+
+              <!-- This block will be assigned a Navigation of Column.  That  -->
+              <!-- causes all child objects to be treated as a single logical -->
+              <!-- Column.  The result of this is that North/South            -->
+              <!-- navigations will go through the items in order.  East/West -->
+              <!-- navigations will attempt to to leave the column.  For      -->
+              <!-- instance, if you focus on item "1" and press the down      -->
+              <!-- arrow, focus will move to item "2". If you were to instead -->
+              <!-- press the right arrow, focus would move to item 4 (leaving -->
+              <!-- the column).                                               -->
+              <me:NavigationBlock MyNavigation="Column"
+                                  StartingIndex="1"/>
+
+              <!-- This block will be assigned a Navigation of Row.  That     -->
+              <!-- causes all child objects to be treated as a single logical -->
+              <!-- Row.  The result of this is that East/West navigations     -->
+              <!-- move through the items in order, and a North/South         -->
+              <!-- navigation will attempt to leave the row.  For instance,   -->
+              <!-- if you were to focus on item "6" and press the left arrow, -->
+              <!-- focus would move to item "5".  If you were to instead      -->
+              <!-- press the down button, focus would go to item 12 (leaving  -->
+              <!-- the row).                                                  -->
+              <me:NavigationBlock MyNavigation="Row"
+                                  StartingIndex="4"/>
+            </Children>
+          </Panel>
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="30,0"/>
+            </Layout>
+            <Children>
+
+              <!-- These blocks have no explicit Navigation set, meaning     -->
+              <!-- they are not grouped in any logical arrangement.  The     -->
+              <!-- result is that a navigation in any direction will always  -->
+              <!-- go to the "best" item in that direction.  This gives very -->
+              <!-- different results from the top two blocks.  For instance, -->
+              <!-- if you focus on item "3" and press up, you will go to     -->
+              <!-- item "2" as it's the next logical item in the column.     -->
+              <!-- However, if you focus on item "9" and press up, you will  -->
+              <!-- go to item "3" as it is directly aligned with your        -->
+              <!-- navigation direction.                                     -->
+              <me:NavigationBlock BackgroundImage="file://KeyboardNavigationCenterGradient.png"
+                                  StartingIndex="7"/>
+              <me:NavigationBlock BackgroundImage="file://KeyboardNavigationCenterGradient.png"
+                                  StartingIndex="10"/>
+            </Children>
+          </Panel>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- The NavigationBlock UI lays out 3 focusable items diagonally within a -->
+  <!-- container.  The passed-in Navigation mode is applied to the container -->
+  <!-- and a starting index is used to generate labels for the blocks.  The  -->
+  <!-- BackgroundImage will be used on the container (a Graphic) to make     -->
+  <!-- each block distinguishable.  A text item also displays the navigation -->
+  <!-- mode that was applied to this block.                                  -->
+  <UI Name="NavigationBlock">
+
+    <Properties>
+      <Image Name="BackgroundImage"
+             Image="null"/>
+      <NavigationPolicies Name="MyNavigation"
+                          NavigationPolicies="None"/>
+      <cor:Int32 Name="StartingIndex"
+                 Int32="5"/>
+    </Properties>
+
+    <Locals>
+      <Size Name="MinimumTileSize"
+            Size="80,80"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- If we're set up in row navigation, display the column strips so -->
+      <!-- we look like a row of items.                                    -->
+      <Condition Source="[MyNavigation]"
+                 SourceValue="Row">
+        <Actions>
+          <Set Target="[LeftVertical.Visible]"
+               Value="true"/>
+          <Set Target="[CenterVertical.Visible]"
+               Value="true"/>
+          <Set Target="[RightVertical.Visible]"
+               Value="true"/>
+        </Actions>
+      </Condition>
+
+      <!-- If we're set up in column navigation, display the row strips so  -->
+      <!-- we look like a column of items.                                  -->
+      <Condition Source="[MyNavigation]"
+                 SourceValue="Column">
+        <Actions>
+          <Set Target="[LeftHorizontal.Visible]"
+               Value="true"/>
+          <Set Target="[CenterHorizontal.Visible]"
+               Value="true"/>
+          <Set Target="[RightHorizontal.Visible]"
+               Value="true"/>
+        </Actions>
+      </Condition>
+
+      <Rule>
+        <Actions>
+          <Set Target="[Right.Text]"
+               Value="[StartingIndex]">
+            <Transformer>
+              <MathTransformer Add="2"
+                               Type="String"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Actions>
+          <Set Target="[Center.Text]"
+               Value="[StartingIndex]">
+            <Transformer>
+              <MathTransformer Add="1"
+                               Type="String"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+      <!-- Calculate the index to display on each tile.  We can't do this    -->
+      <!-- inline because we need to use transformers to do the calculations -->
+      <Rule>
+        <Actions>
+          <Set Target="[Left.Text]"
+               Value="[StartingIndex]">
+            <Transformer>
+              <MathTransformer Type="String"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Background image for the block.  The Navigation value that was -->
+      <!-- supplied is applied to this item.  We use an anchor layout so  -->
+      <!-- that we can lay out the items in a diagonal strip.             -->
+      <Graphic Navigation="[MyNavigation]"
+               Content="[BackgroundImage]"
+               Layout="Anchor"
+               Name="Container">
+        <Children>
+
+          <!-- Navigation text -->
+          <Text Name="NavigationText"
+                Content="Navigation:"
+                Font="Arial,18"
+                Margins="5,5,5,5">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Left,0"
+                                 Top="Right,0"/>
+            </LayoutInput>
+          </Text>
+          <Text Name="NavigationContent"
+                Content="[MyNavigation.ToString]"
+                Font="Arial,18"
+                Margins="5,0,5,5">
+            <LayoutInput>
+              <AnchorLayoutInput Left="NavigationText,0"
+                                 Top="NavigationText,1"/>
+            </LayoutInput>
+          </Text>
+
+          <!-- Left item, located in top right corner -->
+          <kfi:KeyFocusIndicator Name="Left"
+                                 Margins="3,3,3,3"
+                                 MinimumTileSize="[MinimumTileSize]"/>
+
+          <me:HintStrip Name="LeftHorizontal"
+                        Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Left,0"
+                                 Bottom="Left,1"
+                                 Left="Left,0"
+                                 Right="Right,1"/>
+            </LayoutInput>
+          </me:HintStrip>
+
+          <me:HintStrip Name="LeftVertical"
+                        Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Left,0"
+                                 Right="Left,1"
+                                 Top="Left,0"
+                                 Bottom="Right,1"/>
+            </LayoutInput>
+          </me:HintStrip>
+
+
+          <!-- Center item, aligned to "Left"'s right and bottom edges -->
+          <kfi:KeyFocusIndicator Name="Center"
+                                 Margins="3,3,3,3"
+                                 MinimumTileSize="[MinimumTileSize]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Left,1"
+                                 Top="Left,1"/>
+            </LayoutInput>
+          </kfi:KeyFocusIndicator>
+
+          <me:HintStrip Name="CenterHorizontal"
+                        Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Center,0"
+                                 Bottom="Center,1"
+                                 Left="Left,0"
+                                 Right="Right,1"/>
+            </LayoutInput>
+          </me:HintStrip>
+
+          <me:HintStrip Name="CenterVertical"
+                        Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Center,0"
+                                 Right="Center,1"
+                                 Top="Left,0"
+                                 Bottom="Right,1"/>
+            </LayoutInput>
+          </me:HintStrip>
+
+
+          <!-- Right item, aligned to "Center"'s right and bottom edges -->
+          <kfi:KeyFocusIndicator Name="Right"
+                                 Margins="3,3,3,3"
+                                 MinimumTileSize="[MinimumTileSize]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Center,1"
+                                 Top="Center,1"/>
+            </LayoutInput>
+          </kfi:KeyFocusIndicator>
+
+          <me:HintStrip Name="RightHorizontal"
+                        Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Right,0"
+                                 Bottom="Right,1"
+                                 Left="Left,0"
+                                 Right="Right,1"/>
+            </LayoutInput>
+          </me:HintStrip>
+
+          <me:HintStrip Name="RightVertical"
+                        Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Right,0"
+                                 Right="Right,1"
+                                 Top="Left,0"
+                                 Bottom="Right,1"/>
+            </LayoutInput>
+          </me:HintStrip>
+
+        </Children>
+
+      </Graphic>
+    </Content>
+  </UI>
+
+  <!-- Simple UI for displaying a light-color strip to indicate layout -->
+  <!-- orientation.                                                    -->
+  <UI Name="HintStrip">
+    <Content>
+      <ColorFill Name="RightVertical"
+                 Content="LightBlue"
+                 Margins="3,3,3,3"/>
+    </Content>
+  </UI>
+
+</Mcml>

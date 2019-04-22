@@ -1,0 +1,38 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <UI Name="Default">
+    
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="This is Text with WordWrap, Right Aligned in a 3 line box."
+                Color="White"
+                WordWrap="true"
+                HorizontalAlignment="Far"
+                MaximumSize="400,400"
+                MaximumLines="3"/>
+          <Text Content="This is Text with WordWrap, Center Aligned in a 3 line box."
+                Color="White"
+                WordWrap="true"
+                HorizontalAlignment="Center"
+                MaximumSize="400,400"
+                MaximumLines="3"/>
+          <Text Content="This is Text with WordWrap, Left Aligned in a 3 line box."
+                Color="White"
+                WordWrap="true"
+                HorizontalAlignment="Near"
+                MaximumSize="400,400"
+                MaximumLines="3"/>
+          <Text Content="This is Text with WordWrap, No Alignment in a 3 line box."
+                Color="White"
+                WordWrap="true"
+                MaximumSize="400,400"
+                MaximumLines="3"/>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

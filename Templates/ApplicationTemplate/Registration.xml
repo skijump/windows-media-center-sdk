@@ -1,0 +1,9 @@
+﻿<application title="$projectname$" id="{$guid2$}">
+	<entrypoint id="{$guid3$}"
+				addin="$safeprojectname$.MyAddIn, $projectname$,Culture=Neutral,Version=1.0.0.0,PublicKeyToken=insert_public_key_token_here"
+				title="$projectname$"
+				description="$projectname$ Description"
+				ImageUrl=".\Application.png">
+		<category category="More Programs"/>
+	</entrypoint>
+</application>

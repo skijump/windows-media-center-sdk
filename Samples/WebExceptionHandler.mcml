@@ -1,0 +1,76 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:mce="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="http://retrosight.com/samples/windowsmediacentersdk/6/Controls.mcml">
+
+  <UI Name="Default">
+    
+    <!-- Exception Handlers should only be used within the     -->
+    <!-- context of a web application.                         -->
+    
+    <!-- They should NEVER be used for an application with an  -->
+    <!-- assembly present on the local machine.                -->
+    
+    <!-- Exception Handlers are designed to be used only with      -->
+    <!-- those Windows Media Center APIs which throw exceptions    -->
+    <!-- as a normal part of their operation such as demonstrated  -->
+    <!-- with this sample. By design, the RegisterApplication      -->
+    <!-- Method can throw four different types of exceptions.      -->
+    
+    <!-- The Exception Handler allows the web application to   -->
+    <!-- gracefully manage these exceptions and allow the user -->
+    <!-- to continue without crashing.                         -->
+
+    <!-- Web samples are designed to work when loaded       -->
+    <!-- via the HTTP:// or HTTPS:// protocol. Generally    -->
+    <!-- speaking, opening these samples using FILE:// will -->
+    <!-- not produce the desired results.                   -->
+
+    <Locals>
+      <mce:AddInHost Name="MCEHost"/>
+      <ExceptionHandler Name="MyExceptionHandler"/>
+      <Command Name="MyCommand"
+               Description="Register Application" />
+      <EditableText Name="EditableText"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[MyCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[MCEHost.ApplicationContext.RegisterApplication]"
+                  uri="http://retrosight.com/samples/windowsmediacentersdk/6/SamplerRegistration.xml"
+                  unRegister="false"
+                  allUsers="false">
+            <HandleExceptions>
+              <HandleException ExceptionType="Microsoft.MediaCenter.ApplicationAlreadyRegisteredException"
+                               ExceptionHandler="[MyExceptionHandler]" />
+              <HandleException ExceptionType="Microsoft.MediaCenter.ApplicationNotRegisteredException"
+                               ExceptionHandler="[MyExceptionHandler]" />
+              <HandleException ExceptionType="Microsoft.MediaCenter.ApplicationNoPermissionException"
+                               ExceptionHandler="[MyExceptionHandler]" />
+              <HandleException ExceptionType="Microsoft.MediaCenter.ApplicationRegistrationCancelledException"
+                               ExceptionHandler="[MyExceptionHandler]" />
+            </HandleExceptions>
+          </Invoke>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyExceptionHandler.Caught]">
+        <Actions>
+          <Set Target="[Label.PropertyValue]"
+               Value="[MyExceptionHandler.CaughtExceptionType]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel  Layout="VerticalFlow">
+        <Children>
+          <ctrl:Button Command="[MyCommand]"
+                       ButtonLabel="[MyCommand.Description]" />
+          <ctrl:PropertyAndValue Name="Label"
+                                 PropertyName="Exception"
+                                 PropertyValue="No Exception Caught!" />
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

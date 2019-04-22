@@ -1,0 +1,80 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:styles="resx://Sampler/Sampler.Resources/Styles"
+      xmlns:me="Me">
+
+  <UI Name="PropertyAndValueTest">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:PropertyAndValue PropertyName="The Property Name"
+                               PropertyValue="The Property Value" />
+          <me:PropertyAndValue PropertyName="The Property Name"
+                               PropertyValue="The Property Value" />
+          <me:PropertyAndValue PropertyName="The Property Name"
+                               PropertyValue="The Property Value" />
+          <me:PropertyAndValue PropertyName="The Property Name"
+                               PropertyValue="The Property Value" />
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="PropertyAndValue">
+
+    <Properties>
+      <cor:String Name="PropertyName"
+                  String="$Required" />
+      <cor:String Name="PropertyValue"
+                  String="$Required"/>
+
+      <Font Name="FontProperty"
+            Font="font://styles:Text"/>
+      <Font Name="FontEqualSign"
+            Font="font://styles:Text"/>
+      <Font Name="FontValue"
+            Font="font://styles:Text"/>
+
+      <Color Name="ColorProperty"
+             Color="LimeGreen"/>
+      <Color Name="ColorEqualSign"
+             Color="LimeGreen"/>
+      <Color Name="ColorValue"
+             Color="LimeGreen"/>
+
+    </Properties>
+
+    <Rules>
+
+      <!-- Accessibility -->
+      <Binding Source="[PropertyValue]"
+               Target="[CurrentPropertyValue.Content]" />
+      <Binding Target="[Accessible.Value]"
+               Source="[PropertyValue]"/>
+      <Default Target="[Accessible.Name]"
+               Value="[PropertyName]"/>
+      <Default Target="[Accessible.Role]"
+               Value="StaticText"/>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="HorizontalFlow"
+             Margins="2,2,2,2">
+        <Children>
+          <Text Content="[PropertyName]"
+                Color="[ColorProperty]"
+                Font="[FontProperty]"/>
+          <Text Content="="
+                Color="[ColorEqualSign]"
+                Font="[FontEqualSign]"/>
+          <Text Name="CurrentPropertyValue"
+                Content="[PropertyValue]"
+                Color="[ColorValue]"
+                Font="[FontValue]"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

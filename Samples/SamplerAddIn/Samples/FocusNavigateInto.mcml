@@ -1,0 +1,143 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:Me="me"
+      xmlns:bt="resx://Sampler/Sampler.Resources/ControlsSimpleButton">
+
+  <!-- NavigateInto Sample                                                   -->
+  <!-- NavigateInto allows you to send focus to another UI.  When it is      -->
+  <!-- called, it will first see if the item it was invoked on is key        -->
+  <!-- focusable.  If it isn't, it searches children of the item.  When it   -->
+  <!-- finds a focusable item, it gives key focus to that item.              -->
+
+  <!-- The Main UI consists of two areas, one labeled "Ping" and the other   -->
+  <!-- labelled "Pong", a white color fill between them, and instruction     -->
+  <!-- text at the bottom.  When you click on "Ping", we call NavigateInto   -->
+  <!-- on "Pong" and when you click on "Pong" we call NavigateInto on "Ping" -->
+  <UI Name="Main">
+
+    <Locals>
+      <!-- Commands that we pass to SimpleButton which trigger the -->
+      <!-- NavigateInto calls -->
+      <Command Name="GoPong"
+               Description="Ping"/>
+      <Command Name="GoPing"
+               Description="Pong"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- "Ping" was clicked, so send focus to the "Pong" item. -->
+      <Changed Source="[GoPong.Invoked]">
+        <Actions>
+          <Invoke Target="[Pong.NavigateInto]"/>
+        </Actions>
+      </Changed>
+
+      <!-- "Pong" was clicked, so send focus to the "Ping" item. -->
+      <Changed Source="[GoPing.Invoked]">
+        <Actions>
+          <Invoke Target="[Ping.NavigateInto]"/>
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"
+                      Spacing="15,0"/>
+        </Layout>
+        <Children>
+          <!-- Container for Ping, Pong, and the color fill between them.  -->
+          <!-- We use AnchorLayout in order to stretch the color fill to   -->
+          <!-- the full height of the row.                                 -->
+          <Panel>
+            <Layout>
+              <AnchorLayout/>
+            </Layout>
+            <Children>
+              <!-- This is the "Ping" item.  Notice that it's not directly  -->
+              <!-- key focusable - the SimpleButton inside it is what will  -->
+              <!-- receive focus when NavigateInto is called on this.       -->
+              <Me:ButtonContainer Name="Ping"
+                                  Command="[GoPong]"/>
+
+              <ColorFill Name="Net"
+                         Content="White"
+                         MinimumSize="6,0">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Ping,1"
+                                     Top="Ping,0"
+                                     Bottom="Ping,1"/>
+                </LayoutInput>
+              </ColorFill>
+
+              <!-- This is the "Pong" item.  Again, it's not directly key  -->
+              <!-- focusable, but when NavigateInto is called, it will find-->
+              <!-- the SimpleButton inside it which is.                    -->
+              <Me:ButtonContainer Name="Pong"
+                                  Command="[GoPing]">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Net, 1"/>
+                </LayoutInput>
+              </Me:ButtonContainer>
+            </Children>
+          </Panel>
+
+          <Text WordWrap="true"
+                Content="Click 'Ping' to send key focus to 'Pong', and click 'Pong' to send key focus to 'Ping'"
+                Color="White"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- This UI consists of a ColorFill with a SimpleButton child. -->
+  <UI Name="ButtonContainer">
+    <Properties>
+      <Command Name="Command"
+               Command="$Required"/>
+    </Properties>
+
+    <Rules>
+      <!-- Notice we're not setting Input.KeyInteractive="true" on our      -->
+      <!-- Input object, as we want the SimpleButton to take focus, not us. -->
+      <!-- When Input.DeepKeyFocus == true, that indicates that one of our  -->
+      <!-- descendants is focused.                                          -->
+      <!-- When our button has focus, raise the alpha value to make us      -->
+      <!-- brigher.                                                         -->
+      <Condition Source="[Input.DeepKeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Fill.Alpha]"
+               Value=".8"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <ColorFill Name="Fill"
+                 Alpha=".5"
+                 Content="Lawngreen"
+                 Padding="15,15,15,15">
+        <Children>
+
+          <!-- Our button, which will receive focus when NavigateInto is -->
+          <!-- called on our host.                                       -->
+          <bt:SimpleButton Name="Button"
+                           Command="[Command]"
+                           LabelFont="Arial,58"
+                           BackgroundColor="Transparent"
+                           BackgroundHoverColor="Transparent"
+                           BackgroundFocusedColor="Transparent"
+                           BackgroundPressedColor="Transparent"
+                           LabelHoverColor="White"
+                           LabelPressedColor="Firebrick"/>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+</Mcml>

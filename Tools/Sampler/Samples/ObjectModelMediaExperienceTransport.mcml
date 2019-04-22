@@ -1,0 +1,227 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls"
+      xmlns:a="assembly://Sampler/Sampler"
+      xmlns:me="Me">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- The Windows Media Center extensibility platform includes a full set  -->
+  <!-- of APIs for interacting with media services. Such services include   -->
+  <!-- playing media (such as music and videos) as well as other non-media  -->
+  <!-- related services (like displaying a MediaCenter dialog box).         -->
+
+  <!-- All Windows Media Center services are accessed via the AddInHost     -->
+  <!-- type, which is located in the Microsoft.MediaCenter namespace.       -->
+
+  <!-- This sample demonstrates the how to play a video and query its       -->
+  <!-- properties using APIs in the Microsoft.MediaCenter namespace.        -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <cor:String Name="MediaPath"
+                  String=""/>
+      <EditableText Name="UriToMedia"/>
+      <Command Name="StartPlayback"
+               Description="Start Playback" />
+    </Locals>
+
+    <Rules>
+
+      <Default Value="[Sampler.LocalContentVideo04]"
+               Target="[UriToMedia.Value]" />
+
+      <Changed Source="[StartPlayback.Invoked]">
+        <Actions>
+          <Set Target="[MediaPath]"
+               Value="[UriToMedia.Value]"
+               InvokePolicy="Synchronous"/>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[MediaPath]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"/>
+          <Modified Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[MyPlayRate.PropertyValue]"
+               Value="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate.ToString]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState]"/>
+          <Modified Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[MyPlayState.PropertyValue]"
+               Value="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState.ToString]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position]"/>
+          <Modified Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[MyPosition.PropertyValue]"
+               Value="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position.ToString]"/>
+        </Actions>
+      </Rule>
+
+      <Binding Target="[MyBufferingProgress.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.BufferingProgress.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.BufferingProgress.ToString]"/>
+        </Conditions>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Form">
+        <Children>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+
+            <Children>
+              <ctrl:Editbox EditableText="[UriToMedia]"
+                            LabelName="Media Uri" />
+
+              <ctrl:Button Command="[StartPlayback]"
+                           ButtonLabel="[StartPlayback.Description]"/>
+
+              <me:PlayRateButton Description="PlayRate=Stop (0)"
+                                 PlayRate="0"/>
+              <me:PlayRateButton Description="PlayRate=Pause (1)"
+                                 PlayRate="1"/>
+              <me:PlayRateButton Description="PlayRate=Play (2)"
+                                 PlayRate="2"/>
+              <me:PlayRateButton Description="PlayRate=FF1 (3)"
+                                 PlayRate="3"/>
+              <me:PlayRateButton Description="PlayRate=FF2 (4)"
+                                 PlayRate="4"/>
+              <me:PlayRateButton Description="PlayRate=FF3 (5)"
+                                 PlayRate="5"/>
+              <me:PlayRateButton Description="PlayRate=Rew1 (6)"
+                                 PlayRate="6"/>
+              <me:PlayRateButton Description="PlayRate=Rew2 (7)"
+                                 PlayRate="7"/>
+              <me:PlayRateButton Description="PlayRate=Rew3 (8)"
+                                 PlayRate="8"/>
+              <me:PlayRateButton Description="PlayRate=Slo1 (9)"
+                                 PlayRate="9"/>
+              <me:PlayRateButton Description="PlayRate=Slo2 (10)"
+                                 PlayRate="10"/>
+              <me:PlayRateButton Description="PlayRate=Slo3 (11)"
+                                 PlayRate="11"/>
+
+              <!-- Skip Forward -->
+              <ctrl:Button ButtonLabel="Skip Forward">
+                <Command>
+                  <InvokeCommand Target="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.SkipForward]"/>
+                </Command>
+              </ctrl:Button>
+
+              <!-- Skip Back -->
+              <ctrl:Button ButtonLabel="Skip Back">
+                <Command>
+                  <InvokeCommand Target="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.SkipBack]"/>
+                </Command>
+              </ctrl:Button>
+
+            </Children>
+          </Panel>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.5"
+                               Right="Parent,1"
+                               Vertical="Center" />
+            </LayoutInput>
+
+            <Children>
+              <Video MinimumSize="400,300"/>
+              <ctrl:PropertyAndValue Name="MyPlayRate"
+                                     PropertyName="PlayRate"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyPlayState"
+                                     PropertyName="PlayState"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyBufferingProgress"
+                                     PropertyName="BufferingProgress"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyPosition"
+                                     PropertyName="Position"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+  <!-- Button for changing the play rate -->
+  <UI Name="PlayRateButton">
+    <Properties>
+      <cor:Single Name="PlayRate"
+                  Single="0"/>
+      <cor:String Name="Description"
+                  String="ButtonName"/>
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <Command Name="Command"
+               Description="Button Name"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[Description]"
+               Target="[Command.Description]"/>
+
+      <Changed Source="[Command.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"
+               Value="[PlayRate]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <ctrl:Button Command="[Command]"
+                   ButtonLabel="[Description]"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

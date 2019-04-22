@@ -1,0 +1,104 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- Rules are priority-based. The last applicable (i.e. all Source  -->
+  <!-- conditions satisfied) rule wins when determining what the value -->
+  <!-- should be for a Target.                                         -->
+
+  <!-- This UI displays the current count (between 1 and 5) and        -->
+  <!-- changes color of the text message based on the current value.   -->
+  <UI Name="MixedSample">
+
+    <!-- Locals for displaying a counter. -->
+    <Locals>
+      <cor:Int32 Name="Counter"
+                 Int32="1"/>
+      <Timer Name="Timer"
+             Interval="500"
+             Enabled="true"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- All rules are applied in top-down priority order (earlier    -->
+      <!-- rules have a  higher priority). The highest priority Source  -->
+      <!-- matching rule will be applied on an individual Target basis. -->
+
+      <!-- Changed rules are used for detecting when a member changes. -->
+      <!-- When the timer ticks, increment the Counter value by 1.     -->
+      <Changed Source="[Timer.Tick]">
+        <Actions>
+          <Set Target="[Counter]"
+               Value="[Counter]">
+            <Transformer>
+              <MathTransformer Add="1"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Changed>
+
+      <!-- Binding rule to transfer the current Counter value to the        -->
+      <!-- CounterDisplay. FormatTransformer is used to convert the integer -->
+      <!-- Counter value to a string and add additional text.               -->
+      <Binding Source="[Counter]"
+               Target="[CounterDisplay.Content]">
+        <Transformer>
+          <FormatTransformer Format="The current count is: {0}"/>
+        </Transformer>
+      </Binding>
+
+      <!-- This section is used to change the color of the text based -->
+      <!-- on the Counter value.                                      -->
+
+      <!-- Loop count if exceed 5. -->
+      <Condition Source="[Counter]"
+                 ConditionOp="GreaterThan"
+                 SourceValue="5"
+                 Target="[Counter]"
+                 Value="1"/>
+
+      <Condition Source="[Counter]"
+                 SourceValue="4"
+                 Target="[CounterDisplay.Color]"
+                 Value="BlueViolet"/>
+
+      <Condition Source="[Counter]"
+                 SourceValue="3"
+                 Target="[CounterDisplay.Color]"
+                 Value="DeepSkyBlue"/>
+
+      <Condition Source="[Counter]"
+                 SourceValue="2"
+                 Target="[CounterDisplay.Color]"
+                 Value="Seagreen"/>
+
+      <!-- Condition rules match based on a conditional. Equals is the -->
+      <!-- default condition.                                          -->
+      <Condition Source="[Counter]"
+                 SourceValue="1"
+                 Target="[CounterDisplay.Color]"
+                 Value="Firebrick"/>
+
+      <!-- Default rules are used to set default values for members.   -->
+      <!-- They are only run in the absence of a higher priority rule. -->
+      <Default Target="[CounterDisplay.Color]"
+               Value="Yellow"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Children>
+
+          <Text Name="CounterDisplay"
+                Font="Tahoma,20"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

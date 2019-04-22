@@ -1,0 +1,635 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:ctrl="file://Controls.mcml"
+      xmlns:me="Me">
+
+  <UI Name="ScrollingData_NoFocusVert">
+    <Properties>
+      <Orientation Name="ScrollerOrientation"
+                   Orientation="Vertical"/>
+    </Properties>
+
+    <Locals>
+      <ScrollingData Name="ScrollingData"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[ScrollingData.CurrentPage.ToString]"
+               Target="[CurrentPageText.PropertyValue]" />
+      <Binding Source="[ScrollingData.TotalPages.ToString]"
+               Target="[TotalPagesText.PropertyValue]" />
+      <Binding Source="[ScrollingData.CanScrollUp.ToString]"
+               Target="[CanScrollUp.PropertyValue]" />
+      <Binding Source="[ScrollingData.CanScrollDown.ToString]"
+               Target="[CanScrollDown.PropertyValue]" />
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Panel Layout="VerticalFlow"
+                 Margins="0,50,0,0">
+            <Children>
+              <Panel Layout="HorizontalFlow"
+                     MouseInteractive="false"
+                     Margins="15,0,0,15">
+                <Children>
+                  <me:HomeKey Margins="0,0,5,0"
+                              ScrollingData="[ScrollingData]">
+                    <Command>
+                      <Command Description="HomeKey"/>
+                    </Command>
+                  </me:HomeKey>
+                  <me:EndKey Margins="0,0,5,0"
+                             ScrollingData="[ScrollingData]">
+                    <Command>
+                      <Command Description="EndKey"/>
+                    </Command>
+                  </me:EndKey>
+                  <me:PageUpKey Margins="0,0,5,0"
+                                ScrollingData="[ScrollingData]">
+                    <Command>
+                      <Command Description="PageUpKey"/>
+                    </Command>
+                  </me:PageUpKey>
+                  <me:PageDownKey Margins="0,0,5,0"
+                                  ScrollingData="[ScrollingData]">
+                    <Command>
+                      <Command Description="PageDownKey"/>
+                    </Command>
+                  </me:PageDownKey>
+                  <me:ScrollPlus5Key Margins="0,0,5,0"
+                                     ScrollingData="[ScrollingData]">
+                    <Command>
+                      <Command Description="ScrollPlus5Key"/>
+                    </Command>
+                  </me:ScrollPlus5Key>
+                  <me:ScrollMinus5Key Margins="0,0,5,0"
+                                      ScrollingData="[ScrollingData]">
+                    <Command>
+                      <Command Description="ScrollMinus5Key"/>
+                    </Command>
+                  </me:ScrollMinus5Key>
+                  <me:ScrollUpKey Margins="0,0,5,0"
+                                  ScrollingData="[ScrollingData]">
+                    <Command>
+                      <Command Description="ScrollUpKey"/>
+                    </Command>
+                  </me:ScrollUpKey>
+                  <me:ScrollDownKey Margins="0,0,5,0"
+                                    ScrollingData="[ScrollingData]">
+                    <Command>
+                      <Command Description="ScrollDownKey"/>
+                    </Command>
+                  </me:ScrollDownKey>
+                </Children>
+              </Panel>
+
+              <me:TextScroller FocusOrder="0"
+                               Name="TextScroller"
+                               ScrollerOrientation="[ScrollerOrientation]"
+                               ScrollingData="[ScrollingData]" />
+
+              <Panel Layout="VerticalFlow">
+                <Children>
+                  <ctrl:PropertyAndValue Name="TotalPagesText"
+                                     PropertyName="TotalPagesText"
+                                     PropertyValue="TotalPages is undefined"/>
+                  <ctrl:PropertyAndValue Name="CurrentPageText"
+                                         PropertyName="CurrentPageText"
+                                         PropertyValue="CurrentPage is undefined"/>
+                  <ctrl:PropertyAndValue Name="CanScrollUp"
+                                         PropertyName="CanScrollUp"
+                                         PropertyValue="CanScrollUp is undefined"/>
+                  <ctrl:PropertyAndValue Name="CanScrollDown"
+                                         PropertyName="CanScrollDown"
+                                         PropertyValue="CanScrollDown is undefined"/>
+                </Children>
+              </Panel>
+
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="TextScroller">
+    <Properties>
+      <Orientation Name="ScrollerOrientation"
+                   Orientation="Horizontal"/>
+
+      <!-- The ScrollingData object controls Scrolling state and configuration -->
+      <ScrollingData Name="ScrollingData"/>
+    </Properties>
+    <Locals>
+      <!-- The ScrollingHandler which reacts to user keyboard input. -->
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandleDirectionalKeys="true"/>
+    </Locals>
+    <Rules>
+      <!-- Give ScrollingData to ScrollingHandler. -->
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Background.Content]"
+                 Value="LightGray"/>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="ScrollingData_NoFocusVertPane"/>
+      <Default Target="[Accessible.Role]"
+               Value="Pane"/>
+    </Rules>
+    <Content>
+      <!-- Scroller's parent which displays background color. It offsets -->
+      <!-- the Scroller using padding and the Scroller fades the clipped -->
+      <!-- text outside itself (negative fade size).                     -->
+      <!-- This piece of the UI is MouseInteractive. Always specify      -->
+      <!-- parts of the UI's content tree react to mouse input. This is  -->
+      <!-- true for any UI with an input handler set to "Direct".        -->
+      <ColorFill Name="Background"
+                 Content="Gray"
+                 MouseInteractive="true"
+                 Padding="30,30,30,30"
+                 MaximumSize="0,400"
+                 Margins="30,0,30,0"
+                 Navigation="ContainDirectional">
+        <Children>
+
+          <!-- The Scroller. It referrs to the ScrollingData too. -->
+          <Scroller Orientation="[ScrollerOrientation]"
+                    FadeSize="-30"
+                    ScrollingData="[ScrollingData]">
+            <Children>
+
+              <!-- Text to scroll. Filled with rich text content (RTF). -->
+              <!-- Use Wordpad to generate your RTF content.            -->
+              <Text Color="Black"
+                    Font="Tahoma,30"
+                    WordWrap="true"
+                    Content="Incidunt improbis defuturum tenetur inportuno suam confidet hominum aliquam fugit civium confidet noctesque harum factis diis mollitia legum umquam fugit. Sic utilitatibus supplicii animadversionis collegisti hoc. Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu. In nisl sumo principes eam. In vis modo essent persius. Id pro nisl veritus salutatus, sed natum nostrud aliquyam et, suscipit recteque duo ut pri. Apeirian verterem cu vim, tritani verterem sed id. Vero movet te nec, ea sed dicit quando prodesset, tota ponderum ne per! Est ad kasd ridens. Facer vocent disputando id quo, nemore scribentur eu has! Cim ut stet ludus inimicus, aliquid argumentum et sea. Unum oratio quo id! Ius kasd tantas. Eos ad utamur convenire, veritus mentitum facilisis cim no! Ex justo etiam vix, affert possit usu ne? Choro verear eu mel, ad veri soleat quo. Everti deterruisset ex sea, duo. Firmissima odioque neque nullo ruant. Voluptates tanta voluptate et oratio animadversionis illum evertitur tanta laudantium perspiciatis. Semper ut in quae nam eorum totum eveniet possint dubio factis nesciunt res quamvis voluptate quia itaque accessio indicaverunt improborum vestra nollem umquam. Perspiciatis quippiam eaque est laudem hominum. Segniorem accessio. Ipsam tamque inventore labore consecutus legum non quorum nam deleniti fugiat gravissimo ferae inmortalibus imperii minima poena emolumento magnam laudantium copulatas dignissimos eius commemorandis natus. Commemorandis fugiat sint. Sollicitant hanc metu rem.">
+
+                <!-- Smooth scrolling. -->
+                <Animations>
+                  <Animation Type="Move">
+                    <Keyframes>
+                      <PositionKeyframe Time="0"
+                                        RelativeTo="Current"
+                                        Interpolation="Exp"/>
+                      <PositionKeyframe Time=".1"
+                                        RelativeTo="Final"/>
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+              </Text>
+
+            </Children>
+          </Scroller>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- Define a separate UI for each of the Naviagtion keys. A separate UI
+       is needed to allow each button to have it's own ClickHandler.        -->
+
+  <UI Name="EndKey">
+    <Properties>
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="null"/>
+      <Command Name="Command"
+               Command="$Required" />
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    HandlePrimaryMouseButton="true"
+                    Command="[Command]"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[End.BackColor]"
+                 Value="MintCream"/>
+
+      <!-- Invoke the desired navigation when button is clicked -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[Command.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[End.Color]"
+               Value="Green"/>
+          <Invoke Target="[ScrollingData.End]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="EndKey"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Clicker.Command]"/>
+
+    </Rules>
+
+    <Content>
+      <Text Name="End"
+            Content="End"
+            Color="Blue"
+            BackColor="AntiqueWhite"
+            MouseInteractive="true"/>
+    </Content>
+  </UI>
+
+  <UI Name="HomeKey">
+    <Properties>
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="null"/>
+      <Command Name="Command"
+               Command="$Required" />
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    HandlePrimaryMouseButton="true"
+                    Command="[Command]"/>
+    </Locals>
+    <Rules>
+
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Home.BackColor]"
+                 Value="MintCream"/>
+
+      <!-- Invoke the desired navigation when button is clicked -->
+
+      <Rule>
+        <Conditions>
+          <Modified Source="[Command.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Home.Color]"
+               Value="Green"/>
+          <Invoke Target="[ScrollingData.Home]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="HomeKey"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Clicker.Command]"/>
+
+    </Rules>
+    <Content>
+      <Text Name="Home"
+            Content="Home"
+            Color="Blue"
+            BackColor="AntiqueWhite"
+            MouseInteractive="true"/>
+    </Content>
+  </UI>
+
+  <UI Name="PageDownKey">
+    <Properties>
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="null"/>
+      <Command Name="Command"
+               Command="$Required" />
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    HandlePrimaryMouseButton="true"
+                    Command="[Command]"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[PageDown.BackColor]"
+                 Value="MintCream"/>
+
+      <!-- Invoke the desired navigation when button is clicked -->
+
+      <Rule>
+        <Conditions>
+          <Modified Source="[Command.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[PageDown.Color]"
+               Value="Green"/>
+          <Invoke Target="[ScrollingData.PageDown]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="PageDownKey"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Clicker.Command]"/>
+
+    </Rules>
+
+    <Content>
+      <Text Name="PageDown"
+            Content="PageDown"
+            Color="Blue"
+            BackColor="AntiqueWhite"
+            MouseInteractive="true"/>
+    </Content>
+  </UI>
+
+  <UI Name="PageUpKey">
+    <Properties>
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="null"/>
+      <Command Name="Command"
+               Command="$Required" />
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    HandlePrimaryMouseButton="true"
+                    Command="[Command]"/>
+    </Locals>
+
+    <Rules>
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[PageUp.BackColor]"
+                 Value="MintCream"/>
+
+      <!-- Invoke the desired navigation when button is clicked -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[Command.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[PageUp.Color]"
+               Value="Green"/>
+          <Invoke Target="[ScrollingData.PageUp]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="PageUpKey"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Clicker.Command]"/>
+    </Rules>
+
+    <Content>
+      <Text Name="PageUp"
+            Content="PageUp"
+            Color="Blue"
+            BackColor="AntiqueWhite"
+            MouseInteractive="true"/>
+    </Content>
+  </UI>
+
+  <UI Name="ScrollPlus5Key">
+    <Properties>
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="null"/>
+      <Command Name="Command"
+               Command="$Required" />
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    HandlePrimaryMouseButton="true"
+                    Command="[Command]"/>
+    </Locals>
+
+    <Rules>
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Scroll+5.BackColor]"
+                 Value="MintCream"/>
+
+      <!-- Invoke the desired navigation when button is clicked -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[Command.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Scroll+5.Color]"
+               Value="Green"/>
+          <Invoke Target="[ScrollingData.Scroll]"
+                  amount="5"/>
+        </Actions>
+      </Rule>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="ScrollPlus5Key"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Clicker.Command]"/>
+    </Rules>
+
+    <Content>
+      <Text Name="Scroll+5"
+            Content="Scroll +5"
+            Color="Blue"
+            BackColor="AntiqueWhite"
+            MouseInteractive="true"/>
+    </Content>
+  </UI>
+
+  <UI Name="ScrollMinus5Key">
+    <Properties>
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="null"/>
+      <Command Name="Command"
+               Command="$Required" />
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    HandlePrimaryMouseButton="true"
+                    Command="[Command]"/>
+    </Locals>
+
+    <Rules>
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Scroll-5.BackColor]"
+                 Value="MintCream"/>
+
+      <!-- Invoke the desired navigation when button is clicked -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[Command.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Scroll-5.Color]"
+               Value="Green"/>
+          <Invoke Target="[ScrollingData.Scroll]"
+                  amount="-5"/>
+        </Actions>
+      </Rule>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="ScrollMinus5Key"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Clicker.Command]"/>
+    </Rules>
+
+    <Content>
+      <Text Name="Scroll-5"
+            Content="Scroll -5"
+            Color="Blue"
+            BackColor="AntiqueWhite"
+            MouseInteractive="true"/>
+    </Content>
+  </UI>
+
+  <UI Name="ScrollDownKey">
+    <Properties>
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="null"/>
+      <Command Name="Command"
+               Command="$Required" />
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    HandlePrimaryMouseButton="true"
+                    Command="[Command]"/>
+    </Locals>
+
+    <Rules>
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[ScrollDown.BackColor]"
+                 Value="MintCream"/>
+
+      <!-- Invoke the desired navigation when button is clicked -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[Command.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ScrollDown.Color]"
+               Value="Green"/>
+          <Invoke Target="[ScrollingData.ScrollDown]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="ScrollDownKey"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Clicker.Command]"/>
+    </Rules>
+
+    <Content>
+      <Text Name="ScrollDown"
+            Content="ScrollDown"
+            Color="Blue"
+            BackColor="AntiqueWhite"
+            MouseInteractive="true"/>
+    </Content>
+  </UI>
+
+  <UI Name="ScrollUpKey">
+    <Properties>
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="null"/>
+      <Command Name="Command"
+               Command="$Required" />
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    HandlePrimaryMouseButton="true"
+                    Command="[Command]"/>
+    </Locals>
+
+    <Rules>
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[ScrollUp.BackColor]"
+                 Value="MintCream"/>
+
+      <!-- Invoke the desired navigation when button is clicked -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[Command.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ScrollUp.Color]"
+               Value="Green"/>
+          <Invoke Target="[ScrollingData.ScrollUp]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="ScrollUpKey"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Clicker.Command]"/>
+    </Rules>
+
+    <Content>
+      <Text Name="ScrollUp"
+            Content="ScrollUp"
+            Color="Blue"
+            BackColor="AntiqueWhite"
+            MouseInteractive="true"/>
+    </Content>
+  </UI>
+
+
+</Mcml>
+

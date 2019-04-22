@@ -1,0 +1,11 @@
+<application title="Preview Tool"
+             id="{4CDB8FC9-06E1-4F4A-9E76-3EFAC3E225E2}">
+  <entrypoint id="{110FDB8C-25F3-4BC2-BB1D-A393E952B8A9}"
+              addin="Microsoft.MediaCenter.Tools.McmlPad, McmlPad,Culture=Neutral,Version=6.1.0.0,PublicKeyToken=31bf3856ad364e35"
+              title="Preview Tool"
+              description="Windows Media Center SDK Preview Tool"
+              ImageUrl=".\McmlPad.png" >
+    <category category="More Programs"/>
+  </entrypoint>
+
+</application>

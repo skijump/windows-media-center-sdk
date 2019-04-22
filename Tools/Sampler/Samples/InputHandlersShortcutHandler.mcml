@@ -1,0 +1,353 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- Shortcut handlers provide shortcut-command input behavior.           -->
+  <!-- They also have commands associated and the Invoke method on the      -->
+  <!-- command will be called when the shortcut is invoked.                 -->
+
+  <!--  When the remote controls buttons are pressed from either the        -->
+  <!--  keyboard or the remote it animates the text and indicates which     -->
+  <!--  button was pressed.                                                 -->
+
+  <!--  Note: When trapping the Back shortcut you can create an environment -->
+  <!--  (as this sample does) whereby the user cannot back out of the       -->
+  <!--  application at all and can only navigate forward. Extreme caution   -->
+  <!--  should be taken to trap but NOT block the back navigation.          -->
+  
+  <UI Name="Default">
+
+    <Locals>
+      <ShortcutHandler Name="BackHandler"
+                       Shortcut="Back"
+                       Handle="true"/>
+      <ShortcutHandler Name="BlueHandler"
+                       Shortcut="Blue"
+                       Handle="true"/>
+      <ShortcutHandler Name="ChannelDownHandler"
+                       Shortcut="ChannelDown"
+                       Handle="true"/>
+      <ShortcutHandler Name="ChannelUpHandler"
+                       Shortcut="ChannelUp"
+                       Handle="true"/>
+      <ShortcutHandler Name="ClearHandler"
+                       Shortcut="Clear"
+                       Handle="true"/>
+      <ShortcutHandler Name="DVDMenuHandler"
+                       Shortcut="DVDMenu"
+                       Handle="true"/>
+      <ShortcutHandler Name="EnterHandler"
+                       Shortcut="Enter"
+                       Handle="true"/>
+      <ShortcutHandler Name="FastForwardHandler"
+                       Shortcut="FastForward"
+                       Handle="true"/>
+      <ShortcutHandler Name="GreenHandler"
+                       Shortcut="Green"
+                       Handle="true"/>
+      <ShortcutHandler Name="HoldHandler"
+                       Shortcut="Hold"
+                       Handle="true"/>
+      <ShortcutHandler Name="InteractiveHandler"
+                       Shortcut="Interactive"
+                       Handle="true"/>
+      <ShortcutHandler Name="NoneHandler"
+                       Shortcut="None"
+                       Handle="true"/>
+      <ShortcutHandler Name="PageDownHandler"
+                       Shortcut="PageDown"
+                       Handle="true"/>
+      <ShortcutHandler Name="PageUpHandler"
+                       Shortcut="PageUp"
+                       Handle="true"/>
+      <ShortcutHandler Name="PauseHandler"
+                       Shortcut="Pause"
+                       Handle="true"/>
+      <ShortcutHandler Name="PlayHandler"
+                       Shortcut="Play"
+                       Handle="true"/>
+      <ShortcutHandler Name="PlayPauseHandler"
+                       Shortcut="PlayPause"
+                       Handle="true"/>
+      <ShortcutHandler Name="RecordHandler"
+                       Shortcut="Record"
+                       Handle="true"/>
+      <ShortcutHandler Name="RedHandler"
+                       Shortcut="Red"
+                       Handle="true"/>
+      <ShortcutHandler Name="RevealHandler"
+                       Shortcut="Reveal"
+                       Handle="true"/>
+      <ShortcutHandler Name="RewindHandler"
+                       Shortcut="Rewind"
+                       Handle="true"/>
+      <ShortcutHandler Name="SkipBackHandler"
+                       Shortcut="SkipBack"
+                       Handle="true"/>
+      <ShortcutHandler Name="SkipForwardHandler"
+                       Shortcut="SkipForward"
+                       Handle="true"/>
+      <ShortcutHandler Name="StopHandler"
+                       Shortcut="Stop"
+                       Handle="true"/>
+      <ShortcutHandler Name="YellowHandler"
+                       Shortcut="Yellow"
+                       Handle="true"/>
+    </Locals>
+
+    <!-- Define how to handle the input using rules. -->
+    <Rules>
+      <!-- Rules to define the behavior when the shortcut is invoked. -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[BackHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Back" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[BlueHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Blue" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[ChannelDownHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="ChannelDown" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[ChannelUpHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="ChannelUp" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[ClearHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Clear" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[DVDMenuHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="DVDMenu" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[EnterHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Enter" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[FastForwardHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="FastForward" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[GreenHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Green" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[HoldHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Hold" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[InteractiveHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Interactive" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[NoneHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="None" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[PageDownHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="PageDown" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[PageUpHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="PageUp" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[PauseHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Pause" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[PlayHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Play" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[PlayPauseHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="PlayPause" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[RecordHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Record" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[RedHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Red" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[RevealHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Reveal" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[RewindHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Rewind" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[SkipBackHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="SkipBack" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[SkipForwardHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="SkipForward" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[StopHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Stop" />
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Modified Source="[YellowHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Yellow" />
+        </Actions>
+      </Rule>
+      <!-- Animate the label any time a different button is pressed. -->
+      <Changed Source="[Label.Content]">
+        <Actions>
+          <PlayAnimation Target="[Label]">
+            <Animation>
+              <Animation CenterPointPercent="0.5,0.5,0.0">
+                <Keyframes>
+                  <RotateKeyframe Time="0.0"
+                                  Value="0deg;0,0,1"
+                                  Interpolation="SCurve"/>
+                  <RotateKeyframe Time="0.25"
+                                  Value="360deg;0,0,1"/>
+                </Keyframes>
+              </Animation>
+
+            </Animation>
+          </PlayAnimation>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Text Name="Label"
+            Content="The remote button press will be displayed here."
+            Color="White"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

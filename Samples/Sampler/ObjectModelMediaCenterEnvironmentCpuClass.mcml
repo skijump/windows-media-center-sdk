@@ -1,0 +1,30 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+  
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[MyCpuClass.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.CpuClass]" />
+    </Rules>
+
+    <Content>
+      <ctrl:PropertyAndValue Name="MyCpuClass"
+                             PropertyName="CPU Class"
+                             PropertyValue="" />
+    </Content>
+
+  </UI>
+
+</Mcml>

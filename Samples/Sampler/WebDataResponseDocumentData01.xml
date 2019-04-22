@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataroot>
+  <dataitem name="MyItem">
+    <title>My Title</title>
+    <content type="text">My content</content>
+  </dataitem>
+</dataroot>

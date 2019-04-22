@@ -1,0 +1,41 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting">
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <coll:IList Name="MyEntryPointParametersList"
+                  IList="null"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[AddInHost.EntryPointParameters]"
+               Target="[MyEntryPointParametersList]"/>
+      <Binding Source="[MyEntryPointParametersList]"
+               Target="[MyRepeater.Source]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="The EntryPointParameters IList will be empty if launched directly from within Windows Media Center -- see the ObjectModelMediaCenterEnvironmentLaunchEntryPoint.mcml sample."
+                Color="White"
+                WordWrap="true" />
+          <Repeater Name="MyRepeater"
+                    Layout="VerticalFlow">
+            <Content>
+              <Text Content="[RepeatedItem!cor:String]"
+                    Color="White"
+                    WordWrap="true" />
+            </Content>
+          </Repeater>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

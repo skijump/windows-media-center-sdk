@@ -1,0 +1,94 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- A Resource Group allows for the preloading of images -->
+  <!-- and sounds and is most commonly used to acquire all  -->
+  <!-- of the items needed for a page before displaying or  -->
+  <!-- rendering the page.                                  -->
+
+  <!-- Rules are used to respond to the ResourceGroup       -->
+  <!-- AcquisitionStatus which can be one of three values:  -->
+  <!--      Acquiring                                       -->
+  <!--      NeedsAcquire                                    -->
+  <!--      Done                                            -->
+  
+  <!-- Furthermore, the AcquisitionStatus is all or nothing -->
+  <!-- for the resources contained therein so the developer -->
+  <!-- should be careful to watch out for unobtainable      -->
+  <!-- resources which would cause the AcquisitionStatus    -->
+  <!-- to remain permanently in a state which never reaches -->
+  <!-- "Done".                                              -->
+  
+  <!-- Note the syntax for referring to indvidual items     -->
+  <!-- within a ResourceGroup:                              -->
+  <!--      ResourceGroupName.#ResourceName!ResourceType    -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <ResourceGroup Name="Resources">
+        <Resources>
+          <Image Name="MyImageA"
+                 Source="http://retrosight.com/samples/windowsmediacentersdk/6/Photo08.jpg" />
+          <Image Name="MyImageB"
+                 Source="http://retrosight.com/samples/windowsmediacentersdk/6/FourBoxGraphic.png" />
+          <Sound Name="MySound"
+                 Source="http://retrosight.com/samples/windowsmediacentersdk/6/Launch.wav" />
+        </Resources>
+      </ResourceGroup>
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[Resources.Acquire]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Resources.AcquisitionStatus]"
+                    Value="Done" />
+        </Conditions>
+        <Actions>
+          <Set Target="[Child.Visible]"
+               Value="true" />
+          <PlaySound Sound="[Resources.#MySound!Sound]"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <me:ChildUI Name="Child"
+                      Resources="[Resources]"
+                      Visible="false" />
+          <Text Content="Loading"
+                Color="White"/>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <UI Name="ChildUI">
+
+    <Properties>
+      <ResourceGroup Name="Resources"
+                     ResourceGroup="$Required" />
+    </Properties>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Graphic Content="[Resources.#MyImageB!Image]"
+                   MinimumSize="20,20"/>
+          <Graphic Content="[Resources.#MyImageA!Image]"
+                   MinimumSize="20,20" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

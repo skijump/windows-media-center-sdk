@@ -1,0 +1,52 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test the application of various FadeAmount settings on Clip items. 
+       FadeAmount sets the percentage of the FadeSize to apply
+       ex. FadeSize=200 and FadeAmount=.5, the applied Fade will be 100 -->
+
+  <UI Name="ClipFadeAmount">
+    <Content>
+      <Panel Layout="VerticalFlow" >
+        <Children>
+          <me:ClipItem FadeAmount=".1"
+                       Description="Clip with FadeAmount=0"/>
+          <me:ClipItem FadeAmount=".25"
+                       Description="Clip with FadeAmount=.25"/>
+          <me:ClipItem FadeAmount=".5"
+                       Description="Clip with FadeAmount=.5"/>
+          <me:ClipItem FadeAmount=".75"
+                       Description="Clip with FadeAmount=.75"/>
+          <me:ClipItem FadeAmount="1.0"
+                       Description="Clip with FadeAmount=1"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name ="ClipItem">
+    <Properties>
+      <cor:Single Name="FadeAmount"
+                  Single="0"/>
+      <cor:String Name="Description"
+                  String="Description"/>
+    </Properties>
+
+    <Content>
+      <Clip Name="ClipItem"
+            FadeSize="200"
+            FadeAmount="[FadeAmount]"
+            MaximumSize="500,0">
+        <Children>
+          <Text Color="Yellow"
+                Content="[Description]"/>
+        </Children>
+      </Clip>
+    </Content>
+
+  </UI>
+
+</Mcml>
+

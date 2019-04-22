@@ -1,0 +1,93 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:fn="assembly://Sampler,Version=7.0.2009.0228,Culture=Neutral,PublicKeyToken=27f898ecd1eb808a/Sampler.CodeData.ModelItems">
+
+  <!-- MCML data binding services enable binding to arbitrary members on .NET  -->
+  <!-- Framework objects. ModelItems (and types derived from it) are objects   -->
+  <!-- available for use by your application for a variety of scenarios. They  -->
+  <!-- represent the most common abstract data and callback concepts and are   -->
+  <!-- strictly non-visual. They are intended to be used as the main interface -->
+  <!-- (object model) to UI controls defined in markup.                        -->
+
+  <!-- ModelItems provide the following services:                              -->
+
+  <!-- 1) Change notifications:                                                -->
+  <!--    ModelItem implements IPropertyObject, which is the interface used    -->
+  <!--    for surfacing change notifications. This interface is used by Rules. -->
+
+  <!-- 2) Direct simple bindings:                                              -->
+  <!--    For code-based binding scenarios, ModelItem provides several APIs    -->
+  <!--    for these types of simple bindings:                                  -->
+  <!--      BindFromSource                                                     -->
+  <!--      BindToTarget                                                       -->
+  <!--      TwoWayBind                                                         -->
+  <!--    Simple bindings also implement the IPropertyObject interface.        -->
+
+  <!-- 3) Lifetime management:                                                 -->
+  <!--    ModelItem also implements IModelItemOwner. This interface is used    -->
+  <!--    for ensuring that ModelItems being referenced by another ModelItem   -->
+  <!--    are automatically disposed and released.                             -->
+
+  <!-- You can derive from ModelItem and reference it from your MCML, or       -->
+  <!-- you can use it (or one of the supplied derived types) directly. The     -->
+  <!-- following types derived from ModelItem are supplied by the platform:    -->
+
+  <!-- 1) Choice (and BooleanChoice):                                          -->
+  <!--    Maintains a list where a single chosen item is maintained. This can  -->
+  <!--    be used with radio button UI.                                        -->
+
+  <!-- 2) Command (and InvokeCommand/NavigateCommand - both markup-only):      -->
+  <!--    A callback. Used with button UI elements to receive click            -->
+  <!--    notifications.                                                       -->
+
+  <!-- 3) EditableText:                                                        -->
+  <!--    An editable string. Used by editbox UI elements.                     -->
+
+  <!-- 4) ListDataSet (and ArrayListDataSet):                                  -->
+  <!--    Maintains a list of objects for list or gallery UI elements. Fires   -->
+  <!--    add/remove/modified notifications that are compatible with Repeaters.-->
+
+  <!-- 5) RangedValue (and ByteRangedValue/IntRangedValue):                    -->
+  <!--    Maintains a range of values. Used by spinner UI elements.            -->
+
+  <!-- 6) Timer:                                                               -->
+  <!--    Configurable timer that fires notifications on ticks.                -->
+
+  <!-- 7) PropertySet:                                                         -->
+  <!--    Loosely-typed dictionary that fires notifications. You should use a  -->
+  <!--    strongly-typed structure instead of this where possible. Works well  -->
+  <!--    where data structures are required, but, custom code is not possible -->
+  <!--    (such as in web applications).                                       -->
+
+  <!-- The following sample hosts a custom clock object written in code. An    -->
+  <!-- instance of the clock is created in Locals and changes to its current   -->
+  <!-- time property are listened to.                                          -->
+
+  <UI Name="ModelItems">
+
+    <Locals>
+
+      <!-- Custom Clock object. Derives from ModelItem. Fires a notification -->
+      <!-- on every time change (in this case, every second).                -->
+      <!-- Use the xmlns assembly syntax to reference an assembly and a      -->
+      <!-- namespace within it to identify the type to instantiate.          -->
+      <fn:Clock Name="Clock"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- Bind the clock's time value to a text view item. -->
+      <Binding Source="[Clock.Time]"
+               Target="[Label.Content]" />
+
+    </Rules>
+
+    <Content>
+
+      <Text Name="Label"
+            Color="White" />
+
+    </Content>
+
+  </UI>
+
+</Mcml>

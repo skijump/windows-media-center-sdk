@@ -1,0 +1,67 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System">
+
+  <!-- BooleanTransformer is used in a variety of places where a boolean   -->
+  <!-- conversion of arbitrary data is required.                           -->
+
+  <!-- BooleanTransformer can accept several object types and declare if   -->
+  <!-- the value is considered true or false. The following types (and     -->
+  <!-- their behavior) are supported:                                      -->
+
+  <!-- Int32:       True if non-zero, false otherwise.                     -->
+  <!-- Single:      True if non-zero, false otherwise.                     -->
+  <!-- Double:      True if non-zero, false otherwise.                     -->
+  <!-- String:      True if non-null, false otherwise.                     -->
+  <!-- Boolean:     Returns value as is.                                   -->
+  <!-- ICollection: True if non-zero count, false otherwise.               -->
+
+  <!-- NOTE: The target of the BooleanTransformer must accept a Boolean.   -->
+
+  <!-- The following tags support transformers:                            -->
+  <!--   Binding, Equality, Invoke, InvokeCommand, and Set                 -->
+
+  <!-- In this example, a value (a number) is being bound to the visible   -->
+  <!-- property of a Text. The Visible property is type boolean. The       -->
+  <!-- BooleanTransformer will produce a boolean value so that the         -->
+  <!-- binding will succeed.                                               -->
+
+  <!-- Turning Visibility on/off is a common use for BooleanTransformer    -->
+  <!-- where pieces of UI should only be shown in "non-zero/non-null"      -->
+  <!-- cases.                                                              -->
+
+  <UI Name="BooleanTransformer">
+
+    <!-- Value is a number. -->
+    <Locals>
+      <cor:Int32 Name="Value"
+                 Int32="444"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- Bind Value (int) to Label.Visible (bool) via the -->
+      <!-- BooleanTransformer. If the value is non-zero,    -->
+      <!-- the result is 'true'.                            -->
+      <Binding Source="[Value]"
+               Target="[Label.Visible]">
+        <Transformer>
+          <BooleanTransformer/>
+        </Transformer>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Invisible by default. -->
+      <Text Name="Label"
+            Content="This is visible because the value is non-zero!"
+            Color="BlanchedAlmond"
+            Font="Verdana,30"
+            Visible="false"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

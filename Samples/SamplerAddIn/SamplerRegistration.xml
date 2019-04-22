@@ -1,0 +1,83 @@
+﻿<application title="Sample Explorer"
+             id="{bce681ec-a838-4bf3-a124-97674b74851b}">
+  <entrypoint id="{7f1e2adf-5006-44fb-8f3d-095e635ab443}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More Programs"/>
+  </entrypoint>
+  <entrypoint id="{7b42c522-ac1e-4eff-b60b-0e01208551cc}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More With This\Audio\Album"/>
+  </entrypoint>
+  <entrypoint id="{5f51f6cd-7bd9-48d2-a016-c8dd7b1e82c3}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More With This\Audio\Artist"/>
+  </entrypoint>
+  <entrypoint id="{084c6878-b10b-4453-a707-8025fc2cad77}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More With This\Audio\Genre"/>
+  </entrypoint>
+  <entrypoint id="{e90d1b82-2d5d-4916-8022-52b5c994aa1b}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More With This\Audio\Playlist"/>
+  </entrypoint>
+  <entrypoint id="{f06c05c0-7f5a-471a-8560-a35fa243b72e}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More With This\Audio\Song"/>
+  </entrypoint>
+  <entrypoint id="{37cc3cf8-c2b9-4da0-aa95-2aac0f37d393}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More With This\Picture"/>
+  </entrypoint>
+  <entrypoint id="{9608152f-4996-4928-9a34-8115d893971e}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More With This\Video"/>
+  </entrypoint>
+  <entrypoint id="{fb69d092-51c7-4a6d-8f87-5b12d1d88c42}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More With This\DVD"/>
+  </entrypoint>
+  <entrypoint id="{33c6fd2f-a538-4604-8242-ce57e6724427}"
+              addin="Sampler.Sampler, Sampler,Culture=Neutral,Version=7.0.2009.0228,PublicKeyToken=27f898ecd1eb808a"
+              title="Sample Explorer"
+              description="Windows Media Center SDK Sample Explorer"
+              ImageUrl="Sampler.png"
+              AcceptWebInvoke="True">
+    <category category="More With This\TV"/>
+  </entrypoint>
+</application>

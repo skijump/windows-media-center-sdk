@@ -1,0 +1,44 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost" />
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.ApplicationContext.IsCurrentlyVisible]" />
+        </Conditions>
+        <Actions>
+          <DebugTrace Message="IsCurrentlyVisible={0}">
+            <Params>
+              <ObjectPath ObjectPath="[AddInHost.ApplicationContext.IsCurrentlyVisible.ToString]"/>
+            </Params>
+          </DebugTrace>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="View the output of this sample in DbgView: http://live.sysinternals.com/Dbgview.exe"
+                Color="White"
+                WordWrap="true" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

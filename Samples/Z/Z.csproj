@@ -1,0 +1,384 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8F1951CE-AEF4-4D74-8E8E-C1577C953A9B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Z</RootNamespace>
+    <AssemblyName>Z</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Test.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <FullyQualifiedOutputPath>$(MSBuildProjectDirectory)\bin\Debug</FullyQualifiedOutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <FullyQualifiedOutputPath>$(MSBuildProjectDirectory)\bin\Release</FullyQualifiedOutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <StartWorkingDirectory>$(windir)\eHome</StartWorkingDirectory>
+    <StartArguments>-load:"resx://Z/Z.Resources/Default" -assemblyredirect:"$(FullyQualifiedOutputPath)" -markupredirect:"resx://Z/Z.Resources/,file://$(MSBuildProjectDirectory)\Markup\,.mcml"</StartArguments>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(windir)\eHome\McmlPad.exe</StartProgram>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ehRecObj, Version=6.0.6000.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(windir)\eHome\ehRecObj.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.MediaCenter" />
+    <Reference Include="Microsoft.MediaCenter.UI" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\ContentPage.cs" />
+    <Compile Include="Code\DataSetHelpers.cs" />
+    <Compile Include="Code\DownloadsPage.cs" />
+    <Compile Include="Code\Music.cs" />
+    <Compile Include="Code\SearchPage.cs" />
+    <Compile Include="Code\SearchResult.cs" />
+    <Compile Include="Code\TV.cs" />
+    <Compile Include="Code\Launch.cs" />
+    <Compile Include="Code\Application.cs" />
+    <Compile Include="Code\ApplicationExperience.cs" />
+    <Compile Include="Code\DetailsPage.cs" />
+    <Compile Include="Code\GalleryPage.cs" />
+    <Compile Include="Code\MenuCategory.cs" />
+    <Compile Include="Code\Movies.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Code\ThumbnailCommand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Audio\Content.Audio.1.wma" />
+    <Content Include="Content\Data\tbl_Movie.xml" />
+    <Content Include="Content\Data\tbl_TV.xml" />
+    <Content Include="Content\Images\Image.Detail.1.jpg" />
+    <Content Include="Content\Images\Image.Detail.10.jpg" />
+    <Content Include="Content\Images\Image.Detail.11.jpg" />
+    <Content Include="Content\Images\Image.Detail.12.jpg" />
+    <Content Include="Content\Images\Image.Detail.13.jpg" />
+    <Content Include="Content\Images\Image.Detail.14.jpg" />
+    <Content Include="Content\Images\Image.Detail.15.jpg" />
+    <Content Include="Content\Images\Image.Detail.16.jpg" />
+    <Content Include="Content\Images\Image.Detail.17.jpg" />
+    <Content Include="Content\Images\Image.Detail.18.jpg" />
+    <Content Include="Content\Images\Image.Detail.19.jpg" />
+    <Content Include="Content\Images\Image.Detail.2.jpg" />
+    <Content Include="Content\Images\Image.Detail.20.jpg" />
+    <Content Include="Content\Images\Image.Detail.21.jpg" />
+    <Content Include="Content\Images\Image.Detail.22.jpg" />
+    <Content Include="Content\Images\Image.Detail.23.jpg" />
+    <Content Include="Content\Images\Image.Detail.24.jpg" />
+    <Content Include="Content\Images\Image.Detail.25.jpg" />
+    <Content Include="Content\Images\Image.Detail.26.jpg" />
+    <Content Include="Content\Images\Image.Detail.27.jpg" />
+    <Content Include="Content\Images\Image.Detail.28.jpg" />
+    <Content Include="Content\Images\Image.Detail.29.jpg" />
+    <Content Include="Content\Images\Image.Detail.3.jpg" />
+    <Content Include="Content\Images\Image.Detail.30.jpg" />
+    <Content Include="Content\Images\Image.Detail.31.jpg" />
+    <Content Include="Content\Images\Image.Detail.32.jpg" />
+    <Content Include="Content\Images\Image.Detail.33.jpg" />
+    <Content Include="Content\Images\Image.Detail.34.jpg" />
+    <Content Include="Content\Images\Image.Detail.35.jpg" />
+    <Content Include="Content\Images\Image.Detail.36.jpg" />
+    <Content Include="Content\Images\Image.Detail.37.jpg" />
+    <Content Include="Content\Images\Image.Detail.38.jpg" />
+    <Content Include="Content\Images\Image.Detail.39.jpg" />
+    <Content Include="Content\Images\Image.Detail.4.jpg" />
+    <Content Include="Content\Images\Image.Detail.40.jpg" />
+    <Content Include="Content\Images\Image.Detail.41.jpg" />
+    <Content Include="Content\Images\Image.Detail.42.jpg" />
+    <Content Include="Content\Images\Image.Detail.43.jpg" />
+    <Content Include="Content\Images\Image.Detail.44.jpg" />
+    <Content Include="Content\Images\Image.Detail.45.jpg" />
+    <Content Include="Content\Images\Image.Detail.46.jpg" />
+    <Content Include="Content\Images\Image.Detail.47.jpg" />
+    <Content Include="Content\Images\Image.Detail.48.jpg" />
+    <Content Include="Content\Images\Image.Detail.49.jpg" />
+    <Content Include="Content\Images\Image.Detail.5.jpg" />
+    <Content Include="Content\Images\Image.Detail.50.jpg" />
+    <Content Include="Content\Images\Image.Detail.51.jpg" />
+    <Content Include="Content\Images\Image.Detail.52.jpg" />
+    <Content Include="Content\Images\Image.Detail.6.jpg" />
+    <Content Include="Content\Images\Image.Detail.7.jpg" />
+    <Content Include="Content\Images\Image.Detail.8.jpg" />
+    <Content Include="Content\Images\Image.Detail.9.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.1.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.10.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.11.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.12.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.13.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.14.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.15.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.16.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.17.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.18.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.19.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.2.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.20.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.21.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.22.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.23.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.24.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.25.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.26.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.27.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.28.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.29.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.3.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.30.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.31.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.32.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.33.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.34.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.35.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.36.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.37.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.38.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.39.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.4.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.40.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.41.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.42.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.43.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.44.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.45.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.46.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.47.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.48.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.49.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.5.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.50.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.51.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.52.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.6.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.7.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.8.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Large.9.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.1.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.10.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.11.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.12.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.13.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.14.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.15.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.16.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.17.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.18.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.19.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.2.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.20.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.21.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.22.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.23.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.24.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.25.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.26.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.27.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.28.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.29.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.3.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.30.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.31.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.32.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.33.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.34.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.35.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.36.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.37.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.38.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.39.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.4.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.40.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.41.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.42.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.43.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.44.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.45.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.46.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.47.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.48.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.49.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.5.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.50.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.51.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.52.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.6.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.7.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.8.jpg" />
+    <Content Include="Content\Images\Image.Gallery.Small.9.jpg" />
+    <Content Include="Content\Video\Content.Video.1.wmv" />
+    <Content Include="Images\Background.png" />
+    <Content Include="Images\BackgroundItem1.png" />
+    <Content Include="Images\BackgroundItem2.png" />
+    <Content Include="Images\ButtonFocus.png" />
+    <Content Include="Images\ButtonNonFocus.png" />
+    <Content Include="Images\CheckBoxChecked.png" />
+    <Content Include="Images\CheckBoxFocus.png" />
+    <Content Include="Images\CheckBoxNonFocus.png" />
+    <Content Include="Images\Container.png" />
+    <Content Include="Images\EditBoxFocus.png" />
+    <Content Include="Images\EditBoxNonFocus.png" />
+    <Content Include="Images\GalleryFocus.png" />
+    <Content Include="Images\Gradient.Bottom.png" />
+    <Content Include="Images\Gradient.Top.png" />
+    <Content Include="Images\MouseNavDown.png" />
+    <Content Include="Images\MouseNavDownFocus.png" />
+    <Content Include="Images\MouseNavLeft.png" />
+    <Content Include="Images\MouseNavLeftFocus.png" />
+    <Content Include="Images\MouseNavRight.png" />
+    <Content Include="Images\MouseNavRightFocus.png" />
+    <Content Include="Images\MouseNavUp.png" />
+    <Content Include="Images\MouseNavUpFocus.png" />
+    <Content Include="Images\MusicDirectory.png" />
+    <Content Include="Images\MusicFile.png" />
+    <Content Include="Images\ProgressBarFocus.png" />
+    <Content Include="Images\ProgressBarNonFocus.png" />
+    <Content Include="Images\ZLogo.Full.png" />
+    <Content Include="Images\ZLogo.Left.png" />
+    <Content Include="Images\ZLogo.Right.png" />
+    <Content Include="Images\ZLogoProgramLibrary.png" />
+    <Content Include="Markup\Background.mcml" />
+    <Content Include="Markup\Button.mcml" />
+    <Content Include="Markup\CheckBox.mcml" />
+    <Content Include="Markup\ContentList.mcml" />
+    <Content Include="Markup\CoreControls.mcml" />
+    <Content Include="Markup\Default.mcml" />
+    <Content Include="Markup\DownloadsPage.mcml" />
+    <Content Include="Markup\EditBox.mcml" />
+    <Content Include="Markup\EditBoxWithKeyboard.mcml" />
+    <Content Include="Markup\FilterList.mcml" />
+    <Content Include="Markup\Keyboard.mcml" />
+    <Content Include="Markup\KeyboardContents.mcml" />
+    <Content Include="Markup\KeyboardPage.mcml" />
+    <Content Include="Markup\LogInPage.mcml" />
+    <Content Include="Markup\ProgressBar.mcml" />
+    <Content Include="Markup\SearchPage.mcml" />
+    <Content Include="Markup\SearchResult.mcml" />
+    <Content Include="Markup\Styles.mcml" />
+    <Content Include="Markup\DetailsPage.mcml" />
+    <Content Include="Markup\Footer.mcml" />
+    <Content Include="Markup\GalleryPage.mcml" />
+    <Content Include="Markup\Header.mcml" />
+    <Content Include="Markup\MainMenu.mcml" />
+    <Content Include="Markup\SampleData.mcml" />
+    <Content Include="Markup\ThumbnailButton.mcml" />
+    <Content Include="Setup\bannrbmp.bmp" />
+    <Content Include="Setup\build.bat" />
+    <Content Include="Setup\dlgbmp.bmp" />
+    <Content Include="Setup\License.rtf" />
+    <Content Include="Setup\License.txt" />
+    <Content Include="Setup\LicenseAccessible.txt" />
+    <Content Include="Setup\Registration.xml" />
+    <Content Include="Setup\Z.ico" />
+    <Content Include="Setup\z.wxs" />
+    <Content Include="Setup\z_en-us.wxl" />
+    <None Include="DevInstall.cmd" />
+    <None Include="Readme.htm" />
+    <None Include="Test.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>%25windir%25\eHome\McmlVerifier.exe -verbose -assemblyredirect:"$(FullyQualifiedOutputPath)" -directory:"$(ProjectDir)Markup"
+REM "$(ProjectDir)\Setup\build.bat" $(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

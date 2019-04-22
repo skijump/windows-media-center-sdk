@@ -1,0 +1,89 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me" >
+
+  <!-- TypingHandler sample.                                               -->
+
+  <!-- Typing handler provide editbox-like input behavior to a UI element. -->
+
+  <!--  This example implements UI element (TypeUI) that has the           -->
+  <!--  text 'Type here!!'                                                 -->
+
+  <!--  When new text is typed, that text is displayed in the UI and is    -->
+  <!--  appended to the existing text. Typing Handler also handles the     -->
+  <!--  backspace key and deletes from the UI element.                     -->
+  <UI Name="TypeUI">
+    <Content>
+
+      <me:TestTypingHandler>
+        <EditableText>
+          <EditableText Value="Type here!!  " />
+        </EditableText>
+      </me:TestTypingHandler>
+
+    </Content>
+
+  </UI>
+
+  <!-- Implementation for editable text control which handles typing input. -->
+  <UI Name="TestTypingHandler">
+
+    <!-- Define the properties for this object. -->
+    <Properties>
+
+      <!-- EditableText is a required parameter. -->
+      <EditableText Name="EditableText"
+                    EditableText="$Required"/>
+
+      <!-- Background color properties. -->
+
+      <Color Name="BackgroundColor"
+             Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor"
+             Color="FireBrick"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="Arial,20"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- Use the click handler to handle input events. -->
+      <TypingHandler Name="TypingHandler"
+                     EditableText="[EditableText]"/>
+
+    </Locals>
+
+    <!-- Define how to handle the input using rule. -->
+    <Rules>
+      <!-- Value of editable-text is bound to the text value of Label. -->
+      <Binding Source="[EditableText.Value]"
+               Target="[Label.Content]"/>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Solid background color. -->
+      <ColorFill Name="Background"
+                 Content="[BackgroundColor]"
+                 Padding="5,5,5,5">
+        <Children>
+
+          <!-- The label to display. -->
+          <Text Name="Label"
+                Content="Type here!"
+                Color="[LabelColor]"
+                Font="[LabelFont]"/>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

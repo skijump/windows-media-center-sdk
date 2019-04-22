@@ -1,0 +1,20 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+<!-- Only the image size itself is considered when laying         -->
+<!-- out an image and *not* the acquiring/error image sizes.      -->
+<!-- If the image does not have a minimum size specified on it    -->
+<!-- it will receive zero size in layout, and thus you will never -->
+<!-- see them even though the acquiring image may download first. -->
+<!-- Therefore, in order to see the AcquiringImage the graphic    -->
+<!-- must have a MinimumSize attribute.                           -->
+
+  <UI Name="Default">
+    <Content>
+      <Graphic Content="http://retrosight.com/samples/windowsmediacentersdk/6/Photo08.jpg"
+               AcquiringImage="http://retrosight.com/samples/windowsmediacentersdk/6/FourBoxGraphic.png"
+               MaximumSize="200,200"
+	       MinimumSize="200,200"/>
+    </Content>
+  </UI>
+
+</Mcml>

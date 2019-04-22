@@ -1,0 +1,246 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cp="resx://Sampler/Sampler.Resources/ControlsColorPicker"
+      xmlns:spin="resx://Sampler/Sampler.Resources/ControlsSimpleSpinner"
+      xmlns:btn="resx://Sampler/Sampler.Resources/ControlsSimpleButton"
+      xmlns:me="Me">
+
+  <!-- This UI builds upon the ColorPicker sample and adds a spinner with   -->
+  <!-- all available color constants (for example "KellyGreen").            -->
+
+  <!-- It does this by building up a Choice using an enumeration of colors  -->
+  <!-- and passing that to a spinner.  When the spinner's value changes,    -->
+  <!-- the color picker is updated.                                         -->
+  <UI Name="ColorPickerWithConstants">
+
+    <Locals>
+
+      <!-- Color constants -->
+      <Choice Name="Constants">
+        <Options>
+          <Color Color="AliceBlue"/>
+          <Color Color="AntiqueWhite"/>
+          <Color Color="Aqua"/>
+          <Color Color="Aquamarine"/>
+          <Color Color="Azure"/>
+          <Color Color="Beige"/>
+          <Color Color="Bisque"/>
+          <Color Color="Black"/>
+          <Color Color="BlanchedAlmond"/>
+          <Color Color="Blue"/>
+          <Color Color="BlueViolet"/>
+          <Color Color="Brown"/>
+          <Color Color="BurlyWood"/>
+          <Color Color="CadetBlue"/>
+          <Color Color="Chartreuse"/>
+          <Color Color="Chocolate"/>
+          <Color Color="Coral"/>
+          <Color Color="CornflowerBlue"/>
+          <Color Color="Cornsilk"/>
+          <Color Color="Crimson"/>
+          <Color Color="Cyan"/>
+          <Color Color="DarkBlue"/>
+          <Color Color="DarkCyan"/>
+          <Color Color="DarkGoldenrod"/>
+          <Color Color="DarkGray"/>
+          <Color Color="DarkGreen"/>
+          <Color Color="DarkKhaki"/>
+          <Color Color="DarkMagenta"/>
+          <Color Color="DarkOliveGreen"/>
+          <Color Color="DarkOrange"/>
+          <Color Color="DarkOrchid"/>
+          <Color Color="DarkRed"/>
+          <Color Color="DarkSalmon"/>
+          <Color Color="DarkSeaGreen"/>
+          <Color Color="DarkSlateBlue"/>
+          <Color Color="DarkSlateGray"/>
+          <Color Color="DarkTurquoise"/>
+          <Color Color="DarkViolet"/>
+          <Color Color="DeepPink"/>
+          <Color Color="DeepSkyBlue"/>
+          <Color Color="DimGray"/>
+          <Color Color="DodgerBlue"/>
+          <Color Color="Feldspar"/>
+          <Color Color="Firebrick"/>
+          <Color Color="FloralWhite"/>
+          <Color Color="ForestGreen"/>
+          <Color Color="Fuchsia"/>
+          <Color Color="Gainsboro"/>
+          <Color Color="GhostWhite"/>
+          <Color Color="Gold"/>
+          <Color Color="Goldenrod"/>
+          <Color Color="Gray"/>
+          <Color Color="Green"/>
+          <Color Color="GreenYellow"/>
+          <Color Color="Honeydew"/>
+          <Color Color="HotPink"/>
+          <Color Color="IndianRed"/>
+          <Color Color="Indigo"/>
+          <Color Color="Ivory"/>
+          <Color Color="Khaki"/>
+          <Color Color="Lavender"/>
+          <Color Color="LavenderBlush"/>
+          <Color Color="LawnGreen"/>
+          <Color Color="LemonChiffon"/>
+          <Color Color="LightBlue"/>
+          <Color Color="LightCoral"/>
+          <Color Color="LightCyan"/>
+          <Color Color="LightGoldenrodYellow"/>
+          <Color Color="LightGray"/>
+          <Color Color="LightGreen"/>
+          <Color Color="LightPink"/>
+          <Color Color="LightSalmon"/>
+          <Color Color="LightSeaGreen"/>
+          <Color Color="LightSkyBlue"/>
+          <Color Color="LightSlateBlue"/>
+          <Color Color="LightSlateGray"/>
+          <Color Color="LightSteelBlue"/>
+          <Color Color="LightYellow"/>
+          <Color Color="Lime"/>
+          <Color Color="LimeGreen"/>
+          <Color Color="Linen"/>
+          <Color Color="Magenta"/>
+          <Color Color="Maroon"/>
+          <Color Color="MediumAquamarine"/>
+          <Color Color="MediumBlue"/>
+          <Color Color="MediumOrchid"/>
+          <Color Color="MediumPurple"/>
+          <Color Color="MediumSeaGreen"/>
+          <Color Color="MediumSlateBlue"/>
+          <Color Color="MediumSpringGreen"/>
+          <Color Color="MediumTurquoise"/>
+          <Color Color="MediumVioletRed"/>
+          <Color Color="MidnightBlue"/>
+          <Color Color="MintCream"/>
+          <Color Color="MistyRose"/>
+          <Color Color="Moccasin"/>
+          <Color Color="NavajoWhite"/>
+          <Color Color="Navy"/>
+          <Color Color="OldLace"/>
+          <Color Color="Olive"/>
+          <Color Color="OliveDrab"/>
+          <Color Color="Orange"/>
+          <Color Color="OrangeRed"/>
+          <Color Color="Orchid"/>
+          <Color Color="PaleGoldenrod"/>
+          <Color Color="PaleGreen"/>
+          <Color Color="PaleTurquoise"/>
+          <Color Color="PaleVioletRed"/>
+          <Color Color="PapayaWhip"/>
+          <Color Color="PeachPuff"/>
+          <Color Color="Peru"/>
+          <Color Color="Pink"/>
+          <Color Color="Plum"/>
+          <Color Color="PowderBlue"/>
+          <Color Color="Purple"/>
+          <Color Color="Red"/>
+          <Color Color="RosyBrown"/>
+          <Color Color="RoyalBlue"/>
+          <Color Color="SaddleBrown"/>
+          <Color Color="Salmon"/>
+          <Color Color="SandyBrown"/>
+          <Color Color="SeaGreen"/>
+          <Color Color="SeaShell"/>
+          <Color Color="Sienna"/>
+          <Color Color="Silver"/>
+          <Color Color="SkyBlue"/>
+          <Color Color="SlateBlue"/>
+          <Color Color="SlateGray"/>
+          <Color Color="Snow"/>
+          <Color Color="SpringGreen"/>
+          <Color Color="SteelBlue"/>
+          <Color Color="Tan"/>
+          <Color Color="Teal"/>
+          <Color Color="Thistle"/>
+          <Color Color="Tomato"/>
+          <Color Color="Transparent"/>
+          <Color Color="Turquoise"/>
+          <Color Color="Violet"/>
+          <Color Color="VioletRed"/>
+          <Color Color="Wheat"/>
+          <Color Color="White"/>
+          <Color Color="WhiteSmoke"/>
+          <Color Color="Yellow"/>
+          <Color Color="YellowGreen"/>
+        </Options>
+      </Choice>
+
+      <!-- When this command is invoked, apply the currently selected       -->
+      <!-- color.                                                           -->
+      <Command Name="SetColor"
+               Description="Set"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- When the button is invoked, apply the color to the color picker. -->
+      <Changed Source="[SetColor.Invoked]">
+        <Actions>
+          <Set Target="[Picker.DefaultColor]"
+               Value="[Display.Content]"/>
+        </Actions>
+      </Changed>
+
+      <!-- If the chosen color changes, update our display of it.           -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[Constants.Chosen]"
+                    InitialEvaluate="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Display.Content]"
+               Value="[Constants.Chosen!Color]"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <!-- Hosted color picker -->
+          <cp:ColorPicker Name="Picker"/>
+
+          <Text Content="Constants:"
+                Margins="0,20,0,0"
+                Color="White"
+                Font="Arial, 20"/>
+
+          <!-- Spinner to select a constant -->
+          <spin:SimpleSpinner Model="[Constants]"/>
+
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+
+              <!-- Button that applies the chosen color -->
+              <btn:SimpleButton Command="[SetColor]"
+                                Margins="0,0,4,0"/>
+
+              <ColorFill Content="Black"
+                         Padding="1,1,1,1">
+                <Children>
+
+                  <!-- Display of the chosen color -->
+                  <ColorFill Name="Display"
+                             MinimumSize="200,50"/>
+
+                </Children>
+              </ColorFill>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

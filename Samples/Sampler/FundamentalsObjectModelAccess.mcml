@@ -1,0 +1,22 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+  
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="MyAddInHost"/>
+    </Locals>
+
+    <Content>
+      <Text Content="[MyAddInHost.MediaCenterEnvironment.Version.Build.ToString]"
+            Color="White" />
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,95 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Form layout is identical to Anchor layout, except in one important  -->
+  <!-- way: it is a "size-to-constraint" layout by default. This means it  -->
+  <!-- will use the entire size it is given regardless of the size of its  -->
+  <!-- children.                                                           -->
+
+  <!-- The intention of form layout is to use it as a top-level layout     -->
+  <!-- (at the root of your UI where you are laying our your form). It     -->
+  <!-- works well for positioning all child UI elements without needing to -->
+  <!-- extensively nest layouts to achieve the UI design you want.         -->
+
+  <!-- Form layout is used to position children relative to each other or  -->
+  <!-- to the Parent. Form layout deals with edges (Left, Top, Right and   -->
+  <!-- Bottom) that are anchored relative to the Parent or siblings based  -->
+  <!-- on percentages plus an optional offset. Edges are specified using   -->
+  <!-- FormLayoutInputs. Every child of a form layout must use this type   -->
+  <!-- of layout input to declare how they should be laid out.             -->
+
+  <!-- Since form layout is "size-to-constraint," children typically       -->
+  <!-- anchor to the Parent.                                               -->
+
+  <UI Name="Form">
+
+    <Content>
+
+      <!-- The Layout is Form, so the root will take up all the space -->
+      <!-- it is given.                                               -->
+      <ColorFill Layout="Form"
+                 Content="White">
+
+        <Children>
+
+          <me:LayoutItem Name="C"
+                         Display="C: Logo goes here">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0,20"
+                               Bottom="Parent,1,-20"/>
+            </LayoutInput>
+          </me:LayoutItem>
+
+          <me:LayoutItem Name="B"
+                         Display="B: Page/total count goes here">
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,-20"
+                               Bottom="A,0,-20"/>
+            </LayoutInput>
+          </me:LayoutItem>
+
+          <me:LayoutItem Name="A"
+                         Display="A: Gallery list of products go here">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Top="Parent,.25"
+                               Right="Parent,1"
+                               Bottom="Parent,.75"/>
+            </LayoutInput>
+          </me:LayoutItem>
+
+        </Children>
+
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+  <!-- UI that displays an image with some text. The image content -->
+  <!-- fills to the size of the Graphic.                           -->
+  <UI Name="LayoutItem">
+
+    <Properties>
+      <cor:String Name="Display"
+                  String="null"/>
+    </Properties>
+
+    <Content>
+      <Graphic Content="image://me:LayoutItemImage"
+               Padding="5,5,5,5">
+        <Children>
+          <Text Content="[Display]"
+                Color="White"
+                Font="Tahoma,12"
+                WordWrap="true"/>
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+  <Image Name="LayoutItemImage"
+         Source="resx://Sampler/Sampler.Resources/LayoutGraphic"
+         NineGrid="4,4,4,4"/>
+
+</Mcml>

@@ -1,0 +1,227 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:spin="file://ControlsSimpleSpinner.mcml"
+      xmlns:me="Me">
+
+  <!-- This example displays UI to select a Color value.  It hosts four     -->
+  <!-- spinners to individually modify the Red, Green, Blue and Alpha       -->
+  <!-- channels.                                                            -->
+  <UI Name="ColorPicker">
+
+    <Properties>
+      <Color Name="DefaultColor"
+             Color="White"/>
+    </Properties>
+
+    <Locals>
+
+      <!-- These 4 ranged values represent the 4 channels of a color:       -->
+      <!-- Red, Green, Blue, and Alpha.  They are represented by a 0-255    -->
+      <!-- byte value.                                                      -->
+      <ByteRangedValue Name="Red"
+                       MinValue="0"
+                       MaxValue="255"
+                       Step="15"
+                       Description="Red"/>
+      <ByteRangedValue Name="Green"
+                       MinValue="0"
+                       MaxValue="255"
+                       Step="15"
+                       Description="Green"/>
+      <ByteRangedValue Name="Blue"
+                       MinValue="0"
+                       MaxValue="255"
+                       Step="15"
+                       Description="Blue"/>
+      <ByteRangedValue Name="Alpha"
+                       MinValue="0"
+                       MaxValue="255"
+                       Step="15"
+                       Description="Alpha"/>
+
+      <!-- This ranged value controls the Step increment of the above       -->
+      <!-- color channel ranges.  -->
+      <ByteRangedValue Name="Increment"
+                       MinValue="1"
+                       MaxValue="255"
+                       Step="1"
+                       Value="15"
+                       Description="Increment"/>
+
+      <!-- This is the color that will change depending on the channel      -->
+      <!-- values listed above.                                             -->
+      <Color Name="Color"
+             Color="[DefaultColor]"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- The Color struct is not a full ModelItem with property change    -->
+      <!-- notifications.  That means the UI cannot simply change Color.R   -->
+      <!-- (for example) and have it automatically reapplied.  The UI must  -->
+      <!-- manually reset the value as a whole.                             -->
+
+      <!-- In case a host of this UI changes the default color, update.     -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[DefaultColor]"
+                    InitialEvaluate="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Red.Value]"
+               Value="[DefaultColor.R]"/>
+          <Set Target="[Green.Value]"
+               Value="[DefaultColor.G]"/>
+          <Set Target="[Blue.Value]"
+               Value="[DefaultColor.B]"/>
+          <Set Target="[Alpha.Value]"
+               Value="[DefaultColor.A]"/>
+        </Actions>
+      </Rule>
+
+      <!-- The Increment value has changed - update the Steps of all four   -->
+      <!-- color channel values.                                            -->
+      <Changed Source="[Increment.Value]">
+        <Actions>
+          <Set Target="[Red.Step]"
+               Value="[Increment.Value]"/>
+          <Set Target="[Green.Step]"
+               Value="[Increment.Value]"/>
+          <Set Target="[Blue.Step]"
+               Value="[Increment.Value]"/>
+          <Set Target="[Alpha.Step]"
+               Value="[Increment.Value]"/>
+        </Actions>
+      </Changed>
+
+      <!-- The Alpha channel value has changed.  Assign it to the color.    -->
+      <Changed Source="[Alpha.Value]">
+        <Actions>
+          <Set Target="[Color.A]"
+               Value="[Alpha.Value]"/>
+          <Set Target="[Display.Content]"
+               Value="[Color]"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Changed>
+
+      <!-- The Blue channel value has changed.  Assign it to the color.     -->
+      <Changed Source="[Blue.Value]">
+        <Actions>
+          <Set Target="[Color.B]"
+               Value="[Blue.Value]"/>
+          <Set Target="[Display.Content]"
+               Value="[Color]"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Changed>
+
+      <!-- The Green channel value has changed.  Assign it to the color.    -->
+      <Changed Source="[Green.Value]">
+        <Actions>
+          <Set Target="[Color.G]"
+               Value="[Green.Value]"/>
+          <Set Target="[Display.Content]"
+               Value="[Color]"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Changed>
+
+      <!-- The Red channel value has changed.  Assign it to the color.      -->
+      <Changed Source="[Red.Value]">
+        <Actions>
+          <Set Target="[Color.R]"
+               Value="[Red.Value]"/>
+          <Set Target="[Display.Content]"
+               Value="[Color]"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="HorizontalFlow">
+        <Children>
+
+          <ColorFill Content="Black"
+                     Padding="1,1,1,1"
+                     Margins="0,0,20,0">
+            <Children>
+
+              <!-- A display of the color we're editing  -->
+              <ColorFill Name="Display"
+                         Content="[Color]"
+                         MinimumSize="300,300"/>
+
+            </Children>
+          </ColorFill>
+
+          <Panel Layout="VerticalFlow">
+            <Children>
+
+              <!-- Spinners that modify the color channel values -->
+              <me:LabeledSpinner Model="[Red]"
+                                 LabelColor="Red"/>
+              <me:LabeledSpinner Model="[Green]"
+                                 LabelColor="Green"/>
+              <me:LabeledSpinner Model="[Blue]"
+                                 LabelColor="Blue"/>
+              <me:LabeledSpinner Model="[Alpha]"/>
+
+              <!-- A spinner that modifies the increment value -->
+              <me:LabeledSpinner Model="[Increment]"/>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <!-- This UI hosts a SimpleSpinner but adds a colored label onto the end. -->
+  <UI Name="LabeledSpinner">
+
+    <Properties>
+
+      <IValueRange Name="Model"
+                   IValueRange="$Required"/>
+      <Color Name="LabelColor"
+             Color="White"/>
+
+    </Properties>
+
+    <Rules>
+      <Binding Source="[LabelColor]"
+               Target="[Label.Color]"/>
+      <Binding Source="[Model.Description]"
+               Target="[Label.Content]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"
+                      Spacing="3,0"/>
+        </Layout>
+        <Children>
+
+          <spin:SimpleSpinner Model="[Model]"/>
+
+          <Text Name="Label"
+                Font="Arial, 20"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

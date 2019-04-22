@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTvApp", "Addin\iTvApp.csproj", "{67279EA2-56E3-4CED-9006-A48D0588E9D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{025FA6D9-FED0-476F-9E62-406C7C204EA0} = {025FA6D9-FED0-476F-9E62-406C7C204EA0}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataReceiver", "DataReceiver\DataReceiver.vcproj", "{025FA6D9-FED0-476F-9E62-406C7C204EA0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67279EA2-56E3-4CED-9006-A48D0588E9D7}.Release|Win32.ActiveCfg = Release|Any CPU
+		{67279EA2-56E3-4CED-9006-A48D0588E9D7}.Release|Win32.Build.0 = Release|Any CPU
+		{67279EA2-56E3-4CED-9006-A48D0588E9D7}.Release|x64.ActiveCfg = Release|Any CPU
+		{67279EA2-56E3-4CED-9006-A48D0588E9D7}.Release|x64.Build.0 = Release|Any CPU
+		{67279EA2-56E3-4CED-9006-A48D0588E9D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{67279EA2-56E3-4CED-9006-A48D0588E9D7}.Release|x86.Build.0 = Release|Any CPU
+		{025FA6D9-FED0-476F-9E62-406C7C204EA0}.Release|Win32.ActiveCfg = Release|Win32
+		{025FA6D9-FED0-476F-9E62-406C7C204EA0}.Release|Win32.Build.0 = Release|Win32
+		{025FA6D9-FED0-476F-9E62-406C7C204EA0}.Release|x64.ActiveCfg = Release|x64
+		{025FA6D9-FED0-476F-9E62-406C7C204EA0}.Release|x64.Build.0 = Release|x64
+		{025FA6D9-FED0-476F-9E62-406C7C204EA0}.Release|x86.ActiveCfg = Release|Win32
+		{025FA6D9-FED0-476F-9E62-406C7C204EA0}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

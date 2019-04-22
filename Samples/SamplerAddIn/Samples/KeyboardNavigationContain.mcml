@@ -1,0 +1,253 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:kfi="resx://Sampler/Sampler.Resources/InputKeyFocus">
+
+  <!-- Navigation "Contain" modes sample                                     -->
+  <!--                                                                       -->
+  <!-- There are several Navigation modes that you can use to indicate that  -->
+  <!-- you don't want navigations of a certain type to leave your container. -->
+  <!-- ContainHorizontal - don't allow East/West navigations to leave        -->
+  <!-- ContainVertical - don't allow North/South navigations to leave        -->
+  <!-- ContainTabOrder - "Previous" and "Next" navigations won't leave the   -->
+  <!--                   container                                           -->
+  <!-- ContainDirectional - Shorthand for both ContainVertical and           -->
+  <!--                      ContainHorizontal. Directional navigations will  -->
+  <!--                      not leave this container.                        -->
+  <!-- ContainAll - Shorthand for both ContainDirectional and                -->
+  <!--              ContainTabOrder.  No navigations of any kind will leave  -->
+  <!--              this container.                                          -->
+  <!--                                                                       -->
+
+  <!-- The Main UI consists of three sections, each illustrating different   -->
+  <!-- Navigation modes that have a "contain" behavior, with descriptive     -->
+  <!-- text for each.                                                        -->
+  <UI Name="Main">
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="25,0"
+                      ItemAlignment="Near"/>
+        </Layout>
+
+        <Children>
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          ItemAlignment="Near"/>
+            </Layout>
+            <Children>
+
+              <!-- Lay out 4 strips of focusable items in a spiral head to   -->
+              <!-- tail.  The navigation modes will be set on them so that   -->
+              <!-- you can only navigate through the spiral in one direction -->
+              <Panel Layout="Anchor">
+                <Children>
+
+                  <!-- The top strip - marked as contain vertical.  Since -->
+                  <!-- it is a single strip, Up/Down have no effect when  -->
+                  <!-- focus is in this strip.                            -->
+                  <me:Strip Navigation="ContainVertical"
+                            Name="Top"
+                            FlowDirection="Horizontal"
+                            ArrowImage="resx://Sampler/Sampler.Resources/KeyboardNavigationArrowRight">
+                    <LayoutInput>
+                      <AnchorLayoutInput Top="Parent,0"
+                                         Left="Parent,0"/>
+                    </LayoutInput>
+                  </me:Strip>
+
+                  <!-- The vertical strip on the right, marked contain     -->
+                  <!-- horizontal.  Since it's a single column, Left/Right -->
+                  <!-- have no effect when focus is in this strip.         -->
+                  <me:Strip Navigation="ContainHorizontal"
+                            Name="Right"
+                            FlowDirection="Vertical"
+                            ArrowImage="resx://Sampler/Sampler.Resources/KeyboardNavigationArrowDown">
+                    <LayoutInput>
+                      <AnchorLayoutInput Top="Top,0"
+                                         Left="Top,1"/>
+                    </LayoutInput>
+                  </me:Strip>
+
+
+                  <!-- The bottom horizontal strip, again marked contain    -->
+                  <!-- vertical.  Notice that the tab order within this     -->
+                  <!-- is left-to-right because that is the order the items -->
+                  <!-- are flowed out in.  There is no way to reverse the   -->
+                  <!-- ordering of a flow.                                  -->
+                  <me:Strip Navigation="ContainVertical"
+                            Name="Bottom"
+                            FlowDirection="Horizontal"
+                            ArrowImage="resx://Sampler/Sampler.Resources/KeyboardNavigationArrowLeft"
+                            Forwards="false">
+                    <LayoutInput>
+                      <AnchorLayoutInput Top="Right,1"
+                                         Right="Right,1"/>
+                    </LayoutInput>
+                  </me:Strip>
+
+                  <!-- The vertical strip on the left, again marked contain -->
+                  <!-- horizontal.  Notice that the tab order within this   -->
+                  <!-- is top-to-bottom because that is the order the items -->
+                  <!-- are flowed out in.  There is no way to reverse the   -->
+                  <!-- ordering of a flow.                                  -->
+                  <me:Strip Navigation="ContainHorizontal"
+                            Name="Left"
+                            FlowDirection="Vertical"
+                            ArrowImage="resx://Sampler/Sampler.Resources/KeyboardNavigationArrowUp"
+                            Forwards="false">
+                    <LayoutInput>
+                      <AnchorLayoutInput Bottom="Bottom,1"
+                                         Right="Bottom,0"/>
+                    </LayoutInput>
+                  </me:Strip>
+                </Children>
+              </Panel>
+
+              <Text Color="White"
+                    Font="Comic Sans MS,20"
+                    WordWrap="true"
+                    Content="Due to the ContainHorizontal/ContainVertical Navigation modes on each strip, you can only cross the gaps between them in the direction specified by the arrows."/>
+
+            </Children>
+          </Panel>
+
+          <me:Divider/>
+
+          <Panel>
+            <Layout>
+              <FlowLayout ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+
+              <!-- Since this strip is marked ContainDirectional, once focus -->
+              <!-- has entered it, the only way for it to leave using the    -->
+              <!-- keyboard is by pressing Tab or Shift+Tab to do a          -->
+              <!-- Previous/Next navigation.                                 -->
+              <me:Strip FlowDirection="Horizontal"
+                        Navigation="ContainDirectional"
+                        ArrowImage="null"/>
+
+              <Text Color="White"
+                    Font="Comic Sans MS,20"
+                    WordWrap="true"
+                    Content="Navigation=&#34;ContainDirectional&#34; - Once you navigate here, only a Previous or Next Navigation will leave it"/>
+
+            </Children>
+          </Panel>
+
+          <me:Divider/>
+
+          <Panel>
+            <Layout>
+              <FlowLayout ItemAlignment="Center"/>
+            </Layout>
+
+            <Children>
+
+              <!-- This strip is marked as ContainAll.  This means that once -->
+              <!-- focus has entered it, *no* keyboard navigation will leave -->
+              <!-- this container.                                           -->
+              <me:Strip FlowDirection="Horizontal"
+                        Navigation="ContainAll"
+                        ArrowImage="null"/>
+
+              <Text Color="White"
+                    Font="Comic Sans MS,20"
+                    WordWrap="true"
+                    Content="{\rtf Navigation=&#34;ContainAll&#34; Once you navigate here, {\b no} keyboard navigation will leave this strip}"/>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+
+  <!-- The Strip UI lays out a strip of KeyFocusIndicators in the given    -->
+  <!-- orientation.  If an image is supplied, it displays it either at the -->
+  <!-- start or end of the strip, depending on the value of the Forwards   -->
+  <!-- property.   The "Forwards" flag is necessary because FlowLayout     -->
+  <!-- always flows either left to right or top to bottom; there is no way -->
+  <!-- to reverse the order.  So, we cheat and just use an image at either -->
+  <!-- end of the strip, being sure to only show one of them.              -->
+  <UI Name="Strip">
+    <Properties>
+      <Orientation Name="FlowDirection"
+                   Orientation="Vertical"/>
+      <Image Name="ArrowImage"
+             Image="$Required"/>
+      <cor:Boolean Name="Forwards"
+                   Boolean="true"/>
+    </Properties>
+
+    <Locals>
+      <Size Name="MinimumTileSize"
+            Size="50,50"/>
+    </Locals>
+
+    <Rules>
+      <Condition Source="[Forwards]"
+                 SourceValue="false"
+                 Target="[FirstImage.Visible]"
+                 Value="true" />
+    </Rules>
+
+    <Content>
+      <Panel Margins="5,5,5,5">
+        <Layout>
+          <FlowLayout Orientation="[FlowDirection]"
+                      ItemAlignment="Center"
+                      Spacing="5,0"/>
+        </Layout>
+
+        <Children>
+
+          <!-- This image will be displayed if we're not in "Forward" mode. -->
+          <Graphic Name="FirstImage"
+                   Content="[ArrowImage]"
+                   Visible="false"
+                   MaximumSize="[MinimumTileSize]"/>
+
+          <!-- The actual strip of tiles -->
+          <ColorFill Content="Blue"
+                     Padding="5,5,5,5">
+            <Layout>
+              <FlowLayout Orientation="[FlowDirection]"
+                          ItemAlignment="Center"
+                          Spacing="5,0"/>
+            </Layout>
+
+            <Children>
+              <kfi:KeyFocusIndicator MinimumTileSize="[MinimumTileSize]"/>
+              <kfi:KeyFocusIndicator MinimumTileSize="[MinimumTileSize]"/>
+              <kfi:KeyFocusIndicator MinimumTileSize="[MinimumTileSize]"/>
+
+            </Children>
+          </ColorFill>
+
+          <!-- This image will be displayed if we are in "Forward" mode. -->
+          <Graphic Content="[ArrowImage]"
+                   Visible="[Forwards]"
+                   MaximumSize="[MinimumTileSize]"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- The Divider UI simply displays a yellow horizontal line across the -->
+  <!-- width of its container.                                            -->
+  <UI Name="Divider">
+    <Content>
+      <ColorFill Content="Yellow"
+                 MaximumSize="0,2"
+                 Layout="Fill"/>
+    </Content>
+  </UI>
+
+</Mcml>

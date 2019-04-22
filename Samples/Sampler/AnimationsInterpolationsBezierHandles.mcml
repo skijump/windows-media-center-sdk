@@ -1,0 +1,190 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:types="file://AnimationsInterpolationsTypes.mcml">
+
+  <!-- This sample demonstrates how to modify the behavior of a Bezier      -->
+  <!-- interpolation using the Handle1 and Handle2 properties.              -->
+
+  <!-- You specify your interpolation handles on a Keyframe using arguments -->
+  <!-- to the Interpolation property:                                       -->
+  <!--   <PositionKeyframe Interpolation="Bezier,  0.8, 0.8"/>              -->
+  <UI Name="BezierInterpolationHandles">
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Fill"/>
+        </Layout>
+        <Children>
+
+          <!-- This bar represents the starting line. -->
+          <ColorFill Content="Red"
+                     MinimumSize="10,10"/>
+
+          <!-- The track -->
+          <ColorFill Content="DarkGreen"
+                     Layout="VerticalFlow">
+            <LayoutInput>
+              <DockLayoutInput Position="Left"/>
+            </LayoutInput>
+            <Children>
+
+              <!-- Here we have a flow of Horse UIs, each given a position  -->
+              <!-- animation with a different interpolation type.           -->
+
+
+              <!-- Bezier: 0.0, 0.0 -->
+              <types:Horse Label="Bezier: 0.0, 0.0">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier, 0.0, 0.0"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Bezier: 0.5, 0.5 -->
+              <types:Horse Label="Bezier: 0.5, 0.5">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier, 0.5, 0.5"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Bezier: 1.0, 1.0 -->
+              <types:Horse Label="Bezier: 1.0, 1.0">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier, 1.0, 1.0"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Bezier: 0.0, 1.0 -->
+              <types:Horse Label="Bezier: 0.0, 1.0">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier, 0.0, 1.0"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Bezier: 1.0, -0.5 -->
+              <types:Horse Label="Bezier: 1.0, -0.5">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier, 1.0, -0.5"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Bezier: -1.0, 1.0 -->
+              <types:Horse Label="Bezier: -1.0, 1.0">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier, -1.0, 1.0"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Linear (for reference) -->
+              <types:Horse Label="Linear">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Linear"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+            </Children>
+          </ColorFill>
+
+          <!-- This bar represents the finishing line. -->
+          <ColorFill Content="Red"
+                     MinimumSize="10,10"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,204 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:me="Me">
+
+  <!-- A details page -->
+  <UI Name="DetailsPage">
+    <Properties>
+      <z:DetailsPage Name="Page"
+                     DetailsPage="$Required"/>
+      <z:Application Name="Application"
+                     Application="$Required"/>
+    </Properties>
+
+    <Locals>
+      <sys:Boolean Name="Initialized"
+                   Boolean="false"/>
+    </Locals>
+
+    <Rules>
+      <!-- If we don't have a spiffy background image, turn on the 
+				 standard background layer -->
+      <Condition Source="[BackgroundGraphic.Content]"
+                 SourceValue="null"
+                 Target="[Background.Visible]"
+                 Value="true"/>
+
+      <!-- If video is currently playing, show the video layer -->
+      <Rule>
+        <Conditions>
+          <IsValid Source="[Application.MediaCenterEnvironment.MediaExperience.Transport.PlayState]"/>
+          <Equality Source="[Application.MediaCenterEnvironment.MediaExperience.Transport.PlayState]"
+                    Value="Playing"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Video.Visible]"
+               Value="true"/>
+        </Actions>
+      </Rule>
+
+      <!-- When we first navigate to this page, stop any playing video -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Initialized]"
+                    Value="false"/>
+          <IsValid Source="[Application.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Application.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"
+               Value="0"/>
+          <Set Target="[Initialized]"
+               Value="true"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <core:Header Name="Header"
+                       Application="[Application]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Top="Parent,0,40"/>
+            </LayoutInput>
+          </core:Header>
+
+          <core:Footer Name="Footer"
+                       Application="[Application]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Bottom="Parent,1,-40"/>
+            </LayoutInput>
+          </core:Footer>
+
+          <Panel FocusOrder="0">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,40"
+                                 Right="Parent,0,560"
+                                 Horizontal="Fill"
+                                 Top="Parent,0,100"
+                                 Bottom="Parent,1,-100"
+                                 Vertical="Fill"/>
+            </LayoutInput>
+            <Children>
+
+              <me:DetailsPane Page="[Page]"
+                              Margins="65,50,65,50"/>
+
+              <Graphic Content="image://styles:ContainerImage"
+                       Alpha="0.6"/>
+
+            </Children>
+          </Panel>
+
+          <Graphic Content="resx://Z/Z.Resources/Gradient_Top">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Parent,0"
+                                 Left="Parent,0"
+                                 Right="Parent,1"/>
+            </LayoutInput>
+          </Graphic>
+
+          <Graphic Content="resx://Z/Z.Resources/Gradient_Bottom">
+            <LayoutInput>
+              <AnchorLayoutInput Bottom="Parent,1"
+                                 Left="Parent,0"
+                                 Right="Parent,1"/>
+            </LayoutInput>
+          </Graphic>
+
+          <Video Name="Video"
+                 Layout="Fill"
+                 LetterboxColor="Black"
+                 Visible="false"/>
+
+          <!-- Background graphic -->
+          <Graphic Name="BackgroundGraphic"
+                   Content="[Page.Background]"
+                   SizingPolicy="SizeToConstraint"
+                   VerticalAlignment="Fill"
+                   HorizontalAlignment="Center"/>
+
+          <core:Background Name="Background"
+                           Visible="false"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- The primary display area of a details page -->
+  <UI Name="DetailsPane">
+    <Properties>
+      <z:DetailsPage Name="Page"
+                     DetailsPage="$Required"/>
+    </Properties>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <Panel Name="TitleAndSummary"
+                 Layout="VerticalFlow">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Parent,0"
+                                 Bottom="Parent,0,210"
+                                 Vertical="Fill"
+                                 Horizontal="Near"/>
+            </LayoutInput>
+            <Children>
+
+              <Text Content="[Page.Title]"
+                    Color="color://styles:Text.Copy"
+                    Font="font://styles:SectionTitle"
+                    WordWrap="false"/>
+
+              <Text Content="[Page.Summary]"
+                    Color="color://styles:Text.Copy"
+                    Font="font://styles:SecondaryText"
+                    WordWrap="true"
+                    MaximumLines="4"/>
+
+            </Children>
+          </Panel>
+
+          <Repeater Source="[Page.Commands]"
+                    Layout="VerticalFlow"
+                    Margins="-8,0,0,0">
+            <LayoutInput>
+              <AnchorLayoutInput Top="TitleAndSummary,1,10"
+                                 Bottom="Metadata,0"
+                                 Horizontal="Near"/>
+            </LayoutInput>
+            <Content>
+
+              <core:Button Model="[RepeatedItem!Command]"
+                           TileMinSize="200,30"
+                           TileMaxSize="200,30"/>
+
+            </Content>
+          </Repeater>
+
+          <Text Name="Metadata"
+                Content="[Page.Metadata]"
+                Color="color://styles:Text.Copy"
+                Font="font://styles:SecondaryText"
+                WordWrap="true">
+            <LayoutInput>
+              <AnchorLayoutInput Bottom="Parent,1"
+                                 Horizontal="Near"/>
+            </LayoutInput>
+          </Text>
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

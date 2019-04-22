@@ -1,0 +1,195 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <UI Name="EditboxTest">
+    <Locals>
+      <EditableText Name="MyEditableText"
+                    Value="The value for the editable text."/>
+    </Locals>
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:Editbox EditableText="[MyEditableText]"
+                      LabelName="Editbox Label" />
+          <me:Editbox EditableText="[MyEditableText]"
+                      LabelName="Editbox Label" />
+          <me:Editbox EditableText="[MyEditableText]"
+                      LabelName="Editbox Label" />
+          <me:Editbox EditableText="[MyEditableText]"
+                      LabelName="Editbox Label" />
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="Editbox">
+
+    <Properties>
+
+      <EditableText Name="EditableText"
+                    EditableText="$Required"/>
+      <cor:String Name="LabelName"
+                  String="$Required" />
+
+      <Color Name="BackgroundColor"
+             Color="DarkGray"/>
+
+      <Font Name="LabelFont"
+            Font="Calibri,16"/>
+      <Color Name="LabelColor"
+             Color="White"/>
+
+      <Font Name="CurrentValueFont"
+            Font="Calibri,16"/>
+      <Color Name="CurrentValueFocusedColor"
+             Color="White"/>
+
+      <cor:Boolean Name="PasswordMasked"
+                   Boolean="false"/>
+
+    </Properties>
+
+    <Locals>
+
+      <TypingHandler Name="TypingHandler"
+                     EditableText="[EditableText]"/>
+
+    </Locals>
+
+    <Rules>
+
+      <Binding Source="[TypingHandler.DisplayValue]"
+               Target="[CurrentValue.Content]"/>
+
+      <Condition Source="[EditableText.Overtype]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Overtype.Visible]"
+               Value="true"/>
+          <Set Target="[Caret.Visible]"
+               Value="false"/>
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[MyPanel.Alpha]"
+               Value="1" />
+          <Set Target="[Caret.Visible]"
+               Value="true"/>
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="false">
+        <Actions>
+          <Set Target="[MyPanel.Alpha]"
+               Value="0.5"/>
+          <Set Target="[Caret.Visible]"
+               Value="false"/>
+        </Actions>
+      </Condition>
+
+      <Binding Source="[PasswordMasked]"
+               Target="[TypingHandler.PasswordMasked]"/>
+
+    </Rules>
+
+    <Content>
+      <Panel Name="MyPanel"
+             Layout="HorizontalFlow"
+             MouseInteractive="true" >
+        <Animations>
+          <Animation Animation="animation://me:Focus"/>
+          <Animation Animation="animation://me:NoFocus"/>
+        </Animations>
+        <Children>
+
+          <Text Name="Label"
+                Content="[LabelName]"
+                Font="[LabelFont]"
+                Color="[LabelColor]"
+                Padding="0,2,0,0"
+                Margins="2,2,2,2"
+                MaximumSize="100,0"
+                MinimumSize="100,0" />
+
+          <ColorFill Name="Background"
+                     Content="[BackgroundColor]"
+                     Padding="2,0,0,0"
+                     Margins="2,2,2,2"
+                     Layout="Anchor"
+                     MinimumSize="350,30"
+                     MaximumSize="350,30">
+            <Children>
+
+              <Text Name="CurrentValue"
+                    Color="[CurrentValueFocusedColor]"
+                    Font="[CurrentValueFont]"
+                    HorizontalAlignment="Far"
+                    Margins="0,0,10,0"
+                    MinimumSize="0,25"/>
+
+              <ColorFill Name="Caret"
+                         Content="[LabelColor]"
+                         Visible="false"
+                         MinimumSize="16,2">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="CurrentValue,1,-10"
+                                     Top="CurrentValue,0"
+                                     Bottom="CurrentValue,1"
+                                     Vertical="Far"/>
+                </LayoutInput>
+              </ColorFill>
+
+              <ColorFill Name="Overtype"
+                         Content="Black"
+                         Visible="false">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="CurrentValue,0"
+                                     Right="CurrentValue,1"
+                                     Top="CurrentValue,0"
+                                     Bottom="CurrentValue,1"/>
+                </LayoutInput>
+              </ColorFill>
+
+            </Children>
+          </ColorFill>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <Animation Name="Focus"
+             Loop="0"
+             CenterPointPercent="0,0.5,1.0"
+             Type="GainFocus">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     Value="1,1,1"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+      <ScaleKeyframe Time="0.1"
+                     Value="1.1,1.1,1"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="NoFocus"
+             Loop="0"
+             CenterPointPercent="0,0.5,1.0"
+             Type="LoseFocus">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+      <ScaleKeyframe Time="0.04"
+                     Value="1,1,1"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

@@ -1,0 +1,33 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:a="assembly://$projectname$/$safeprojectname$"
+      xmlns:s="resx://$projectname$/$safeprojectname$.Resources/Styles"
+      xmlns:r="resx://$projectname$/$safeprojectname$.Resources/RepeatItem">
+
+  <UI Name="Default">
+
+    <Properties>
+      <a:Application Name="Application"
+                     Application="$Required"/>
+    </Properties>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Repeater Source="[Application.MyData]" >
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          Spacing="4,0"/>
+            </Layout>
+            <Content>
+              <r:RepeatItem Text="[RepeatedItem!cor:String]"
+                            Application="[Application]"/>
+            </Content>
+          </Repeater>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,219 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:me="Me">
+
+  <!-- List-based scrolling is used for scrolling lists of key-focusable   -->
+  <!-- items. By default, a Scroller will always keep the current item     -->
+  <!-- focus in view. However, it doesn't respond to key-based input       -->
+  <!-- (page-up/page-down/home/end/etc.).                                  -->
+
+  <!-- List-based scrolling requires that items in the list be generated   -->
+  <!-- via a Repeater. If a Repeater isn't used, navigation using page-up/ -->
+  <!-- page-down/home/end/etc. will not work. The close interaction between-->
+  <!-- Scroller and Repeater enables scrolling of lists of enormous size.  -->
+  <!-- This "virtualized" form of scrolling is covered in another sample.  -->
+
+  <!-- To enable list-based scrolling with key support, a few objects need -->
+  <!-- to be created and hooked up to each other. Here are the main        -->
+  <!-- players:                                                            -->
+
+  <!-- ScrollingData:                                                      -->
+  <!-- The main point of synchronization of scrolling. It contains the     -->
+  <!-- current position of the scroll as well as multiple properties and   -->
+  <!-- methods used to change the current scroll position. The main        -->
+  <!-- scenario for calling these methods is when creating separate UI for -->
+  <!-- enabling the user to change the scroll position using buttons on    -->
+  <!-- the screen.                                                         -->
+
+  <!-- ScrollingHandler:                                                   -->
+  <!-- Handles user input (both mouse and keyboard) and is the main driver -->
+  <!-- of ScrollingData. It has a ScrollingData property that you must     -->
+  <!-- supply a ScrollingData instance. ScrollingHandler will react to     -->
+  <!-- user input and set properties and call methods on the ScrollingData -->
+  <!-- to change the current scroll position.                              -->
+  <!-- NOTE: ScrollingHandler must be configured with HandlerStage set as  -->
+  <!--       "Bubbled." This is because you want to react to input coming  -->
+  <!--       from your children. The Scroller itself shouldn't be set up   -->
+  <!--       to get key focus.                                             -->
+
+  <!-- Repeater:                                                           -->
+  <!-- As mentioned, a Repeater must be in use under the Scroller to       -->
+  <!-- enable key-based scrolling. ScrollingData's Repeater property must  -->
+  <!-- be set with the Repeater instance in use.                           -->
+
+  <!-- Scroller:                                                           -->
+  <!-- The ViewItem itself. It reacts to changes to the ScrollingData. Its -->
+  <!-- ScrollingData property must be set with the ScrollingData instance. -->
+
+  <!-- The following example populates a Repeater with several items. It   -->
+  <!-- shows how to hookup the mentioned objects together.                 -->
+
+  <UI Name="FocusBasedScroller">
+
+    <Locals>
+
+      <!-- Create list of data to repeat. -->
+      <ArrayListDataSet Name="Locations">
+        <Source>
+          <cor:String String="Item Number 1"/>
+          <cor:String String="Item Number 2"/>
+          <cor:String String="Item Number 3"/>
+          <cor:String String="Item Number 4"/>
+          <cor:String String="Item Number 5"/>
+          <cor:String String="Item Number 6"/>
+          <cor:String String="Item Number 7"/>
+          <cor:String String="Item Number 8"/>
+          <cor:String String="Item Number 9"/>
+          <cor:String String="Item Number 10"/>
+          <cor:String String="Item Number 11"/>
+          <cor:String String="Item Number 12"/>
+          <cor:String String="Item Number 13"/>
+          <cor:String String="Item Number 14"/>
+          <cor:String String="Item Number 15"/>
+          <cor:String String="Item Number 16"/>
+          <cor:String String="Item Number 17"/>
+          <cor:String String="Item Number 18"/>
+          <cor:String String="Item Number 19"/>
+          <cor:String String="Item Number 20"/>
+          <cor:String String="Item Number 21"/>
+          <cor:String String="Item Number 22"/>
+          <cor:String String="Item Number 23"/>
+          <cor:String String="Item Number 24"/>
+          <cor:String String="Item Number 25"/>
+          <cor:String String="Item Number 26"/>
+          <cor:String String="Item Number 27"/>
+          <cor:String String="Item Number 28"/>
+          <cor:String String="Item Number 29"/>
+          <cor:String String="Item Number 30"/>
+          <cor:String String="Item Number 31"/>
+          <cor:String String="Item Number 32"/>
+          <cor:String String="Item Number 33"/>
+          <cor:String String="Item Number 34"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <!-- The ScrollingHandler which reacts to user keyboard input. -->
+      <!-- NOTE: HandlerStage must be "Bubbled."                     -->
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandlerStage="Bubbled"/>
+
+      <!-- ScrollingData contains many ways to customize how scrolling -->
+      <!-- should behave. It has methods to change the current scroll  -->
+      <!-- position and it also reports the position. In this case,    -->
+      <!-- the default values are used for the sample.                 -->
+      <ScrollingData Name="ScrollingData" />
+    </Locals>
+
+    <!-- This is where the scrolling objects get hooked up to each     -->
+    <!-- other. Default rules are a good place to do this since Rules  -->
+    <!-- get run after the rest of the UI is created and ready to go.  -->
+    <Rules>
+
+      <!-- Give ScrollingData to ScrollingHandler. -->
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+
+      <!-- Give Repeater to ScrollingData. -->
+      <Default Target="[ScrollingData.Repeater]"
+               Value="[ListRepeater]"/>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <Text Color="SlateGray"
+                Font="Tahoma,30"
+                Margins="30,0,0,0"
+                Content="Gallery of Items"/>
+          <Text Color="LightGoldenrodYellow"
+                Font="Tahoma,15"
+                Margins="30,0,0,0"
+                Content="Please choose one of the items:"/>
+
+          <Panel Padding="30,0,30,0"
+                 Margins="0,10,0,10">
+            <Children>
+
+              <!-- The Scroller. It referrs to the ScrollingData too. -->
+              <Scroller Orientation="Horizontal"
+                        MaximumSize="0,400"
+                        FadeSize="-30"
+                        ScrollingData="[ScrollingData]">
+                <Children>
+
+                  <!-- The Repeater. A direct child of the Scroller. -->
+                  <Repeater Name="ListRepeater"
+                            Source="[Locations]">
+                    <Layout>
+                      <GridLayout Orientation="Vertical"
+                                  AllowWrap="true"
+                                  Spacing="10,10"/>
+                    </Layout>
+                    <Content>
+                      <!-- Repeating out the items. -->
+                      <me:ListItem Description="[RepeatedItem!cor:String]"/>
+                    </Content>
+                  </Repeater>
+
+                </Children>
+              </Scroller>
+
+            </Children>
+            </Panel>
+
+          </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <!-- A UI that is key-interactive for demonstrating the Scroller. -->
+  <!-- It is what is used within the Repeater's Content for the     -->
+  <!-- list items.                                                  -->
+  <UI Name="ListItem">
+    <Properties>
+      <cor:String Name="Description"
+                  String="null"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <Default Target="[Input.KeyRepeatThreshold]"
+               Value="500"/>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="LightGoldenrodYellow"/>
+          <Set Target="[Label.Color]"
+               Value="Black"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <ColorFill Name="Background"
+                 Content="SlateGray"
+                 Padding="5,5,5,5">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+          <Graphic Content="file://ScrollingListsXbox360.png"/>
+          <Text Name="Label"
+                Content="[Description]"
+                Color="White"
+                Font="Verdana,10"/>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+</Mcml>

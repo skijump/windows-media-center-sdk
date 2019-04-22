@@ -1,0 +1,1891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- These variables define the Windows Installer product version, product code and upgrade code. They   -->
+<!-- will be used later on in this file.                                                                 -->
+<?define Property_ProductVersion = "6.0.0.0" ?>
+<?define Property_ProductCode = "B569A311-A4F4-4bf1-824E-7483C61097B8" ?>
+<?define Property_UpgradeCode = "0BEF6723-FE2D-42e8-A530-EACEB61D78E0" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="$(var.Property_ProductCode)"
+           UpgradeCode="$(var.Property_UpgradeCode)"
+           Name="!(loc.Property_ProductName)"
+           Language="!(loc.Property_ProductLanguage)"
+           Version="$(var.Property_ProductVersion)"
+           Manufacturer="!(loc.Property_CompanyName)">
+
+    <Package Description="!(loc.Package_Description)"
+             Comments="!(loc.Package_Comments)"
+             InstallerVersion="200"
+             Compressed="yes" />
+
+    <!-- This information enables Windows Installer major upgrade functionality so users can seamlessly  -->
+    <!-- install a new version of the product and have the old version automatically uninstall behind    -->
+    <!-- the scenes. See the following topic in the MSDN Library for additional information:             -->
+    <!-- http://msdn.microsoft.com/library/default.asp?url=/library/en-us/msi/setup/major_upgrades.asp   -->
+    <Upgrade Id="$(var.Property_UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.Property_ProductVersion)"
+                      OnlyDetect="yes"
+                      Property="NEWERVERSIONDETECTED" />
+      <UpgradeVersion Minimum="1.0.0.0"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.Property_ProductVersion)"
+                      IncludeMaximum="no"
+                      Property="OLDERVERSIONBEINGUPGRADED" />
+    </Upgrade>
+
+    <!-- This is the EULA Windows Media Center will display during setup.  It should be in plain text    -->
+    <!-- format. This file is NOT displayed within the standard setup wizard for mouse and keyboard.     -->
+    <!-- That file (License.rtf) is defined within the <WixVariable> element below.                      -->
+    <Binary Id="License.txt"
+            SourceFile="..\setup\License.txt" />
+    <Binary Id="LicenseAccessible.txt"
+            SourceFile="..\setup\LicenseAccessible.txt" />
+
+    <!-- This custom action prevents users from installing if a newer version of this product is already -->
+    <!-- installed on the system. This is a part of Windows Installer major upgrade functionality.       -->
+    <CustomAction Id="CA_BlockOlderVersionInstall"
+                  Error="!(loc.LaunchCondition_LaterVersion)" />
+
+    <!-- This custom action prevents users from installing this product on unsupported operating system  -->
+    <!-- versions. The conditions that are checked for operating system version are defined below.       -->
+    <CustomAction Id="CA_ErrWrongWindowsVersion"
+                  Error="!(loc.LaunchCondition_WrongOSVersion)" />
+
+    <!-- This condition adds an item to the LaunchCondition table of the MSI to block a user from        -->
+    <!-- installing this product unless they have administrative privileges on the system.               -->
+    <Condition Message="!(loc.LaunchCondition_AdminPrivs)">
+      <![CDATA[Privileged]]>
+    </Condition>
+
+    <!-- This is a list of directories that are used by this product as installation locations or custom -->
+    <!-- action file search locations.                                                                   -->
+    <Directory Id="TARGETDIR"
+               Name="SourceDir">
+      <Directory Id="WindowsFolder"
+                 Name="WINDOWS">
+        <Directory Id="EhomeFolder"
+                   Name="eHome"/>
+      </Directory>
+      <Directory Id="ProgramFilesFolder"
+                 Name="Program Files">
+        <Directory Id="PFilesMicrosoft"
+                   Name="09530D0BE3104237B278FA545F27AA38">
+          <Directory Id="ZROOTDIRECTORY"
+                     Name="Z"/>
+        </Directory>
+      </Directory>
+      <Directory Id="CommonAppDataFolder"
+                 Name="ComAppDt">
+        <Directory Id="AppDataMicrosoft"
+                   Name="09530D0BE3104237B278FA545F27AA38">
+          <Directory Id="Z"
+                     Name="Z">
+            <Directory Id="Z_Data"
+                       Name="Data"/>
+            <Directory Id="Z_Images"
+                       Name="Images"/>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="DesktopFolder"
+                 Name="Desktop"/>
+      <Directory Id="StartMenuFolder"
+                 Name="StrtFldr">
+        <Directory Id="ProgramMenuFolder"
+                   Name="PrgFldr">
+          <Directory Id="ZProgramsFolder"
+                     Name="Z"/>
+        </Directory>
+      </Directory>
+      <Directory Id="Users"
+                 Name="Users">
+        <Directory Id="Public"
+                   Name="Public">
+          <Directory Id="PUBLIC_MUSIC"
+                     Name="Music">
+            <Directory Id="Z_Music"
+                       Name="Z"/>
+          </Directory>
+          <Directory Id="PUBLIC_VIDEOS"
+                     Name="Videos">
+            <Directory Id="Z_Videos"
+                       Name="Z"/>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- This is a list of all components installed as a part of this product. A component is the        -->
+    <!-- smallest atomic unit of installation in Windows Installer. Each component must have a unique    -->
+    <!-- GUID. In general, it is recommended that each file be installed by a separate component in      -->
+    <!-- order to avoid reference counting problems and make future servicing of this product easier.    -->
+    <!-- Each component is listed as a child of the DirectoryRef that represents the directory that      -->
+    <!-- the file it contains will install to.                                                           -->
+    <DirectoryRef Id="ZROOTDIRECTORY">
+      <Component Id="z.dll"
+                 Guid="F1DBC9A9-7356-46ab-A90B-7659481CE682"
+                 DiskId="1">
+        <File Id="z.dll"
+              Name="z.dll"
+              KeyPath="yes"
+              Source="..\bin\$(var.BuildType)\z.dll"
+              Checksum="yes"
+              Vital="yes"
+              Assembly=".net"/>
+        <RegistryKey Root="HKLM"
+                     Key="Software\09530D0BE3104237B278FA545F27AA38\Z">
+          <RegistryValue Name="InstallLocation"
+                         Type="string"
+                         Value="[ZROOTDIRECTORY]"/>
+          <RegistryValue Name="DataLocation"
+                         Type="string"
+                         Value="[Z]"/>
+          <RegistryValue Name="ShowLoginPage"
+                         Type="string"
+                         Value="1"/>
+        </RegistryKey>
+      </Component>
+      <Component Id="Registration.xml"
+                 Guid="BCA65AE5-2D1B-4b57-BAC4-D597DF712D42"
+                 DiskId="1">
+        <File Id="Registration.xml"
+              Name="Registration.xml"
+              Source=".\Registration.xml"
+              Checksum="no" />
+      </Component>
+      <Component Id="ZLogoProgramLibrary.png"
+                 Guid="09C4BA61-6716-4be1-92F0-BEEE1FF72EA3"
+                 DiskId="1">
+        <File Id="ZLogoProgramLibrary.png"
+              Name="ZLogoProgramLibrary.png"
+              Source="..\Images\ZLogoProgramLibrary.png"
+              Checksum="no" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="ZProgramsFolder">
+      <Component Id="ZShortcut"
+                 Guid="46FBB071-8C55-494d-A457-0981C14BE3AA"
+                 DiskId="1">
+        <RegistryValue Root="HKCU"
+                       Key="Software\09530D0BE3104237B278FA545F27AA38\Z"
+                       Name="Installed"
+                       Type="integer"
+                       Value="1"/>
+        <Shortcut Id="Z_Desktop_Shortcut"
+                  Name="!(loc.Z_Shortcut_Title)"
+                  Description="!(loc.Z_Shortcut_Description)"
+                  Directory="DesktopFolder"
+                  Target="[EHSHELLEXE]"
+                  Arguments="/entrypoint:{11ffb644-572d-4a2f-9a19-38289e8e5466}\{d916397f-491e-4aa9-aabf-c8957e6bba40}"
+                  Icon="Z.ico" />
+        <Shortcut Id="Z_StartMenu_Shortcut"
+                  Name="!(loc.Z_Shortcut_Title)"
+                  Description="!(loc.Z_Shortcut_Description)"
+                  Directory="ZProgramsFolder"
+                  Target="[EHSHELLEXE]"
+                  Arguments="/entrypoint:{11ffb644-572d-4a2f-9a19-38289e8e5466}\{d916397f-491e-4aa9-aabf-c8957e6bba40}"
+                  Icon="Z.ico" />
+        <RemoveFolder Id="ZProgramsFolder"
+                      On="uninstall"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="Z_Data">
+      <Component Id="tbl_Movie.xml"
+                 Guid="3EB57582-45DC-4673-BFEA-FFD379DE96DE"
+                 DiskId="1">
+        <File Id="tbl_Movie.xml"
+              Name="tbl_Movie.xml"
+              Source="..\Content\Data\tbl_Movie.xml"
+              Checksum="no" />
+      </Component>
+      <Component Id="tbl_TV.xml"
+                 Guid="D4A468BE-908A-47de-859C-F9F25D0FF42C"
+                 DiskId="1">
+        <File Id="tbl_TV.xml"
+              Name="tbl_TV.xml"
+              Source="..\Content\Data\tbl_TV.xml"
+              Checksum="no" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="Z_Images">
+      <Component Id="Image.Detail.1.jpg"
+                 Guid="58dd959b-5187-44b2-8c45-d6a1318d210a"
+                 DiskId="1">
+        <File Id="Image.Detail.1.jpg"
+              Name="Image.Detail.1.jpg"
+              Source="..\Content\Images\Image.Detail.1.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.2.jpg"
+                 Guid="b2c10a80-a17a-443b-aaf6-261858214894"
+                 DiskId="1">
+        <File Id="Image.Detail.2.jpg"
+              Name="Image.Detail.2.jpg"
+              Source="..\Content\Images\Image.Detail.2.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.3.jpg"
+                 Guid="cee74aef-3e45-4dc0-90cb-bd9194f3ce93"
+                 DiskId="1">
+        <File Id="Image.Detail.3.jpg"
+              Name="Image.Detail.3.jpg"
+              Source="..\Content\Images\Image.Detail.3.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.4.jpg"
+                 Guid="de68e26b-c8a0-4835-b8e9-d4b4d12165a0"
+                 DiskId="1">
+        <File Id="Image.Detail.4.jpg"
+              Name="Image.Detail.4.jpg"
+              Source="..\Content\Images\Image.Detail.4.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.5.jpg"
+                 Guid="8b309707-6ba8-4569-bc17-a51cc4ccf291"
+                 DiskId="1">
+        <File Id="Image.Detail.5.jpg"
+              Name="Image.Detail.5.jpg"
+              Source="..\Content\Images\Image.Detail.5.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.6.jpg"
+                 Guid="7134aa31-1827-4836-9e8c-e1cf8750c02a"
+                 DiskId="1">
+        <File Id="Image.Detail.6.jpg"
+              Name="Image.Detail.6.jpg"
+              Source="..\Content\Images\Image.Detail.6.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.7.jpg"
+                 Guid="7be998a4-928d-4a62-bfef-3287edb0c87c"
+                 DiskId="1">
+        <File Id="Image.Detail.7.jpg"
+              Name="Image.Detail.7.jpg"
+              Source="..\Content\Images\Image.Detail.7.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.8.jpg"
+                 Guid="2528eed8-23c3-42cc-9131-27b8a3a02018"
+                 DiskId="1">
+        <File Id="Image.Detail.8.jpg"
+              Name="Image.Detail.8.jpg"
+              Source="..\Content\Images\Image.Detail.8.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.9.jpg"
+                 Guid="e7fe48c1-1c1b-435d-bce5-4ba5dcf3381b"
+                 DiskId="1">
+        <File Id="Image.Detail.9.jpg"
+              Name="Image.Detail.9.jpg"
+              Source="..\Content\Images\Image.Detail.9.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.10.jpg"
+                 Guid="3c3a687a-54a5-41ae-a9c3-14bf6c9982a2"
+                 DiskId="1">
+        <File Id="Image.Detail.10.jpg"
+              Name="Image.Detail.10.jpg"
+              Source="..\Content\Images\Image.Detail.10.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.11.jpg"
+                 Guid="16eb151d-05b9-4718-a98f-ffdfb62271ec"
+                 DiskId="1">
+        <File Id="Image.Detail.11.jpg"
+              Name="Image.Detail.11.jpg"
+              Source="..\Content\Images\Image.Detail.11.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.12.jpg"
+                 Guid="71519682-a568-47e0-bca6-0cab33d96c7e"
+                 DiskId="1">
+        <File Id="Image.Detail.12.jpg"
+              Name="Image.Detail.12.jpg"
+              Source="..\Content\Images\Image.Detail.12.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.13.jpg"
+                 Guid="a0462f65-655b-445a-8e78-1ccbacfeb196"
+                 DiskId="1">
+        <File Id="Image.Detail.13.jpg"
+              Name="Image.Detail.13.jpg"
+              Source="..\Content\Images\Image.Detail.13.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.14.jpg"
+                 Guid="219482c3-3628-4512-aacd-bc5970bd589a"
+                 DiskId="1">
+        <File Id="Image.Detail.14.jpg"
+              Name="Image.Detail.14.jpg"
+              Source="..\Content\Images\Image.Detail.14.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.15.jpg"
+                 Guid="4371a06a-4f20-449c-be5c-5717ff415cca"
+                 DiskId="1">
+        <File Id="Image.Detail.15.jpg"
+              Name="Image.Detail.15.jpg"
+              Source="..\Content\Images\Image.Detail.15.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.16.jpg"
+                 Guid="13e753ab-ff42-42e0-995a-d04a246bfc9f"
+                 DiskId="1">
+        <File Id="Image.Detail.16.jpg"
+              Name="Image.Detail.16.jpg"
+              Source="..\Content\Images\Image.Detail.16.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.17.jpg"
+                 Guid="a4a15a49-dc0b-46ac-8c63-2225f1a44c40"
+                 DiskId="1">
+        <File Id="Image.Detail.17.jpg"
+              Name="Image.Detail.17.jpg"
+              Source="..\Content\Images\Image.Detail.17.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.18.jpg"
+                 Guid="60e4aa38-1af0-4288-9670-6f841d1b2d73"
+                 DiskId="1">
+        <File Id="Image.Detail.18.jpg"
+              Name="Image.Detail.18.jpg"
+              Source="..\Content\Images\Image.Detail.18.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.19.jpg"
+                 Guid="d85c5d87-910c-483b-8f84-56234515d449"
+                 DiskId="1">
+        <File Id="Image.Detail.19.jpg"
+              Name="Image.Detail.19.jpg"
+              Source="..\Content\Images\Image.Detail.19.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.20.jpg"
+                 Guid="0fa8488f-59b1-49d9-aca9-bb6910fa7b9f"
+                 DiskId="1">
+        <File Id="Image.Detail.20.jpg"
+              Name="Image.Detail.20.jpg"
+              Source="..\Content\Images\Image.Detail.20.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.21.jpg"
+                 Guid="301d4480-2938-4e2b-80bf-818e50878f7a"
+                 DiskId="1">
+        <File Id="Image.Detail.21.jpg"
+              Name="Image.Detail.21.jpg"
+              Source="..\Content\Images\Image.Detail.21.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.22.jpg"
+                 Guid="860ae607-ab67-491c-aaf5-d0b8b2eff2fd"
+                 DiskId="1">
+        <File Id="Image.Detail.22.jpg"
+              Name="Image.Detail.22.jpg"
+              Source="..\Content\Images\Image.Detail.22.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.23.jpg"
+                 Guid="2f574752-55a4-488b-a2a2-0b917a4850e5"
+                 DiskId="1">
+        <File Id="Image.Detail.23.jpg"
+              Name="Image.Detail.23.jpg"
+              Source="..\Content\Images\Image.Detail.23.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.24.jpg"
+                 Guid="7fe989b9-5767-4d73-a4e8-59110cf5bf81"
+                 DiskId="1">
+        <File Id="Image.Detail.24.jpg"
+              Name="Image.Detail.24.jpg"
+              Source="..\Content\Images\Image.Detail.24.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.25.jpg"
+                 Guid="17b58882-dadf-49f6-8fcf-b488217f9a0b"
+                 DiskId="1">
+        <File Id="Image.Detail.25.jpg"
+              Name="Image.Detail.25.jpg"
+              Source="..\Content\Images\Image.Detail.25.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.26.jpg"
+                 Guid="1983df7d-65ea-415e-9b56-1f0a016ce050"
+                 DiskId="1">
+        <File Id="Image.Detail.26.jpg"
+              Name="Image.Detail.26.jpg"
+              Source="..\Content\Images\Image.Detail.26.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.27.jpg"
+                 Guid="d5184a02-125c-4011-970c-d54eb4a433dd"
+                 DiskId="1">
+        <File Id="Image.Detail.27.jpg"
+              Name="Image.Detail.27.jpg"
+              Source="..\Content\Images\Image.Detail.27.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.28.jpg"
+                 Guid="9aa9fe43-cb1c-4b8b-a307-06f8932ae79b"
+                 DiskId="1">
+        <File Id="Image.Detail.28.jpg"
+              Name="Image.Detail.28.jpg"
+              Source="..\Content\Images\Image.Detail.28.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.29.jpg"
+                 Guid="09d59e20-3e03-41ab-9528-222f1b9ba774"
+                 DiskId="1">
+        <File Id="Image.Detail.29.jpg"
+              Name="Image.Detail.29.jpg"
+              Source="..\Content\Images\Image.Detail.29.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.30.jpg"
+                 Guid="37f67f0c-dd84-4dee-98e0-f04bd4c3db70"
+                 DiskId="1">
+        <File Id="Image.Detail.30.jpg"
+              Name="Image.Detail.30.jpg"
+              Source="..\Content\Images\Image.Detail.30.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.31.jpg"
+                 Guid="786c6076-35d3-4cf5-bfe6-488c86833aee"
+                 DiskId="1">
+        <File Id="Image.Detail.31.jpg"
+              Name="Image.Detail.31.jpg"
+              Source="..\Content\Images\Image.Detail.31.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.32.jpg"
+                 Guid="7d758869-b642-4934-aff0-5aac7fffdd21"
+                 DiskId="1">
+        <File Id="Image.Detail.32.jpg"
+              Name="Image.Detail.32.jpg"
+              Source="..\Content\Images\Image.Detail.32.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.33.jpg"
+                 Guid="7ce00a16-a41d-4cfe-a88e-0709aab78557"
+                 DiskId="1">
+        <File Id="Image.Detail.33.jpg"
+              Name="Image.Detail.33.jpg"
+              Source="..\Content\Images\Image.Detail.33.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.34.jpg"
+                 Guid="6f310ba6-1f4f-486a-8309-5e525cd22c10"
+                 DiskId="1">
+        <File Id="Image.Detail.34.jpg"
+              Name="Image.Detail.34.jpg"
+              Source="..\Content\Images\Image.Detail.34.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.35.jpg"
+                 Guid="1581f9d7-643d-4cc0-944a-0dea8025fe2f"
+                 DiskId="1">
+        <File Id="Image.Detail.35.jpg"
+              Name="Image.Detail.35.jpg"
+              Source="..\Content\Images\Image.Detail.35.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.36.jpg"
+                 Guid="bf5c7e2c-e484-4074-8f0d-4972a37be092"
+                 DiskId="1">
+        <File Id="Image.Detail.36.jpg"
+              Name="Image.Detail.36.jpg"
+              Source="..\Content\Images\Image.Detail.36.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.37.jpg"
+                 Guid="cd2e0ce2-12d7-479e-b2ec-0945ea18628f"
+                 DiskId="1">
+        <File Id="Image.Detail.37.jpg"
+              Name="Image.Detail.37.jpg"
+              Source="..\Content\Images\Image.Detail.37.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.38.jpg"
+                 Guid="ef4f6193-5e2a-4a14-9cfd-d863706efc2f"
+                 DiskId="1">
+        <File Id="Image.Detail.38.jpg"
+              Name="Image.Detail.38.jpg"
+              Source="..\Content\Images\Image.Detail.38.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.39.jpg"
+                 Guid="85910062-fc2a-4c77-9c8f-2e8ab223bbd5"
+                 DiskId="1">
+        <File Id="Image.Detail.39.jpg"
+              Name="Image.Detail.39.jpg"
+              Source="..\Content\Images\Image.Detail.39.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.40.jpg"
+                 Guid="4fc89337-c590-43f5-9a0a-1973a6b2cd1e"
+                 DiskId="1">
+        <File Id="Image.Detail.40.jpg"
+              Name="Image.Detail.40.jpg"
+              Source="..\Content\Images\Image.Detail.40.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.41.jpg"
+                 Guid="a6b85ed7-f234-4f0e-8e36-e12aa4f1ffff"
+                 DiskId="1">
+        <File Id="Image.Detail.41.jpg"
+              Name="Image.Detail.41.jpg"
+              Source="..\Content\Images\Image.Detail.41.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.42.jpg"
+                 Guid="631cb086-9844-448c-9805-ad9c7e070daf"
+                 DiskId="1">
+        <File Id="Image.Detail.42.jpg"
+              Name="Image.Detail.42.jpg"
+              Source="..\Content\Images\Image.Detail.42.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.43.jpg"
+                 Guid="da996bfb-5780-4c78-a4d6-54088ffbd2e9"
+                 DiskId="1">
+        <File Id="Image.Detail.43.jpg"
+              Name="Image.Detail.43.jpg"
+              Source="..\Content\Images\Image.Detail.43.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.44.jpg"
+                 Guid="242ede8a-9c22-443d-8e99-c9219011b32e"
+                 DiskId="1">
+        <File Id="Image.Detail.44.jpg"
+              Name="Image.Detail.44.jpg"
+              Source="..\Content\Images\Image.Detail.44.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.45.jpg"
+                 Guid="2e3f0f65-3c02-4da8-81b2-8dc1e746974d"
+                 DiskId="1">
+        <File Id="Image.Detail.45.jpg"
+              Name="Image.Detail.45.jpg"
+              Source="..\Content\Images\Image.Detail.45.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.46.jpg"
+                 Guid="f948d5e6-1129-46e5-b63c-53ad5f40fe22"
+                 DiskId="1">
+        <File Id="Image.Detail.46.jpg"
+              Name="Image.Detail.46.jpg"
+              Source="..\Content\Images\Image.Detail.46.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.47.jpg"
+                 Guid="82338fa7-c90b-48d0-85f6-83921bafc80d"
+                 DiskId="1">
+        <File Id="Image.Detail.47.jpg"
+              Name="Image.Detail.47.jpg"
+              Source="..\Content\Images\Image.Detail.47.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.48.jpg"
+                 Guid="e490825a-6c9d-4885-9188-a7da02bf1f28"
+                 DiskId="1">
+        <File Id="Image.Detail.48.jpg"
+              Name="Image.Detail.48.jpg"
+              Source="..\Content\Images\Image.Detail.48.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.49.jpg"
+                 Guid="90ae626f-4517-4a87-b662-8bc79a330113"
+                 DiskId="1">
+        <File Id="Image.Detail.49.jpg"
+              Name="Image.Detail.49.jpg"
+              Source="..\Content\Images\Image.Detail.49.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.50.jpg"
+                 Guid="1fdb15e7-7089-11db-9690-00e08161165f"
+                 DiskId="1">
+        <File Id="Image.Detail.50.jpg"
+              Name="Image.Detail.50.jpg"
+              Source="..\Content\Images\Image.Detail.50.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.51.jpg"
+                 Guid="2c55e4fe-7089-11db-9690-00e08161165f"
+                 DiskId="1">
+        <File Id="Image.Detail.51.jpg"
+              Name="Image.Detail.51.jpg"
+              Source="..\Content\Images\Image.Detail.51.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Detail.52.jpg"
+                 Guid="35360608-7089-11db-9690-00e08161165f"
+                 DiskId="1">
+        <File Id="Image.Detail.52.jpg"
+              Name="Image.Detail.52.jpg"
+              Source="..\Content\Images\Image.Detail.52.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.1.jpg"
+                 Guid="17813f29-3656-4d2b-9275-a68aa23efb48"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.1.jpg"
+              Name="Image.Gallery.Large.1.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.1.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.2.jpg"
+                 Guid="996f719d-8552-4830-a4d9-be262875c20c"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.2.jpg"
+              Name="Image.Gallery.Large.2.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.2.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.3.jpg"
+                 Guid="1c3e1a3c-6969-4fdd-8872-8c5ab82ca357"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.3.jpg"
+              Name="Image.Gallery.Large.3.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.3.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.4.jpg"
+                 Guid="35e9c86d-648d-4a72-88cc-6ce0d24b4157"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.4.jpg"
+              Name="Image.Gallery.Large.4.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.4.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.5.jpg"
+                 Guid="ee29aa72-b3ca-4d7e-a449-ba8b695a9b70"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.5.jpg"
+              Name="Image.Gallery.Large.5.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.5.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.6.jpg"
+                 Guid="9e24bf26-96ad-4c80-9355-e2aff7e98030"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.6.jpg"
+              Name="Image.Gallery.Large.6.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.6.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.7.jpg"
+                 Guid="8e8d837b-8b21-4dfc-9cde-47f6e5117f01"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.7.jpg"
+              Name="Image.Gallery.Large.7.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.7.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.8.jpg"
+                 Guid="01a816a7-6564-4c9c-9fa5-355d707095e7"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.8.jpg"
+              Name="Image.Gallery.Large.8.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.8.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.9.jpg"
+                 Guid="39cfffaa-b548-4de7-b170-27259763c026"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.9.jpg"
+              Name="Image.Gallery.Large.9.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.9.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.10.jpg"
+                 Guid="4cbfbb14-4fa2-4194-acd2-b769126fae64"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.10.jpg"
+              Name="Image.Gallery.Large.10.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.10.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.11.jpg"
+                 Guid="d0f6a5bb-7a44-479e-8672-e9f28c8ae7ac"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.11.jpg"
+              Name="Image.Gallery.Large.11.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.11.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.12.jpg"
+                 Guid="82a04e31-5b05-431e-9491-71ba74b22ffb"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.12.jpg"
+              Name="Image.Gallery.Large.12.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.12.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.13.jpg"
+                 Guid="c913d5f4-f594-4a3a-88c3-6dc5a917263c"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.13.jpg"
+              Name="Image.Gallery.Large.13.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.13.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.14.jpg"
+                 Guid="79f225a4-cfe1-4dc0-98e3-f82774b86ae6"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.14.jpg"
+              Name="Image.Gallery.Large.14.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.14.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.15.jpg"
+                 Guid="4a8bddc6-2da8-4118-b4d7-d4d51cf58dd7"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.15.jpg"
+              Name="Image.Gallery.Large.15.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.15.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.16.jpg"
+                 Guid="72fe6efa-8ad2-4711-8709-6054766ab17d"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.16.jpg"
+              Name="Image.Gallery.Large.16.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.16.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.17.jpg"
+                 Guid="135f69f6-3225-4f19-b72e-508dee09b3d5"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.17.jpg"
+              Name="Image.Gallery.Large.17.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.17.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.18.jpg"
+                 Guid="76941140-400d-454c-a5ec-834fffd4b9a7"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.18.jpg"
+              Name="Image.Gallery.Large.18.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.18.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.19.jpg"
+                 Guid="aeb0a406-8950-4923-bd54-0b35e6a65cba"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.19.jpg"
+              Name="Image.Gallery.Large.19.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.19.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.20.jpg"
+                 Guid="1d31716f-945c-4eff-817c-8f1ce39f6860"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.20.jpg"
+              Name="Image.Gallery.Large.20.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.20.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.21.jpg"
+                 Guid="2e1a8452-0bc6-4a72-a379-246ffd152151"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.21.jpg"
+              Name="Image.Gallery.Large.21.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.21.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.22.jpg"
+                 Guid="831a3c2a-e976-4879-b347-c64207977640"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.22.jpg"
+              Name="Image.Gallery.Large.22.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.22.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.23.jpg"
+                 Guid="e595d906-241b-4a79-8baa-642c1f6cef59"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.23.jpg"
+              Name="Image.Gallery.Large.23.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.23.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.24.jpg"
+                 Guid="2d04b2c4-7df5-48c6-b10a-2d5ea76efd55"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.24.jpg"
+              Name="Image.Gallery.Large.24.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.24.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.25.jpg"
+                 Guid="529b68ea-0ec7-4907-9465-35b5eb640add"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.25.jpg"
+              Name="Image.Gallery.Large.25.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.25.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.26.jpg"
+                 Guid="7134af01-2bb5-4011-80a1-ee92185ef9c1"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.26.jpg"
+              Name="Image.Gallery.Large.26.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.26.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.27.jpg"
+                 Guid="23b1e63c-1c53-48f7-9ad9-249e9e0f95e8"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.27.jpg"
+              Name="Image.Gallery.Large.27.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.27.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.28.jpg"
+                 Guid="d8b81e18-75af-4b2f-a9e8-69e1d6709234"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.28.jpg"
+              Name="Image.Gallery.Large.28.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.28.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.29.jpg"
+                 Guid="f846ff8d-7a9f-422c-bbda-fb8317d2f280"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.29.jpg"
+              Name="Image.Gallery.Large.29.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.29.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.30.jpg"
+                 Guid="faaa00d9-bff3-43cf-b8bb-943d2887a3e8"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.30.jpg"
+              Name="Image.Gallery.Large.30.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.30.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.31.jpg"
+                 Guid="3388fd1a-3d0e-449c-857d-9c72de988969"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.31.jpg"
+              Name="Image.Gallery.Large.31.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.31.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.32.jpg"
+                 Guid="a3d355a9-7004-4b85-ab4c-ae559ac36323"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.32.jpg"
+              Name="Image.Gallery.Large.32.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.32.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.33.jpg"
+                 Guid="faa3e9e6-9f49-4d5a-a3e3-b93b9432aa5f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.33.jpg"
+              Name="Image.Gallery.Large.33.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.33.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.34.jpg"
+                 Guid="7a75f3d1-429b-4a74-80bc-c952e615e366"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.34.jpg"
+              Name="Image.Gallery.Large.34.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.34.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.35.jpg"
+                 Guid="15f06893-9eac-4a4f-8645-f01ab6001395"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.35.jpg"
+              Name="Image.Gallery.Large.35.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.35.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.36.jpg"
+                 Guid="c84b6ec5-aea0-4d3a-98a2-42c17ba3abce"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.36.jpg"
+              Name="Image.Gallery.Large.36.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.36.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.37.jpg"
+                 Guid="3f96e1e6-a79f-4111-b1ef-b3dd2bff47f8"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.37.jpg"
+              Name="Image.Gallery.Large.37.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.37.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.38.jpg"
+                 Guid="b71edb00-bb7c-441d-8be6-e1f05b455be6"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.38.jpg"
+              Name="Image.Gallery.Large.38.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.38.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.39.jpg"
+                 Guid="8b234fd5-aeac-4a67-9965-3098864fae23"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.39.jpg"
+              Name="Image.Gallery.Large.39.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.39.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.40.jpg"
+                 Guid="a771bfcd-fc87-4922-87e1-85a951a67a3e"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.40.jpg"
+              Name="Image.Gallery.Large.40.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.40.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.41.jpg"
+                 Guid="ce396271-8cf0-4736-b6bb-7f4d76f54937"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.41.jpg"
+              Name="Image.Gallery.Large.41.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.41.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.42.jpg"
+                 Guid="889758fd-ed44-447a-bb55-b373dc5b0b72"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.42.jpg"
+              Name="Image.Gallery.Large.42.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.42.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.43.jpg"
+                 Guid="5eb4022b-8d99-42f0-9ada-5a61ffc2eb5e"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.43.jpg"
+              Name="Image.Gallery.Large.43.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.43.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.44.jpg"
+                 Guid="d81f9119-8723-43dc-846d-921bee604cbd"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.44.jpg"
+              Name="Image.Gallery.Large.44.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.44.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.45.jpg"
+                 Guid="41cc2d95-441c-4b6b-869f-44a8e444bd27"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.45.jpg"
+              Name="Image.Gallery.Large.45.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.45.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.46.jpg"
+                 Guid="c47553dc-5bd3-4c52-9274-1739977f70e3"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.46.jpg"
+              Name="Image.Gallery.Large.46.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.46.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.47.jpg"
+                 Guid="39b704a8-a591-4417-b1f0-12cf7398dc99"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.47.jpg"
+              Name="Image.Gallery.Large.47.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.47.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.48.jpg"
+                 Guid="7486bdf1-6f5b-410e-be5c-eb0f10c61a2a"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.48.jpg"
+              Name="Image.Gallery.Large.48.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.48.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.49.jpg"
+                 Guid="6d29bf74-3c10-40cb-9522-ba6a0f32303d"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.49.jpg"
+              Name="Image.Gallery.Large.49.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.49.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.50.jpg"
+                 Guid="69185296-7089-11db-9690-00e08161165f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.50.jpg"
+              Name="Image.Gallery.Large.50.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.50.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.51.jpg"
+                 Guid="70527366-7089-11db-9690-00e08161165f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.51.jpg"
+              Name="Image.Gallery.Large.51.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.51.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Large.52.jpg"
+                 Guid="7736bf8e-7089-11db-9690-00e08161165f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Large.52.jpg"
+              Name="Image.Gallery.Large.52.jpg"
+              Source="..\Content\Images\Image.Gallery.Large.52.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.1.jpg"
+                 Guid="a1118eb8-684c-4281-a59a-628333db281f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.1.jpg"
+              Name="Image.Gallery.Small.1.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.1.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.2.jpg"
+                 Guid="ba231c8c-4be9-4368-92eb-6d08c7c5783f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.2.jpg"
+              Name="Image.Gallery.Small.2.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.2.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.3.jpg"
+                 Guid="01463173-4f89-45c1-8a76-0e45e2c06ec1"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.3.jpg"
+              Name="Image.Gallery.Small.3.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.3.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.4.jpg"
+                 Guid="f4e7459c-75d8-4b7e-945d-67db342b9c35"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.4.jpg"
+              Name="Image.Gallery.Small.4.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.4.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.5.jpg"
+                 Guid="585f0c37-d670-4e0b-b33f-4e4b311380c4"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.5.jpg"
+              Name="Image.Gallery.Small.5.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.5.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.6.jpg"
+                 Guid="1b9c5853-b8a1-4105-b8cd-13ea4507eed1"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.6.jpg"
+              Name="Image.Gallery.Small.6.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.6.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.7.jpg"
+                 Guid="9785ec53-02d6-420d-b01b-ac9661a516ea"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.7.jpg"
+              Name="Image.Gallery.Small.7.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.7.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.8.jpg"
+                 Guid="008d2f11-a4b1-4577-a090-4972ad35ddfe"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.8.jpg"
+              Name="Image.Gallery.Small.8.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.8.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.9.jpg"
+                 Guid="c5547977-86d6-41e3-9497-d5b5b9dae9a0"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.9.jpg"
+              Name="Image.Gallery.Small.9.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.9.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.10.jpg"
+                 Guid="0379c73f-c4ba-45ec-9915-f36747aa5889"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.10.jpg"
+              Name="Image.Gallery.Small.10.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.10.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.11.jpg"
+                 Guid="9b507db7-554a-44ce-9626-923888ebb88f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.11.jpg"
+              Name="Image.Gallery.Small.11.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.11.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.12.jpg"
+                 Guid="d9eb64b0-4cbf-4370-abf1-a32e2146d336"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.12.jpg"
+              Name="Image.Gallery.Small.12.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.12.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.13.jpg"
+                 Guid="eb6c4315-3cc5-4a58-b4c0-0a54af87b96c"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.13.jpg"
+              Name="Image.Gallery.Small.13.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.13.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.14.jpg"
+                 Guid="3de1517c-e9e0-4176-ba38-08b9403cc9e5"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.14.jpg"
+              Name="Image.Gallery.Small.14.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.14.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.15.jpg"
+                 Guid="76003884-7fc4-47e9-ac1a-3cab3c6c30bc"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.15.jpg"
+              Name="Image.Gallery.Small.15.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.15.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.16.jpg"
+                 Guid="64340ba2-bdee-4670-9269-e119dd5ce00d"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.16.jpg"
+              Name="Image.Gallery.Small.16.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.16.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.17.jpg"
+                 Guid="6b44bff0-09a5-4f7d-a182-e393cc46c9d4"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.17.jpg"
+              Name="Image.Gallery.Small.17.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.17.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.18.jpg"
+                 Guid="7f7fb0fc-3aee-43f7-b98b-ad0c1d2dca88"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.18.jpg"
+              Name="Image.Gallery.Small.18.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.18.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.19.jpg"
+                 Guid="43eb5ce4-909f-43aa-bb7a-cca445d1425b"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.19.jpg"
+              Name="Image.Gallery.Small.19.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.19.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.20.jpg"
+                 Guid="bf0ea325-4b3a-48bc-8ef7-88fb3ebd9fb7"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.20.jpg"
+              Name="Image.Gallery.Small.20.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.20.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.21.jpg"
+                 Guid="6338ddbf-d058-43a1-8736-a382ceda13e9"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.21.jpg"
+              Name="Image.Gallery.Small.21.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.21.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.22.jpg"
+                 Guid="d5b999ac-3d78-4228-91ec-809f4e9c2387"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.22.jpg"
+              Name="Image.Gallery.Small.22.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.22.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.23.jpg"
+                 Guid="c2b7c9f7-8922-4f4d-a3dc-40eab5387830"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.23.jpg"
+              Name="Image.Gallery.Small.23.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.23.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.24.jpg"
+                 Guid="0946bd42-d5ef-417b-ac6a-8ca4d873a05a"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.24.jpg"
+              Name="Image.Gallery.Small.24.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.24.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.25.jpg"
+                 Guid="d38d7afe-089c-4613-914c-736065e71645"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.25.jpg"
+              Name="Image.Gallery.Small.25.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.25.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.26.jpg"
+                 Guid="0cb56ddd-479c-492d-8198-34a872415e4d"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.26.jpg"
+              Name="Image.Gallery.Small.26.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.26.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.27.jpg"
+                 Guid="0150da84-f653-43d3-bb56-e1c1f285e6e7"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.27.jpg"
+              Name="Image.Gallery.Small.27.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.27.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.28.jpg"
+                 Guid="bd11fd10-1369-4c64-b38b-e4ec6a5e25df"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.28.jpg"
+              Name="Image.Gallery.Small.28.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.28.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.29.jpg"
+                 Guid="8af22486-7c51-4d0f-8b3d-579a404ba761"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.29.jpg"
+              Name="Image.Gallery.Small.29.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.29.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.30.jpg"
+                 Guid="d7b0065f-a0f1-4382-a4f2-329dcc7f60ec"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.30.jpg"
+              Name="Image.Gallery.Small.30.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.30.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.31.jpg"
+                 Guid="9738f9c2-b619-4944-9779-e4951aca1b13"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.31.jpg"
+              Name="Image.Gallery.Small.31.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.31.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.32.jpg"
+                 Guid="355bb20c-74e7-49e8-a961-3141701a027f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.32.jpg"
+              Name="Image.Gallery.Small.32.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.32.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.33.jpg"
+                 Guid="1ecc2157-ba18-426e-b87a-be2e28648674"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.33.jpg"
+              Name="Image.Gallery.Small.33.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.33.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.34.jpg"
+                 Guid="3d4c16f1-3b78-498b-85e0-bd425e99e39e"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.34.jpg"
+              Name="Image.Gallery.Small.34.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.34.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.35.jpg"
+                 Guid="9a95fa01-fb59-4e51-afea-253563877274"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.35.jpg"
+              Name="Image.Gallery.Small.35.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.35.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.36.jpg"
+                 Guid="b176371e-89d8-4523-bed0-8ca3f735ac6a"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.36.jpg"
+              Name="Image.Gallery.Small.36.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.36.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.37.jpg"
+                 Guid="3e6fbbb2-4719-4e41-ab20-931457d668fe"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.37.jpg"
+              Name="Image.Gallery.Small.37.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.37.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.38.jpg"
+                 Guid="cedbf206-d6a3-4112-8e62-165df9a9eafe"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.38.jpg"
+              Name="Image.Gallery.Small.38.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.38.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.39.jpg"
+                 Guid="2c69430a-1a40-4c06-aff5-72651a298944"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.39.jpg"
+              Name="Image.Gallery.Small.39.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.39.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.40.jpg"
+                 Guid="b86451d6-aee6-42da-ad32-e6b8299c6e1c"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.40.jpg"
+              Name="Image.Gallery.Small.40.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.40.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.41.jpg"
+                 Guid="052022b4-fa4e-4b8f-9d06-d5627054878d"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.41.jpg"
+              Name="Image.Gallery.Small.41.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.41.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.42.jpg"
+                 Guid="24117d01-174b-49b5-9f09-48dc8a8c12b7"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.42.jpg"
+              Name="Image.Gallery.Small.42.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.42.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.43.jpg"
+                 Guid="441d48fa-254f-412c-8a72-ec2b8121499e"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.43.jpg"
+              Name="Image.Gallery.Small.43.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.43.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.44.jpg"
+                 Guid="b7ed3f98-de0e-414c-99dc-8dc990844745"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.44.jpg"
+              Name="Image.Gallery.Small.44.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.44.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.45.jpg"
+                 Guid="baa4a8a3-37cd-430e-8bf1-189bfa15ab1f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.45.jpg"
+              Name="Image.Gallery.Small.45.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.45.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.46.jpg"
+                 Guid="186fb2b6-4d6f-4d67-839a-5f29b87db4a0"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.46.jpg"
+              Name="Image.Gallery.Small.46.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.46.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.47.jpg"
+                 Guid="a9aafada-e0dc-4200-9b15-28142a9409a9"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.47.jpg"
+              Name="Image.Gallery.Small.47.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.47.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.48.jpg"
+                 Guid="a185df65-5907-40c5-9d97-93e6d9317ec7"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.48.jpg"
+              Name="Image.Gallery.Small.48.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.48.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.49.jpg"
+                 Guid="e66932f3-9884-489f-a67a-4d239750dfb4"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.49.jpg"
+              Name="Image.Gallery.Small.49.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.49.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.50.jpg"
+                 Guid="b49daf68-7089-11db-9690-00e08161165f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.50.jpg"
+              Name="Image.Gallery.Small.50.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.50.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.51.jpg"
+                 Guid="baa440de-7089-11db-9690-00e08161165f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.51.jpg"
+              Name="Image.Gallery.Small.51.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.51.jpg"
+              Checksum="no"/>
+      </Component>
+      <Component Id="Image.Gallery.Small.52.jpg"
+                 Guid="c69002de-7089-11db-9690-00e08161165f"
+                 DiskId="1">
+        <File Id="Image.Gallery.Small.52.jpg"
+              Name="Image.Gallery.Small.52.jpg"
+              Source="..\Content\Images\Image.Gallery.Small.52.jpg"
+              Checksum="no"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="Z_Music">
+      <Component Id="Content.Audio.1.wma"
+                 Guid="28DA4D2F-84D7-4d92-A7F0-AA4FE957007C"
+                 DiskId="1">
+        <Condition>PUBLIC_MUSIC</Condition>
+        <File Id="Content.Audio.1.wma"
+              Name="Content.Audio.1.wma"
+              Source="..\Content\Audio\Content.Audio.1.wma"
+              Checksum="no" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="Z_Videos">
+      <Component Id="Content.Video.1.wmv"
+                 Guid="EBAF4150-4D13-4bd3-A038-71A8B828641D"
+                 DiskId="1">
+        <Condition>PUBLIC_VIDEOS</Condition>
+        <File Id="Content.Video.1.wmv"
+              Name="Content.Video.1.wmv"
+              Source="..\Content\Video\Content.Video.1.wmv"
+              Checksum="no" />
+      </Component>
+    </DirectoryRef>
+    <!-- End Components -->
+
+    <!-- This is a list of features that are installed as a part of this product. In this case, there is -->
+    <!-- only one feature. Each feature contains a list of components that it will install. Features can -->
+    <!-- can be displayed and allow user selection in setup UI if desired.                               -->
+    <Feature Id="ZROOTFEATURE"
+             Title="Z Windows Media Center Sample Application"
+             Level="1">
+      <ComponentRef Id="z.dll" />
+      <ComponentRef Id="Registration.xml" />
+      <ComponentRef Id="ZLogoProgramLibrary.png" />
+      <ComponentRef Id="ZShortcut" />
+      <ComponentRef Id="tbl_Movie.xml" />
+      <ComponentRef Id="tbl_TV.xml" />
+      <ComponentRef Id="Image.Detail.1.jpg"/>
+      <ComponentRef Id="Image.Detail.2.jpg"/>
+      <ComponentRef Id="Image.Detail.3.jpg"/>
+      <ComponentRef Id="Image.Detail.4.jpg"/>
+      <ComponentRef Id="Image.Detail.5.jpg"/>
+      <ComponentRef Id="Image.Detail.6.jpg"/>
+      <ComponentRef Id="Image.Detail.7.jpg"/>
+      <ComponentRef Id="Image.Detail.8.jpg"/>
+      <ComponentRef Id="Image.Detail.9.jpg"/>
+      <ComponentRef Id="Image.Detail.10.jpg"/>
+      <ComponentRef Id="Image.Detail.11.jpg"/>
+      <ComponentRef Id="Image.Detail.12.jpg"/>
+      <ComponentRef Id="Image.Detail.13.jpg"/>
+      <ComponentRef Id="Image.Detail.14.jpg"/>
+      <ComponentRef Id="Image.Detail.15.jpg"/>
+      <ComponentRef Id="Image.Detail.16.jpg"/>
+      <ComponentRef Id="Image.Detail.17.jpg"/>
+      <ComponentRef Id="Image.Detail.18.jpg"/>
+      <ComponentRef Id="Image.Detail.19.jpg"/>
+      <ComponentRef Id="Image.Detail.20.jpg"/>
+      <ComponentRef Id="Image.Detail.21.jpg"/>
+      <ComponentRef Id="Image.Detail.22.jpg"/>
+      <ComponentRef Id="Image.Detail.23.jpg"/>
+      <ComponentRef Id="Image.Detail.24.jpg"/>
+      <ComponentRef Id="Image.Detail.25.jpg"/>
+      <ComponentRef Id="Image.Detail.26.jpg"/>
+      <ComponentRef Id="Image.Detail.27.jpg"/>
+      <ComponentRef Id="Image.Detail.28.jpg"/>
+      <ComponentRef Id="Image.Detail.29.jpg"/>
+      <ComponentRef Id="Image.Detail.30.jpg"/>
+      <ComponentRef Id="Image.Detail.31.jpg"/>
+      <ComponentRef Id="Image.Detail.32.jpg"/>
+      <ComponentRef Id="Image.Detail.33.jpg"/>
+      <ComponentRef Id="Image.Detail.34.jpg"/>
+      <ComponentRef Id="Image.Detail.35.jpg"/>
+      <ComponentRef Id="Image.Detail.36.jpg"/>
+      <ComponentRef Id="Image.Detail.37.jpg"/>
+      <ComponentRef Id="Image.Detail.38.jpg"/>
+      <ComponentRef Id="Image.Detail.39.jpg"/>
+      <ComponentRef Id="Image.Detail.40.jpg"/>
+      <ComponentRef Id="Image.Detail.41.jpg"/>
+      <ComponentRef Id="Image.Detail.42.jpg"/>
+      <ComponentRef Id="Image.Detail.43.jpg"/>
+      <ComponentRef Id="Image.Detail.44.jpg"/>
+      <ComponentRef Id="Image.Detail.45.jpg"/>
+      <ComponentRef Id="Image.Detail.46.jpg"/>
+      <ComponentRef Id="Image.Detail.47.jpg"/>
+      <ComponentRef Id="Image.Detail.48.jpg"/>
+      <ComponentRef Id="Image.Detail.49.jpg"/>
+      <ComponentRef Id="Image.Detail.50.jpg"/>
+      <ComponentRef Id="Image.Detail.51.jpg"/>
+      <ComponentRef Id="Image.Detail.52.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.1.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.2.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.3.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.4.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.5.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.6.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.7.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.8.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.9.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.10.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.11.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.12.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.13.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.14.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.15.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.16.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.17.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.18.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.19.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.20.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.21.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.22.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.23.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.24.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.25.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.26.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.27.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.28.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.29.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.30.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.31.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.32.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.33.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.34.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.35.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.36.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.37.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.38.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.39.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.40.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.41.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.42.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.43.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.44.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.45.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.46.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.47.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.48.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.49.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.50.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.51.jpg"/>
+      <ComponentRef Id="Image.Gallery.Large.52.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.1.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.2.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.3.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.4.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.5.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.6.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.7.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.8.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.9.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.10.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.11.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.12.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.13.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.14.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.15.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.16.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.17.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.18.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.19.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.20.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.21.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.22.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.23.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.24.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.25.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.26.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.27.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.28.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.29.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.30.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.31.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.32.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.33.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.34.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.35.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.36.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.37.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.38.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.39.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.40.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.41.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.42.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.43.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.44.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.45.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.46.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.47.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.48.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.49.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.50.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.51.jpg"/>
+      <ComponentRef Id="Image.Gallery.Small.52.jpg"/>
+      <ComponentRef Id="Content.Audio.1.wma" />
+      <ComponentRef Id="Content.Video.1.wmv" />
+    </Feature>
+
+    <!-- The media table defines the location that the MSI will look to find source files during         -->
+    <!-- installation or repair scenarios. In this case, the source files are in a cab file that will be -->
+    <!-- embedded directly into the MSI at build time.                                                   -->
+    <Media Id="1"
+           Cabinet="z.cab"
+           EmbedCab="yes" />
+
+    <!-- These custom actions are used to register the application with Media Center using the utility   -->
+    <!-- RegisterMceApp.exe that is installed as a part of the Windows Media Center feature. Each custom -->
+    <!-- action is defined as a pair in order to leverage the WiX QtExec custom action to suppress the   -->
+    <!-- pop-up UI that would ordinarily appear when running RegisterMceApp.exe. Registering a Windows   -->
+    <!-- Media Center application will fail if it is already registered, so this setup will first        -->
+    <!-- unregister the application and then attempt to re-register it. This setup ignores the return    -->
+    <!-- code from the unregistration custom action but checks the return code of the registration       -->
+    <!-- action. If registration fails, setup will fail and roll back. These custom actions use the      -->
+    <!-- REGISTERMCEAPP property that is defined below in order to find the exact location of the file   -->
+    <!-- RegisterMceApp.exe on the system.                                                               -->
+    <CustomAction Id="CA_RegisterMceApp_Unregister_Install_Cmd"
+                  Property="CA_RegisterMceApp_Unregister_Install"
+                  Value="&quot;[REGISTERMCEAPP]&quot; /u /allusers &quot;[#Registration.xml]&quot;"/>
+    <CustomAction Id="CA_RegisterMceApp_Unregister_Uninstall_Cmd"
+                  Property="CA_RegisterMceApp_Unregister_Uninstall"
+                  Value="&quot;[REGISTERMCEAPP]&quot; /u /allusers &quot;[#Registration.xml]&quot;"/>
+    <CustomAction Id="CA_RegisterMceApp_Register_Cmd"
+                  Property="CA_RegisterMceApp_Register"
+                  Value="&quot;[REGISTERMCEAPP]&quot; /allusers &quot;[#Registration.xml]&quot;"/>
+    <CustomAction Id="CA_RegisterMceApp_Rollback_Cmd"
+                  Property="CA_RegisterMceApp_Rollback"
+                  Value="&quot;[REGISTERMCEAPP]&quot; /u /allusers &quot;[#Registration.xml]&quot;"/>
+
+    <CustomAction Id="CA_RegisterMceApp_Unregister_Install"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec"
+                  Execute="deferred"
+                  Return="ignore"
+                  Impersonate="no"/>
+    <CustomAction Id="CA_RegisterMceApp_Unregister_Uninstall"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec"
+                  Execute="deferred"
+                  Return="ignore"
+                  Impersonate="no"/>
+    <CustomAction Id="CA_RegisterMceApp_Register"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec"
+                  Execute="deferred"
+                  Return="check"
+                  Impersonate="no"/>
+    <CustomAction Id="CA_RegisterMceApp_Rollback"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec"
+                  Execute="rollback"
+                  Return="ignore"
+                  Impersonate="no"/>
+
+    <!-- This is an icon that will be used for the Add/Remove Programs logo and the shortcut logo.       -->
+    <Icon Id="Z.ico"
+          SourceFile="Z.ico" />
+
+    <!-- The InstallExecuteSequence table describes the order that actions will be executed during       -->
+    <!-- installation, repair and uninstall of this product.                                             -->
+    <InstallExecuteSequence>
+      <Custom Action="CA_BlockOlderVersionInstall"
+              After="FindRelatedProducts">
+        <![CDATA[NEWERVERSIONDETECTED]]>
+      </Custom>
+      <RemoveExistingProducts After="InstallFinalize" />
+      <LaunchConditions After="AppSearch"/>
+
+      <!-- This custom action searches for a version of Windows equal to or greater than        -->
+      <!-- specified and the presence of RegisterMceApp.exe. If all of these conditions are met -->
+      <!-- the system is a valid operating system and the product will be allowed to install.   -->
+      <Custom Action="CA_ErrWrongWindowsVersion"
+              Before="CostInitialize"><![CDATA[(NOT VersionNT >= 601 OR NOT REGISTERMCEAPP) AND NOT Installed]]></Custom>
+
+      <Custom Action="CA_RegisterMceApp_Unregister_Install_Cmd"
+              After="CostFinalize">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Unregister_Uninstall_Cmd"
+              After="CA_RegisterMceApp_Unregister_Install_Cmd">
+        <![CDATA[REMOVE]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Register_Cmd"
+              After="CA_RegisterMceApp_Unregister_Uninstall_Cmd">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Rollback_Cmd"
+              After="CA_RegisterMceApp_Register_Cmd">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+
+      <!-- This unregistration custom action must occur before files are removed during uninstall of the -->
+      <!-- product because the custom action requires the registration XML file in order to run          -->
+      <!-- correctly. It is conditioned to only run during uninstall using the REMOVE condition.         -->
+      <Custom Action="CA_RegisterMceApp_Unregister_Uninstall"
+              Before="RemoveFiles">
+        <![CDATA[REMOVE]]>
+      </Custom>
+
+      <!-- This sequence of actions is important. In order to allow the roll back custom action to run   -->
+      <!-- at the correct time in case the setup fails, it must be scheduled before the other actions    -->
+      <!-- because Windows Installer pushes each action onto a stack and then pops them off of the stack -->
+      <!-- in case of any failure in order to accomplish the roll back.                                  -->
+      <Custom Action="CA_RegisterMceApp_Rollback"
+              After="InstallFiles">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Unregister_Install"
+              After="CA_RegisterMceApp_Rollback">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Register"
+              After="CA_RegisterMceApp_Unregister_Install">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+    </InstallExecuteSequence>
+
+    <!-- The InstallUISequence table describes the order that actions will be executed when the user     -->
+    <!-- runs setup in full UI mode. Some actions must be scheduled in the UI and the execute sequence   -->
+    <!-- tables to ensure that they will run regardless of whether the user runs setup in full UI mode   -->
+    <!-- or in reduced UI or silent modes.                                                               -->
+    <InstallUISequence>
+      <Custom Action="CA_BlockOlderVersionInstall"
+              After="FindRelatedProducts">
+        <![CDATA[NEWERVERSIONDETECTED]]>
+      </Custom>
+      <Custom Action="CA_ErrWrongWindowsVersion"
+              Before="CostInitialize"><![CDATA[(NOT VersionNT >= 601 OR NOT REGISTERMCEAPP) AND NOT Installed]]></Custom>
+    </InstallUISequence>
+
+    <!-- These properties define links that will appear in the Add/Remove Programs control panel when    -->
+    <!-- this product is installed on the system.                                                        -->
+    <Property Id="ARPHELPLINK"
+              Value="!(loc.Property_ArpHelpLink)" />
+    <Property Id="ARPPRODUCTICON">Z.ico</Property>
+    <Property Id="ARPURLINFOABOUT"
+              Value="!(loc.Property_ArpUrlInfoAbout)" />
+
+    <!-- This property defines the ALLUSERS property to be 1, which indicates that this product will be  -->
+    <!-- installed per-machine instead of per-user.                                                      -->
+    <Property Id="ALLUSERS">
+      <![CDATA[1]]>
+    </Property>
+
+    <!-- This property uses an AppSearch to attempt to locate the file %windir\eHome\ehShell.exe  on the -->
+    <!-- system. If it is found, the property is set to the fully qualified path to this file, and this  -->
+    <!-- path is used to create a desktop shortcut to launch the application in Windows Media Center.    -->
+    <Property Id="EHSHELLEXE"
+              Secure="yes">
+      <DirectorySearch Id="EhomeDirectory"
+                       Path="[WindowsFolder]\ehome">
+        <FileSearch Id="EhShellExe"
+                    Name="ehShell.exe"
+                    MinVersion="6.0.0.0" />
+      </DirectorySearch>
+    </Property>
+
+    <!-- This property uses an AppSearch to attempt to locate the file %windir\eHome\RegisterMceApp.exe  -->
+    <!-- on the system. If it is found, the property is set to the fully qualified path to this file,    -->
+    <!-- and this path is used to call RegisterMceApp.exe in several custom actions listed above to      -->
+    <!-- register this application with Windows Media Center.                                            -->
+    <Property Id="REGISTERMCEAPP"
+              Secure="yes">
+      <DirectorySearch Id="EhomeDirectory2"
+                       Path="[WindowsFolder]\ehome">
+        <FileSearch Id="RegisterMceAppExe"
+                    Name="RegisterMceApp.exe" />
+      </DirectorySearch>
+    </Property>
+
+    <!-- These properties use a RegLocator to attempt to locate the full path of the common Music and    -->
+    <!-- Videos folders.  The default locations are c:\Users\Public\Music and c:\Users\Public\Videos.    -->
+    <!-- In general, applications should not look at these registry values directly to determine these   -->
+    <!-- folder paths, and should instead use the ShGetFolderPathEx API.  The only way to call that API  -->
+    <!-- in an MSI is to write a custom actions, so rather than do that, we are going to look at these   -->
+    <!-- registry values and assume the risk of application compatibility issues in future versions of   -->
+    <!-- Windows Vista.                                                                                  -->
+    <Property Id="PUBLIC_MUSIC"
+              Secure="yes">
+      <RegistrySearch Id="SearchForPublicMusicFolder"
+                      Root="HKLM"
+                      Key="SOFTWARE\Microsoft\Windows\CurrentVersion\explorer\Shell Folders"
+                      Name="CommonMusic"
+                      Type="raw" />
+    </Property>
+
+    <Property Id="PUBLIC_VIDEOS"
+              Secure="yes">
+      <RegistrySearch Id="SearchForPublicVideosFolder"
+                      Root="HKLM"
+                      Key="SOFTWARE\Microsoft\Windows\CurrentVersion\explorer\Shell Folders"
+                      Name="CommonVideo"
+                      Type="raw" />
+    </Property>
+
+    <!-- This property is used as the default installation directory, and the user can change this path  -->
+    <!-- during setup. The Id must be set to WIXUI_INSTALLDIR and the value must match the directory Id  -->
+    <!-- defined above that represents the root installation directory.                                  -->
+    <Property Id="WIXUI_INSTALLDIR"
+              Value="ZROOTDIRECTORY"/>
+    
+    <!-- These properties are used by the Windows Media Center InstallApplication Method to determine what  -->
+    <!-- license to display to the end user. The Value attribute should match the <Binary> elements above.  -->
+    <!-- Do NOT change the ID of these properties.-->
+    <Property Id="d4276fcf18d5470b97f3fc6c36408694"
+              Value="License.txt"/>
+    <Property Id="aefe520afb0145c1bc61ca0463a29e3c"
+              Value="LicenseAccessible.txt"/>
+
+    <!-- This UIRef element specifies what WiXUI dialog set to use for the setup UI. This package uses   -->
+    <!-- the WixUI_InstallDir dialog set, which provides a welcome page, a license agreement page, a     -->
+    <!-- page to allow changing the installation path, an installation confirmation page, a progress     -->
+    <!-- page and a completion page. Other dialog sets are available in the WiX toolset and are          -->
+    <!-- described in more detail in the WiX documentation.                                              -->
+    <UIRef Id="WixUI_InstallDir"/>
+
+    <!-- In WiX v3.0, these variables are used to override the default setup UI bitmaps and license      -->
+    <!-- agreement text that are included in the WixUIExtension with custom files that are included in   -->
+    <!-- the Q project.                                                                                  -->
+    <WixVariable Id="WixUIBannerBmp"
+                 Value="bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp"
+                 Value="dlgbmp.bmp" />
+    <WixVariable Id="WixUILicenseRtf"
+                 Value="License.rtf" />
+
+  </Product>
+</Wix>

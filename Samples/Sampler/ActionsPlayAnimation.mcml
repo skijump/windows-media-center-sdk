@@ -1,0 +1,70 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- This sample demonstrates how to play animations from the Rules       -->
+  <!-- system by using the PlayAnimation action.                            -->
+
+  <!-- Just like any other action in the rules system, the PlayAnimation    -->
+  <!-- action can be invoked when a set of conditions is met.  This action  -->
+  <!-- takes a Target item and an Animation to play.                        -->
+  <UI Name="PlayAnimationAction">
+
+    <Locals>
+
+      <!-- Our event that we will listen to -->
+      <Command Name="Command"
+               Description="Play Animation"/>
+
+    </Locals>
+
+    <Rules>
+      <!-- The button was clicked. -->
+      <Changed Source="[Command.Invoked]">
+        <Actions>
+
+          <!-- Play an animation on the target item. -->
+          <PlayAnimation Target="[MyGraphic]">
+            <Animation>
+
+              <!-- This animation will rotate the item 360 degrees. -->
+              <Animation CenterPointPercent="0.5,0.5,0.0">
+                <Keyframes>
+                  <RotateKeyframe Time="0.0"
+                                  Value="0deg;0,0,1"
+                                  Interpolation="SCurve"/>
+                  <RotateKeyframe Time="1.0"
+                                  Value="360deg;0,0,1"/>
+                </Keyframes>
+              </Animation>
+
+            </Animation>
+          </PlayAnimation>
+
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Center">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <!-- This button, when invoked, will play an animation. -->
+              <ctrl:Button Command="[Command]"
+                          ButtonLabel="[Command.Description]"/>
+
+              <!-- The target of the animation: a graphic. -->
+              <Graphic Name="MyGraphic"
+                       Content="file://FourBoxGraphic.png"/>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

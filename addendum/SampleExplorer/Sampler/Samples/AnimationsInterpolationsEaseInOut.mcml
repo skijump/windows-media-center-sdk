@@ -1,0 +1,201 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:types="resx://Sampler/Sampler.Resources/AnimationsInterpolationsTypes">
+
+  <!-- This sample demonstrates how to modify the behavior of an EaseIn or  -->
+  <!-- EaseOut interpolation using the Weight and EasePercent properties.   -->
+
+  <!-- An "EaseIn" interpolation is part linear, and part logarithmic.  It  -->
+  <!-- has a definable "breaking point" where the animation changes from    -->
+  <!-- one interpolation to the other.                                      -->
+
+  <!-- An "EaseOut" interpolation is similar to an EaseIn, except that the  -->
+  <!-- first half is exponential and the second half is linear.             -->
+
+  <!-- Weight defines the amount of effect the interpolation has relative   -->
+  <!-- to a standard linear interpolation.   EasePercent defines the        -->
+  <!-- "breaking point."                                                    -->
+
+  <!-- You specify your interpolation controls on a Keyframe using          -->
+  <!-- arguments to the Interpolation property:                             -->
+  <!--   <PositionKeyframe Interpolation="EaseIn, 1.0, 0.5"/>               -->
+  <!-- The first number is the Weight, the second numer is the EasePercent. -->
+  <UI Name="EaseInOutInterpolationHandles">
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Fill"/>
+        </Layout>
+        <Children>
+
+          <!-- This bar represents the starting line. -->
+          <ColorFill Content="Red"
+                     MinimumSize="10,10"/>
+
+          <!-- The track -->
+          <ColorFill Content="DarkGreen"
+                     Layout="VerticalFlow">
+            <LayoutInput>
+              <DockLayoutInput Position="Left"/>
+            </LayoutInput>
+            <Children>
+
+              <!-- Here we have a flow of Horse UIs, each given a position  -->
+              <!-- animation with a different interpolation settings.       -->
+
+
+              <!-- EaseIn: 1.0, 0.25 -->
+              <types:Horse Label="EaseIn: 1.0, 0.25">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="EaseIn, 1.0, 0.25"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+              <!-- EaseIn: 1.0, 0.50 -->
+              <types:Horse Label="EaseIn: 1.0, 0.50">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="EaseIn, 1.0, 0.50"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- EaseIn: 1.0, 0.75 -->
+              <types:Horse Label="EaseIn: 1.0, 0.75">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="EaseIn, 1.0, 0.75"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Linear (for reference) -->
+              <types:Horse Label="Linear">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Linear"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- EaseIn: 0.25, 0.75 -->
+              <types:Horse Label="EaseIn: 0.25, 0.25">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="EaseIn, 0.25, 0.75"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- EaseIn: 1.0, 0.75 -->
+              <types:Horse Label="EaseIn: 1.0, 0.25">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="EaseIn, 1.0, 0.75"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- EaseIn: 4.0, 0.75 -->
+              <types:Horse Label="EaseIn: 4.0, 0.25">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="EaseIn, 4.0, 0.75"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+            </Children>
+          </ColorFill>
+
+          <!-- This bar represents the finishing line. -->
+          <ColorFill Content="Red"
+                     MinimumSize="10,10"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

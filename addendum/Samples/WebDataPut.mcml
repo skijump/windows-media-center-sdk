@@ -1,0 +1,135 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:ctrl="http://retrosight.com/samples/windowsmediacentersdk/6/Controls.mcml"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:sys="assembly://System/System">
+
+  <!-- A scenario using Data Access Model Item is to send       -->
+  <!-- data/files for future use. For example, in the           -->
+  <!-- following sample, an xml file is sent to the server and  -->
+  <!-- users can request data from it.                          -->
+
+  <!-- Creating or updating a file can be done using request     -->
+  <!-- method PUT. Request document contains the data to be sent -->
+  <!-- to the server. Request URI includes the file path and     -->
+  <!-- file name. When using PUT as request method, request      -->
+  <!-- document can not be empty.                                -->
+
+  <!-- Web samples are designed to work when loaded       -->
+  <!-- via the HTTP:// or HTTPS:// protocol. Generally    -->
+  <!-- speaking, opening these samples using FILE:// will -->
+  <!-- not produce the desired results.                   -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <!-- Construct Data Access Model Item -->
+      <da:RemoteResourceUri Name="RequestURI"/>
+      <da:XmlRemoteResource Name="MyResource">
+        <Mappings>
+          <da:XmlRemoteValue Name="UserName"
+                             Source="/users/@name" />
+          <da:XmlRemoteValue Name="WelcomeInformation"
+                             Source="/users/WelcomeInformation"/>
+          <da:XmlRemoteValue Name="UserID"
+                             Source="/users/ID"/>
+        </Mappings>
+      </da:XmlRemoteResource>
+    </Properties>
+
+    <Locals>
+      <!-- Resource URI-->
+      <cor:String Name="ResourceString"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/WebDataPut.xml"/>
+      <Command Name="UploadCommand"
+               Description="Upload data"/>
+      <Command Name="RequestCommand"
+               Description="Request data"/>
+      <!-- XML file as string -->
+      <cor:String Name="RequestDoc"
+                  String="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+                                &lt;users name=&quot;guest&quot;&gt;
+                                &lt;WelcomeInformation&gt;Hello, guest!&lt;/WelcomeInformation&gt;
+                                &lt;ID&gt;1106450982&lt;ID&gt;
+                                &lt;/users&gt;"/>
+    </Locals>
+
+    <Rules>
+      <!-- Click Upload data button -->
+      <Changed Source="[UploadCommand.Invoked]">
+        <Actions>
+          <!-- Set and display request URI-->
+          <Set Target="[RequestURI.FullString]"
+               Value="[ResourceString]"/>
+          <Set Target="[RequestFullString.PropertyValue]"
+               Value="[RequestURI.FullString]"/>
+          <!-- Generate request document -->
+          <Set Target="[MyResource.RequestDocument]"
+               Value="[RequestDoc]"  />
+          <!-- Invoke data request -->
+          <!-- Request Method is PUT -->
+          <Set Target="[MyResource.RequestUri]"
+               Value="[RequestURI]"/>
+          <Set Target="[MyResource.RequestMethod]"
+               Value="PUT"/>
+          <Invoke Target="[MyResource.GetDataFromResource]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <!-- Click request data button -->
+      <Changed Source="[RequestCommand.Invoked]">
+        <Actions>
+          <!-- Clear request document -->
+          <Set Target="[MyResource.RequestDocument]"
+               Value=""/>
+
+          <!-- Invoke data request -->
+          <!-- Request Method is GET -->
+          <Set Target="[MyResource.RequestMethod]"
+               Value="GET"/>
+          <Invoke Target="[MyResource.GetDataFromResource]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <!-- Binding response data to view items -->
+      <Binding Source="[MyResource.Status.ToString]"
+               Target="[RequestStatus.PropertyValue]"/>
+      <Binding Source="[MyResource.Mappings.#UserName!da:XmlRemoteValue.String]"
+               Target="[ResponseUserName.PropertyValue]"/>
+      <Binding Source="[MyResource.Mappings.#WelcomeInformation!da:XmlRemoteValue.String]"
+               Target="[ResponseWelcomeInfo.PropertyValue]"/>
+      <Binding Source="[MyResource.Mappings.#UserID!da:XmlRemoteValue.String]"
+               Target="[ResponseUserID.PropertyValue]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <!-- Buttons -->
+          <ctrl:Button Command="[UploadCommand]"
+                       ButtonLabel="[UploadCommand.Description]"/>
+          <ctrl:Button Command="[RequestCommand]"
+                       ButtonLabel="[RequestCommand.Description]"/>
+          <!-- Display data -->
+          <ctrl:PropertyAndValue Name="RequestFullString"
+                                 PropertyName="Rrequest URI"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="RequestStatus"
+                                 PropertyName="Status"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="ResponseUserName"
+                                 PropertyName="User Name"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="ResponseWelcomeInfo"
+                                 PropertyName="Welcome Information"
+                                 PropertyValue=""/>
+          <ctrl:PropertyAndValue Name="ResponseUserID"
+                                 PropertyName="User ID"
+                                 PropertyValue=""/>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,379 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:but="resx://Sampler/Sampler.Resources/ControlsSimpleButton"
+      xmlns:spi="resx://Sampler/Sampler.Resources/ControlsSimpleSpinner">
+
+  <!-- ListDataSet sample                                                    -->
+  <!--                                                                       -->
+  <!-- The only requirement for hooking up data to a Repeater is that it be  -->
+  <!-- stored in an IList implementation.  However, standard IList           -->
+  <!-- implementations (for example ArrayList) have no way of notifying the  -->
+  <!-- Repeater when they've changed - if items are inserted or removed, the -->
+  <!-- Repeater will get out of sync.  To solve this problem, we have the    -->
+  <!-- ListDataSet and ArrayListDataSet classes.  ListDataSet is a class     -->
+  <!-- simply wraps an IList and fires notifications when its contents are   -->
+  <!-- changed.  ArrayListDataSet is a ListDataSet subclass that uses an     -->
+  <!-- ArrayList as its backing store.                                       -->
+  <!--                                                                       -->
+  <!-- If the data source for your Repeater is a ListDataSet, then the       -->
+  <!-- Repeater will listen for the change notifications it provides.  Thus, -->
+  <!-- as you call the IList methods on it, the content displayed by the     -->
+  <!-- Repeater will be updated accordingly and kept in sync.                -->
+  <!--                                                                       -->
+  <!-- The Main UI shows a list of Onomatopoeias (words whose pronunciation  -->
+  <!-- imitate the sound they describe) and has buttons for inserting new    -->
+  <!-- items into the list and removing items from the list.  It also        -->
+  <!-- displays the total number of items in the list, demonstrating how     -->
+  <!-- UI can listen to ListDataSet notifications to automatically stay in   -->
+  <!-- sync with the backing data.                                           -->
+  <UI Name="Main">
+    <Locals>
+
+      <!-- This is the list of words that will be displayed in our UI.      -->
+      <!-- Start off with three items just so we have something to show     -->
+      <!-- initially.                                                       -->
+      <ArrayListDataSet Name="Onomatopoeia">
+        <Source>
+          <cor:String String="splash"/>
+          <cor:String String="gush"/>
+          <cor:String String="kerplunk"/>
+        </Source>
+      </ArrayListDataSet>
+
+
+      <!-- This is the choice that is going to be passed to the spinner to  -->
+      <!-- determine which word should be inserted into the list next.      -->
+      <Choice Name="OnomatopoeiaChoices">
+        <Options>
+          <cor:String String="argh"/>
+          <cor:String String="bam"/>
+          <cor:String String="eek"/>
+          <cor:String String="splash"/>
+          <cor:String String="gush"/>
+          <cor:String String="kerplunk"/>
+          <cor:String String="buzz"/>
+          <cor:String String="crash"/>
+          <cor:String String="whirr"/>
+          <cor:String String="clang"/>
+          <cor:String String="hiss"/>
+          <cor:String String="purr"/>
+          <cor:String String="meow"/>
+          <cor:String String="squeak"/>
+          <cor:String String="mumble"/>
+          <cor:String String="hush"/>
+          <cor:String String="boom"/>
+          <cor:String String="woof"/>
+          <cor:String String="hmm"/>
+        </Options>
+      </Choice>
+
+      <!-- Will be passed to the insert button so we know when to insert an -->
+      <!-- item into the list.                                              -->
+      <Command Name="InsertCommand"
+               Description=""/>
+
+      <!-- Will be passed to the remove button so we know when to remove an  -->
+      <!-- item from the list.                                               -->
+      <Command Name="RemoveCommand"
+               Description=""/>
+
+      <!-- This is the next index that we will insert to or remove from. -->
+      <IntRangedValue Name="OperationIndex"/>
+
+      <!-- Random number generator, used to calculate OperationIndex. -->
+      <cor:Random Name="RandomNumberGenerator"/>
+
+      <!-- This is the maximum number of items that we'll allow in the list. -->
+      <cor:Int32 Name="MaxListLength"
+                 cor:Int32="10"/>
+    </Locals>
+
+    <Rules>
+
+      <Rule>
+        <!-- ListDataSet fires a notification when its count has changed.  -->
+        <!-- When it does, we need to update the counter that shows the    -->
+        <!-- number of items in the list, generate a new random value for  -->
+        <!-- OperationIndex, and find a new random onomatopoeia to insert  -->
+        <!-- into the list.                                                -->
+        <Conditions>
+          <Modified Source="[Onomatopoeia.Count]"
+                    InitialEvaluate="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Counter.Content]"
+               Value="[Onomatopoeia.Count]">
+            <Transformer>
+              <FormatTransformer Format="Total Count: {0}"/>
+            </Transformer>
+          </Set>
+
+          <!-- This is a bit non-obvious - We have to mark this action as     -->
+          <!-- ExclusiveApply="false" because both this action and the next   -->
+          <!-- have the same Target value (RandomNumberGenerator.Next).  If   -->
+          <!-- we didn't do this, the second action would never be evaluated. -->
+          <Invoke ResultTarget="[OperationIndex.Value]"
+                  Target="[RandomNumberGenerator.Next]"
+                  maxValue="[Onomatopoeia.Count]"
+                  ExclusiveApply="false"/>
+
+          <Invoke ResultTarget="[OnomatopoeiaChoices.ChosenIndex]"
+                  Target="[RandomNumberGenerator.Next]"
+                  maxValue="[OnomatopoeiaChoices.Options.Count]"/>
+
+        </Actions>
+      </Rule>
+
+      <!-- When the OperationIndex changes, update the description on our   -->
+      <!-- Insert/Remove buttons.                                           -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[OperationIndex.Value]"
+                    InitialEvaluate="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[InsertCommand.Description]"
+               Value="[OperationIndex.Value]">
+            <Transformer>
+              <FormatTransformer Format="Insert at {0}:"/>
+            </Transformer>
+          </Set>
+
+          <Set Target="[RemoveCommand.Description]"
+               Value="[OperationIndex.Value]">
+            <Transformer>
+              <FormatTransformer Format="Remove item {0}"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+      <!-- If the list reaches zero length, then disable the Remove button  -->
+      <!-- since there are no more items to remove.                         -->
+      <Condition Source="[Onomatopoeia.Count]"
+                 ConditionOp="Equals"
+                 SourceValue="0"
+                 Target="[RemoveButton.InputEnabled]"
+                 Value="false"/>
+
+      <!-- If the list has reached its maximum length, then disable both the -->
+      <!-- Insert button and the spinner to prevent the user from inserting  -->
+      <!-- more items.                                                       -->
+      <Condition Source="[Onomatopoeia.Count]"
+                 ConditionOp="Equals"
+                 SourceValue="[MaxListLength]">
+        <Actions>
+          <Set Target="[InsertButton.InputEnabled]"
+               Value="false"/>
+          <Set Target="[Spinner.InputEnabled]"
+               Value="false"/>
+        </Actions>
+      </Condition>
+
+      <!-- If the Remove button was clicked, and our list has more than     -->
+      <!-- zero items, then remove an item from the list.                   -->
+      <!-- Again, notice that once the item is removed, the UI will         -->
+      <!-- automatically reflect the change.                                -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[RemoveCommand.Invoked]"/>
+          <Equality Source="[Onomatopoeia.Count]"
+                    ConditionOp="GreaterThan"
+                    Value="0"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Onomatopoeia.RemoveAt]"
+                  index="[OperationIndex.Value]"/>
+        </Actions>
+      </Rule>
+
+      <!-- If the Insert button was clicked, and our list has less than the  -->
+      <!-- maximum number of items, then insert a new item into the list     -->
+      <!-- using the chosen value from our spinner control.  Notice that     -->
+      <!-- once the item is inserted, the UI will automatically reflect the  -->
+      <!-- addition.  We don't have to do anything special to let the        -->
+      <!-- Repeater know there's a new item available because the list fired -->
+      <!-- a notification automatically.                                     -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[InsertCommand.Invoked]"/>
+          <Equality Source="[Onomatopoeia.Count]"
+                    ConditionOp="LessThan"
+                    Value="[MaxListLength]"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Onomatopoeia.Insert]"
+                  index="[OperationIndex.Value]"
+                  item="[OnomatopoeiaChoices.Chosen]"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="15,0"/>
+        </Layout>
+
+        <Children>
+
+          <!-- Title text -->
+          <Text Content="Onomatopoeias"
+                Font="Arial,50"
+                Color="White"/>
+
+          <!-- Number of items in the list -->
+          <Text Name="Counter"
+                Color="Yellow"
+                Margins="0,10,0,10"/>
+
+          <!-- Insert button and associated spinner. -->
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="5,0"/>
+            </Layout>
+            <Children>
+              <but:SimpleButton FocusOrder="0"
+                                Name="InsertButton"
+                                Command="[InsertCommand]"
+                                MinimumSize="200,0"
+                                InputEnabled="true"/>
+              <spi:SimpleSpinner Name="Spinner"
+                                 Model="[OnomatopoeiaChoices]"
+                                 InputEnabled="true"/>
+            </Children>
+          </Panel>
+
+          <!-- Remove button. -->
+          <but:SimpleButton Name="RemoveButton"
+                            Command="[RemoveCommand]"
+                            InputEnabled="true"
+                            MinimumSize="200,0"/>
+
+
+          <!-- The Repeater itself.  Notice that instead of defining the    -->
+          <!-- Content inline, we use the ContentName property to instead   -->
+          <!-- use a Content that we define later on in this UI.            -->
+          <Repeater ContentName="RepeatedContent"
+                    Source="[Onomatopoeia]"
+                    MinimumSize="0,450">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          Spacing="5,0"/>
+            </Layout>
+          </Repeater>
+        </Children>
+      </Panel>
+    </Content>
+
+
+    <!-- This is the content that will be repeated for each item in the list -->
+    <!-- It hosts a TextString UI, and has some simple animations defined.   -->
+    <!-- In addition to the "Item" path, Repeater also provides an "Index"   -->
+    <!-- path (of type Index).  This tells you both your virtual index (your -->
+    <!-- index within the visual list) as well as your actual index (your    -->
+    <!-- index within the data set).  These two may not be the same if the   -->
+    <!-- layout used on the repeater wraps (i.e. repeats the data multiple   -->
+    <!-- times)                                                              -->
+    <Content Name="RepeatedContent">
+      <me:TextString Text="[RepeatedItem!cor:String]"
+                     MyIndex="[RepeatedItemIndex]">
+        <Animations>
+          <Animation Type="Show">
+            <Keyframes>
+              <AlphaKeyframe Time="0.0"
+                             Value="0"/>
+              <AlphaKeyframe Time=".25"
+                             Value="1.0"/>
+            </Keyframes>
+          </Animation>
+
+          <Animation Type="Hide">
+            <Keyframes>
+              <AlphaKeyframe Time="0.0"
+                             Value="1.0"
+                             RelativeTo="Current"/>
+              <AlphaKeyframe Time=".25"
+                             Value="0.0"/>
+            </Keyframes>
+          </Animation>
+
+          <Animation Type="Move">
+            <Keyframes>
+              <PositionKeyframe Time="0.0"
+                                Value="0,0,0"
+                                RelativeTo="Current"/>
+              <PositionKeyframe Time="0.2"
+                                Value="0,0,0"/>
+            </Keyframes>
+          </Animation>
+        </Animations>
+
+      </me:TextString>
+    </Content>
+  </UI>
+
+  <!-- The TextString UI takes a string and an Index value, and displays    -->
+  <!-- them.  It also displays a "New!" notification when the item is first -->
+  <!-- shown, which subsequently fades out.                                 -->
+  <UI Name="TextString">
+    <Properties>
+      <cor:String Name="Text"
+                  cor:String="$Required"/>
+      <Index Name="MyIndex"
+             Index="$Required"/>
+    </Properties>
+
+    <!-- Bind the index value to our prefix string.  We bind here because   -->
+    <!-- the value can change as items are inserted/removed around us.      -->
+    <Rules>
+      <Binding Source="[MyIndex.Value]"
+               Target="[IndexPrefix.Content]">
+        <Transformer>
+          <FormatTransformer Format="{0}:"/>
+        </Transformer>
+      </Binding>
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      Spacing="5,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Index value -->
+          <Text Color="LawnGreen"
+                Name="IndexPrefix"/>
+
+          <!-- Our actual string content -->
+          <Text Color="LawnGreen"
+                Content="[Text]"/>
+
+          <!-- New! notification.  It has an Alpha animation that fades to  -->
+          <!-- 0.0 over 1.25 seconds.                                       -->
+          <Text Color="Red"
+                Content="New!">
+            <Animations>
+              <Animation Type="Show">
+                <Keyframes>
+                  <AlphaKeyframe Time="0.0"
+                                 Interpolation="Exp"
+                                 Value="1.0"/>
+                  <AlphaKeyframe Time="1.25"
+                                 Value="0.0"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Text>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

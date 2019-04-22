@@ -1,0 +1,227 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- DateTimeTransformer is used for converting a DateTime value to      -->
+  <!-- a String for display purposes.                                      -->
+
+  <!-- The formatting of the DateTime is based on the corresponding        -->
+  <!-- Regional settings (as specified in Control Panel), and can be       -->
+  <!-- customized using the Format property.                               -->
+
+  <!-- Specify one of the following values as the Format:                  -->
+
+  <!-- LongTime:          Regional format for "long" time display.         -->
+  <!--                    Typically includes hours, minutes, and seconds,  -->
+  <!--                    and may include an AM/PM indicator, depending on -->
+  <!--                    locale.                                          -->
+  <!-- ShortTime:         Same as LongTime, but without the seconds.       -->
+  <!-- LongDate:          Regional format for "long" date display.         -->
+  <!-- ShortDate:         Regional format for "short" date display.        -->
+  <!-- YearMonth:         The year and month values only.                  -->
+  <!-- MonthDay:          The month and day values only.                   -->
+
+  <!-- The above values may be combined with the following flags:          -->
+
+  <!-- NoAMPM:            Suppress the AM/PM indicator, if any.            -->
+  <!-- NoYear:            Remove the year, if any.                         -->
+  <!-- NoDayOfWeek:       Remove the day-of-week, if any.                  -->
+  <!-- AbbreviateYear:    Shorten year, if any, to two digits.             -->
+  <!-- AbbreviateNames:   Shorten month and day-of-week names, if any, to  -->
+  <!--                    their abbreviated forms.                         -->
+  <!-- ForceDayOfWeek:    Force inclusion of day-of-week, if the date      -->
+  <!--                    format otherwise wouldn't include it.            -->
+
+  <!-- NOTE: The target of the DateTimeTransformer must accept a String.   -->
+
+  <!-- The following tags support transformers:                            -->
+  <!--   Binding, Equality, Invoke, InvokeCommand, and Set                 -->
+
+  <!-- In this example, a DateTime value is being bound to the Value       -->
+  <!-- propreties of several Text items.  DateTimeTransformer will produce -->
+  <!-- a String value so that the binding will succeed.                    -->
+
+  <UI Name="DateTimeTransformer_Dates_Complex">
+
+    <Locals>
+      <cor:DateTime Name="Value"
+                    cor:DateTime="2006-01-26 15:32:54"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[Value]"
+               Target="[ShortDate_ShortTime.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="ShortDate,ShortTime"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Value]"
+               Target="[LongDate_LongTime.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="LongDate,LongTime"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Value]"
+               Target="[ShortDate_NoYear_ForceDayOfWeek_AbbreviateNames.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="ShortDate,NoYear,ForceDayOfWeek,AbbreviateNames"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Value]"
+               Target="[ShortDate_ForceDayOfWeek.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="ShortDate,ForceDayOfWeek"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Value]"
+               Target="[ShortDate_AbbreviateYear.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="ShortDate,AbbreviateYear"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Value]"
+               Target="[ShortDate_NoYear.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="ShortDate,NoYear"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Value]"
+               Target="[LongDate_NoDayOfWeek.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="LongDate,NoDayOfWeek"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Value]"
+               Target="[LongDate_AbbreviateNames.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="LongDate,AbbreviateNames"/>
+        </Transformer>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="Format applied"/>
+              <me:LabelText Content="Display of formatted date"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="_____________"/>
+              <me:LabelText Content="______________________"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="LongDate, AbbreviateNames"/>
+              <me:ValueText Name="LongDate_AbbreviateNames"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="LongDate, NoDayOfWeek"/>
+              <me:ValueText Name="LongDate_NoDayOfWeek"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="ShortDate, NoYear"/>
+              <me:ValueText Name="ShortDate_NoYear"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="ShortDate, AbbreviateYear"/>
+              <me:ValueText Name="ShortDate_AbbreviateYear"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="ShortDate, ForceDayOfWeek"/>
+              <me:ValueText Name="ShortDate_ForceDayOfWeek"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="ShortDate, NoYear, ForceDayOfWeek, AbbreviateNames"/>
+              <me:ValueText Name="ShortDate_NoYear_ForceDayOfWeek_AbbreviateNames"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="LongDate, LongTime"/>
+              <me:ValueText Name="LongDate_LongTime"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="ShortDate, ShortTime"/>
+              <me:ValueText Name="ShortDate_ShortTime"/>
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <UI Name="LabelText">
+
+    <Properties>
+      <cor:String Name="Content"
+                  String=""/>
+    </Properties>
+
+    <Content>
+      <Text Content="[Content]"
+            Font="Verdana,16"
+            Color="LightCoral"
+            Margins="10,5,10,5"
+            MinimumSize="400,0"
+            MaximumSize="400,0"
+            WordWrap="true"/>
+    </Content>
+
+  </UI>
+
+  <UI Name="ValueText">
+
+    <Properties>
+      <cor:String Name="Content"
+                  String=""/>
+    </Properties>
+
+    <Content>
+      <Text Content="[Content]"
+            Font="Verdana,16"
+            Color="Khaki"
+            Margins="10,5,10,5"/>
+    </Content>
+
+  </UI>
+
+
+</Mcml>
+

@@ -1,0 +1,147 @@
+<Mcml
+  xmlns="http://schemas.microsoft.com/2008/mcml"
+  xmlns:sys="assembly://mscorlib/System"
+  xmlns:styles="resx://Z/Z.Resources/Styles"
+  xmlns:me="Me">
+
+  <UI Name="Editbox">
+    <Properties>
+      <!-- The value of this edit control -->
+      <EditableText Name="EditableText"
+                    EditableText="$Required"/>
+
+      <!-- Images -->
+      <Image Name="EditBoxNonFocusImage"
+             Source="resx://Z/Z.Resources/EditBoxNonFocus"
+             NineGrid="12,12,12,12"/>
+      <Image Name="EditBoxFocusImage"
+             Source="resx://Z/Z.Resources/EditBoxFocus"
+             NineGrid="12,12,12,12"/>
+
+      <!-- Label properties -->
+      <Color Name="TextColor"
+             Color="color://styles:Text.Copy"/>
+      <Color Name="TextFocusedColor"
+             Color="color://styles:Text.Copy"/>
+      <Font Name="TextFont"
+            Font="font://styles:EditText"/>
+
+      <!-- Tile metrics -->
+      <Size Name="TileMinSize"
+            Size="325,48"/>
+      <Size Name="TileMaxSize"
+            Size="325,0"/>
+
+      <!-- Is this a password entry field? -->
+      <sys:Boolean Name="PasswordMasked"
+                   Boolean="false"/>
+    </Properties>
+
+    <Locals>
+      <!-- React to "typing" input. -->
+      <TypingHandler Name="TypingHandler"
+                     EditableText="[EditableText]"/>
+    </Locals>
+
+    <Rules>
+      <!-- Bind the display value to our Text's content. -->
+      <Binding Source="[TypingHandler.DisplayValue]"
+               Target="[Label.Content]"/>
+
+      <!-- Overtype styling -->
+      <Condition Source="[EditableText.Overtype]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Overtype.Visible]"
+               Value="true"/>
+          <Set Target="[Caret.Visible]"
+               Value="false"/>
+        </Actions>
+      </Condition>
+
+      <!-- Focused styling -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[EditBoxFocusImage]"/>
+          <Set Target="[Label.Color]"
+               Value="[TextFocusedColor]"/>
+          <Set Target="[Caret.Visible]"
+               Value="true"/>
+        </Actions>
+      </Condition>
+
+      <!-- Is this a password entry field? -->
+      <Binding Source="[PasswordMasked]"
+               Target="[TypingHandler.PasswordMasked]"/>
+    </Rules>
+
+    <Content>
+      <Graphic Name="Background"
+               Content="[EditBoxNonFocusImage]"
+               MouseInteractive="true"
+               Padding="10,4,10,4"
+               Layout="Anchor"
+               MinimumSize="[TileMinSize]"
+               MaximumSize="[TileMaxSize]">
+        <Children>
+
+          <!-- Display of the current value -->
+          <Text Name="Label"
+                Color="[TextColor]"
+                Font="[TextFont]"
+                HorizontalAlignment="Far"
+                Margins="0,0,10,0"
+                MinimumSize="0,36"/>
+
+          <!-- The caret -->
+          <ColorFill Name="Caret"
+                     Content="[TextFocusedColor]"
+                     Visible="false"
+                     MinimumSize="3,25"
+                     MaximumSize="0,25">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Label,1,-8"
+                                 Top="Label,0,-20"
+                                 Bottom="Label,1,20"
+                                 Vertical="Center"/>
+            </LayoutInput>
+            <Animations>
+              <!-- Blink animation -->
+              <Animation Type="Idle"
+                         Loop="-1">
+                <Keyframes>
+                  <AlphaKeyframe Time="0.0"
+                                 Value="1.0"/>
+                  <AlphaKeyframe Time="0.4"
+                                 Value="1.0"/>
+                  <AlphaKeyframe Time="0.5"
+                                 Value="0.0"/>
+                  <AlphaKeyframe Time="0.9"
+                                 Value="0.0"/>
+                  <AlphaKeyframe Time="1.0"
+                                 Value="1.0"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </ColorFill>
+
+          <!-- Overtype background -->
+          <ColorFill Name="Overtype"
+                     Content="Black"
+                     Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Label,0"
+                                 Right="Label,1"
+                                 Top="Label,0"
+                                 Bottom="Label,1"/>
+            </LayoutInput>
+          </ColorFill>
+
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+</Mcml>

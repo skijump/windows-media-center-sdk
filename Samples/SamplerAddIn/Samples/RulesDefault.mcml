@@ -1,0 +1,31 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- Default rules are used to set default state in the event that other  -->
+  <!-- higher priority rules do not apply. They can also be used to perform -->
+  <!-- one-time initialization of state when the UI is created.             -->
+
+  <UI Name="Default">
+
+    <Rules>
+
+      <!-- Set the Label content and color. This can also be achieved  -->
+      <!-- by setting the Text properties directly. However, Default   -->
+      <!-- rules should be used if higher priority conditional rules   -->
+      <!-- are in use and will manipulate the same Target.             -->
+
+      <Default Target="[Label.Color]"
+               Value="Purple"/>
+      <Default Target="[Label.Content]"
+               Value="Default Rules!"/>
+
+    </Rules>
+
+    <Content>
+
+      <Text Name="Label"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

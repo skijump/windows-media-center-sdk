@@ -1,0 +1,20 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System">
+
+  <UI Name="GroupHeader">
+
+    <Properties>
+      <cor:String Name="GroupName"
+                  String="Test" />
+    </Properties>
+
+
+    <Content>
+      <Text Name="MyText" Content="[GroupName]"
+            Font="Calibri,16"
+            Color="Coral"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,123 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:b="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- This sample demonstrates how to leverage the various overloads -->
+  <!-- of the Dialog() Method. -->
+
+  <UI Name="Default">
+
+    <Locals>
+
+      <addin:AddInHost Name="AddInHost"/>
+
+      <Command Name="DialogA"
+               Description="Dialog (5 Arguments)"/>
+      <Command Name="DialogB"
+               Description="Dialog (6 Arguments)"/>
+      <Command Name="DialogC"
+               Description="Dialog (7 Arguments)"/>
+
+      <!-- The dialog result is stored here. The type is in another   -->
+      <!-- namespace, so it has a different xmlns prefix than the     -->
+      <!-- AddInHost type.                                            -->
+      <mc:DialogResultHandler Name="ResultHandler"/>
+
+      <!-- This is the list of buttons that will be displayed by the -->
+      <!-- Dialog Methods which take developer specified buttons.    -->
+      <ArrayListDataSet Name="DialogButtons">
+        <Source>
+          <cor:String cor:String="Custom Button A"/>
+          <cor:String cor:String="Custom Button B"/>
+        </Source>
+      </ArrayListDataSet>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- InvokeCommand will call the Dialog method on the       -->
+      <!-- AddInHost.MediaCenterEnvironment object. The dialog    -->
+      <!-- takes text, captions, buttons, timeout and isModal     -->
+      <!-- parameters. This sample has hard-coded values for      -->
+      <!-- these parameters. When the dialog is dismissed, the    -->
+      <!-- DialogClosed event on the ResultHandler will be fired. -->
+      <!-- The changed rule will cause the return value to be     -->
+      <!-- propogated to the Label text.                          -->
+      <!-- Since this is an InvokeCommand, object paths can be    -->
+      <!-- used for any of the parameters and they will be        -->
+      <!-- evaluated on every invocation.                         -->
+
+      <Changed Source="[DialogA.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.Dialog]"
+                  text="The Text"
+                  caption="The Caption"
+                  buttons="OK, Cancel"
+                  timeout="0"
+                  isModal="true"/>
+        </Actions>
+      </Changed>
+
+      <!-- If you do not wish to include an imagePath -->
+      <!-- set it to "null" - an empty length string  -->
+      <!-- will not work.                             -->
+      <Changed Source="[DialogB.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.Dialog]"
+                  text="The Text"
+                  caption="The Caption"
+                  buttons="[DialogButtons]"
+                  timeout="0"
+                  isModal="true"
+                  imagePath="null"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[DialogC.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.Dialog]"
+                  text="The Text"
+                  caption="The Caption"
+                  buttons="[DialogButtons]"
+                  timeout="0"
+                  isModal="true"
+                  imagePath="null"
+                  callback="[ResultHandler.Callback]"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[ResultHandler.DialogDismissed]">
+        <Actions>
+          <Set Target="[MyDialogResult.PropertyValue]"
+               Value="[ResultHandler.Result.ToString]"/>
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:Button Command="[DialogA]"
+                       ButtonLabel="[DialogA.Description]" />
+          <ctrl:Button Command="[DialogB]"
+                       ButtonLabel="[DialogB.Description]" />
+          <ctrl:Button Command="[DialogC]"
+                       ButtonLabel="[DialogC.Description]" />
+          <ctrl:PropertyAndValue Name="MyDialogResult"
+                                 PropertyName="DialogResult"
+                                 PropertyValue="" />
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

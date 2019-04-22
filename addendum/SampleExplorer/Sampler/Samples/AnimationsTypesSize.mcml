@@ -1,0 +1,94 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cb="resx://Sampler/Sampler.Resources/ControlsSimpleCheckBox">
+
+  <!-- An animation of type Size is used to commit a change in size with    -->
+  <!-- an animation instead of an immediate change.  When the item's        -->
+  <!-- size changes as a result of layout the Size animation will be        -->
+  <!-- played.                                                              -->
+
+  <!-- Size animations generally make use of SizeKeyframes with             -->
+  <!-- RelativeTo="Current" for the first one and RelativeTo="Final" for    -->
+  <!-- the last one.  This essentially means "Transition from how big you   -->
+  <!-- are to how big you're supposed to be."                               -->
+
+  <UI Name="SizeAnimations">
+
+    <Locals>
+      <!-- This bool will track what scale to make our graphic.  -->
+      <BooleanChoice Name="Big"
+                     Value="false"
+                     Description="Big?"/>
+    </Locals>
+
+    <Rules>
+      <!-- If the boolean value is true, scale up. -->
+      <Condition Source="[Big.Value]"
+                 SourceValue="true"
+                 Target="[Image.MinimumSize]"
+                 Value="200,200"/>
+
+      <!-- By default, don't scale. -->
+      <Default Target="[Image.MinimumSize]"
+               Value="100,100"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Form">
+        <Children>
+
+          <!-- This is the item that we will be resizing. -->
+          <Graphic Name="Image"
+                   Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,1"
+                               Top="Parent,0"
+                               Bottom="Parent,1"
+                               Horizontal="Center"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Animations>
+
+              <!-- This animation is of type Size.  It will play whenever   -->
+              <!-- the size of the target changes.                          -->
+              <Animation Type="Size">
+                <Keyframes>
+
+                  <!-- Animate from our current size... -->
+                  <SizeKeyframe Time="0.0"
+                                Value="0,0,0"
+                                RelativeTo="Current"
+                                Interpolation="SCurve"/>
+
+                  <!-- ... to the new size. -->
+                  <SizeKeyframe Time="0.5"
+                                Value="0,0,0"
+                                RelativeTo="Final"/>
+
+                </Keyframes>
+              </Animation>
+
+            </Animations>
+          </Graphic>
+
+          <!-- Display a checkbox to control our boolean value. -->
+          <cb:SimpleCheckBox Name="CheckBox"
+                             Model="[Big]">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,1"
+                               Top="Parent,0,150"
+                               Horizontal="Center"/>
+            </LayoutInput>
+          </cb:SimpleCheckBox>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

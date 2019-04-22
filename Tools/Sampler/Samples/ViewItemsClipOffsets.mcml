@@ -1,0 +1,72 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test the application of various NearOffset and FarOffset settings on Clip items. 
+       For horizontal orientation, NearOffset is the left and FarOffset is the Right
+       For Vertical orientation, NearOffset is the top and FarOffset is the bottom -->
+
+  <UI Name="ClipOffsets">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:ViewItem NearOffset="0"
+                       FarOffset="0"
+                       Orientation="Horizontal"
+                       Color="White"/>
+          <me:ViewItem NearOffset="25"
+                       FarOffset="100"
+                       Orientation="Horizontal"
+                       Color="White"/>
+          <me:ViewItem NearOffset="-100"
+                       FarOffset="-25"
+                       Orientation="Horizontal"
+                       Color="White"/>
+          <me:ViewItem NearOffset="25"
+                       FarOffset="100"
+                       Orientation="Vertical"
+                       Color="LightBlue"/>
+          <me:ViewItem NearOffset="-100"
+                       FarOffset="-25"
+                       Orientation="Vertical"
+                       Color="LightBlue"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="ViewItem">
+
+    <Properties>
+      <cor:Single Name="NearOffset"
+                  Single="0.0"/>
+      <cor:Single Name="FarOffset"
+                  Single="0.0"/>
+      <Orientation Name="Orientation"
+                   Orientation="Horizontal"/>
+      <Color Name="Color"
+             Color="White"/>
+    </Properties>
+
+    <Content>
+      <Clip Name="ClipItem"
+            NearOffset="[NearOffset]"
+            FarOffset="[FarOffset]"
+            Orientation="[Orientation]"
+            FadeSize="40"
+            MaximumSize="125,125"
+            Margins="10,10,10,10">
+        <Children>
+          <ColorFill Content="[Color]"
+                     Layout="Fill"/>
+        </Children>
+      </Clip>
+    </Content>
+
+  </UI>
+
+
+</Mcml>
+
+

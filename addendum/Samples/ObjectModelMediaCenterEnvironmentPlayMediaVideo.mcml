@@ -1,0 +1,65 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <cor:String Name="WebMediaPath"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/video01.wmv"/>
+      <cor:String Name="LocalMediaPath"
+                  String="c:\users\public\videos\Windows Media Center SDK\Video01.wmv" />
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <Command Name="PlayVideoLocal"
+               Description="Play Local Video" />
+      <Command Name="PlayVideoWeb"
+               Description="Play Web Video" />
+    </Locals>
+
+    <Rules>
+      <Changed Source="[PlayVideoWeb.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[WebMediaPath]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[PlayVideoLocal.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[LocalMediaPath]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <ctrl:Button Command="[PlayVideoLocal]"
+                           ButtonLabel="[PlayVideoLocal.Description]" />
+              <ctrl:Button Command="[PlayVideoWeb]"
+                           ButtonLabel="[PlayVideoWeb.Description]" />
+              <Video MinimumSize="400,300" />
+            </Children>
+          </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

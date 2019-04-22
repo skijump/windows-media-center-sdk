@@ -1,0 +1,10 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <Color Name="FocusColor"
+         Color="Yellow"/>
+  <Color Name="NonFocusColor"
+         Color="Firebrick"/>
+  <Color Name="SelectedColor"
+         Color="Green"/>
+
+</Mcml>

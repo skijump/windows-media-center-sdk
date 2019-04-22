@@ -1,0 +1,16 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- A simple Hello World sample. -->
+  <UI Name="HelloWorld">
+
+    <Content>
+
+      <!-- A text object -->
+      <Text Content="Hello, World!"
+            Color="White"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,80 @@
+<html>
+<title>Z Sample Application</title>
+<body>
+<font face="Trebuchet MS" size="4">
+<b>
+Windows Media Center Software Development Kit
+<br>
+Sample Application: Z
+<font face="Trebuchet MS" size="2">
+</b>
+<p>
+<b>Quick Start</b>
+<p>
+<ol>
+<li>Launch Microsoft Visual C# 2008 Express Edition or Visual Studio 2008 with Administrator privileges.</li>
+<li>Select File > Open Project from the menu.</li>
+<li>Browse to the source code folder.</li>
+<p>
+<b>Note:</b> The default source code path for the Z sample application when the Windows Media Center SDK is installed is %programfiles%\Microsoft SDKs\Windows Media Center\v6.x\Samples\Z\.
+<p>
+<li>Open Z.sln.</li>
+<li>Select Build > Build Solution from the menu.</li>
+<li>Launch a command prompt with Administrator privileges.</li>
+<li>Navigate to the Z source code folder.</li>
+<li>Run DevInstall.cmd.</li>
+<li>Launch Windows Media Center.</li>
+<li>Navigate to Extras > Extras Library</li>
+<li>Select Z.</li>
+</ol>
+<p>
+<b>Configuring the Development Environment</b>
+<p>
+The Z sample application presumes data, content and resources are located in specific places. During development the assembly (z.dll) should be placed in the Global Assembly Cache (GAC) and registered with Windows Media Center. The following scripts can be used to automate this process so you can quickly start developing and debugging. You must run these scripts from an elevated command prompt with Administrator privileges.
+<p>
+<ul>
+<li>To create development data, content and install the assembly into the Global Assembly Cache and and register with Windows Media Center run <b>DevInstall.cmd [/debug]</b>.</li>
+<li>To delete development data, content and uninstall from the Global Assembly Cache and unregister from Windows Media Center run <b>DevInstall.cmd /u [/debug]</b>.</li>
+</ul>
+<p>
+DevInstall.cmd can be run anytime you change data or content or rebuild the assembly. By default, it deletes all previous files and recopies them from the source location.
+<p>
+<b>Video Sample</b>
+<p>
+There is no video content shipped with the source code for Z. The data file that ships with the application expects a single piece of video content in the %public%\videos\Z\ folder named Content.Video.1.wmv. Running CopyContent.cmd will create this file using sample content installed with the SDK.
+<p>
+<b>Launching Z from Visual C# 2008 Express Edition or Visual Studio 2008</b>
+<p>
+The Z source is configured to launch the Media Center Markup Language Preview Tool when you select Debug > Start Debugging on the menu or press F5 in the Visual Studio IDE. To use this feature, you must copy the development data and content by running Command.CreateDevEnvironment.cmd. By design, none of the Windows Media Center APIs used in Z (such as PlayMedia or Dialog) are available in the Media Center Markup Language Preview Tool.
+<p>
+<b>Creating an MSI-based Installer</b>
+<p>
+The Z sample application source comes with a Windows Installer XML (WiXToolset project that allows you to create an MSI-based installer for an end user. The installer will copy all of the necessary data and content to allow the end user to run Z within Windows Media Center without taking any additional action. Follow these steps to build an installer for the Z sample application:
+<p>
+<ol>
+<li>Install Operating System A or Operating System B.</li>
+<li>Install Visual C# 2008 Express Edition or Visual Studio 2008.</li>
+<li>Install the Windows Media Center SDK 6.x.</li>
+<li>Download and install the latest WiX version 3.0 MSI from <a href="http://wix.sourceforge.net/downloadv3.html">http://wix.sourceforge.net/downloadv3.html</a>.</li>
+<li>Right-click on the shortcut for Visual C# 2008 Express Edition or Visual Studio 2008, choose Run as administrator and click Yes to launch Visual Studio with elevated privileges.</li>
+<li>Open the Z project - it will be installed to %programfiles%\Microsoft SDKs\Windows Media Center\v6.x\Samples\Z if you installed the Windows Media Center SDK to the default location.</li>
+<li>Right-click on the Z project in the Solution Explorer and choose Properties.</li>
+<li>Select the Build Events tab.</li>
+<li>Add a new entry to the Post-build event command line text box that says "$(ProjectDir)\Setup\build.bat" $(ConfigurationName).</li>
+<li>Click on the File menu and choose Save All.</li>
+<li>Click on the Build menu and choose Rebuild Solution to build the Z binaries and then run build.bat.</li>
+</ol>
+<p>
+The above steps will create an MSI named Z_Sample_Application.msi at %programfiles%\Microsoft SDKs\Windows Media Center\v6.x\Samples\Z\bin\ by default.
+<p>
+There are a couple of important notes to keep in mind when using these sample setup files:
+<p>
+<ol>
+<li><b>This is very important</b> - do not change the component GUIDs of any of the Z components in Z.wxs, and do not copy and paste these GUIDs into any other WXS files.  If you do so, you will end up violating the Windows Installer component rules, which causes reference counting problems when installing and uninstalling products.</li>
+<li>The build.bat script requires that you have already built the Z binary (Z.dll).</li>
+<li>The build.bat script assumes that you have installed the Windows Media Center SDK to the default location.  You will need to open that batch file in a text editor such as notepad and update the Z_SRC_PATH variable if you installed to a non-default path.</li>
+<li>The build.bat script uses the release build of Z.dll by default.  If you run build_z.bat debug, it will use the debug binaries instead.</li>
+</ol>
+<p>
+</body>
+</html>

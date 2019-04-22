@@ -1,0 +1,15 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <UI Name="Default">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="Content=ABC" Color="White"/>
+              <Text Content="ABC" Color="Yellow"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

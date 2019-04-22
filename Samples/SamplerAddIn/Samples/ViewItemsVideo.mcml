@@ -1,0 +1,209 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:mce="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:b="resx://Sampler/Sampler.Resources/ControlsSimpleButton"
+      xmlns:a="assembly://Sampler/Sampler">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- A Video view item is used for displaying video in MCML. There are   -->
+  <!-- no members on the Video object that can be used to start, stop or   -->
+  <!-- change the content that is playing. Rather, the MediaCenter add-in  -->
+  <!-- services have members for this purpose.                             -->
+
+  <!-- The current video playing in Windows Media Center will be shown     -->
+  <!-- within the bounds of the Video view item, but does not affect the   -->
+  <!-- size of the video. It must be given a MinimumSize or a full set of  -->
+  <!-- anchor points (if it uses a Form or Anchor layout).                 -->
+
+  <!-- Just like any other view item, the Video view item can be           -->
+  <!-- animated.                                                           -->
+
+  <!-- The following sample demonstrates the Video view item. Video can    -->
+  <!-- be started by clicking a button. The Video is animated via another  -->
+  <!-- button.                                                             -->
+
+  <UI Name="VideoViewItem">
+
+    <Properties>
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+    
+    <Locals>
+      <mce:AddInHost Name="MCEHost"/>
+      <Command Name="Kick"
+               Description="Kick the TV"/>
+    </Locals>
+
+    <Rules>
+
+        <Rule>
+          <Actions>
+            <Invoke Target="[MCEHost.MediaCenterEnvironment.PlayMedia]"
+                    mediaType="Video"
+                    media="[Sampler.LocalContentVideo03]"
+                    addToQueue="false" />
+          </Actions>
+        </Rule>
+
+      <!-- React to the animate TV command. -->
+      <Changed Source="[Kick.Invoked]">
+        <Actions>
+
+          <PlayAnimation Target="[TV]">
+            <Animation>
+              <Animation CenterPointPercent="1,1,1">
+                <Keyframes>
+                  <RotateKeyframe Time="0"
+                                  Value="0deg;0,0,1"/>
+                  <RotateKeyframe Time=".025"
+                                  Value="-10deg;0,0,1"/>
+                  <RotateKeyframe Time=".59"
+                                  Value="-10deg;0,0,1"/>
+                  <RotateKeyframe Time=".6"
+                                  Value="15deg;0,0,1"/>
+                  <RotateKeyframe Time=".74"
+                                  Value="15deg;0,0,1"/>
+                  <RotateKeyframe Time=".75"
+                                  Value="0deg;0,0,1"/>
+
+                  <PositionKeyframe Time="0"
+                                    Value="0,0,0"
+                                    RelativeTo="Current"
+                                    Interpolation="Log"/>
+                  <PositionKeyframe Time=".1"
+                                    Value="0,-200,0"/>
+                  <PositionKeyframe Time=".5"
+                                    Value="0,-200,0"
+                                    Interpolation="Exp"/>
+                  <PositionKeyframe Time=".6"
+                                    Value="0,0,0"/>
+                </Keyframes>
+              </Animation>
+            </Animation>
+          </PlayAnimation>
+
+          <PlayAnimation Target="[Tube]">
+            <Animation>
+              <Animation CenterPointPercent=".5,.5,1">
+                <Keyframes>
+                  <ColorKeyframe Time="0"
+                                 Value="255,255,255"/>
+                  <ColorKeyframe Time=".1"
+                                 Value="255,255,255"/>
+                  <ColorKeyframe Time=".11"
+                                 Value="255,0,0"/>
+                  <ColorKeyframe Time=".15"
+                                 Value="255,255,255"/>
+                  <ColorKeyframe Time=".2"
+                                 Value="255,255,255"/>
+                  <ColorKeyframe Time=".21"
+                                 Value="255,0,0"/>
+                  <ColorKeyframe Time=".25"
+                                 Value="255,255,255"/>
+                  <ColorKeyframe Time=".5"
+                                 Value="0,255,0"/>
+                  <ColorKeyframe Time=".7"
+                                 Value="255,255,255"/>
+                  <ColorKeyframe Time=".71"
+                                 Value="0,0,255"/>
+                  <ColorKeyframe Time=".95"
+                                 Value="255,255,255"/>
+                </Keyframes>
+              </Animation>
+            </Animation>
+          </PlayAnimation>
+
+          <PlaySound Sound="resx://Sampler/Sampler.Resources/ViewItemsVideoGlassBreaking"/>
+
+          <Set Target="[CrackedTube.Visible]"
+               Value="true"/>
+
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Background. -->
+      <ColorFill Content="LightSteelBlue"
+                 Layout="Form">
+        <Children>
+
+          <!-- The TV. -->
+          <Panel Name="TV"
+                 Layout="Anchor">
+            <Children>
+
+              <!-- Cracked TV tube. -->
+              <Graphic Name="CrackedTube"
+                       Content="resx://Sampler/Sampler.Resources/ViewItemsVideoCrackedTube"
+                       Visible="false">
+                <LayoutInput>
+                  <FormLayoutInput Left="Cabinet,0,15"
+                                   Top="Cabinet,0,105"/>
+                </LayoutInput>
+              </Graphic>
+
+              <!-- TV cabinet. -->
+              <Graphic Name="Cabinet"
+                       Content="resx://Sampler/Sampler.Resources/ViewItemsVideoTV"/>
+
+              <!-- The Video (TV tube). -->
+              <Video Name="Tube">
+                <LayoutInput>
+                  <FormLayoutInput Left="Cabinet,0,10"
+                                   Top="Cabinet,0,95"
+                                   Right="Cabinet,1,-10"
+                                   Bottom="Cabinet,1,-60"/>
+                </LayoutInput>
+              </Video>
+
+            </Children>
+
+          </Panel>
+
+          <!-- The floor. -->
+          <ColorFill Name="Floor"
+                     Content="BurlyWood">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Top="TV,1"
+                               Right="Parent,1"
+                               Bottom="Parent,1"/>
+            </LayoutInput>
+          </ColorFill>
+
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          Spacing="10,0"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <LayoutInput>
+              <FormLayoutInput Left="TV,1,20"
+                               Top="TV,0,20"/>
+            </LayoutInput>
+
+            <Children>
+
+              <!-- Button to animate kicking the TV -->
+              <b:SimpleButton Command="[Kick]"/>
+
+            </Children>
+
+          </Panel>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

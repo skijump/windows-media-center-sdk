@@ -1,0 +1,89 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- The Windows Media Center extensibility platform includes a Capabilities -->
+  <!-- object that indicates whether certain system capabilities and           -->
+  <!-- resources are available on the current device that the code is          -->
+  <!-- running on.                                                             -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[MyDirectX.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#DirectX.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#DirectX]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[MyAudio.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#Audio.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#Audio]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[MyVideo.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#Video.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#Video]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[MyIntensiveRendering.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#IntensiveRendering.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#IntensiveRendering]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[MyConsole.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#Console.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#Console]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[MyTVDisplay.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#TVDisplay.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#TVDisplay]"/>
+        </Conditions>
+      </Binding>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:PropertyAndValue Name="MyDirectX"
+                                 PropertyName="DirectX"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyAudio"
+                                 PropertyName="Audio"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyVideo"
+                                 PropertyName="Video"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyIntensiveRendering"
+                                 PropertyName="IntensiveRendering"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyConsole"
+                                 PropertyName="Console"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="MyTVDisplay"
+                                 PropertyName="TVDisplay"
+                                 PropertyValue="" />
+         </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

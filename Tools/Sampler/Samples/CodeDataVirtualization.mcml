@@ -1,0 +1,277 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:v="assembly://Sampler,Version=7.0.2009.0228,Culture=Neutral,PublicKeyToken=27f898ecd1eb808a/Sampler.CodeData.Virtualization"
+      xmlns:me="Me">
+
+  <!-- Virtualization support enables the ability to construct very large  -->
+  <!-- (capable of millions of items) lists. Virtualization also supports  -->
+  <!-- very slow data sources.                                             -->
+
+  <!-- In this sample, a custom list (derived from VirtualList in code)    -->
+  <!-- is created which contains a million thumbnail (caption and picture) -->
+  <!-- data items. The actual picture is slow to acquire, so, it will      -->
+  <!-- come in after the thumbnail UI is created.                          -->
+
+  <!-- The Main UI which contains the list and displays current scrolling  -->
+  <!-- metrics.                                                            -->
+  <UI Name="Virtualization">
+    <Locals>
+
+      <!-- Our enormous list. -->
+      <v:EnormoList Name="EnormoList"/>
+
+      <!-- Data used by scrollers. Contains current and total page data. -->
+      <!-- It is also used to configure how the Scroller behaves as far  -->
+      <!-- as focus. In this case, we want the current focused item to   -->
+      <!-- always appear 30% from the left of the Scroller.              -->
+      <ScrollingData Name="ScrollingData"
+                     LockedPosition=".3"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- Bind total pages. -->
+      <Binding Source="[ScrollingData.TotalPages]"
+               Target="[TotalPages.Content]">
+        <Transformer>
+          <FormatTransformer Format="{0:0}"/>
+        </Transformer>
+      </Binding>
+
+      <!-- Bind the current page. -->
+      <Binding Source="[ScrollingData.CurrentPage]"
+               Target="[CurrentPage.Content]">
+        <Transformer>
+          <FormatTransformer Format="{0:0}"/>
+        </Transformer>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+      <ColorFill Content="Black"
+                 Layout="Form">
+        <Children>
+
+          <!-- The gallery. It takes the list and the scrolling data. -->
+          <me:ThumbnailGallery Name="Gallery"
+                               ThumbnailList="[EnormoList]"
+                               MaximumSize="0,500"
+                               ScrollingData="[ScrollingData]"/>
+
+          <!-- Display of the current and total pages. -->
+          <Panel Name="PageStats"
+                 Layout="HorizontalFlow">
+            <Children>
+              <Text Name="CurrentPage"
+                    Font="Verdana,20"
+                    Color="White"/>
+              <Text Content="of"
+                    Margins="10,0,10,0"
+                    Font="Verdana,20"
+                    Color="White"/>
+              <Text Name="TotalPages"
+                    Font="Verdana,20"
+                    Color="White"/>
+            </Children>
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,-20"
+                               Bottom="Parent,1,-20"/>
+            </LayoutInput>
+          </Panel>
+
+          <!-- Title text. -->
+          <Text Name="Banner"
+                Content="100,000 Snowflakes!"
+                Color="White"
+                Font="Verdana,45">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0,20"
+                               Top="Parent,0,20"/>
+            </LayoutInput>
+          </Text>
+
+          <!-- Subtitle text. -->
+          <Text Name="SubBanner"
+                Content="Each snowflake is generated randomly at runtime."
+                Color="White"
+                Font="Verdana,15">
+            <LayoutInput>
+              <FormLayoutInput Left="Banner,0"
+                               Top="Banner,1"/>
+            </LayoutInput>
+          </Text>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- The gallery that displays the thumbnails. -->
+  <UI Name="ThumbnailGallery">
+
+    <!-- Required properties: the list and scrolling data. -->
+    <Properties>
+      <coll:IList Name="ThumbnailList"
+                  IList="$Required"/>
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- Create an input handler for scrolling. -->
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandlerStage="Bubbled"/>
+    </Locals>
+
+    <Rules>
+      <!-- Wire up the scrolling to enable "list-based" scrolling. -->
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+      <Default Target="[ScrollingData.Repeater]"
+               Value="[ListRepeater]"/>
+    </Rules>
+
+    <Content>
+
+      <ColorFill Content="Black"
+                 Padding="50,5,50,5">
+        <Children>
+
+          <!-- The scroller. The "prefetch" is used to fault in items beyond -->
+          <!-- the screen so that scrolling appears faster. Here, the        -->
+          <!-- prefetch was lowererd so that it's easier to see items being  -->
+          <!-- faulted in.                                                   -->
+          <Scroller Orientation="Horizontal"
+                    ScrollingData="[ScrollingData]"
+                    FadeSize="-50"
+                    Prefetch=".5">
+            <Children>
+
+              <!-- The thumbnail repeater.                                   -->
+              <!-- NOTE: It's important to set DiscardOffscreenVisuals to    -->
+              <!--       true when using large lists. Otherwise, visuals     -->
+              <!--       faulted in will not be released (even when they are -->
+              <!--       scrolled away). Visuals not released means that     -->
+              <!--       backing data items cannot be released either.       -->
+              <Repeater Name="ListRepeater"
+                        Source="[ThumbnailList]"
+                        DiscardOffscreenVisuals="true">
+                <Layout>
+                  <!-- The only layouts that should be used with virtual -->
+                  <!-- lists are Grid and Flow. Both are designed to     -->
+                  <!-- work with the Repeater to ensure items are        -->
+                  <!-- faulted in and thrown away effeciently.           -->
+                  <!-- NOTE: Use Grid for best performance. The          -->
+                  <!--       reference size makes it optimal.            -->
+                  <GridLayout Orientation="Vertical"
+                              AllowWrap="true"
+                              ReferenceSize="100,100"
+                              Spacing="5,5"/>
+                </Layout>
+                <Content>
+                  <!-- Build a Thumbnail UI per-data item. -->
+                  <me:Thumbnail Data="[RepeatedItem!v:ThumbnailData]"/>
+                </Content>
+                <Animations>
+                  <Animation Type="Move">
+                    <Keyframes>
+                      <PositionKeyframe Time="0"
+                                        Value="0,0,0"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time=".2"
+                                        Value="0,0,0"/>
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+              </Repeater>
+
+            </Children>
+          </Scroller>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+  <!-- Thumbnail UI. Displays a caption and picture. -->
+  <UI Name="Thumbnail">
+
+    <Properties>
+      <v:ThumbnailData Name="Data"
+                       ThumbnailData="$Required"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="100,0,0"/>
+        </Actions>
+      </Condition>
+
+      <Binding Source="[Data.Picture]"
+               Target="[Picture.Content]"/>
+    </Rules>
+
+    <Content>
+      <ColorFill Name="Background"
+                 Content="64,255,255,255">
+        <Children>
+
+          <!-- Caption. -->
+          <Text Color="White"
+                Content="[Data.Caption]"
+                Font="Verdana,10"
+                BackColor="64,255,255,255"/>
+
+          <!-- Picture.                                                     -->
+          <!-- The picture is considered "slow data". So, it will update at -->
+          <!-- runtime as the picture comes in. When that happens, a nice   -->
+          <!-- animation will play when this content changes.               -->
+          <Graphic Name="Picture"
+                   MinimumSize="100,100">
+            <Animations>
+              <Animation Type="ContentChangeShow"
+                         CenterPointPercent=".5,.5,1">
+                <Keyframes>
+                  <AlphaKeyframe Time="0"
+                                 Value="0.0"/>
+                  <AlphaKeyframe Time=".25"
+                                 Value="1.0"/>
+                  <PositionKeyframe Time="0"
+                                    Value="0,-300,0"/>
+                  <PositionKeyframe Time="3"
+                                    Value="0,0,0"/>
+                  <RotateKeyframe Time="0"
+                                  Value="-720deg;1,1,1"/>
+                  <RotateKeyframe Time="3"
+                                  Value="0deg;0,0,1"/>
+                  <ColorKeyframe Time="0"
+                                 Value="255,255,255"/>
+                  <ColorKeyframe Time="3"
+                                 Value="255,255,255"/>
+                  <ColorKeyframe Time="3.4"
+                                 Value="0,0,255"/>
+                  <ColorKeyframe Time="4"
+                                 Value="255,255,255"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+
+</Mcml>

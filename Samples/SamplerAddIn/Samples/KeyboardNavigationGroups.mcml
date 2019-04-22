@@ -1,0 +1,108 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:kfi="resx://Sampler/Sampler.Resources/InputKeyFocus">
+
+  <!-- Navigation Groups sample                                              -->
+  <!-- The Navigation property allows you to specify flags to alter the way  -->
+  <!-- ViewItems in your tree respond to navigation requests.                -->
+  <!-- The two most basic flags are "Group" and "TabGroup"  The Group flag   -->
+  <!-- indicates that your object is a logical container for other navigable -->
+  <!-- items.  When possible, items within the same group are preferred for  -->
+  <!-- spatial navigation over items from another group.  There are very few -->
+  <!-- cases where items need to be marked as Navigation="Group." If the     -->
+  <!-- default navigation behavior needs to be overridden, consider whether  -->
+  <!-- one of the other flag values are more appropriate.                    -->
+  <!--                                                                       -->
+  <!-- The TabGroup flag marks your container as a logical tab stop.  A Tab  -->
+  <!-- navigation will immediately leave your group for the next tab stop.   -->
+
+  <!-- The Main UI displays 3 rows of focusable items.  Some of the items    -->
+  <!-- display numbers in them, to indicate the order in which they'll be    -->
+  <!-- focused as you tab through the UI.                                    -->
+  <UI Name="Main">
+    <Content>
+      <ColorFill Content="White">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="15,0"/>
+        </Layout>
+        <Children>
+
+          <!-- By marking this item as Navigation="Group", the Navigation    -->
+          <!-- system will treat it as a container for all of its children.  -->
+          <!-- Without any Navigation flags set, the Navigation system would -->
+          <!-- ignore this item when considering navigation targets, since   -->
+          <!-- it has no impact.  "Group" is a way to say "I want to be      -->
+          <!-- considered as a generic container, I don't require any        -->
+          <!-- special semantics."                                           -->
+          <Panel Navigation="Group"
+                 Padding="5,5,5,5">
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="15,0"/>
+            </Layout>
+
+            <Children>
+
+              <!-- The text indicates relative tab order.  By default, Tab  -->
+              <!-- moves among all focusable items, unless they are in a    -->
+              <!-- container marked as Navigation="TabGroup".  These items  -->
+              <!-- are not, and so they'll each be visited as you tab       -->
+              <!-- through.                                                 -->
+              <kfi:KeyFocusIndicator Text="1"/>
+              <kfi:KeyFocusIndicator Text="2"/>
+              <kfi:KeyFocusIndicator Text="3"/>
+            </Children>
+          </Panel>
+
+          <!-- Put two tab groups in, to show the effects of tabbing from -->
+          <!-- one to the other.                                          -->
+          <me:TabGroup TabOrder="4"/>
+          <me:TabGroup TabOrder="5"/>
+
+          <!-- Instruction text. -->
+          <Text Content="Numbers indicate the relative tab order of all of the tab stops"/>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- The TabGroup UI creates a TabGroup with three items, the first one -->
+  <!-- being marked to indicate the group's relative tab ordering.        -->
+  <UI Name="TabGroup">
+
+    <Properties>
+      <cor:String Name="TabOrder"
+                  String="$Required"/>
+    </Properties>
+    <Content>
+
+      <!-- Marking this item as Navigation="TabGroup" indicates that   -->
+      <!-- if focus is in this subtree and the user presses tab, we    -->
+      <!-- will attempt to navigate out of this group.  i.e. this node -->
+      <!-- becomes a tabstop.                                          -->
+      <ColorFill Content="Blue"
+                 Navigation="TabGroup"
+                 Padding="5,5,5,5">
+        <Children>
+          <ColorFill Content="White"
+                     Padding="5,5,5,5">
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="15,0"/>
+            </Layout>
+
+            <Children>
+              <kfi:KeyFocusIndicator Text="[TabOrder]"/>
+              <kfi:KeyFocusIndicator/>
+              <kfi:KeyFocusIndicator/>
+            </Children>
+
+          </ColorFill>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+</Mcml>

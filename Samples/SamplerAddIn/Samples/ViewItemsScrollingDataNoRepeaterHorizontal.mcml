@@ -1,0 +1,226 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls"
+      xmlns:me="Me">
+
+  <UI Name="Default">
+    
+    <Properties>
+      <Orientation Name="ScrollerOrientation"
+                   Orientation="Horizontal"/>
+    </Properties>
+
+    <Locals>
+      <ScrollingData Name="ScrollingData"/>
+      <Command Name="Home"
+               Description="Home" />
+      <Command Name="End"
+               Description="End" />
+      <Command Name="PageUp"
+               Description="Page Up" />
+      <Command Name="PageDown"
+               Description="Page Down" />
+      <Command Name="ScrollPlusFive"
+               Description="Scroll + 5" />
+      <Command Name="ScrollMinusFive"
+               Description="Scroll - 5" />
+      <Command Name="ScrollUp"
+               Description="Scroll Up" />
+      <Command Name="ScrollDown"
+               Description="Scroll Down" />
+    </Locals>
+
+    <Rules>
+      <Binding Source="[ScrollingData.CurrentPage.ToString]"
+               Target="[CurrentPageText.PropertyValue]" />
+      <Binding Source="[ScrollingData.TotalPages.ToString]"
+               Target="[TotalPagesText.PropertyValue]" />
+      <Binding Source="[ScrollingData.CanScrollUp.ToString]"
+               Target="[CanScrollUp.PropertyValue]" />
+      <Binding Source="[ScrollingData.CanScrollDown.ToString]"
+               Target="[CanScrollDown.PropertyValue]" />
+      <Changed Source="[Home.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollingData.Home]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[End.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollingData.End]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[PageUp.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollingData.PageUp]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[PageDown.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollingData.PageDown]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[ScrollPlusFive.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollingData.Scroll]"
+                  amount="5"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[ScrollMinusFive.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollingData.Scroll]"
+                  amount="-5"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[ScrollUp.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollingData.ScrollUp]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[ScrollDown.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollingData.ScrollDown]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Panel Layout="VerticalFlow"
+                 Margins="0,50,0,0">
+            <Children>
+              <Panel Layout="HorizontalFlow"
+                     MouseInteractive="false"
+                     Margins="15,0,0,15">
+                <Children>
+                  <ctrl:Button Command="[Home]"
+                               ButtonLabel="[Home.Description]"
+                               ButtonMinimumSize="120,30"
+                               ButtonMaximumSize="120,30" />
+                  <ctrl:Button Command="[End]"
+                               ButtonLabel="[End.Description]"
+                               ButtonMinimumSize="120,30"
+                               ButtonMaximumSize="120,30" />
+                  <ctrl:Button Command="[PageUp]"
+                               ButtonLabel="[PageUp.Description]"
+                               ButtonMinimumSize="120,30"
+                               ButtonMaximumSize="120,30" />
+                  <ctrl:Button Command="[PageDown]"
+                               ButtonLabel="[PageDown.Description]"
+                               ButtonMinimumSize="120,30"
+                               ButtonMaximumSize="120,30" />
+                  <ctrl:Button Command="[ScrollPlusFive]"
+                               ButtonLabel="[ScrollPlusFive.Description]"
+                               ButtonMinimumSize="120,30"
+                               ButtonMaximumSize="120,30" />
+                  <ctrl:Button Command="[ScrollMinusFive]"
+                               ButtonLabel="[ScrollMinusFive.Description]"
+                               ButtonMinimumSize="120,30"
+                               ButtonMaximumSize="120,30" />
+                  <ctrl:Button Command="[ScrollUp]"
+                               ButtonLabel="[ScrollUp.Description]"
+                               ButtonMinimumSize="120,30"
+                               ButtonMaximumSize="120,30" />
+                  <ctrl:Button Command="[ScrollDown]"
+                               ButtonLabel="[ScrollDown.Description]"
+                               ButtonMinimumSize="120,30"
+                               ButtonMaximumSize="120,30" />
+                </Children>
+              </Panel>
+              <me:TextScroller Name="TextScroller"
+                               ScrollerOrientation="[ScrollerOrientation]"
+                               ScrollingData="[ScrollingData]" />
+              <Panel Layout="VerticalFlow">
+                <Children>
+                  <ctrl:PropertyAndValue Name="TotalPagesText"
+                                         PropertyName="TotalPagesText"
+                                         PropertyValue="TotalPages is undefined"/>
+                  <ctrl:PropertyAndValue Name="CurrentPageText"
+                                         PropertyName="CurrentPageText"
+                                         PropertyValue="CurrentPage is undefined"/>
+                  <ctrl:PropertyAndValue Name="CanScrollUp"
+                                         PropertyName="CanScrollUp"
+                                         PropertyValue="CanScrollUp is undefined"/>
+                  <ctrl:PropertyAndValue Name="CanScrollDown"
+                                         PropertyName="CanScrollDown"
+                                         PropertyValue="CanScrollDown is undefined"/>
+                </Children>
+              </Panel>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+    
+  </UI>
+
+
+  <UI Name="TextScroller">
+    
+    <Properties>
+      <Orientation Name="ScrollerOrientation"
+                   Orientation="Horizontal"/>
+      <ScrollingData Name="ScrollingData"/>
+    </Properties>
+    
+    <Locals>
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandleDirectionalKeys="true"/>
+    </Locals>
+    
+    <Rules>
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Background.Content]"
+                 Value="LightGray"/>
+      <Default Target="[Accessible.Name]"
+               Value="ScrollingData_NoFocusHorzPane"/>
+      <Default Target="[Accessible.Role]"
+               Value="Pane"/>
+    </Rules>
+    
+    <Content>
+      <!-- Scroller's parent which displays background color. It offsets -->
+      <!-- the Scroller using padding and the Scroller fades the clipped -->
+      <!-- text outside itself (negative fade size).                     -->
+      <!-- This piece of the UI is MouseInteractive. Always specify      -->
+      <!-- parts of the UI's content tree react to mouse input. This is  -->
+      <!-- true for any UI with an input handler set to "Direct".        -->
+      <ColorFill Name="Background"
+                 Content="Gray"
+                 MouseInteractive="true"
+                 Padding="30,30,30,30"
+                 MaximumSize="0,400"
+                 Margins="30,0,30,0"
+                 Navigation="ContainDirectional">
+        <Children>
+          <Scroller Orientation="[ScrollerOrientation]"
+                    FadeSize="-30"
+                    ScrollingData="[ScrollingData]">
+            <Children>
+              <Text Color="Black"
+                    Font="Tahoma,30"
+                    WordWrap="true"
+                    Content="Incidunt improbis defuturum tenetur inportuno suam confidet hominum aliquam fugit civium confidet noctesque harum factis diis mollitia legum umquam fugit. Sic utilitatibus supplicii animadversionis collegisti hoc. Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu. In nisl sumo principes eam. In vis modo essent persius. Id pro nisl veritus salutatus, sed natum nostrud aliquyam et, suscipit recteque duo ut pri. Apeirian verterem cu vim, tritani verterem sed id. Vero movet te nec, ea sed dicit quando prodesset, tota ponderum ne per! Est ad kasd ridens. Facer vocent disputando id quo, nemore scribentur eu has! Cim ut stet ludus inimicus, aliquid argumentum et sea. Unum oratio quo id! Ius kasd tantas. Eos ad utamur convenire, veritus mentitum facilisis cim no! Ex justo etiam vix, affert possit usu ne? Choro verear eu mel, ad veri soleat quo. Everti deterruisset ex sea, duo. Firmissima odioque neque nullo ruant. Voluptates tanta voluptate et oratio animadversionis illum evertitur tanta laudantium perspiciatis. Semper ut in quae nam eorum totum eveniet possint dubio factis nesciunt res quamvis voluptate quia itaque accessio indicaverunt improborum vestra nollem umquam. Perspiciatis quippiam eaque est laudem hominum. Segniorem accessio. Ipsam tamque inventore labore consecutus legum non quorum nam deleniti fugiat gravissimo ferae inmortalibus imperii minima poena emolumento magnam laudantium copulatas dignissimos eius commemorandis natus. Commemorandis fugiat sint. Sollicitant hanc metu rem.">
+                <Animations>
+                  <Animation Type="Move">
+                    <Keyframes>
+                      <PositionKeyframe Time="0"
+                                        RelativeTo="Current"
+                                        Interpolation="Exp"/>
+                      <PositionKeyframe Time=".1"
+                                        RelativeTo="Final"/>
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+              </Text>
+            </Children>
+          </Scroller>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+  
+ </Mcml>

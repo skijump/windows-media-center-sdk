@@ -1,0 +1,108 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cb="file://ControlsSimpleCheckbox.mcml">
+
+  <!-- An animation of type Idle will play when no other animation event is -->
+  <!-- active.  It is the animation that should represent the "Rest state"  -->
+  <!-- of your item.                                                        -->
+
+  <!-- This sample builds on top of the Show/Hide sample to introduce an    -->
+  <!-- Idle animation to play between when we are showing and hiding.       -->
+  
+  <UI Name="IdleAnimations">
+
+    <Locals>
+      <BooleanChoice Name="ShowItem"
+                     Value="true"
+                     Description="Visible"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[ShowItem.Value]"
+               Target="[MyGraphic.Visible]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Form">
+        <Children>
+
+          <Graphic Name="MyGraphic"
+                   Content="file://FourBoxGraphicSmall.png">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,1"
+                               Top="Parent,0"
+                               Bottom="Parent,1"
+                               Horizontal="Center"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Animations>
+
+              <!-- This animation is of type Show.  It will play whenever -->
+              <!-- the item it is attached to is made visible.            -->
+              <Animation Type="Show">
+                <Keyframes>
+
+                  <AlphaKeyframe Time="0.0"
+                                 Value="0.0"
+                                 Interpolation="Exp"/>
+                  <AlphaKeyframe Time="1.5"
+                                 Value="1.0"/>
+
+                </Keyframes>
+              </Animation>
+
+              <!-- This animation is of type Idle.  It will play whenever   -->
+              <!-- the item it not playing any other animations.  In this   -->
+              <!-- case that will be whenever we are not showing or hiding. -->
+              <Animation Type="Idle"
+                         Loop="-1"
+                         CenterPointPercent="0.5,0.5,0.0">
+                <Keyframes>
+
+                  <!-- Spin! -->
+                  <RotateKeyframe Time="0.0"
+                                  Value="-360deg;0,0,1"/>
+                  <RotateKeyframe Time="1.0"
+                                  Value="0deg;0,0,1"/>
+
+                </Keyframes>
+              </Animation>
+
+              <!-- This animation is of type Hide.  It will play whenever -->
+              <!-- the item it is attached to is made invisible.          -->
+              <Animation Type="Hide">
+                <Keyframes>
+
+                  <AlphaKeyframe Time="0.0"
+                                 Value="1.0"
+                                 RelativeTo="Current"
+                                 Interpolation="Log"/>
+                  <AlphaKeyframe Time="1.5"
+                                 Value="0.0"/>
+
+                </Keyframes>
+              </Animation>
+
+            </Animations>
+          </Graphic>
+
+          <cb:SimpleCheckBox Name="CheckBox"
+                             Model="[ShowItem]">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,1"
+                               Top="Parent,0,150"
+                               Horizontal="Center"/>
+            </LayoutInput>
+          </cb:SimpleCheckBox>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

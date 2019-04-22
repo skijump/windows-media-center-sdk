@@ -1,0 +1,127 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <cor:String Name="MediaPath"
+                  String="c:\users\public\videos\Windows Media Center SDK\Video03.wmv"/>
+      <EditableText Name="UriToMedia"/>
+      <Command Name="StartPlayback"
+               Description="Start Playback" />
+    </Locals>
+
+    <Rules>
+
+      <Default Value="[MediaPath]"
+               Target="[UriToMedia.Value]" />
+
+      <Changed Source="[StartPlayback.Invoked]">
+        <Actions>
+          <Set Target="[MediaPath]"
+               Value="[UriToMedia.Value]"
+               InvokePolicy="Synchronous"/>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[MediaPath]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+
+      <Binding Target="[MyDuration.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Duration.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Duration.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyMPAARating.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#MPAARating.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#MPAARating.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyTitle.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Title.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Title.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyURI.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Uri.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Uri.ToString]"/>
+        </Conditions>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Form">
+        <Children>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <ctrl:Button Command="[StartPlayback]"
+                           ButtonLabel="[StartPlayback.Description]"/>
+              <ctrl:Editbox EditableText="[UriToMedia]"
+                            LabelName="Media Uri" />
+            </Children>
+          </Panel>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.5"
+                               Right="Parent,1"
+                               Vertical="Center" />
+            </LayoutInput>
+            <Children>
+              <ctrl:PropertyAndValue Name="MyDuration"
+                                     PropertyName="Duration"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyMPAARating"
+                                     PropertyName="MPAARating"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyTitle"
+                                     PropertyName="Title"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyURI"
+                                     PropertyName="URI"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+
+          <NowPlaying ShowFullMetadata="OnFocus"
+                      SnapToDefaultPosition="true">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Bottom="Parent,1"/>
+            </LayoutInput>
+          </NowPlaying>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

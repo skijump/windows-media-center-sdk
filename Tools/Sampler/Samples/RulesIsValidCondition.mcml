@@ -1,0 +1,109 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- IsValid conditions are used in "expanded" rule syntax for       -->
+  <!-- adding path validation to rules. The condition determines if    -->
+  <!-- a supplied Source path can be evaluated without error.          -->
+  <!-- Specifically, it checks if any "part" of the path (excluding    -->
+  <!-- the last part) returns 'null'. If so, the condition fails.      -->
+
+  <!-- Note that the condition will not fail if the entire path        -->
+  <!-- results in a null.                                              -->
+
+  <!-- This example implements a "DescriptionAnalyzer" that simply     -->
+  <!-- displays the contents of the Description property on ModelItem. -->
+  <!-- It also includes the length of the Description string. Since    -->
+  <!-- Description is null by default, IsValid is used to check if the -->
+  <!-- entire path needed to display the length is safe to call.       -->
+
+  <UI Name="IsValidCondition">
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Pass in a ModelItem with a Description set. -->
+          <me:DescriptionAnalyzer>
+            <Model>
+              <ModelItem Description="This ModelItem has a nice description."/>
+            </Model>
+          </me:DescriptionAnalyzer>
+
+          <!-- Pass in a ModelItem with the null default Description. -->
+          <me:DescriptionAnalyzer>
+            <Model>
+              <ModelItem/>
+            </Model>
+          </me:DescriptionAnalyzer>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <!-- DescriptionAnalyzer:  -->
+  <UI Name="DescriptionAnalyzer">
+
+    <Properties>
+      <ModelItem Name="Model"
+                 ModelItem="$Required"/>
+    </Properties>
+
+    <Rules>
+
+      <!-- Check if it's safe to query the Description Length. If so, -->
+      <!-- the Setters can display the Description and its Length     -->
+      <!-- without a runtime null-reference exception.                -->
+      <Rule>
+        <Conditions>
+          <IsValid Source="[Model.Description.Length]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="DarkGreen"/>
+          <Set Target="[Description.Content]"
+               Value="[Model.Description]"/>
+          <Set Target="[DescriptionLength.Content]"
+               Value="[Model.Description.Length.ToString]">
+            <Transformer>
+              <FormatTransformer Format="It has {0} characters."/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Configured with all the default (null-cased) Description display. -->
+      <ColorFill Name="Background"
+                 Layout="VerticalFlow"
+                 Content="Firebrick">
+        <Children>
+
+          <Text Name="Description"
+                Color="SeaShell"
+                Font="Verdana,30"
+                Content="No description specified."/>
+          <Text Name="DescriptionLength"
+                Color="SeaShell"
+                Font="Verdana,30"
+                Content="Unable to determine character count."/>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

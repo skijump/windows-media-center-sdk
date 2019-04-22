@@ -1,0 +1,140 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- Margins and Padding are used to add space inside and outside of     -->
+  <!-- ViewItems. Margins and Padding are always available regardless of   -->
+  <!-- what layout is used. Margins and Padding are expressed by setting 4 -->
+  <!-- values: Left, Top, Right and Bottom.                                -->
+
+  <!-- Margins are used to add spacing outside of a ViewItem. This will    -->
+  <!-- increase the distance between the ViewItem and its siblings/parent. -->
+
+  <!-- Negative margins can be used to force overlap with other ViewItems. -->
+
+  <!-- Padding is used to add space inside of a ViewItem. This will        -->
+  <!-- increase the distance between the ViewItem and its children.        -->
+
+  <!-- This example shows the use of margins, padding, and negative        -->
+  <!-- margins.                                                            -->
+
+  <UI Name="MarginsPadding">
+
+    <Content>
+
+      <!-- Root that contains several examples of margins and padding -->
+      <!-- conbinations.                                              -->
+      <ColorFill Content="White">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"
+                      AllowWrap="true"
+                      Spacing="5,0"/>
+        </Layout>
+        <Children>
+
+          <!-- No margins and no padding. -->
+          <ColorFill Content="Bisque">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+              <Text Content="No margins, no padding."
+                    Font="Tahoma,12"/>
+              <ColorFill Content="Firebrick">
+                <Children>
+                  <ColorFill Content="Yellow"
+                             Alpha=".5"
+                             MinimumSize="50,50"/>
+                </Children>
+              </ColorFill>
+            </Children>
+          </ColorFill>
+
+          <!-- Margins and no padding. -->
+          <ColorFill Content="Bisque">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+              <Text Content="Margins, no padding."
+                    Font="Tahoma,12"/>
+              <ColorFill Content="Firebrick"
+                         Margins="0,25,0,25">
+                <Children>
+                  <ColorFill Content="Yellow"
+                             Alpha=".5"
+                             MinimumSize="50,50"/>
+                </Children>
+              </ColorFill>
+            </Children>
+          </ColorFill>
+
+          <!-- Padding and no margins. -->
+          <ColorFill Content="Bisque">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+              <Text Content="Padding, no margins."
+                    Font="Tahoma,12"/>
+              <ColorFill Content="Firebrick"
+                         Padding="25,25,25,25">
+                <Children>
+                  <ColorFill Content="Yellow"
+                             Alpha=".5"
+                             MinimumSize="50,50"/>
+                </Children>
+              </ColorFill>
+            </Children>
+          </ColorFill>
+
+          <!-- Margins and padding. -->
+          <ColorFill Content="Bisque">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+              <Text Content="Margins and padding."
+                    Font="Tahoma,12"/>
+              <ColorFill Content="Firebrick"
+                         Margins="25,25,25,25"
+                         Padding="25,25,25,25">
+                <Children>
+                  <ColorFill Content="Yellow"
+                             Alpha=".5"
+                             MinimumSize="50,50"/>
+                </Children>
+              </ColorFill>
+            </Children>
+          </ColorFill>
+
+          <!-- Negative margins. -->
+          <ColorFill Content="Bisque">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+              <Text Content="Neg margins, no padding."
+                    Font="Tahoma,12"/>
+              <ColorFill Content="Firebrick">
+                <Children>
+                  <ColorFill Content="Yellow"
+                             Margins="-25,-25,-25,-25"
+                             Alpha=".5"
+                             MinimumSize="150,150"/>
+                </Children>
+              </ColorFill>
+            </Children>
+          </ColorFill>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+</Mcml>

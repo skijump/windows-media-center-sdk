@@ -1,0 +1,68 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Fill layout is a "size-to-constraint" layout that will use the     -->
+  <!-- entire size given to it. In addition, it will size all of its      -->
+  <!-- children to the same size.                                         -->
+
+  <!-- This example demonstrates children of various sizes within a fill  -->
+  <!-- layout. They will be forced to be a large size.                    -->
+
+  <!-- NOTE: Fill layout forces children to be a certain size. If a child -->
+  <!-- declares a maximum size that is smaller than the size being forced -->
+  <!-- by the parent, then the child will be automatically hidden.        -->
+
+  <UI Name="Fill">
+
+    <Content>
+
+      <!-- Layout is Center, so, the root will take up all the space it -->
+      <!-- is given.                                                    -->
+      <ColorFill Layout="Fill"
+                 Content="White">
+
+        <Children>
+
+          <!-- This child will not be displayed because it states that -->
+          <!-- it does not want to exceed 100x100, but the parent      -->
+          <!-- states that the child must be larger.                   -->
+          <me:LayoutItem Display="A: Will not be displayed"
+                         MaximumSize="100,100"/>
+
+          <me:LayoutItem Display="B: Forced to the size of the parent."/>
+
+        </Children>
+
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+  <!-- UI that displays an image with some text. The image content -->
+  <!-- fills to the size of the Graphic.                           -->
+  <UI Name="LayoutItem">
+
+    <Properties>
+      <cor:String Name="Display"
+                  String="null"/>
+    </Properties>
+
+    <Content>
+      <Graphic Content="image://me:LayoutItemImage"
+               Padding="5,5,5,5">
+        <Children>
+          <Text Content="[Display]"
+                Color="White"
+                Font="Tahoma,12"
+                WordWrap="true"/>
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+  <Image Name="LayoutItemImage"
+         Source="resx://Sampler/Sampler.Resources/LayoutGraphic"
+         NineGrid="4,4,4,4"/>
+
+</Mcml>

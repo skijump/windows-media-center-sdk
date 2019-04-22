@@ -1,0 +1,83 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:content="resx://Z/Z.Resources/ContentList"
+      xmlns:gallery="resx://Z/Z.Resources/GalleryPage"
+      xmlns:result="resx://Z/Z.Resources/SearchResult"
+      xmlns:search="resx://Z/Z.Resources/SearchPage"
+      xmlns:me="Me">
+
+
+  <!-- A download page -->
+  <UI Name="DownloadsPage">
+    <Properties>
+      <z:DownloadsPage Name="Page"
+                       DownloadsPage="$Required"/>
+      <z:Application Name="Application"
+                     Application="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- An object to track which item in the list currently has focus. -->
+      <IntRangedValue Name="FocusedIndex"/>
+    </Locals>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <core:Header Name="Header"
+                       Application="[Application]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Top="Parent,0,40"/>
+            </LayoutInput>
+          </core:Header>
+
+          <Panel Name="Content"
+                 Layout="VerticalFlow"
+                 FocusOrder="0">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Right="Parent,1,-105"
+                                 Vertical="Fill"
+                                 Top="Parent,0,100"
+                                 Bottom="Parent,1,-40"
+                                 Horizontal="Fill"/>
+            </LayoutInput>
+            <Children>
+
+              <Text Font="font://styles:SectionTitle"
+                    Color="color://styles:Text.Copy"
+                    Content="[Page.Description]"/>
+
+              <content:FilterList Page="[Page]"
+                                  FocusOrder="2"/>
+
+              <search:SearchList Page="[Page]"
+                                 Margins="0,35,0,35"
+                                 FocusedIndex="[FocusedIndex]"
+                                 FocusOrder="1"/>
+
+            </Children>
+          </Panel>
+
+          <!-- Item counter -->
+          <content:ItemCounter Page="[Page]"
+                               FocusedIndex="[FocusedIndex]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Content,0,20"
+                                 Right="Content,1"/>
+            </LayoutInput>
+          </content:ItemCounter>
+
+          <core:Background/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

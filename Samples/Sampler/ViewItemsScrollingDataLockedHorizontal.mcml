@@ -1,0 +1,227 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test ScrollingData's LockedPosition and 'LockedAlignment' for a Horizontally oriented 
+       Scroller ViewItem with a Repeater.  -->
+
+
+  <UI Name="ScrollingDataLockedAlignment">
+
+    <Locals>
+
+      <!-- Create list of data to repeat. -->
+      <ArrayListDataSet Name="Locations">
+        <Source>
+          <cor:String String="Living Room"/>
+          <cor:String String="Den"/>
+          <cor:String String="Master Bedroom"/>
+          <cor:String String="Second Bedroom"/>
+          <cor:String String="Third Bedroom"/>
+          <cor:String String="Fourth Bedroom"/>
+          <cor:String String="Fifth Bedroom"/>
+          <cor:String String="Sixth Bedroom"/>
+          <cor:String String="Kitchen"/>
+          <cor:String String="Dining Room"/>
+          <cor:String String="Bonus Room"/>
+          <cor:String String="Media Room"/>
+          <cor:String String="Sitting Room"/>
+          <cor:String String="Library"/>
+          <cor:String String="Wine Cellar"/>
+          <cor:String String="Bathroom"/>
+          <cor:String String="Second Bathroom"/>
+          <cor:String String="Third Bathroom"/>
+          <cor:String String="Fourth Bathroom"/>
+          <cor:String String="Closet"/>
+          <cor:String String="Indoor Swimming Pool"/>
+          <cor:String String="Jacuzzi"/>
+          <cor:String String="Garage First Stall"/>
+          <cor:String String="Garage Second Stall"/>
+          <cor:String String="Garage Third Stall"/>
+          <cor:String String="Garage Fourth Stall"/>
+          <cor:String String="Garage Fifth Stall"/>
+          <cor:String String="Garage Sixth Stall"/>
+          <cor:String String="Guest House"/>
+          <cor:String String="Tennis Court"/>
+          <cor:String String="Basketball Court"/>
+          <cor:String String="Gazebo"/>
+          <cor:String String="Tool Shed"/>
+          <cor:String String="Attic"/>
+          <cor:String String="Location 1"/>
+          <cor:String String="Location 2"/>
+          <cor:String String="Location 3"/>
+          <cor:String String="Location 4"/>
+          <cor:String String="Location 5"/>
+          <cor:String String="Location 6"/>
+          <cor:String String="Location 7"/>
+          <cor:String String="Location 8"/>
+          <cor:String String="Location 9"/>
+          <cor:String String="Location 10"/>
+          <cor:String String="Location 11"/>
+          <cor:String String="Location 12"/>
+          <cor:String String="Location 13"/>
+          <cor:String String="Location 14"/>
+          <cor:String String="Location 15"/>
+          <cor:String String="Location 16"/>
+          <cor:String String="Location 17"/>
+          <cor:String String="Location 18"/>
+          <cor:String String="Location 19"/>
+          <cor:String String="Location 20"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <!-- The ScrollingHandler which reacts to user keyboard input. -->
+      <!-- NOTE: HandlerStage must be "Bubbled".                     -->
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandlerStage="Bubbled"/>
+
+      <!-- Set LockedPosition="0" LockedAlignment=".5" 
+           LockedPosition="0" means to anchor the focus at the Left of the page
+           LockedAlignment=".5" means to center the focus area in the middle of the focus item -->
+      <ScrollingData Name="ScrollingData"
+                     LockedPosition="0"
+                     LockedAlignment=".5"/>
+
+    </Locals>
+
+    <!-- This is where the scrolling objects get hooked up to each     -->
+    <!-- other. Default rules are a good place to do this since Rules  -->
+    <!-- get run after the rest of the UI is created and ready to go.  -->
+    <Rules>
+      <!-- Give ScrollingData to ScrollingHandler. -->
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+
+      <!-- Give Repeater to ScrollingData. -->
+      <Default Target="[ScrollingData.Repeater]"
+               Value="[ListRepeater]"/>
+
+      <!-- When ScrollingData changes, update Total Pages -->
+      <Binding Source="[ScrollingData.TotalPages]"
+               Target="[TotalPagesText.Content]">
+        <Transformer>
+          <FormatTransformer Format="TotalPages is: {0}"
+                             ExtendedFormat="#"/>
+        </Transformer>
+      </Binding>
+
+      <!-- When ScrollingData changes, update the current page -->
+      <Binding Source="[ScrollingData.CurrentPage]"
+               Target="[CurrentPageText.Content]">
+        <Transformer>
+          <FormatTransformer Format="CurrentPage is: {0}"/>
+        </Transformer>
+      </Binding>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="SDLockedHorz"/>
+      <Default Target="[Accessible.Role]"
+               Value="Pane" />
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <Text Color="SlateGray"
+                Font="Tahoma,20"
+                WordWrap="true"
+                Content="Test 'LockedAlignment' for a Horizontally Oriented Scroller with a Repeater"/>
+
+          <ColorFill Padding="30,30,30,30"
+                     Content="AntiqueWhite"
+                     Margins="0,10,0,10">
+            <Children>
+
+              <!-- The Scroller. It referrs to the ScrollingData too. -->
+              <Scroller Orientation="Horizontal"
+                        MaximumSize="0,400"
+                        FadeSize="-30"
+                        ScrollingData="[ScrollingData]">
+                <Children>
+
+                  <!-- The Repeater. A direct child of the Scroller. -->
+                  <Repeater Name="ListRepeater"
+                            Source="[Locations]">
+                    <Layout>
+                      <GridLayout Orientation="Horizontal"
+                                  AllowWrap="true"
+                                  Spacing="10,10"/>
+                    </Layout>
+                    <Content>
+                      <!-- Repeating out the items. -->
+                      <me:ListItem Description="[RepeatedItem!cor:String]"/>
+                    </Content>
+                  </Repeater>
+
+                </Children>
+              </Scroller>
+
+            </Children>
+          </ColorFill>
+
+          <Text Name="TotalPagesText"
+                Color="SlateGray"
+                Content="TotalPages is undefined" />
+          <Text Name="CurrentPageText"
+                Color="SlateGray"
+                Content="CurrentPage is undefined" />
+
+        </Children>
+
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <!-- A UI that is key-interactive for demonstrating the Scroller. -->
+  <!-- It is what is used within the Repeater's Content for the     -->
+  <!-- list items.                                              -->
+  <UI Name="ListItem">
+    <Properties>
+      <cor:String Name="Description"
+                  String="null"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="Yellow"/>
+          <Set Target="[Label.Color]"
+               Value="Black"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <ColorFill Name="Background"
+                 Content="SlateGray"
+                 Padding="5,5,5,5"
+                 MouseInteractive="true">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+          <ColorFill Content="Aqua"
+                     MinimumSize="100,100"/>
+          <Text Name="Label"
+                Content="[Description]"
+                Color="White"
+                Font="Verdana,10"/>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+</Mcml>
+
+

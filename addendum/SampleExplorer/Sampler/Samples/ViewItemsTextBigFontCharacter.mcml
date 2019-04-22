@@ -1,0 +1,14 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+  <UI Name="Text">
+    <Content>
+      <Panel>
+        <Children>
+          <Text Content="௵"
+                Font="Arial, 36"
+                Color="White"
+                BackColor="Black"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

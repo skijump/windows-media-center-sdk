@@ -1,0 +1,172 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:ctrl="http://retrosight.com/samples/windowsmediacentersdk/6/Controls.mcml">
+
+  <UI Name="Default">
+
+    <!-- Sometimes, it is convenient to view requested data    -->
+    <!-- sorted. In the following sample, employee information -->
+    <!-- is requested from server, including employee names    -->
+    <!-- and employee IDs. By setting SortBy property of       -->
+    <!-- XmlRemoteValueList, the data can be reordered by      -->
+    <!-- name or ID.                                           -->
+
+    <!-- Comparing with the response document, the sample      -->
+    <!-- demonstrates how SortBy works.                        -->
+
+    <!-- Web samples are designed to work when loaded       -->
+    <!-- via the HTTP:// or HTTPS:// protocol. Generally    -->
+    <!-- speaking, opening these samples using FILE:// will -->
+    <!-- not produce the desired results.                   -->
+
+    <Locals>
+      <!-- Construct Data Access Model Item -->
+      <da:RemoteResourceUri Name="MyRemoteResourceUri"/>
+      <da:XmlRemoteResource Name="MyXmlRemoteResource">
+        <Mappings>
+          <da:XmlRemoteValue Name="Title"
+                             Source="/Data/@title" />
+          <da:XmlRemoteValueList Name="Employees"
+                                 RepeatedType="PropertySet"
+                                 Source="/Data/employees/employee"
+                                 SortBy="Entries.#name">
+            <Mappings>
+              <da:XmlRemoteValue Property="Entries.#name"
+                                 Source="/@name"/>
+              <da:XmlRemoteValue Property="Entries.#ID"
+                                 Source="/ID"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+      <cor:Boolean Name="MyGetDataResult"/>
+      <Command Name="MyCommand1"
+               Description="Get Data From Resource"/>
+      <Command Name="MyCommand2"
+               Description="Show Response Document"/>
+      <Command Name="MyCommand3"
+               Description="Sort By Employee Name"/>
+      <Command Name="MyCommand4"
+               Description="Sort By Employee ID"/>
+      <EditableText Name="MyEditableText"
+                    Value="http://retrosight.com/samples/windowsmediacentersdk/6/WebDataSortableData.xml"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[MyRemoteResourceUri.FullString]"
+               Source="[MyEditableText.Value.ToString]" />
+      <!-- Invoke data request, using method HEAD -->
+      <Changed Source="[MyCommand1.Invoked]">
+        <Actions>
+          <Set Target="[MyXmlRemoteResource.RequestUri]"
+               Value="[MyRemoteResourceUri]"/>
+          <Invoke Target="[MyXmlRemoteResource.GetDataFromResource]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <!-- Bind response document to view item -->
+      <Changed Source="[MyCommand2.Invoked]">
+        <Actions>
+          <Set Target="[MyResponseDocument.Content]"
+               Value="[MyXmlRemoteResource.ResponseDocument]"/>
+        </Actions>
+      </Changed>
+      <!-- Set sorting reference as employee name -->
+      <Changed Source="[MyCommand3.Invoked]">
+        <Actions>
+          <Set Target="[MyXmlRemoteResource.Mappings.#Employees!da:XmlRemoteValueList.SortBy]"
+               Value="Entries.#name"/>
+        </Actions>
+      </Changed>
+      <!-- Set sorting reference as employee ID -->
+      <Changed Source="[MyCommand4.Invoked]">
+        <Actions>
+          <Set Target="[MyXmlRemoteResource.Mappings.#Employees!da:XmlRemoteValueList.SortBy]"
+               Value="Entries.#ID"/>
+        </Actions>
+      </Changed>
+      <!-- Bind status to view items -->
+      <Changed Source="[MyXmlRemoteResource.ResponseStatusDescription]">
+        <Conditions>
+          <IsValid Source="[MyXmlRemoteResource.ResponseStatusDescription]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[MyResponseStatusDescription.PropertyValue]"
+               Value="[MyXmlRemoteResource.ResponseStatusDescription]"/>
+        </Actions>
+      </Changed>
+      <Binding Target="[MyStatus.PropertyValue]"
+               Source="[MyXmlRemoteResource.Status.ToString]" />
+      <Binding Target="[MyResponseStatusCode.PropertyValue]"
+               Source="[MyXmlRemoteResource.ResponseStatusCode.ToString]" />
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <ctrl:Editbox EditableText="[MyEditableText]"
+                            LabelName="Uri" />
+              <ctrl:Button Command="[MyCommand1]"
+                           ButtonLabel="[MyCommand1.Description]" />
+              <ctrl:Button Command="[MyCommand2]"
+                           ButtonLabel="[MyCommand2.Description]" />
+              <!-- Display request status data -->
+              <ctrl:PropertyAndValue Name="MyStatus"
+                                     PropertyName="Status"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyResponseStatusCode"
+                                     PropertyName="Response Status Code"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyResponseStatusDescription"
+                                     PropertyName="Response Status Description"
+                                     PropertyValue="" />
+              <!-- controls to change sorting -->
+              <ctrl:Button Command="[MyCommand3]"
+                           ButtonLabel="[MyCommand3.Description]" />
+              <ctrl:Button Command="[MyCommand4]"
+                           ButtonLabel="[MyCommand4.Description]" />
+              <!-- Display sorted employee data -->
+              <Repeater Source="[MyXmlRemoteResource.Mappings.#Employees!da:XmlRemoteValueList.List]"
+                        Layout="VerticalFlow">
+                <Content>
+                  <Panel Layout="HorizontalFlow">
+                    <Children>
+                      <ctrl:PropertyAndValue PropertyName="Name"
+                                             PropertyValue="[RepeatedItem!PropertySet.Entries.#name!cor:String]"/>
+                      <ctrl:PropertyAndValue PropertyName="ID"
+                                             PropertyValue="[RepeatedItem!PropertySet.Entries.#ID!cor:String]"/>
+                    </Children>
+                  </Panel>
+                </Content>
+              </Repeater>
+            </Children>
+          </Panel>
+          <!-- Display response xml document -->
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.5"
+                               Right="Parent,1"
+                               Vertical="Center" />
+            </LayoutInput>
+            <Children>
+              <Text Name="MyResponseDocument"
+                    Color="White"
+                    WordWrap="true"
+                    Font="Calibri, 10" />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,35 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:a="assembly://Sampler/Sampler">
+
+  <UI Name="Default">
+
+    <Properties>
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+
+    <Locals>
+      <Image Name="MyImage" />
+      <cor:String Name="MyString"
+                  String="[Sampler.FourBoxGraphic]" />
+    </Locals>
+
+    <Rules>
+      <Default Target="[MyImage]"
+               Value="[MyString!Image]" />
+      <Binding Source="[MyImage]"
+               Target="[MyGraphic.Content]" />
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Children>
+          <Graphic Name="MyGraphic" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

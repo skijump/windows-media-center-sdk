@@ -1,0 +1,154 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <!-- Windows Media Center users can choose between three color schemes:    -->
+
+  <!-- 1. Windows Media Center standard                                      -->
+  <!-- 2. High contrast white                                                -->
+  <!-- 3. High contrast black                                                -->
+
+  <!-- Windows Media Center applications should support these color schemes  -->
+  <!-- for the best possible user experience.                                -->
+
+  <!-- To enable a different color scheme, from the start menu choose:       -->
+  <!-- Tasks | Settings | General | Visual and Sound Effects and then choose -->
+  <!-- one of the color schemes.                                             -->
+
+  <!-- This sample demonstrates how to define colors for each of the         -->
+  <!-- Windows Media Center color schemes and then dynamically update        -->
+  <!-- the UI color settings based on the selected Windows Media Center      -->
+  <!-- color scheme.                                                         -->
+
+  <UI Name="BasePage">
+    <Properties>
+      <cor:String Name="PageTitleContent"
+                  String="Working With Color Schemes"/>
+      <cor:String Name="BodyTextContent"
+                  String="This sample is color scheme aware, so the text and background colors will change based on the currently selected color scheme."/>
+    </Properties>
+
+    <Locals>
+      <Environment Name="Environment"/>
+    </Locals>
+
+    <Rules>
+      <!-- Rules to set color scheme to high contrast 1 -->
+      <Condition  Source="[Environment.ColorScheme]"
+                  SourceValue="HighContrast1">
+        <Actions>
+          <Set Target="[HeaderContainer.Content]"
+               Value="color://me:Header.Background.Color.HC.White"/>
+          <Set Target="[PageTitle.Color]"
+               Value="color://me:Page.Title.Text.Color.HC.White"/>
+          <Set Target="[BodyContent.Color]"
+               Value="color://me:Page.Text.Color.HC.White"/>
+          <Set Target="[BodyContainer.Content]"
+               Value="color://me:Body.Background.Color.HC.White"/>
+        </Actions>
+      </Condition>
+
+      <!-- Rules to set color scheme to high contrast 2 -->
+      <Condition  Source="[Environment.ColorScheme]"
+                  SourceValue="HighContrast2">
+        <Actions>
+          <Set Target="[HeaderContainer.Content]"
+               Value="color://me:Header.Background.Color.HC.Black"/>
+          <Set Target="[PageTitle.Color]"
+               Value="color://me:Page.Title.Text.Color.HC.Black"/>
+          <Set Target="[BodyContent.Color]"
+               Value="color://me:Page.Text.Color.HC.Black"/>
+          <Set Target="[BodyContainer.Content]"
+               Value="color://me:Body.Background.Color.HC.Black"/>
+        </Actions>
+      </Condition>
+
+      <!-- Default rules to set color scheme to Windows Media Center standard -->
+      <Default Target="[HeaderContainer.Content]"
+               Value="color://me:Header.Background.Color"/>
+      <Default Target="[PageTitle.Color]"
+               Value="color://me:Page.Title.Text.Color"/>
+      <Default Target="[BodyContent.Color]"
+               Value="color://me:Page.Text.Color"/>
+      <Default Target="[BodyContainer.Content]"
+               Value="color://me:Body.Background.Color"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <!-- Header -->
+              <ColorFill Name="HeaderContainer"
+                         Padding="10,10,10,10">
+                <Layout>
+                  <AnchorLayout SizeToHorizontalChildren="false"/>
+                </Layout>
+                <Children>
+                  <Text Name="PageTitle"
+                        Content="[PageTitleContent]"
+                        MaximumLines="1"
+                        Margins="0,50,0,0"/>
+                </Children>
+              </ColorFill>
+
+              <!-- Body -->
+              <ColorFill Name="BodyContainer"
+                         Padding="10,10,10,10">
+                <Layout>
+                  <AnchorLayout SizeToHorizontalChildren="false"
+                                SizeToVerticalChildren="false"/>
+                </Layout>
+                <Children>
+                  <Text Name="BodyContent"
+                        WordWrap="true"
+                        Content="[BodyTextContent]"/>
+                </Children>
+              </ColorFill>
+
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <!-- Color definitions for Windows Media Center default (white on blue) -->
+  <Color Name="Header.Background.Color"
+         Color="255,10,70,110"/>
+  <Color Name="Page.Title.Text.Color"
+         Color="255,255,255,255"/>
+  <Color Name="Page.Text.Color"
+         Color="255,10,70,110"/>
+  <Color Name="Body.Background.Color"
+         Color="255,250,250,250"/>
+  <Color Name="Footer.Background.Color"
+         Color="255,10,70,110"/>
+
+  <!-- Color definitions for High Contrast 1 (black on white) -->
+  <Color Name="Header.Background.Color.HC.White"
+         Color="255,255,255,255"/>
+  <Color Name="Page.Title.Text.Color.HC.White"
+         Color="255,0,0,0"/>
+  <Color Name="Page.Text.Color.HC.White"
+         Color="255,0,0,0"/>
+  <Color Name="Body.Background.Color.HC.White"
+         Color="255,255,255,255"/>
+  <Color Name="Footer.Background.Color.HC.White"
+         Color="255,255,255,255"/>
+
+  <!-- Color definitions for High Contrast 2 (yellow on black) -->
+  <Color Name="Header.Background.Color.HC.Black"
+         Color="255,0,0,0"/>
+  <Color Name="Page.Title.Text.Color.HC.Black"
+         Color="255, 255, 255, 100"/>
+  <Color Name="Page.Text.Color.HC.Black"
+         Color="255, 255, 255, 100"/>
+  <Color Name="Body.Background.Color.HC.Black"
+         Color="230,0,0,0"/>
+  <Color Name="Footer.Background.Color.HC.Black"
+         Color="255,0,0,0"/>
+
+</Mcml>

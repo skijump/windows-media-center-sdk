@@ -1,0 +1,89 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml" >
+
+  <!-- ClickHandler sample.                                                 -->
+
+  <!-- Click handler provide button-like input behavior to a UI element.    -->
+  <!-- Click handlers allow users the opportunity to handle different       -->
+  <!-- inputs to the UI element like mouse clicks and Space and             -->
+  <!-- and Enter key presses.                                               -->
+  <!-- They also have commands associated and the Invoke method on the      -->
+  <!-- command will be called when a UI element is clicked.                 -->
+
+  <!--  This example implements UI element (ClickUI) that has the           -->
+  <!--  text 'Click me.'                                                    -->
+
+  <!--  When this UI element is clicked (either with the mouse or the Space -->
+  <!--  and Enter keys), it changes the background color and label color    -->
+  <!--  of the UI element.                                                  -->
+  <UI Name="ClickUI">
+
+    <!-- Define the properties for this object. -->
+    <Properties>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor"
+             Color="DimGray"/>
+      <Color Name="BackgroundPressedColor"
+             Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor"
+             Color="White"/>
+      <Color Name="LabelPressedColor"
+             Color="FireBrick"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="Arial,20"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- Use the click handler to handle input events. -->
+      <ClickHandler Name="Clicker"/>
+
+    </Locals>
+
+    <!-- Define how to handle the input using rule. -->
+    <Rules>
+
+      <!-- Rule to define the behavior when ClickUI is clicked.          -->
+      <!-- Change the background and label color using the colors above. -->
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[BackgroundPressedColor]" />
+          <Set Target="[Label.Color]"
+               Value="[LabelPressedColor]" />
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <!-- Solid background color. -->
+          <ColorFill Name="Background"
+                     Content="[BackgroundColor]"
+                     Padding="5,5,5,5">
+            <Children>
+
+              <!-- The label to display. -->
+              <Text Name="Label"
+                    Content="Click me!"
+                    Color="[LabelColor]"
+                    Font="[LabelFont]"/>
+
+            </Children>
+          </ColorFill>
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

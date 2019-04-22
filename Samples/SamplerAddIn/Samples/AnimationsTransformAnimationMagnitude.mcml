@@ -1,0 +1,102 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to use a TransformAnimation to modify   -->
+  <!-- the magnitude of an animation.                                       -->
+
+  <!-- A TransformAnimation takes a reference animation and produces a new  -->
+  <!-- animation based on that animation.  One of the ways the source       -->
+  <!-- animation can be transformed is by magnifying the Value of all       -->
+  <!-- keyframes by a scalar.                                               -->
+  <UI Name="TransformAnimationMagnitude">
+
+    <Properties>
+
+      <!-- This is our reference animation.  We will take this animation    -->
+      <!-- modify the Values by a scalar Magnitude.  Specifically that will -->
+      <!-- mean that the Vector3 Values of the PositionKeyframes are        -->
+      <!-- modified. -->
+      <Animation Name="Reference"
+                 Loop="-1">
+        <Keyframes>
+
+          <PositionKeyframe Time="0.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="2.0"
+                            Value="100,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="4.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+
+        </Keyframes>
+      </Animation>
+
+    </Properties>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Demonstrate what the unmodified reference animation looks    -->
+          <!-- like.                                                        -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="Reference animation"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <Animation Animation="[Reference]"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Take the reference animation and apply a Magnitude of 2.0.   -->
+          <!-- This will cause the position motion to be more extreme.      -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="2.0 Magnitude"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <TransformAnimation Source="[Reference]"
+                                  Magnitude="2.0"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Take the reference animation and apply a Magnitude of 0.5.   -->
+          <!-- This will cause the position motion to be less extreme.      -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="0.5 Magnitude"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <TransformAnimation Source="[Reference]"
+                                  Magnitude="0.5"/>
+
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

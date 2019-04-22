@@ -1,0 +1,64 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Center layout simply centers all children. It is a                   -->
+  <!-- "size-to-constraint" layout meaning that it will take as much        -->
+  <!-- space that is given to it and center all children within that space. -->
+
+  <!-- This example has children of various sizes within a center layout.   -->
+
+  <UI Name="Center">
+
+    <Content>
+
+      <!-- Layout is Center, so, the root will take up all the space it -->
+      <!-- is given.                                                    -->
+      <ColorFill Layout="Center"
+                 Content="White">
+
+        <Children>
+
+          <me:LayoutItem Display="A"
+                         MinimumSize="100,500"/>
+
+          <me:LayoutItem Display="B"
+                         MinimumSize="500,100"/>
+
+          <me:LayoutItem Display="C"
+                         MinimumSize="300,300"/>
+
+        </Children>
+
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+  <!-- UI that displays an image with some text. The image content -->
+  <!-- fills to the size of the Graphic.                           -->
+  <UI Name="LayoutItem">
+
+    <Properties>
+      <cor:String Name="Display"
+                  String="null"/>
+    </Properties>
+
+    <Content>
+      <Graphic Content="image://me:LayoutItemImage"
+               Padding="5,5,5,5">
+        <Children>
+          <Text Content="[Display]"
+                Color="White"
+                Font="Tahoma,12"
+                WordWrap="true"/>
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+  <Image Name="LayoutItemImage"
+         Source="resx://Sampler/Sampler.Resources/LayoutGraphic"
+         NineGrid="4,4,4,4"/>
+
+</Mcml>

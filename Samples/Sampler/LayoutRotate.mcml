@@ -1,0 +1,101 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <!-- This sample shows some examples of using RotateLayout to rotate      -->
+  <!-- items within  a layout flow.  Rotations can be set on an item        -->
+  <!-- directly via the Rotate property, or via animations using            -->
+  <!-- RotateKeyframes, but neither of those approaches will produce        -->
+  <!-- layout-friendly results.  By using a RotateLayout, the item can be   -->
+  <!-- placed in any type of layout and the final rotated rectangle will be -->
+  <!-- used to arrange it.                                                  -->
+
+  <!-- RotateLayout is limited to only 4 rotation values: 0, 90, 180, and   -->
+  <!-- 270 degrees.                                                         -->
+  <UI Name="RotateLayout">
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"
+                      Spacing="30,0"/>
+        </Layout>
+        <Children>
+
+          <me:Arrow Description="No rotation">
+            <ItemLayout>
+              <RotateLayout AngleDegrees="0"/>
+            </ItemLayout>
+          </me:Arrow>
+
+          <me:Arrow Description="90 degrees">
+            <ItemLayout>
+              <RotateLayout AngleDegrees="90"/>
+            </ItemLayout>
+          </me:Arrow>
+
+          <me:Arrow Description="180 degrees">
+            <ItemLayout>
+              <RotateLayout AngleDegrees="180"/>
+            </ItemLayout>
+          </me:Arrow>
+
+          <me:Arrow Description="270 degrees">
+            <ItemLayout>
+              <RotateLayout AngleDegrees="270"/>
+            </ItemLayout>
+          </me:Arrow>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+
+  <!-- This UI describes our actual usage of the RotateLayout.  It contains -->
+  <!-- a label and an arrow that is rotated by the RotateLayout.            -->
+  <UI Name="Arrow">
+    <Properties>
+      <cor:String Name="Description"
+                  String="$Required"/>
+      <RotateLayout Name="ItemLayout"
+                    RotateLayout="$Required"/>
+    </Properties>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- The label -->
+          <Text Content="[Description]"
+                Color="White"
+                Font="Arial, 20"/>
+
+          <!-- The rotate layout -->
+          <Panel Layout="[ItemLayout]">
+            <Children>
+
+              <!-- The arrow -->
+              <Graphic Content="file://LayoutGraphicArrow.png"
+                       MaximumSize="75,75"/>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

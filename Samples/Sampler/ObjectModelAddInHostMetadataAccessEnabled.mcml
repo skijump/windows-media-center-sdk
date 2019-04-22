@@ -1,0 +1,39 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:host="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <host:AddInHost Name="host"/>
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Conditions>
+          <IsValid Source="[host.MetadataAccessEnabled]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[MyProperty.PropertyValue]"
+               Value="[host.MetadataAccessEnabled.ToString]"/>
+         </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <ctrl:PropertyAndValue Name="MyProperty"
+                                     PropertyName="MetadataAccessEnabled"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

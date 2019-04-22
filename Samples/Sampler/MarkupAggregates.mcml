@@ -1,0 +1,65 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- Aggregates are used for "reexposing" external markup resources.     -->
+  <!-- When the Aggregate tag is used within an MCML file, the Source      -->
+  <!-- property points to another MCML file. All top-level markup resouces -->
+  <!-- (UIs, Images, Sounds, Animations, etc.) are now available through   -->
+  <!-- the local MCML file's namespace. It's as if the contents of all the -->
+  <!-- referenced MCML files have been included in the local MCML file.    -->
+
+  <!-- Aggregates are typically used for grouping many MCML files under a  -->
+  <!-- single namespace. For example, if you have several controls         -->
+  <!-- defined within several MCML files (such as buttons, editboxes,      -->
+  <!-- etc.) you could create a file called "Controls.mcml" and reference  -->
+  <!-- each of your individual controls via Aggregate tags. Then all your  -->
+  <!-- controls can be accessed via your Controls.mcml through a single    -->
+  <!-- xmlns statement.                                                    -->
+
+  <!-- Aggregates increase the potential of name collisions since the      -->
+  <!-- contents of the referenced MCML resources may not be readily known. -->
+  <!-- It up to the author to resolve these name collisions.               -->
+
+  <!-- NOTE: When name collisions occur, the Aggregate always wins.        -->
+
+  <!-- The following example demonstrates the use of Aggregates. Several   -->
+  <!-- MCML files will be referenced and accessed as if they were part of  -->
+  <!-- the "Me" namespace.                                                 -->
+
+  <!-- "Import" controls. They are now part of this MCML file's namespace  -->
+  <!-- and can be referenced by externals through this MCML file. As a     -->
+  <!-- result, access to contents of these MCMLs can be done via the "Me"  -->
+  <!-- namespace.                                                          -->
+  <Aggregate Source="file://ControlsSimpleButton.mcml"/>
+  <Aggregate Source="file://ControlsSimpleEditbox.mcml"/>
+
+  <UI Name="Aggregates">
+
+    <Content>
+
+      <!-- Reference to SimpleButton. Notice the "me" namespace. The -->
+      <!-- Aggregate has the same effect as if the referenced MCML   -->
+      <!-- resource was defined in this file.                        -->
+      <me:SimpleButton>
+        <Command>
+          <Command Description="Testing some Aggregates!"/>
+        </Command>
+      </me:SimpleButton>
+
+    </Content>
+
+  </UI>
+
+  <!-- Another UI named "SimpleButton". This causes a naming collision  -->
+  <!-- with the UI brought in via Controls.SimpleButton.mcml. It won't -->
+  <!-- be chosen. The Aggregate always wins.                            -->
+  <UI Name="SimpleButton">
+    <Content>
+
+      <Text Content="This UI won't be chosen over the SimpleButton brought in via an Aggregate!"
+            Color="Red"/>
+
+    </Content>
+  </UI>
+
+</Mcml>

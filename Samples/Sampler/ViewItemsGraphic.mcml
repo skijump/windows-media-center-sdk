@@ -1,0 +1,160 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- A Graphic allows you to display an image.  This sample shows how to   -->
+  <!-- use a graphic, as well as how to preserve its aspect ratio when the   -->
+  <!-- image is larger or smaller than its layout constraint.                -->
+
+  <!-- The main UI displays three example UIs from left to right.  The       -->
+  <!-- first is the original image with no scaling or cropping.  The second  -->
+  <!-- shows how to preserve the image's aspect ratio when it is larger than -->
+  <!-- the layout constraint. The third UI shows how to preserve its aspect  -->
+  <!-- ratio when the image is smaller than its layout constraint.           -->
+
+  <!-- MaintainAspectRatio is more of an indication to the layout engine of  -->
+  <!-- the developers desire, but it can be trumped by other layout          -->
+  <!-- constraints as we see here.                                           -->
+
+  <UI Name="Graphic">
+    <Rules>
+      <!-- Make the parent UI accept key focus, since it has no children     -->
+      <!-- that accept key focus.                                            -->
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+    </Rules>
+    <Content>
+      <Panel Padding="15,15,15,15">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"
+                      Spacing="15,0"/>
+        </Layout>
+        <Children>
+          <me:OriginalImage/>
+          <me:ImageTooLarge/>
+          <me:ImageTooSmall/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- This UI demonstrates the simplest way to display an image without  -->
+  <!-- any cropping or scaling.  The Content property on Graphic is the   -->
+  <!-- source of the image.                                               -->
+  <UI Name="OriginalImage">
+    <Content>
+
+      <ColorFill Content="Firebrick"
+                 Padding="15,15,15,15">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="15,0"/>
+        </Layout>
+
+        <Children>
+          <Text Content="ViewItemsGraphicDog.png (full size)"
+                Color="White"
+                Font="Arial,18"
+                MaximumSize="384,0"
+                WordWrap="true"/>
+          <!-- The image is 384 x 375 pixels.  This Graphic will display   -->
+          <!-- it at exactly that size.                                    -->
+          <Graphic Content="file://ViewItemsGraphicDog.png"/>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- This UI demonstrates how to preserve aspect ratio when displaying   -->
+  <!-- an image that is larger than its layout constraint.                 -->
+  <UI Name="ImageTooLarge">
+    <Content>
+      <ColorFill Content="Firebrick"
+                 Padding="15,15,15,15">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"
+                      Spacing="15,0"/>
+        </Layout>
+        <Children>
+
+          <Text Content="ViewItemsGraphicDog.png (scaled down)"
+                Color="White"
+                Font="Arial,18"
+                MaximumSize="200,0"
+                WordWrap="true"/>
+
+          <!-- The image is 384 x 375, which is larger than the specified   -->
+          <!-- MaximumSize value of 200 x 300.  Using Fill for the Vertical -->
+          <!-- and Horizontal alignment properties will cause the UI to     -->
+          <!-- attempt to display the image as large as possible (with no   -->
+          <!-- cropping).  In the first sample, MaintainAspectRatio is set  -->
+          <!-- to true so that the image's aspect ratio is preserved when   -->
+          <!-- it is scaled down.  The gray bars above and below the image  -->
+          <!-- (which come from the ColorFill) show the full size of the    -->
+          <!-- constraint.                                                  -->
+          <ColorFill Content="LightGray"
+                     MinimumSize="200,300"
+                     MaximumSize="200,300">
+            <Children>
+              <Graphic Content="file://ViewItemsGraphicDog.png"
+                       MaintainAspectRatio="true"/>
+            </Children>
+          </ColorFill>
+
+          <!-- This graphic shows what happens when you do not set           -->
+          <!-- MaintainAspectRatio to true.  The image is stretched to fill  -->
+          <!-- the entire constraint, even though it is a different aspect   -->
+          <!-- ratio from the original file.                                 -->
+          <Graphic Content="file://ViewItemsGraphicDog.png"
+                   MinimumSize="200,300"
+                   MaximumSize="200,300"/>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- This UI demonstrates how to preserve aspect ratio when displaying  -->
+  <!-- an image that is smaller than its layout constraint.               -->
+  <UI Name="ImageTooSmall">
+    <Content>
+      <ColorFill Content="Firebrick"
+                 Padding="15,15,15,15">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"
+                      Spacing="15,0"/>
+        </Layout>
+        <Children>
+          <Text Content="ViewItemsGraphicDogSmall.png (scaled up)"
+                Color="White"
+                Font="Arial,18"
+                MaximumSize="200,0"
+                WordWrap="true"/>
+          <!-- The image is 120 x 118, which is smaller than the specified  -->
+          <!-- MinimumSize value of 200 x 300.                              -->
+
+          <!-- In this first case, the small image is enlarged to fit the   -->
+          <!-- constraint, but its aspect ratio is preserved.  The bars     -->
+          <!-- above and below the image (which come from the ColorFill)    -->
+          <!-- show the full size of the constraint.                        -->
+          <ColorFill Content="LightGray"
+                     MinimumSize="200,300"
+                     MaximumSize="200,300">
+            <Children>
+              <Graphic Content="file://ViewItemsGraphicDogSmall.png"
+                       MaintainAspectRatio="true"/>
+            </Children>
+          </ColorFill>
+
+          <Graphic Content="file://ViewItemsGraphicDogSmall.png"
+                   MinimumSize="200,300"
+                   MaximumSize="200,300"/>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+</Mcml>

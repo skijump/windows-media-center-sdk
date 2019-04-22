@@ -1,0 +1,169 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- This sample illustrates the use of CenterPointPercent and           -->
+  <!-- CenterPointOffset attributes in describing a rotation animation.    -->
+
+  <!-- CenterPointPercent specifies a center point adjustment based on a   -->
+  <!-- percentage value when applying a scale or rotation to the view item -->
+  <!-- A value of 1 equals 100%.                                           -->
+
+  <!-- CenterPointOffset specifies a center point adjustment based on a    -->
+  <!-- pixel-offset value. This value is applied after the                 -->
+  <!-- CenterPointPercent attribute has been applied if both are provided. -->
+
+  <!-- This sample builds a Dunking bird object from two images - the legs -->
+  <!-- and the body. We also define a rotation animation that is attached  -->
+  <!-- only to the dunking bird body.                                      -->
+
+  <!-- The sample can play two different animations:                       -->
+  <!-- Animation 1 - uses the center point with zero offset.               -->
+  <!-- Animation 2 - uses the center point with a non-zero offset.         -->
+  <!-- Note how the axis of rotation changes with the change in the        -->
+  <!-- center point offset specification.                                  -->
+
+  <UI Name="CenterPointRotate">
+
+    <Locals>
+      <!-- Command to play the rotation animation using the center point  -->
+      <!-- percent with zero center point offset                          -->
+      <Command Name="PlayCenterPointPercentRotation"
+               Description="Play Center Point Percent Rotation"/>
+
+      <!-- Command to play the rotation animation using the center point  -->
+      <!-- offset. Use RotationKeyframe to describe an animation.         -->
+      <Command Name="PlayCenterPointOffsetRotation"
+               Description="Play Center Point Offset Rotation"/>
+    </Locals>
+
+    <Properties>
+      <!-- This animation makes the dunking bird body trace a 50 degree   -->
+      <!-- arc around the specified center point percent and offset.      -->
+      <Animation Name="Rotation"
+                 Loop="-1"
+                 CenterPointPercent="0.5266,0.549,1">
+        <Keyframes>
+          <RotateKeyframe Interpolation="SCurve"
+                          Time="0.0"
+                          Value="0deg;0,0,1"/>
+          <RotateKeyframe Interpolation="SCurve"
+                          Time="0.5"
+                          Value="-25deg;0,0,1"/>
+          <RotateKeyframe Interpolation="SCurve"
+                          Time="1.0"
+                          Value="0deg;0,0,1"/>
+          <RotateKeyframe Interpolation="SCurve"
+                          Time="1.5"
+                          Value="25deg;0,0,1"/>
+          <RotateKeyframe Interpolation="SCurve"
+                          Time="2.0"
+                          Value="0deg;0,0,1"/>
+        </Keyframes>
+      </Animation>
+    </Properties>
+    <Rules>
+      <!-- Change the offset on the Rotation animation defined above to   -->
+      <!-- an offset when this Command is invoked.                        -->
+      <Changed Source="[PlayCenterPointPercentRotation.Invoked]">
+        <Actions>
+          <Set Target="[Rotation.CenterPointOffset]"
+               Value="0,0,0"/>
+          <Invoke Target="[DunkingBirdBody.AttachAnimation]"
+                  animation="[Rotation]"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+        </Actions>
+      </Changed>
+
+      <!-- Change the offset on the Rotation animation defined to a   -->
+      <!-- non-zero offset when this Command is invoked.              -->
+      <Changed Source="[PlayCenterPointOffsetRotation.Invoked]">
+        <Actions>
+          <Set Target="[Rotation.CenterPointOffset]"
+               Value="0,140,0"/>
+          <Invoke Target="[DunkingBirdBody.AttachAnimation]"
+                  animation="[Rotation]"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"
+                      Spacing="30,0"/>
+        </Layout>
+        <Children>
+          <Text Content="Click one of the links below"
+                Color="Red"
+                Font="Arial,30" />
+          <me:MyLink Command="[PlayCenterPointPercentRotation]" />
+          <me:MyLink Command="[PlayCenterPointOffsetRotation]" />
+
+          <!-- Build the dunking bird image from two images - dunking    -->
+          <!-- bird body and dunking bird legs                           -->
+          <ColorFill Content="White"
+                     MaximumSize="400,500"
+                     Padding="0,25,0,25"
+                     Layout="Center">
+            <Children>
+              <Graphic Name="DunkingBirdLegs"
+                       Content="file://AnimationsCenterPointDunkingBirdLegs.png"
+                       MaintainAspectRatio="true"/>
+              <Graphic Name="DunkingBirdBody"
+                       Content="file://AnimationsCenterPointDunkingBirdBody.png"
+                       MaintainAspectRatio="true"/>
+            </Children>
+          </ColorFill>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!--  This UI item defines a simple Text item that can invoke      -->
+  <!--  a Command when the user clicks on it.                        -->
+
+  <UI Name="MyLink">
+    <Properties>
+      <!-- The command to be invoked.                                -->
+      <ICommand Name="Command"
+                ICommand="$Required"/>
+
+      <!-- Text properties                                           -->
+
+      <Color Name="LinkTextColor"
+             Color="Blue"/>
+      <Color Name="LinkTextHoverColor"
+             Color="White"/>
+      <Font Name="LinkTextFont"
+            Font="Arial,20,Italic"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[Command.Description]"
+               Target="[Link.Content]" />
+      <Binding Source="[Command]"
+               Target="[Clicker.Command]" />
+      <Condition Source="[Input.MouseFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Link.Color]"
+               Value="[LinkTextHoverColor]"/>
+        </Actions>
+      </Condition>
+    </Rules>
+    <Content>
+      <Text Name="Link"
+            Color="[LinkTextColor]"
+            Font="[LinkTextFont]" />
+    </Content>
+  </UI>
+</Mcml>

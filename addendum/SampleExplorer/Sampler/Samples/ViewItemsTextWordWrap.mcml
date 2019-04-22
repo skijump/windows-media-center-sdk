@@ -1,0 +1,25 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System">
+  <UI Name="Default">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="Wordwrap=Default (False). Text on one line, truncated."
+                Color="White"/>
+          <Text Content="Incidunt improbis defuturum tenetur inportuno suam confidet hominum aliquam fugit civium confidet noctesque harum factis diis mollitia legum umquam fugit. Sic utilitatibus supplicii animadversionis collegisti hoc. Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu."
+                Color="Yellow"/>
+          <Text Content="WordWrap=False. Text on one line, truncated."
+                Color="White"/>
+          <Text Content="Incidunt improbis defuturum tenetur inportuno suam confidet hominum aliquam fugit civium confidet noctesque harum factis diis mollitia legum umquam fugit. Sic utilitatibus supplicii animadversionis collegisti hoc. Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu."
+                WordWrap="false"
+                Color="Yellow"/>
+          <Text Content="WordWrap=True. Text on multiple lines, not truncated."
+                Color="White"/>
+          <Text Content="Incidunt improbis defuturum tenetur inportuno suam confidet hominum aliquam fugit civium confidet noctesque harum factis diis mollitia legum umquam fugit. Sic utilitatibus supplicii animadversionis collegisti hoc. Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu."
+                WordWrap="true"
+                Color="Yellow"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

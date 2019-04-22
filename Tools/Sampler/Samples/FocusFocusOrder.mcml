@@ -1,0 +1,293 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- FocusOrder Sample                                                     -->
+  <!-- The FocusOrder property allows you to assign relative priorities to   -->
+  <!-- siblings within the Navigation tree for determining where default     -->
+  <!-- focus should go when entering a UI.                                   -->
+  <!-- Legal values range from 0 to Int32.MaxValue (the default), and the    -->
+  <!-- priority is inverted. i.e. a *lower* non-negative focus order takes   -->
+  <!-- precendence over a higher one.                                        -->
+
+  <!-- The Main UI displays 4 rows of focusable tiles, each row              -->
+  <!-- demonstrating a different aspect of the FocusOrder property.  Each    -->
+  <!-- displays a string, indicating the FocusOrder that has been set on it. -->
+  <!-- To the left of each row is a button which when clicked, will move     -->
+  <!-- focus into that row, demonstrating how the FocusOrder determines      -->
+  <!-- default focus.                                                        -->
+
+  <!-- It is possible to create a container that is focusable in such a way  -->
+  <!-- that if it ends up with no focusable content, Windows Media Center    -->
+  <!-- will still give it focus as a fallback and it will continue to be     -->
+  <!-- able to respond to input.                                             -->
+
+  <UI Name="Main">
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="25,0"/>
+        </Layout>
+
+        <Children>
+          <Text Color="White"
+                Font="Arial,18"
+                Content="The second row should have default focus."/>
+          <Text Color="White"
+                Font="Arial,18"
+                Content="Click on a 'Navigate Into' button to go to the default focus for that row"/>
+
+          <!-- In this first row, the item with the lowest focus order is    -->
+          <!-- actually disabled.  Thus, the default focus for this row will -->
+          <!-- actually go to the second item.                               -->
+          <me:Strip Name="Row1"
+                    Item1Enabled="false"/>
+
+          <!-- Notice that out of all peers in this UI, this row is the only -->
+          <!-- one with an explicitly set FocusOrder.  Thus, default focus   -->
+          <!-- should start in this row.  Within this row, we continue to    -->
+          <!-- use FocusOrder to find the default focus.  In this case, it   -->
+          <!-- will be the first tile, as it's got the lowest FocusOrder     -->
+          <!-- value.                                                        -->
+          <me:Strip Name="Row2"
+                    FocusOrder="0" />
+
+          <!-- This row demonstrates that FocusOrder can really be any       -->
+          <!-- values.  It's not the values themselves that are important,   -->
+          <!-- but the ordering of them when compared against their peers.   -->
+          <me:Strip Name="Row3"
+                    Item1FocusOrder="300"
+                    Item2FocusOrder="200"
+                    Item3FocusOrder="100"/>
+
+          <!-- Lastly, in this strip, all of the items are disabled.  In     -->
+          <!-- case, a default navigation into the strip goes to the only    -->
+          <!-- focusable item - the "Navigate Into" button itself.           -->
+          <me:Strip Name="Row4"
+                    Item1Enabled="false"
+                    Item2Enabled="false"
+                    Item3Enabled="false"/>
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+  <!-- The "Strip" UI displays a row of focusable tiles, allowing you to set -->
+  <!-- the focus order and key-interactivity of each tile individually.      -->
+  <!-- It also displays a button to the left of the row that when clicked,   -->
+  <!-- will send focus to the default location within our row.               -->
+  <UI Name="Strip">
+    <Properties>
+
+      <!-- Which tiles are key interactive (i.e. focusable) -->
+      <cor:Boolean Name="Item1Enabled"
+                   Boolean="true"/>
+      <cor:Boolean Name="Item2Enabled"
+                   Boolean="true"/>
+      <cor:Boolean Name="Item3Enabled"
+                   Boolean="true"/>
+
+      <!-- What is the focus order for each tile -->
+      <cor:Int32 Name="Item1FocusOrder"
+                 Int32="1"/>
+      <cor:Int32 Name="Item2FocusOrder"
+                 Int32="2"/>
+      <cor:Int32 Name="Item3FocusOrder"
+                 Int32="3"/>
+    </Properties>
+
+    <Locals>
+      <Command Name="NavigateIntoCommand"/>
+    </Locals>
+
+    <Rules>
+      <!-- When our command is invoked, do a navigation into this row to -->
+      <!-- show where the default focus goes.                            -->
+      <Changed Source="[NavigateIntoCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[Root.NavigateInto]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Name="Root">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      Spacing="5,0"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- Button for navigating into our row -->
+          <me:NavigateButton Command="[NavigateIntoCommand]"
+                             Margins="0,0,25,0"/>
+
+          <!-- 3 Focusable Tiles -->
+          <me:FocusableTile MaximumSize="150,100"
+                            MinimumSize="150,100"
+                            KeyInteractive="[Item1Enabled]"
+                            FocusOrder="[Item1FocusOrder]"
+                            MyFocusOrder="[Item1FocusOrder]"/>
+          <me:FocusableTile MaximumSize="150,100"
+                            MinimumSize="150,100"
+                            KeyInteractive="[Item2Enabled]"
+                            FocusOrder="[Item2FocusOrder]"
+                            MyFocusOrder="[Item2FocusOrder]"/>
+          <me:FocusableTile MaximumSize="150,100"
+                            MinimumSize="150,100"
+                            KeyInteractive="[Item3Enabled]"
+                            FocusOrder="[Item3FocusOrder]"
+                            MyFocusOrder="[Item3FocusOrder]"/>
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+  <!-- The "FocusableTile" UI is a single tile which is optionally key      -->
+  <!-- interactive, and displays an integer value representing its focus    -->
+  <!-- order.  When it receives Key focus, it's outline changes color, and  -->
+  <!-- if it is disabled, it is shown grayed out with a text indication as  -->
+  <!-- well.                                                                -->
+  <UI Name="FocusableTile">
+
+    <Properties>
+      <cor:Boolean Name="KeyInteractive"
+                   Boolean="true"/>
+      <cor:Int32  Name="MyFocusOrder"/>
+    </Properties>
+
+    <Rules>
+      <!-- Set our KeyInteractive state-->
+      <Default Target="[Input.KeyInteractive]"
+               Value="[KeyInteractive]"/>
+
+      <!-- When we receive Key Focus, change our outline color -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="True">
+        <Actions>
+          <Set Target="[Outline.Content]"
+               Value="Lawngreen"/>
+        </Actions>
+      </Condition>
+
+      <!-- Convert our integer FocusOrder value to a string and set it on   -->
+      <!-- our text object.-->
+      <Default Target="[FocusOrderMessage.Content]"
+               Value="[MyFocusOrder.ToString]"/>
+
+      <!-- If we're disabled, gray ourselves out and show the disabled text.-->
+      <Condition Source ="[KeyInteractive]"
+                 SourceValue="false">
+        <Actions>
+          <Set Target="[DisabledOverlay.Visible]"
+               Value="true"/>
+          <Set Target="[DisabledMessage.Visible]"
+               Value="true"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <ColorFill Name="DisabledOverlay"
+                     Visible="false"
+                     Content="Gray"
+                     Alpha="0.8">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Outline,0"
+                                 Top="Outline,0"
+                                 Right="Outline,1"
+                                 Bottom="Outline,1"/>
+            </LayoutInput>
+          </ColorFill>
+
+          <ColorFill Name="Outline"
+                     Content="Firebrick"
+                     Padding="10,10,10,10"
+                     Layout="Fill">
+            <Children>
+              <ColorFill Content="Yellow"
+                         MouseInteractive="true"
+                         Layout="VerticalFlow"
+                         Padding="3,3,3,3">
+                <Children>
+                  <Text Name="FocusOrderMessage"/>
+                  <Text Name="DisabledMessage"
+                        Visible="false"
+                        Font="Arial,16"
+                        Content="(Disabled)"/>
+                </Children>
+              </ColorFill>
+            </Children>
+          </ColorFill>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- The NavigateButton UI creates a simple button with a fixed text value -->
+  <!-- It takes a command, that is passed to the ClickHandler so it can be   -->
+  <!-- invoked when the button is clicked on.                                -->
+  <UI Name="NavigateButton">
+
+    <Properties>
+      <ICommand Name="Command"
+                ICommand="$Required"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"
+                    Command="[Command]"/>
+    </Locals>
+
+    <Rules>
+      <!-- When the user is in the process of clicking us, change our text  -->
+      <!-- color to indicate that.                                          -->
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Message.Color]"
+               Value="Yellow"/>
+        </Actions>
+      </Condition>
+
+      <!-- When we receive Key Focus, change our outline and background     -->
+      <!-- colors for a visual indication.                                  -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="True">
+        <Actions>
+          <Set Target="[Outline.Content]"
+               Value="Lawngreen"/>
+          <Set Target="[Background.Content]"
+               Value="Firebrick"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <ColorFill Name="Outline"
+                 Content="White"
+                 Padding="2,2,2,2">
+        <Children>
+          <ColorFill Name="Background"
+                     MouseInteractive="true"
+                     Content="Black"
+                     Padding="3,3,3,3">
+            <Children>
+              <Text  Name="Message"
+                     Color="White"
+                     Content="Navigate Into ==>"/>
+            </Children>
+          </ColorFill>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+</Mcml>

@@ -1,0 +1,139 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System">
+
+  <!-- MathTransformer gives UIs the ability to manipulate numeric values  -->
+  <!-- by applying simple math operators (Add, Subtract, Multiply, Divide, -->
+  <!-- Modulo, Absolute, and Sign). MathTransformer also has the ability   -->
+  <!-- to do numeric type conversions of the end result.                   -->
+
+  <!-- MathTransformer takes an incoming value and applies operators in    -->
+  <!-- a paticular order. Operator values to apply come from properties    -->
+  <!-- set on the MathTransformer. Order of operations is the following:   -->
+
+  <!-- Value = Value * "Multiply"                                          -->
+  <!-- Value = Value / "Divide"                                            -->
+  <!-- Value = Value + "Add"                                               -->
+  <!-- Value = Value - "Subtract"                                          -->
+  <!-- Value = Value % "Mod"                                               -->
+  <!-- If "Abs", Then Value = Abs(Value)                                   -->
+  <!-- If "Sign", Then Value = Sign(Value)                                 -->
+  <!-- Value = Convert(Value)                                              -->
+
+  <!-- MathTransformer can accept any numeric value. It has "Int" versions -->
+  <!-- of all its properties to support integer operations                 -->
+
+  <!-- NOTE: The target of the MathTransformer must accept the same type   -->
+  <!-- of the original value, or, the converted type if a conversion was   -->
+  <!-- specified.                                                          -->
+
+  <!-- The following tags support transformers:                            -->
+  <!--   Binding, Equality, Invoke, InvokeCommand, and Set                 -->
+
+  <!-- In this example, the Fibonacci sequence is computed by using        -->
+  <!-- the MathTransformer. A Fibonacci number is computer by adding the   -->
+  <!-- last 2 numbers in the sequence: Fib(n)=Fib(n-1)+Fib(n-2), where     -->
+  <!-- Fib(1)=1 and Fib(0)=0. A MathTransformer is also used to increment  -->
+  <!-- a count on every Timer tick to serve as the current Fibonacci       -->
+  <!-- number being computed. The sequence stops at Fib(45) to prevent     -->
+  <!-- an integer overflow.                                                -->
+
+  <UI Name="MathTransformer">
+
+    <!-- Value is a number. -->
+    <Locals>
+      <Timer Name="Timer"
+             Enabled="true"
+             Interval="750"/>
+
+      <!-- The current Fib index. -->
+      <cor:Int32 Name="Count"
+                 Int32="1"/>
+
+      <!-- The last Fib value. -->
+      <cor:Int32 Name="Last"
+                 Int32="0"/>
+      <!-- The current Fib value. -->
+      <cor:Int32 Name="Value"
+                 Int32="1"/>
+
+      <cor:Int32 Name="Scratch"/>
+
+      <!-- MathTransformer in locals so that it can be modified -->
+      <!-- on the fly.                                          -->
+      <MathTransformer Name="Adder"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- On a tick, compute the next Fib value. -->
+      <Changed Source="[Timer.Tick]">
+        <Actions>
+          <Set Target="[Scratch]"
+               Value="[Value]"/>
+
+          <!-- Modify the MathTransformer so that it will add in -->
+          <!-- the Last Fib value.                               -->
+          <Set Target="[Adder.AddInt]"
+               Value="[Last]"/>
+
+          <!-- Add the last Fib value in (this will invoke the -->
+          <!-- transformer).                                   -->
+          <Set Target="[Value]"
+               Value="[Value]"
+               Transformer="[Adder]"/>
+          <Set Target="[Last]"
+               Value="[Scratch]"/>
+
+          <!-- Increment the counter. Uses an embedded math -->
+          <!-- transformer.                                 -->
+          <Set Target="[Count]"
+               Value="[Count]">
+            <Transformer>
+              <MathTransformer AddInt="1"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Changed>
+
+      <!-- Stop the timer at Fib(45) to prevent overflow. -->
+      <Condition Source="[Count]"
+                 ConditionOp="GreaterThan"
+                 SourceValue="44">
+        <Actions>
+          <Set Target="[Timer.Enabled]"
+               Value="false"/>
+        </Actions>
+      </Condition>
+
+      <!-- Display of the current Fib value. -->
+      <Binding Source="[Value.ToString]"
+               Target="[ValueLabel.Content]"/>
+
+      <!-- Display of the current Fib index. -->
+      <Binding Source="[Count.ToString]"
+               Target="[CountLabel.Content]">
+        <Transformer>
+          <FormatTransformer Format="Fibonacci({0})="/>
+        </Transformer>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="HorizontalFlow">
+        <Children>
+          <Text Name="CountLabel"
+                Color="LightSteelBlue"
+                Font="Tahoma,40"/>
+          <Text Name="ValueLabel"
+                Color="White"
+                Font="Tahoma,40"/>
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

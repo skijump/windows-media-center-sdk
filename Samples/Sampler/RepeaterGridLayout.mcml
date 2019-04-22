@@ -1,0 +1,348 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- Repeater + GridLayout sample                                         -->
+  <!--                                                                      -->
+  <!-- When you have items that may be of different sizes that you want to  -->
+  <!-- be laid out in an evenly-sized grid, you can use a GridLayout to     -->
+  <!-- achieve this.  Like FlowLayout, GridLayout lets you specify a policy -->
+  <!-- for when to request additional items to repeat the list.  Used in    -->
+  <!-- combination with a repeater, this lets you create a list of items    -->
+  <!-- that appears to repeat infinitely.                                   -->
+  <!--                                                                      -->
+  <!-- In this sample, we have a list of 4 different-sized images that we   -->
+  <!-- put inside of a grid layout to achieve equally-sized tiles.  We then -->
+  <!-- create 6 rows of these items, demonstrating the different repeat     -->
+  <!-- configurations on GridLayout.   The repeat options themselves work   -->
+  <!-- identically on FlowLayout/GridLayout, but notice that in this sample,-->
+  <!-- all of the items are the same size, whereas in the FlowLayout sample -->
+  <!-- they were not.                                                       -->
+  <UI Name="Main">
+
+    <Locals>
+      <!-- We need to create a ScrollingData in order to pad the top of our -->
+      <!-- scrolling region.  If we don't do this, when you scroll down and -->
+      <!-- then back up again, the text at the top wouldn't be visible      -->
+      <!-- (since scrolling is done via focus, and the text is above the    -->
+      <!-- highest focusable item).                                         -->
+      <ScrollingData Name="ScrollData"
+                     BeginPadding="200"
+                     BeginPaddingRelativeTo="Near"/>
+    </Locals>
+    <Content>
+
+      <Panel>
+        <Children>
+
+          <Scroller Orientation="Vertical"
+                    ScrollingData="[ScrollData]"
+                    Navigation="FlowHorizontal"
+                    FadeSize="1">
+            <Children>
+
+              <!-- Title for the sample. -->
+              <Text Color="White"
+                    Content="GridLayout Sample"
+                    Font="Arial,50">
+                <Animations>
+                  <Animation Animation="animation://me:MoveAnimation"/>
+                </Animations>
+              </Text>
+
+              <!-- ScrollingSample is a UI which displays a row of four    -->
+              <!-- stars.                                                  -->
+              <!-- The "Mode" parameter gets passed to the Repeat property -->
+              <!-- on its GridLayout, and MaximumConstraint is set as the  -->
+              <!-- MaximumSize for the entire row.                         -->
+
+              <!-- This row will just display the four tiles without any    -->
+              <!-- repeating at all.                                        -->
+              <me:ScrollingSample Mode="Never">
+                <Animations>
+                  <Animation Animation="animation://me:MoveAnimation"/>
+                </Animations>
+              </me:ScrollingSample>
+
+              <!-- Repeat="Always" means "always repeat"  So, this row will -->
+              <!-- repeat.                                                  -->
+              <me:ScrollingSample Mode="Always">
+                <Animations>
+                  <Animation Animation="animation://me:MoveAnimation"/>
+                </Animations>
+              </me:ScrollingSample>
+
+              <!-- Repeat="WhenTooSmall" means the data should be repeated -->
+              <!-- if it doesn't fit the entire constraint.  In this case, -->
+              <!-- we set a maximum constraint that's smaller than our     -->
+              <!-- content, and so it does not repeat (since it's not too  -->
+              <!-- small).                                                 -->
+              <me:ScrollingSample Mode="WhenTooSmall"
+                                  MaximumConstraint="500,0">
+                <Animations>
+                  <Animation Animation="animation://me:MoveAnimation"/>
+                </Animations>
+              </me:ScrollingSample>
+
+              <!-- In this case, we're not limiting the constraint - since -->
+              <!-- our content is smaller than the "unlimited" constraint, -->
+              <!-- this row will repeat.                                   -->
+              <me:ScrollingSample Mode="WhenTooSmall">
+                <Animations>
+                  <Animation Animation="animation://me:MoveAnimation"/>
+                </Animations>
+              </me:ScrollingSample>
+
+              <!-- Repeat="WhenTooBig" means that the data should be         -->
+              <!-- repeated if it's larger than the entire constraint.   In  -->
+              <!-- this case, we're leaving the maximum constraint untouched -->
+              <!-- and so our content will not wrap.                         -->
+              <me:ScrollingSample Mode="WhenTooBig">
+                <Animations>
+                  <Animation Animation="animation://me:MoveAnimation"/>
+                </Animations>
+              </me:ScrollingSample>
+
+              <!-- And in this case, we pass in a maximum size that's  -->
+              <!-- smaller than our content size, and so it will wrap. -->
+              <me:ScrollingSample Mode="WhenTooBig"
+                                  MaximumConstraint="500,0">
+                <Animations>
+                  <Animation Animation="animation://me:MoveAnimation"/>
+                </Animations>
+              </me:ScrollingSample>
+
+            </Children>
+          </Scroller>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+
+  <!-- The ScrollingSample displays a list of four different-sized stars    -->
+  <!-- using a GridLayout to create evenly-sized tiles.  It lets you        -->
+  <!-- configure the Repeat value on the GridLayout, and the MaximumSize for-->
+  <!-- the entire row.                                                      -->
+  <!-- It also has two Text items, showing the values of the passed-in      -->
+  <!-- parameters.                                                          -->
+  <UI Name="ScrollingSample">
+    <Properties>
+      <RepeatPolicy Name="Mode"
+                    RepeatPolicy="Always"/>
+      <Size Name="MaximumConstraint"
+            Size="0,0"/>
+    </Properties>
+    <Locals>
+
+      <!-- This is our list of images that we'll be passing to the Repeater.-->
+      <!-- The four images all have unique sizes.                           -->
+      <ArrayListDataSet Name="List">
+        <Source>
+          <Image Image="file://RepeaterGridLayoutGreenStar.png"/>
+          <Image Image="file://RepeaterGridLayoutBlueStar.png"/>
+          <Image Image="file://RepeaterGridLayoutYellowStar.png"/>
+          <Image Image="file://RepeaterGridLayoutPurpleStar.png"/>
+        </Source>
+      </ArrayListDataSet>
+
+    </Locals>
+
+    <Rules>
+      <!-- Display our Repeat and MaxSize values.  -->
+      <Rule>
+
+        <Actions>
+          <Set Target="[Description.Content]"
+               Value="[Mode]">
+            <Transformer>
+              <FormatTransformer Format="Repeat: {0}"/>
+            </Transformer>
+          </Set>
+
+          <Set Target="[Constraint.Content]"
+               Value="[MaximumConstraint]">
+            <Transformer>
+              <FormatTransformer Format="Max Size: {0}"/>
+            </Transformer>
+          </Set>
+        </Actions>
+
+      </Rule>
+
+    </Rules>
+
+
+    <Content>
+
+      <!-- Colored outline for our entire row.                              -->
+      <ColorFill Content="DarkBlue"
+                 Margins="0,25,0,0"
+                 Padding="10,10,10,10"
+                 MaximumSize="[MaximumConstraint]">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="5,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Text description of our properties.                          -->
+          <Text Name="Description"
+                Font="Arial,20"
+                Color="White"/>
+          <Text Name="Constraint"
+                Font="Arial,20"
+                Color="White"/>
+
+          <!-- Put in a scroller so that if we repeat, the row will scroll. -->
+          <Scroller Orientation="Horizontal"
+                    FadeSize="30">
+            <Children>
+
+              <!-- Hook up our list to the repeater.  -->
+              <Repeater Source="[List]"
+                        Navigation="Row">
+                <Animations>
+                  <Animation Animation="animation://me:MoveAnimation"/>
+                </Animations>
+
+                <Layout>
+
+                  <!-- The actual GridLayout.  Set the repeat to the passed -->
+                  <!-- in value.  The ReferenceSize specifies the size to be-->
+                  <!-- used for each item it is laying out.  Thus, even     -->
+                  <!-- though our images are different sizes, each will be  -->
+                  <!-- placed inside a 150 x 200 space, ensuring a uniform  -->
+                  <!-- flow.  MajorAlignment and MinorAlignment specify how -->
+                  <!-- the content should be placed within the space if it  -->
+                  <!-- is smaller than the reference size.                  -->
+                  <GridLayout Repeat="[Mode]"
+                              ReferenceSize="150,200"
+                              Spacing="5,0"
+                              MajorAlignment="Center"
+                              MinorAlignment="Center"/>
+                </Layout>
+                <Content>
+
+                  <!-- For each item, repeat our RepeatedItem UI, passing in-->
+                  <!-- the index of the item and the image.                 -->
+                  <me:RepeatedItem MyIndex="[RepeatedItemIndex]"
+                                   ImageSource="[RepeatedItem!Image]"/>
+                </Content>
+              </Repeater>
+
+            </Children>
+          </Scroller>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+
+  <!-- The RepeatedItem UI is what gets repeated for each image in our list -->
+  <!-- from the ScrollingSample UI.  It displays the image itself, the      -->
+  <!-- item's index and "Real" indexes, and a background color fill that    -->
+  <!-- changes color when it receives key focus.                            -->
+  <UI Name="RepeatedItem">
+    <Properties>
+
+      <!-- The index passed down from the repeater.-->
+      <Index Name="MyIndex"
+             Index="$Required"/>
+
+      <!-- The image from our list.                -->
+      <Image Name="ImageSource"
+             Image="$Required"/>
+
+    </Properties>
+
+    <Rules>
+      <!-- Mark ourselves as KeyInteractive so we can receive key focus.    -->
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+      <!-- If we get key focus, change our background color to indicate it. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Background.Content]"
+                 Value="Gray"/>
+
+      <!-- Display our Index and "Real" index.  The Value property on Index -->
+      <!-- is the index of the item, taking repeating into account, and     -->
+      <!-- the RealValue is the index of our item within the data list.     -->
+      <Rule>
+        <Actions>
+          <Set Target="[IndexValue.Content]"
+               Value="[MyIndex.Value.ToString]">
+            <Transformer>
+              <FormatTransformer Format="Virtual: {0}"/>
+            </Transformer>
+          </Set>
+          <Set Target="[RealIndexValue.Content]"
+               Value="[MyIndex.SourceValue.ToString]">
+            <Transformer>
+              <FormatTransformer Format="Real: {0}"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Fill">
+        <Children>
+
+          <ColorFill Name="Background"
+                     Content="Transparent"
+                     Padding="5,5,5,5">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <Children>
+
+              <!-- Create a left-aligned panel for our text items. -->
+              <Panel>
+                <Layout>
+                  <FlowLayout Orientation="Vertical"
+                              ItemAlignment="Near"/>
+                </Layout>
+                <Children>
+                  <Text Name="IndexValue"
+                        Color="White"
+                        Font="Arial,18"/>
+                  <Text Name="RealIndexValue"
+                        Color="White"
+                        Font="Arial,18"/>
+                </Children>
+              </Panel>
+
+              <!-- The actual Graphic. -->
+              <Graphic Content="[ImageSource]"/>
+
+            </Children>
+          </ColorFill>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- Animation so we scroll smoothly -->
+  <Animation Name="MoveAnimation"
+             Type="Move">
+    <Keyframes>
+      <PositionKeyframe Time="0.0"
+                        Value="0,0,0"
+                        RelativeTo="Current"/>
+      <PositionKeyframe Time="0.2"
+                        Value="0,0,0"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

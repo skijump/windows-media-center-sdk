@@ -1,0 +1,77 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:a="assembly://Sampler/Sampler">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+  
+  <UI Name="Default">
+
+    <Properties>
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+    
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+    </Locals>
+
+    <Rules>
+
+      <Rule>
+        <Actions>
+
+          <!--Play some content which should be considered to determine if we are the foreground application.-->
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Audio"
+                  media="[Sampler.LocalContentAudio03]"
+                  addToQueue="false" />
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"/>
+          <Equality Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"
+                    Value="2"/>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true"/>
+        </Conditions>
+        <Actions>
+          <!--Set the EntryPointID so we return to this application when the Now Playing PIP is selected by the user.-->
+          <!-- This application and entrypoint GUID is for the Sampler. -->
+          <!-- It would be replaced with the developer defined GUIDs for the specific application. -->
+          <Set Target="[AddInHost.MediaCenterEnvironment.MediaExperience.EntryPointId]"
+               Value="{bce681ec-a838-4bf3-a124-97674b74851b}\{7f1e2adf-5006-44fb-8f3d-095e635ab443}" />
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Panel>
+            <Layout>
+              <FlowLayout AllowWrap="true"
+                          Spacing="5,5"
+                          Orientation="Vertical"/>
+            </Layout>
+            <Children>
+              <Text Name="Label"
+                    Color="White"
+                    Content="MediaCenter.MediaCenterEnvironment.MediaExperience.EntryPointID Sample" />
+              <NowPlaying />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

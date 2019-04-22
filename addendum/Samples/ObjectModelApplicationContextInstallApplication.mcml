@@ -1,0 +1,62 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:mce="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <mce:AddInHost Name="MCEHost"/>
+      <mce:InstallationOptions Name="OptionNone"
+                               InstallationOptions="None"/>
+      <mce:InstallationOptions Name="OptionUpdate"
+                               InstallationOptions="Update"/>
+      <ExceptionHandler Name="GenericHandler" />
+      <Command Name="LaunchInstall"
+               Description="Install All Users Local Application" />
+      <cor:String Name="MsiURL"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/PowerPlaylist2.0.msi"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[LaunchInstall.Invoked]">
+        <Actions>
+          <Invoke Target="[MCEHost.ApplicationContext.InstallApplication]"
+                  package="[MsiURL]"
+                  options="[OptionNone]">
+            <HandleExceptions>
+              <HandleException ExceptionType="System.Exception"
+                               ExceptionHandler="[GenericHandler]" />
+            </HandleExceptions>
+          </Invoke>
+        </Actions>
+      </Changed>
+      <Changed Source="[GenericHandler.Caught]">
+        <Actions>
+          <Set Target="[ExceptionResult.Content]"
+               Value="[GenericHandler.CaughtExceptionType]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:Button Command="[LaunchInstall]"
+                       ButtonLabel="[LaunchInstall.Description]"/>
+          <Text Name="ExceptionResult"
+                Content=""
+                Color="White"
+                Font="Calibri, 14" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

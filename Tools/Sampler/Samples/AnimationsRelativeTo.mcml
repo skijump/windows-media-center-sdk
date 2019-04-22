@@ -1,0 +1,119 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:btn="resx://Sampler/Sampler.Resources/ControlsSimpleButton">
+
+  <!-- The RelativeTo option on keyframes enables you to configure what the -->
+  <!-- Value property on that keyframe is relative to.                      -->
+
+  <!-- There are three RelativeTo options:                                  -->
+  <!-- * Absolute                                                           -->
+  <!-- * Final                                                              -->
+  <!-- * Current                                                            -->
+
+  <!-- The value of an Absolute keyframe is not relative.  Its value is     -->
+  <!-- a literal.                                                           -->
+
+  <!-- The value of a Final keyframe is relative to the desired end value   -->
+  <!-- specified by layout.  It's where the item is supposed to be at the   -->
+  <!-- end of the animation.  It's recommended that all animations end with -->
+  <!-- a RelativeTo="Final" keyframe.                                       -->
+
+  <!-- The value of a Current keyframe is relative to the existing value    -->
+  <!-- at the time the animation is started.  It is recommended that all    -->
+  <!-- animations should begin with a RelativeTo="Current" keyframe.  This  -->
+  <!-- enables nice blending of values when animations are interrupted.     -->
+  <UI Name="AnimationRelativeValues">
+
+    <Properties>
+
+      <!-- This animation animates relative to layout coordinates (using -->
+      <!-- RelativeTo="Final").                                          -->
+      <Animation Name="AbsoluteAnimation">
+        <Keyframes>
+
+          <PositionKeyframe Time="0.0"
+                            Value="0,0,0"/>
+          <PositionKeyframe Time="1.0"
+                            Value="400,0,0"/>
+          <PositionKeyframe Time="2.0"
+                            Value="0,0,0"/>
+
+        </Keyframes>
+      </Animation>
+
+      <!-- This animation animates relative to layout coordinates for all   -->
+      <!-- keyframes except the first (which is RelativeTo="Current").      -->
+      <!-- That keyframe will take the value of the current position at the -->
+      <!-- time the animation is played.                                    -->
+      <Animation Name="RelativeAnimation">
+        <Keyframes>
+
+          <PositionKeyframe Time="0.0"
+                            Value="0,0,0"
+                            RelativeTo="Current"/>
+          <PositionKeyframe Time="1.0"
+                            Value="400,0,0"/>
+          <PositionKeyframe Time="2.0"
+                            Value="0,0,0"/>
+
+        </Keyframes>
+      </Animation>
+    </Properties>
+
+    <Locals>
+      <Command Name="Command"
+               Description="Play animation NOW"/>
+    </Locals>
+
+    <Rules>
+      <!-- When our button is pressed, play the two animations. -->
+      <Changed Source="[Command.Invoked]">
+        <Actions>
+          <PlayAnimation Target="[AbsoluteItem]"
+                         Animation="[AbsoluteAnimation]"/>
+          <PlayAnimation Target="[RelativeItem]"
+                         Animation="[RelativeAnimation]"/>
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Description of the test -->
+          <Text Content="Click on the button to play the animation.  The cube will move to the right and then back to the left.  Try clicking the Play button in the middle of the animation to see how the different RelativeTo values on the first keyframe modify the behavior."
+                Font="Arial, 20"
+                Color="White"
+                WordWrap="true"/>
+
+          <!-- Play button -->
+          <btn:SimpleButton Command="[Command]"/>
+
+          <!-- Non-relative example -->
+          <Text Content="Relative to Final"
+                Font="Arial, 20"
+                Color="White"/>
+          <Graphic Name="AbsoluteItem"
+                   Content="resx://Sampler/Sampler.Resources/FourBoxGraphic"/>
+
+          <!-- Relative example -->
+          <Text Content="Relative to Current"
+                Font="Arial, 20"
+                Color="White"/>
+          <Graphic Name="RelativeItem"
+                   Content="resx://Sampler/Sampler.Resources/FourBoxGraphic"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

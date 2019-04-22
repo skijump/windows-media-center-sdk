@@ -1,0 +1,165 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <UI Name="Default">
+
+    <Locals>
+      <ArrayListDataSet Name="MyLocations">
+        <Source>
+          <cor:String String="Item Number 1"/>
+          <cor:String String="Item Number 2"/>
+          <cor:String String="Item Number 3"/>
+          <cor:String String="Item Number 4"/>
+          <cor:String String="Item Number 5"/>
+          <cor:String String="Item Number 6"/>
+          <cor:String String="Item Number 7"/>
+          <cor:String String="Item Number 8"/>
+          <cor:String String="Item Number 9"/>
+          <cor:String String="Item Number 10"/>
+          <cor:String String="Item Number 11"/>
+          <cor:String String="Item Number 12"/>
+          <cor:String String="Item Number 13"/>
+          <cor:String String="Item Number 14"/>
+          <cor:String String="Item Number 15"/>
+          <cor:String String="Item Number 16"/>
+          <cor:String String="Item Number 17"/>
+          <cor:String String="Item Number 18"/>
+          <cor:String String="Item Number 19"/>
+          <cor:String String="Item Number 20"/>
+          <cor:String String="Item Number 21"/>
+          <cor:String String="Item Number 22"/>
+          <cor:String String="Item Number 23"/>
+          <cor:String String="Item Number 24"/>
+          <cor:String String="Item Number 25"/>
+          <cor:String String="Item Number 26"/>
+          <cor:String String="Item Number 27"/>
+          <cor:String String="Item Number 28"/>
+          <cor:String String="Item Number 29"/>
+          <cor:String String="Item Number 30"/>
+          <cor:String String="Item Number 31"/>
+          <cor:String String="Item Number 32"/>
+          <cor:String String="Item Number 33"/>
+          <cor:String String="Item Number 34"/>
+        </Source>
+      </ArrayListDataSet>
+      <ScrollingHandler Name="MyScrollingHandler"
+                        HandlerStage="Bubbled"/>
+      <cor:Boolean Name="GesturePanEnabled"
+                   Boolean="true"/>
+      <ScrollingData Name="MyScrollingData"
+                     BeginPadding="100"
+                     EndPadding="100"/>
+    </Locals>
+
+    <Rules>
+      <Default Target="[MyScrollingHandler.ScrollingData]"
+               Value="[MyScrollingData]"/>
+      <Default Target="[MyScrollingData.Repeater]"
+               Value="[MyListRepeater]"/>
+      <Binding Source="[GesturePanEnabled]"
+               Target="[MyScrollingHandler.GesturePanEnabled]"/>
+      <Binding Source="[MyScrollingHandler.IsPanning.ToString]"
+               Target ="[MyIsPanning.Content]" />
+      <Binding Source="[MyScrollingHandler.IsPanningInertia.ToString]"
+               Target="[MyIsPanningInertia.Content]" />
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form"
+             TouchInteractive="True">
+        <Children>
+          <Panel Layout="Center">
+            <Children>
+              <Panel Layout="VerticalFlow">
+                <Children>
+                  <ColorFill Padding="30,30,30,30"
+                             Content="AntiqueWhite"
+                             Margins="0,10,0,10">
+                    <Children>
+                      <Scroller Orientation="Horizontal"
+                                MaximumSize="0,400"
+                                FadeSize="-30"
+                                ScrollingData="[MyScrollingData]">
+                        <Children>
+                          <Repeater Name="MyListRepeater"
+                                    Source="[MyLocations]">
+                            <Layout>
+                              <GridLayout Orientation="Horizontal"
+                                          AllowWrap="true"
+                                          Spacing="10,10"/>
+                            </Layout>
+                            <Content>
+                              <me:ListItem Description="[RepeatedItem!cor:String]"/>
+                            </Content>
+                          </Repeater>
+
+                        </Children>
+                      </Scroller>
+                    </Children>
+                  </ColorFill>
+                  <Text Color="White"
+                        Content="Is Panning?"/>
+                  <Text Name="MyIsPanning"
+                        Color="White"
+                        Content=""/>
+                  <Text Color="White"
+                        Content="Is Inertia?"/>
+                  <Text Name="MyIsPanningInertia"
+                        Color="White"
+                        Content=""/>
+                </Children>
+              </Panel>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <UI Name="ListItem">
+    <Properties>
+      <cor:String Name="Description"
+                  String="null"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="Yellow"/>
+          <Set Target="[Label.Color]"
+               Value="Black"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <ColorFill Name="Background"
+                 Content="SlateGray"
+                 Padding="5,5,5,5"
+                 MouseInteractive="true">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+          <ColorFill Content="Aqua"
+                     MinimumSize="100,100"/>
+          <Text Name="Label"
+                Content="[Description]"
+                Color="White"
+                Font="Verdana,10"/>
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,125 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- Repeater Divider sample                                               -->
+  <!--                                                                       -->
+  <!-- When repeating a list of items, you sometimes want a divider to       -->
+  <!-- appear between them.  To support this, Repeater allows you to create  -->
+  <!-- a content section to be automatically inserted between items when     -->
+  <!-- used with a FlowLayout.                                               -->
+  <!-- Like the Content property on repeater, you can either specify the     -->
+  <!-- Divider inline via the Divider property, or as a separate named       -->
+  <!-- Content section via the DividerName property.  It's worth repeating   -->
+  <!-- that the dividers only make sense if you use a FlowLayout on the      -->
+  <!-- Repeater.  If you specify a Divider to be used, it will be centered   -->
+  <!-- in the Major Spacing between consecutive items by the FlowLayout.     -->
+  <!--                                                                       -->
+  <!-- This sample consists of a vertical flow of descriptive text, followed -->
+  <!-- by a strip of ColorFills with dividers between them.  There is more   -->
+  <!-- descriptive text, and then the same list of ColorFills is shown       -->
+  <!-- with a wrapped layout - in this case the dividers only appear between -->
+  <!-- items in a single row, not at the end of the wrapped row.             -->
+  <UI Name="Main">
+
+    <!-- Make ourselves key interactive since we don't have any focusable -->
+    <!-- content.                                                         -->
+    <Rules>
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+    </Rules>
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="20,0"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- Description text -->
+          <Text Color="White"
+                WordWrap="true"
+                Content="Notice the divider images that only appear *between* the color fills.  This is a result of setting the DividerName on Repeater"/>
+
+          <!-- Display a strip of items with dividers between them -->
+          <me:Sample/>
+
+          <Text Color="White"
+                WordWrap="true"
+                Content="In this case, the content has wrapped - Dividers only appear between items in the same strip"/>
+
+          <!-- Set a MaximumSize on this Sample in order to force it to wrap -->
+          <me:Sample MaximumSize="300,0"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+  <!-- The Sample UI Flows out a list of colors, displaying ColorFills for   -->
+  <!-- each one, specifying a Divider on the Repeater.  The FlowLayout is on -->
+  <!-- the Repeater is allowed to wrap so that we can demonstrate Divider    -->
+  <!-- behavior when wrapping occurs.                                        -->
+  <UI Name="Sample">
+    <Locals>
+      <ArrayListDataSet Name="List">
+        <Source>
+          <Color Color="DarkGreen"/>
+          <Color Color="Firebrick"/>
+          <Color Color="LightBlue"/>
+          <Color Color="Orange"/>
+        </Source>
+      </ArrayListDataSet>
+    </Locals>
+
+    <Content>
+      <ColorFill Content="Moccasin"
+                 Padding="10,10,10,10">
+        <Children>
+
+          <!-- We're specifying the DividerName to give the Repeater a  -->
+          <!-- named Content to insert between items.  We could also    -->
+          <!-- specify it inline using the Divider property, like we do -->
+          <!-- for Content below.                                       -->
+          <Repeater DividerName="Divider"
+                    Source="[List]">
+            <Layout>
+
+              <!-- Dividers only make sense if you're using FlowLayout-->
+              <FlowLayout Spacing="50,25"
+                          ItemAlignment="Center"
+                          AllowWrap="true"/>
+
+            </Layout>
+
+            <!-- This is the content that will be repeated for each item -->
+            <!-- in our list.  Just create a simple ColorFill, using the -->
+            <!-- the color that's being repeated as it's Content.        -->
+            <Content>
+              <Panel>
+                <Children>
+                  <ColorFill MinimumSize="100, 100"
+                             Content="[RepeatedItem!Color]"/>
+                </Children>
+              </Panel>
+            </Content>
+
+          </Repeater>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+    <!-- This is the Content section that is referred to by the DividerName -->
+    <!-- on the Repeater above.  Just use a small png image as the divider. -->
+    <Content Name="Divider">
+      <Graphic Content="file://RepeaterDivider.png"/>
+    </Content>
+
+  </UI>
+</Mcml>

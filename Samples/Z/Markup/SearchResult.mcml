@@ -1,0 +1,232 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:content="resx://Z/Z.Resources/ContentList"
+      xmlns:gallery="resx://Z/Z.Resources/GalleryPage"
+      xmlns:me="Me">
+
+
+  <!-- A result in either a search page or downloads page. -->
+  <UI Name="SearchResult">
+    <Properties>
+      <z:SearchResult Name="Model"
+                      SearchResult="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- Make this button clickable -->
+      <ClickHandler Name="Clicker"
+                    Command="[Model]"/>
+    </Locals>
+
+    <Rules>
+      <!-- Pressed styling -->
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <PlayAnimation Target="[Background]"
+                         Animation="animation://me:ButtonPress"/>
+        </Actions>
+      </Condition>
+
+      <!-- Focused styling -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="image://styles:ButtonFocusImage"/>
+          <Set Target="[Description.Color]"
+               Value="color://styles:Text.Negative"/>
+          <Set Target="[Type.Color]"
+               Value="color://styles:Text.Negative"/>
+          <Set Target="[MetadataPanel1.Visible]"
+               Value="true"/>
+          <Set Target="[MetadataPanel2.Visible]"
+               Value="true"/>
+          <Set Target="[Background.Scale]"
+               Value="1.1,1.1,1.0"/>
+          <Set Target="[ProgressBar.Focused]"
+               Value="true"/>
+        </Actions>
+      </Condition>
+
+      <!-- If there is no image to display, show the no image message. -->
+      <Condition Source="[Model.Image]"
+                 SourceValue="null"
+                 Target="[NoImage.Visible]"
+                 Value="true"/>
+
+      <!-- Progress bar -->
+      <Condition Source="[Model.DownloadProgress]"
+                 ConditionOp="GreaterThan"
+                 SourceValue="0.0"
+                 Target="[ProgressBar.Visible]"
+                 Value="true"/>
+
+      <!-- Accessibility -->
+      <Binding Target="[Accessible.IsPressed]"
+               Source="[Clicker.Clicking]"/>
+      <Binding Target="[Accessible.IsFocusable]"
+               Source="[Input.KeyInteractive]"/>
+      <Binding Target="[Accessible.IsFocused]"
+               Source="[Input.KeyFocus]"/>
+      <Binding Target="[Accessible.Name]"
+               Source="[Model.Description]"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Model]"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+    </Rules>
+
+    <Content>
+      <Graphic Name="Background"
+               Content="null"
+               Layout="Anchor"
+               MaximumSize="0,85"
+               Padding="5,5,5,5"
+               Scale="1,1,1"
+               CenterPointPercent="0.3,0.5,0.0">
+        <Animations>
+          <Animation Animation="animation://me:Scale"/>
+        </Animations>
+        <Children>
+
+          <!-- Image container -->
+          <Panel Name="ImagePanel">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0"
+                                 Right="Parent,0,100"
+                                 Horizontal="Near"
+                                 Top="Parent,0"
+                                 Bottom="Parent,1"
+                                 Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+
+              <!-- Image -->
+              <Graphic Name="Image"
+                       Content="[Model.Image]"
+                       SizingPolicy="SizeToConstraint"/>
+
+              <!-- Display if there is no image -->
+              <ColorFill Name="NoImage"
+                         Content="color://styles:Container.A"
+                         Layout="Fill"
+                         Visible="false">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0"
+                                     Right="Parent,0,100"
+                                     Horizontal="Near"
+                                     Top="Parent,0"
+                                     Bottom="Parent,1"
+                                     Vertical="Center"/>
+                </LayoutInput>
+              </ColorFill>
+
+            </Children>
+          </Panel>
+
+          <!-- Critical metadata -->
+          <Panel Name="PrimaryPanel"
+                 Layout="VerticalFlow">
+            <LayoutInput>
+              <AnchorLayoutInput Left="ImagePanel,1,10"
+                                 Right="Parent,0.5"
+                                 Horizontal="Fill"
+                                 Top="Parent,0"/>
+            </LayoutInput>
+            <Children>
+
+              <Text Name="Description"
+                    Content="[Model.Description]"
+                    Color="color://styles:Text.Active"
+                    Font="font://styles:SecondaryText"/>
+
+              <Text Name="Type"
+                    Content="[Model.Type]"
+                    Margins="0,-5,0,0"
+                    Color="color://styles:Text.Active"
+                    Font="font://styles:TertiaryText"/>
+
+              <core:ProgressBar Name="ProgressBar"
+                                Visible="false"
+                                Model="[Model]"
+                                Focused="false"
+                                Margins="2,0,0,0"/>
+
+            </Children>
+          </Panel>
+
+          <!-- Extra metadata panel #1 -->
+          <Panel Name="MetadataPanel1"
+                 Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0.5,10"
+                                 Right="Parent,0.75"
+                                 Horizontal="Fill"
+                                 Top="Parent,0"/>
+            </LayoutInput>
+            <Children>
+
+              <Text Name="Metadata1"
+                    Content="[Model.Metadata1]"
+                    WordWrap="true"
+                    Color="color://styles:Text.Negative"
+                    Font="font://styles:TertiaryText"/>
+
+            </Children>
+          </Panel>
+
+          <!-- Extra metadata panel #2 -->
+          <Panel Name="MetadataPanel2"
+                 Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0.75,10"
+                                 Right="Parent,1"
+                                 Horizontal="Fill"
+                                 Top="Parent,0"/>
+            </LayoutInput>
+            <Children>
+
+              <Text Name="Metadata2"
+                    Content="[Model.Metadata2]"
+                    WordWrap="true"
+                    Color="color://styles:Text.Negative"
+                    Font="font://styles:TertiaryText"/>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+  <!-- Animations -->
+  <Animation Name="ButtonPress">
+    <Keyframes>
+      <ScaleKeyframe Time="0.00"
+                     RelativeTo="Current"
+                     Interpolation="Log"/>
+      <ScaleKeyframe Time="0.08"
+                     Value="0.9,0.9,1.0"/>
+      <ScaleKeyframe Time="0.15"
+                     Value="1.0,1.0,1.0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="Scale"
+             Type="Scale">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     RelativeTo="Current"/>
+      <ScaleKeyframe Time="0.05"
+                     RelativeTo="Final"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

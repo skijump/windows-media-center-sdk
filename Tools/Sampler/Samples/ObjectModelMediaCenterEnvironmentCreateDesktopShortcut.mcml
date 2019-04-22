@@ -1,0 +1,79 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:sys="assembly://System/System"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- CreateDesktopShortcut allows you to prompt the user to launch a Uri -->
+  <!-- in a browser. The default presented to the user is to Open Website  -->
+  <!-- but they may elect to Save Link which will create a folder on the   -->
+  <!-- desktop named Windows Media Center Shortcuts. The process for       -->
+  <!-- creating this folder is not instantaneous - it can sometimes take   -->
+  <!-- several minutes for it to appear. -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost" />
+      <Command Name="MyCommand"
+               Description="CreateDesktopShortcut" />
+      <!-- Title is used for the filename of the shortcut placed in  -->
+      <!-- the Windows Media Center Shortcuts folder on the users    -->
+      <!-- desktop.                                                  -->
+      <cor:String Name="MyTitle"
+                  String="My Title"/>
+      <sys:Uri Name="MyUri"
+               Uri="http://www.microsoft.com"/>
+      <!-- ShortcutStatus can have one of three values corresponding -->
+      <!-- to how the user responds to the dialog box created when   -->
+      <!-- the CreateDeskstopShortcut Method is called.              -->
+      <!--                                                           -->
+      <!-- InstallNow = Open Website                                 -->
+      <!-- InstallLater = Save Link                                  -->
+      <!-- Cancelled = Cancelled                                     -->
+      <!--                                                           -->
+      <!-- The default value is InstallNow but this is not           -->
+      <!-- meaningful until after the user have responded to the     -->
+      <!-- dialog, so rules written to respond to this value should  -->
+      <!-- only evaluate after the method has been called.           -->
+      <mc:ShortcutStatus Name="MyShortcutStatus"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[MyCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.CreateDesktopShortcut]"
+                  title="[MyTitle]"
+                  target="[MyUri]"
+                  ResultTarget="[MyShortcutStatus]" />
+        </Actions>
+      </Changed>
+      <Binding Target="[MyProperty.PropertyValue]"
+               Source="[MyShortcutStatus.ToString]">
+        <Conditions>
+          <IsValid Source="[MyShortcutStatus]" />
+        </Conditions>
+      </Binding>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:Button Command="[MyCommand]"
+                       ButtonLabel="[MyCommand.Description]"/>
+          <ctrl:PropertyAndValue Name="MyProperty"
+                                 PropertyName="ShortcutStatus"
+                                 PropertyValue="" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

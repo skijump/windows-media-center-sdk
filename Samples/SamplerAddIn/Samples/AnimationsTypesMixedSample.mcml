@@ -1,0 +1,168 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:btn="resx://Sampler/Sampler.Resources/ControlsSimpleButton">
+
+  <!-- This sample demonstrates is a combination of the Move and Rotate     -->
+  <!-- samples.  The buttons on the edges of the box will change both the   -->
+  <!-- position and rotation of the object, and both will animate together. -->
+  <UI Name="MoveAndRotateAnimations">
+
+    <Locals>
+      <!-- Create layout inputs for the four poles.  We will be applying    -->
+      <!-- these to multiple items, so it's more concise to just declare    -->
+      <!-- them once.                                                       -->
+      <DockLayoutInput Name="Left"
+                       Position="Left"
+                       Alignment="Center"/>
+      <DockLayoutInput Name="Right"
+                       Position="Right"
+                       Alignment="Center"/>
+      <DockLayoutInput Name="Top"
+                       Position="Top"
+                       Alignment="Center"/>
+      <DockLayoutInput Name="Bottom"
+                       Position="Bottom"
+                       Alignment="Center"/>
+
+      <!-- These commands when invoked will change our target's position. -->
+      <!-- That will be wired up with our Rules below.                    -->
+      <Command Name="LeftCommand"
+               Description="Left"/>
+      <Command Name="RightCommand"
+               Description="Right"/>
+      <Command Name="TopCommand"
+               Description="Top"/>
+      <Command Name="BottomCommand"
+               Description="Bottom"/>
+    </Locals>
+
+    <Rules>
+      <!-- The bottom button was clicked - change the target's position. -->
+      <Changed Source="[BottomCommand.Invoked]">
+        <Actions>
+          <Set Target="[Magnet.LayoutInput]"
+               Value="[Bottom]"/>
+          <Set Target="[Magnet.Rotation]"
+               Value="180deg;0,0,1"/>
+        </Actions>
+      </Changed>
+
+      <!-- The top button was clicked - change the target's position. -->
+      <Changed Source="[TopCommand.Invoked]">
+        <Actions>
+          <Set Target="[Magnet.LayoutInput]"
+               Value="[Top]"/>
+          <Set Target="[Magnet.Rotation]"
+               Value="0deg;0,0,1"/>
+        </Actions>
+      </Changed>
+
+      <!-- The right button was clicked - change the target's position. -->
+      <Changed Source="[RightCommand.Invoked]">
+        <Actions>
+          <Set Target="[Magnet.LayoutInput]"
+               Value="[Right]"/>
+          <Set Target="[Magnet.Rotation]"
+               Value="90deg;0,0,1"/>
+        </Actions>
+      </Changed>
+
+      <!-- The left button was clicked - change the target's position. -->
+      <Changed Source="[LeftCommand.Invoked]">
+        <Actions>
+          <Set Target="[Magnet.LayoutInput]"
+               Value="[Left]"/>
+          <Set Target="[Magnet.Rotation]"
+               Value="-90deg;0,0,1"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="VerticalFlow"
+             Padding="10,50,10,100">
+        <Children>
+
+          <Text Content="Click one of the buttons to change where the graphic attaches.  A Move and Rotate animation will animate the graphic from where it is currently to its new position and rotation."
+                Font="Arial, 20"
+                Color="White"
+                WordWrap="true"/>
+
+          <ColorFill Name="Test"
+                     Content="Azure"
+                     Layout="Dock">
+            <Children>
+
+              <!-- These buttons when invoked will change the position of -->
+              <!-- the target.                                            -->
+              <btn:SimpleButton Command="[LeftCommand]"
+                                LayoutInput="[Left]"/>
+              <btn:SimpleButton Command="[RightCommand]"
+                                LayoutInput="[Right]"/>
+              <btn:SimpleButton Command="[TopCommand]"
+                                LayoutInput="[Top]"/>
+              <btn:SimpleButton Command="[BottomCommand]"
+                                LayoutInput="[Bottom]"/>
+
+              <!-- The target of the animation: a Magnet graphic. -->
+              <Graphic Name="Magnet"
+                       Content="resx://Sampler/Sampler.Resources/FourBoxGraphic"
+                       LayoutInput="[Top]">
+                <Animations>
+
+                  <!-- This animation will happen whenever a "Rotate" event -->
+                  <!-- happens (when our rotation changes).                 -->
+                  <Animation Type="Rotate"
+                             CenterPointPercent="0.5, 0.5, 1.0">
+                    <Keyframes>
+
+                      <!-- Start the position at "Current", which is -->
+                      <!-- wherever it was left last.                -->
+                      <RotateKeyframe Time="0.00"
+                                      Value="0deg;0,0,1"
+                                      RelativeTo="Current"
+                                      Interpolation="Log"/>
+
+                      <!-- End the position at "Final", which is where       -->
+                      <!-- layout designated as the rotation we should have. -->
+                      <RotateKeyframe Time="0.50"
+                                      Value="0deg;0,0,1"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                  <!-- This animation will happen whenever a "Move" event   -->
+                  <!-- happens (when our layout position changes).          -->
+                  <Animation Type="Move"
+                             CenterPointPercent="0.5,0.5,0.0">
+                    <Keyframes>
+
+                      <!-- Start the position at "Current", which is        -->
+                      <!-- wherever it was left last. -->
+                      <PositionKeyframe Time="0.00"
+                                        Value="0,0,0"
+                                        RelativeTo="Current"
+                                        Interpolation="Log"/>
+
+                      <!-- End the position at "Final", which is where       -->
+                      <!-- layout designated as the position we should have. -->
+                      <PositionKeyframe Time="0.50"
+                                        Value="0,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+              </Graphic>
+
+            </Children>
+          </ColorFill>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

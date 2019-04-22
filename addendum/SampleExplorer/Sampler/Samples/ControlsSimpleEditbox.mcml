@@ -1,0 +1,150 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <!-- Test data for SimpleEditbox. -->
+  <UI Name="TestSimpleEditbox">
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:SimpleEditbox>
+            <EditableText>
+              <EditableText Value="EditBox 1"/>
+            </EditableText>
+          </me:SimpleEditbox>
+          <me:SimpleEditbox>
+            <EditableText>
+              <EditableText Value="EditBox 2"/>
+            </EditableText>
+          </me:SimpleEditbox>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+
+  <!-- Simple edit box -->
+  <UI Name="SimpleEditbox">
+
+    <Properties>
+
+      <!-- EditableText is a required parameter. -->
+      <EditableText Name="EditableText"
+                    EditableText="$Required"/>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor"
+             Color="DimGray"/>
+      <Color Name="BackgroundFocusedColor"
+             Color="DarkGray"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor"
+             Color="White"/>
+      <Color Name="LabelFocusedColor"
+             Color="White"/>
+
+      <cor:Boolean Name="PasswordMasked"
+                   Boolean="false"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- React to "typing" input. -->
+      <TypingHandler Name="TypingHandler"
+                     EditableText="[EditableText]"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- The editable text value is bound to the label text value. -->
+      <Binding Source="[TypingHandler.DisplayValue]"
+               Target="[Label.Content]"/>
+
+      <!-- Change color if in overtype mode. -->
+      <Condition Source="[EditableText.Overtype]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Overtype.Visible]"
+               Value="true"/>
+          <Set Target="[Caret.Visible]"
+               Value="false"/>
+        </Actions>
+      </Condition>
+
+      <!-- Change color of key focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[BackgroundFocusedColor]"/>
+          <Set Target="[Label.Color]"
+               Value="[LabelFocusedColor]"/>
+          <Set Target="[Caret.Visible]"
+               Value="true"/>
+        </Actions>
+      </Condition>
+
+      <!-- Is this a password field? -->
+      <Binding Source="[PasswordMasked]"
+               Target="[TypingHandler.PasswordMasked]"/>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Solid background color. -->
+      <ColorFill Name="Background"
+                 Content="[BackgroundColor]"
+                 MouseInteractive="true"
+                 Padding="5,5,5,5"
+                 Layout="Anchor"
+                 MinimumSize="325,0"
+                 MaximumSize="325,0">
+        <Children>
+
+          <!-- Display of the current value. -->
+          <Text Name="Label"
+                Color="[LabelColor]"
+                Font="Arial,20"
+                HorizontalAlignment="Far"
+                Margins="0,0,10,0"
+                MinimumSize="0,30"/>
+
+          <!-- Display of the caret. -->
+          <ColorFill Name="Caret"
+                     Content="[LabelFocusedColor]"
+                     Visible="false"
+                     MinimumSize="12,4">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Label,1,-10"
+                                 Top="Label,0"
+                                 Bottom="Label,1"
+                                 Vertical="Far"/>
+            </LayoutInput>
+          </ColorFill>
+
+          <!-- Overtype fill. -->
+          <ColorFill Name="Overtype"
+                     Content="Black"
+                     Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Label,0"
+                                 Right="Label,1"
+                                 Top="Label,0"
+                                 Bottom="Label,1"/>
+            </LayoutInput>
+          </ColorFill>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

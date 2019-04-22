@@ -1,0 +1,66 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to animate an item's color.             -->
+  <!-- We build an Animation object and add it to the item's Animations     -->
+  <!-- collection.  We populate that Animation object with two or more      -->
+  <!-- keyframes, starting at time "0.0".                                   -->
+  <UI Name="ColorKeyframe">
+
+    <Content>
+
+      <!-- The target of the animation... -->
+      <Graphic Name="MyGraphic"
+               Content="file://WhiteGraphicSmall.png">
+        <Animations>
+
+          <!-- Create an animation that will loop forever. -->
+          <Animation Loop="-1">
+            <Keyframes>
+
+              <!-- Start with a "neutral" color filter -->
+              <ColorKeyframe Time="0.0"
+                             Value="1.0,1.0,1.0"/>
+
+              <!-- Animate to black -->
+              <ColorKeyframe Time="1.0"
+                             Value="0.0,0.0,0.0"/>
+
+              <!-- Back to the "neutral" color filter  -->
+              <ColorKeyframe Time="2.0"
+                             Value="1.0,1.0,1.0"/>
+
+              <!-- Bring down the red channel -->
+              <ColorKeyframe Time="3.0"
+                             Value="0.0,1.0,1.0"/>
+
+              <!-- Back to the "neutral" color filter  -->
+              <ColorKeyframe Time="4.0"
+                             Value="1.0,1.0,1.0"/>
+
+              <!-- Bring down the green channel -->
+              <ColorKeyframe Time="5.0"
+                             Value="1.0,0.0,1.0"/>
+
+              <!-- Back to the "neutral" color filter  -->
+              <ColorKeyframe Time="6.0"
+                             Value="1.0,1.0,1.0"/>
+
+              <!-- Bring down the blue channel -->
+              <ColorKeyframe Time="7.0"
+                             Value="1.0,1.0,0.0"/>
+
+              <!-- Back to the "neutral" color filter -->
+              <ColorKeyframe Time="8.0"
+                             Value="1.0,1.0,1.0"/>
+
+            </Keyframes>
+          </Animation>
+
+        </Animations>
+      </Graphic>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

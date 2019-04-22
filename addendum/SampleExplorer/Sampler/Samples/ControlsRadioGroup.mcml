@@ -1,0 +1,291 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:me="Me">
+
+  <UI Name="RadioGroupTest">
+
+    <Locals>
+      <Choice Name="ChoiceOne"
+              Description="Description is Vertical">
+        <Options>
+          <cor:String String="option 1"/>
+          <cor:String String="option 2"/>
+          <cor:String String="option 3"/>
+        </Options>
+      </Choice>
+      <Choice Name="ChoiceTwo"
+              Description="Description is Horizontal"
+              DefaultIndex="1">
+        <Options>
+          <cor:String String="Option A with a really, really, really, really long title option"/>
+          <cor:String String="Option B"/>
+        </Options>
+      </Choice>
+    </Locals>
+
+    <Rules>
+      <!-- Set the default choice for ChoiceTwo -->
+      <Rule>
+        <Actions>
+          <Invoke Target="[ChoiceTwo.DefaultValue]"/>
+        </Actions>
+      </Rule>
+      <!-- Display the choice -->
+      <Binding Source="[ChoiceOne.Chosen!cor:String]"
+               Target="[MyChoiceA.Content]"/>
+      <Binding Source="[ChoiceTwo.Chosen!cor:String]"
+               Target="[MyChoiceB.Content]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <!-- Vertical Layout -->
+              <me:RadioGroup ChoiceGroup="[ChoiceOne]"
+                             Orientation="Vertical"/>
+              <!-- Horizontal Layout -->
+              <me:RadioGroup ChoiceGroup="[ChoiceTwo]"/>
+            </Children>
+          </Panel>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.5"
+                               Right="Parent,1"
+                               Vertical="Center" />
+            </LayoutInput>
+            <Children>
+              <Text Name="MyChoiceA"
+                    Color="White"/>
+              <Text Name="MyChoiceB"
+                    Color="White"/>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <UI Name="RadioGroup">
+    
+    <Properties>
+      <Choice Name="ChoiceGroup"
+              Choice="$Required"
+              Description="$Required"/>
+      <Orientation Name="Orientation"
+                   Orientation="Horizontal"/>
+      <!-- Properties for box and check -->
+      <Size Name="BoxSize"
+            Size="20,20"/>
+      <Color Name="BoxColor"
+             Color="White"/>
+      <Color Name="CheckColor"
+             Color="Green"/>
+      <!-- Properties for Label -->
+      <Font Name="LabelFont"
+            Font="Calibri,16"/>
+      <Color Name="LabelColor"
+             Color="White"/>
+      <!-- Properties for Description -->
+      <Font Name="DescriptionFont"
+            Font="Calibri,16"/>
+      <Color Name="DescriptionColor"
+             Color="White"/>
+    </Properties>
+    
+    <Rules>
+      <!-- Bind the option data as a source to the repeater. -->
+      <Binding Source="[ChoiceGroup.Options]"
+               Target="[Repeater.Source]" />
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="[ChoiceGroup.Description]"
+                Color="[DescriptionColor]"
+                Font="[DescriptionFont]"/>
+          <!-- Using repeaters to draw check boxes for options -->
+          <Repeater Name="Repeater">
+            <Content>
+              <me:SimpleRadioButton ChoiceGroup="[ChoiceGroup]"
+                                    Option="[RepeatedItem!cor:String]"
+                                    BoxSize="[BoxSize]"
+                                    BoxColor="[BoxColor]"
+                                    CheckColor="[CheckColor]"
+                                    LabelFont="[LabelFont]"
+                                    LabelColor="[LabelColor]"/>
+            </Content>
+            <Layout>
+              <FlowLayout Orientation="[Orientation]"
+                          Spacing="10,10"
+                          ItemAlignment="Near"
+                          AllowWrap="true"/>
+            </Layout>
+          </Repeater>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <!-- UI for each radio button -->
+  <UI Name="SimpleRadioButton">
+    
+    <Properties>
+      <Choice Name="ChoiceGroup"
+              Choice="$Required"/>
+      <cor:String Name="Option"
+                  String="$Required"/>
+      <Size Name="OverallMinimumSize"
+            Size="300,30"/>
+      <Size Name="OverallMaximumSize"
+            Size="300,30"/>
+      <Size Name="BoxSize"
+            Size="20,20"/>
+      <Size Name="CheckSize"
+            Size="12,12"/>
+      <Color Name="BoxColor"
+             Color="AntiqueWhite"/>
+      <Color Name="CheckColor"
+             Color="Chocolate"/>
+      <Font Name="LabelFont"
+            Font="Arial, 12"/>
+      <Color Name="LabelColor"
+             Color="AntiqueWhite"/>
+    </Properties>
+
+    <Locals>
+      <!-- React to "click" input. -->
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <!-- The radio button has been clicked - update the chosen value in radio group.            -->
+      <Changed Source="[Clicker.Invoked]">
+        <Actions>
+          <Set Target="[ChoiceGroup.Chosen]"
+               Value="[Option]"/>
+        </Actions>
+      </Changed>
+      <!-- If the UI is losing the selection, show it as unselected.        -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[ChoiceGroup.Chosen]"
+                    ConditionOp="NotEquals"
+                    Value="[Option]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Check.Visible]"
+               Value="false" />
+        </Actions>
+      </Rule>
+      <!-- If the UI is getting the selection, show it as selected.         -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[ChoiceGroup.Chosen]"
+                    Value="[Option]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Check.Visible]"
+               Value="true" />
+        </Actions>
+      </Rule>
+      <!-- Show the choice label. -->
+      <Binding Source="[Option]"
+               Target="[Label.Content]"/>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="false">
+        <Actions>
+          <Set Target="[MyPanel.Alpha]"
+               Value="0.5" />
+        </Actions>
+      </Condition>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[MyPanel.Alpha]"
+               Value="1.0" />
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <Panel Name="MyPanel"
+             MaximumSize="[OverallMaximumSize]"
+             MinimumSize="[OverallMinimumSize]">
+        <Animations>
+          <Animation Animation="animation://me:Focus"/>
+          <Animation Animation="animation://me:NoFocus"/>
+        </Animations>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+          <!-- The box around the selection. -->
+          <ColorFill Name="Box"
+                     Content="[BoxColor]"
+                     Layout="Center"
+                     MaximumSize="[BoxSize]"
+                     MinimumSize="[BoxSize]">
+            <Children>
+              <!-- Colorfill that becomes visible on selection. -->
+              <ColorFill Name="Check"
+                         Content="[CheckColor]"
+                         Visible="false"
+                         MaximumSize="[CheckSize]"
+                         MinimumSize="[CheckSize]">
+              </ColorFill>
+            </Children>
+          </ColorFill>
+          <!-- The label to display choice. -->
+          <Text Name="Label"
+                Color="[LabelColor]"
+                Font="[LabelFont]"
+                Margins="6,0,0,0"/>
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <Animation Name="Focus"
+             Loop="0"
+             CenterPointPercent="0,0.5,1.0"
+             Type="GainFocus">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     Value="1,1,1"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+      <ScaleKeyframe Time="0.1"
+                     Value="1.1,1.1,1"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="NoFocus"
+             Loop="0"
+             CenterPointPercent="0,0.5,1.0"
+             Type="LoseFocus">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+      <ScaleKeyframe Time="0.04"
+                     Value="1,1,1"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

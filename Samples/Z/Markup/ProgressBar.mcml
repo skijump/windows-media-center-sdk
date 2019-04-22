@@ -1,0 +1,113 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:me="Me">
+
+  <UI Name="ProgressBar">
+    <Properties>
+      <z:SearchResult Name="Model"
+                      SearchResult="$Required" />
+      <sys:Boolean Name="Focused"
+                   Boolean="false"/>
+
+      <Image Name="FocusImage"
+             Source="resx://Z/Z.Resources/ProgressBarFocus"
+             NineGrid="3,3,3,3"/>
+      <Image Name="NonFocusImage"
+             Source="resx://Z/Z.Resources/ProgressBarNonFocus"
+             NineGrid="3,3,3,3"/>
+    </Properties>
+
+    <Locals>
+      <!-- Model.Value will be bound to the Right percent of this input -->
+      <FormLayoutInput Name="ProgressInput"
+                       Left="Parent,0"
+                       Right="Parent,0.5"
+                       Top="Parent,0"
+                       Bottom="Parent,1"/>
+      <FormLayoutInput Name="DummyInput"
+                       Left="Parent,0"
+                       Right="Parent,0.5"
+                       Top="Parent,0"
+                       Bottom="Parent,1"/>
+    </Locals>
+
+    <Rules>
+      <!-- Focused styling -->
+      <Condition Source="[Focused]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Visible]"
+               Value="true"/>
+          <Set Target="[BarBackground.Content]"
+               Value="[FocusImage]"/>
+          <Set Target="[Bar.Content]"
+               Value="color://styles:Text.Negative"/>
+          <Set Target="[Bar.Alpha]"
+               Value="1.0"/>
+        </Actions>
+      </Condition>
+
+      <!-- Apply the label -->
+      <Changed Source="[Model.DownloadProgress]"
+               InitialEvaluate="true">
+        <Actions>
+          <Set Target="[ProgressInput.Right.Percent]"
+               Value="[Model.DownloadProgress]" />
+
+          <!-- An unfortunate extra step ... because layout inputs do not fire        -->
+          <!-- property change notifications, the system doesn't know that the layout -->
+          <!-- has changed; to get around this, we need to set the layout input       -->
+          <!-- property itself; but even that isn't sufficient because Media Center   -->
+          <!-- sees that the old and new value are the same object, and treats it     -->
+          <!-- as no change, so we have to go one further and set the layout input    -->
+          <!-- to a dummy value and then back to the right value, so that the         -->
+          <!-- system notices the change                                              -->
+          <Set Target="[Bar.LayoutInput]"
+               Value="[DummyInput]"
+               ExclusiveApply="false"/>
+          <Set Target="[Bar.LayoutInput]"
+               Value="[ProgressInput]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- Background graphic -->
+          <Graphic Name="BarBackground"
+                   Content="[NonFocusImage]"
+                   Layout="Form"
+                   MaximumSize="100,10"
+                   Padding="3,3,3,3">
+            <Children>
+
+              <!-- Current progress value -->
+              <ColorFill Name="Bar"
+                         Content="color://styles:Text.Active"
+                         Alpha="0.5"/>
+
+            </Children>
+          </Graphic>
+
+          <!-- Label -->
+          <Text Name="Label"
+                Margins="6,0,0,0"
+                Visible="false"
+                Color="color://styles:Text.Negative"
+                Font="font://styles:GalleryItemSubText"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

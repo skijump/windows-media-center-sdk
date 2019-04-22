@@ -1,0 +1,208 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- GraphicAlignment Sample                                             -->
+  <!-- A Graphic allows you to configure how it should behave when its     -->
+  <!-- source image is a different size than its layout constraint by      -->
+  <!-- setting the HorizontalAlignment and VerticalAlignment properties on -->
+  <!-- it.                                                                 -->
+
+  <!-- The Main UI displays two 3 x 3 grids, displaying how the alignment  -->
+  <!-- values affect the way an image is rendered when it is larger or     -->
+  <!-- smaller than its layout constraints.                                -->
+  <UI Name="Main">
+    <Rules>
+      <!-- Make ourselves key focusable, since we have no focusable content-->
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+    </Rules>
+    <Content>
+      <Panel Name="Picture"
+             Padding="15,15,15,15">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      Spacing="30,0"/>
+        </Layout>
+        <Children>
+
+          <!-- First display a grid of a large image with a maximum        -->
+          <!-- constraint that is smaller than the image.  The effect is   -->
+          <!-- that each tile displays the cropped portion of the image    -->
+          <!-- corresponding to its location in the grid.                  -->
+          <me:AlignmentDemo ImgMaximumSize="128,125"
+                            SourceImage="resx://Sampler/Sampler.Resources/GraphicsAlignmentDog"
+                            Description="GraphicsAlignmentDog.png (Clipped)"/>
+
+          <!-- In this case, we're going to force a constraint size, and   -->
+          <!-- use an image that's smaller than the minimum.  The effect   -->
+          <!-- is that each tile contains a full rendering of the image,   -->
+          <!-- but it is aligned within the cell according to the cell's   -->
+          <!-- location in the grid.                                       -->
+          <me:AlignmentDemo ImgMaximumSize="128,125"
+                            ImgMinimumSize="128,125"
+                            SourceImage="resx://Sampler/Sampler.Resources/GraphicsAlignmentDogTiny"
+                            Description="GraphicsAlignmentDogTiny.png (Aligned)"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- AlignmentDemo is a UI that takes an image and displays it 9 times in -->
+  <!-- a grid, demonstrating each possible combination of Near, Center, and -->
+  <!-- Far for VerticalAlignment and HorizontalAlignment.  Each image is    -->
+  <!-- overlaid with two letters indicating the alignment values.  Each     -->
+  <!-- tile's Maximum and Minimum layout constraints are set to the values  -->
+  <!-- passed in.                                                           -->
+  <UI Name="AlignmentDemo">
+
+    <Properties>
+      <cor:String Name="Description"
+                  String="$Required"/>
+      <Size Name="ImgMinimumSize"
+            Size="0,0"/>
+      <Size Name="ImgMaximumSize"
+            Size="0,0"/>
+      <Image Name="SourceImage"
+             Image="$Required"/>
+    </Properties>
+
+    <Content>
+      <ColorFill Content="BurlyWood"
+                 Padding="15,15,15,15">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="15,0"/>
+        </Layout>
+
+        <Children>
+
+          <Text Content="[Description]"
+                MaximumSize="390,0"
+                WordWrap="true"/>
+
+          <!-- We set a maximum height on this panel so that the flow wraps -->
+          <!-- so that each part displays in its relative position.         -->
+          <Panel MaximumSize="0,388">
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          Spacing="3,3"
+                          AllowWrap="true"/>
+            </Layout>
+            <Children>
+
+              <!-- First column: HorizontalAlignment="Near" -->
+              <me:ImagePart HorizontalAlignment="Near"
+                            VerticalAlignment="Near"
+                            AlignmentText="N,N"
+                            ImgMinimumSize="[ImgMinimumSize]"
+                            ImgMaximumSize="[ImgMaximumSize]"
+                            SourceImage="[SourceImage]"/>
+
+              <me:ImagePart HorizontalAlignment="Near"
+                            VerticalAlignment="Center"
+                            AlignmentText="N,C"
+                            ImgMinimumSize="[ImgMinimumSize]"
+                            ImgMaximumSize="[ImgMaximumSize]"
+                            SourceImage="[SourceImage]"/>
+
+              <me:ImagePart HorizontalAlignment="Near"
+                            VerticalAlignment="Far"
+                            AlignmentText="N,F"
+                            ImgMinimumSize="[ImgMinimumSize]"
+                            ImgMaximumSize="[ImgMaximumSize]"
+                            SourceImage="[SourceImage]"/>
+
+
+              <!-- Second column: HorizontalAlignment="Center" -->
+              <me:ImagePart HorizontalAlignment="Center"
+                            VerticalAlignment="Near"
+                            AlignmentText="C,N"
+                            ImgMinimumSize="[ImgMinimumSize]"
+                            ImgMaximumSize="[ImgMaximumSize]"
+                            SourceImage="[SourceImage]"/>
+
+              <me:ImagePart HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            AlignmentText="C,C"
+                            ImgMinimumSize="[ImgMinimumSize]"
+                            ImgMaximumSize="[ImgMaximumSize]"
+                            SourceImage="[SourceImage]"/>
+
+              <me:ImagePart HorizontalAlignment="Center"
+                            VerticalAlignment="Far"
+                            AlignmentText="C,F"
+                            ImgMinimumSize="[ImgMinimumSize]"
+                            ImgMaximumSize="[ImgMaximumSize]"
+                            SourceImage="[SourceImage]"/>
+
+
+              <!-- Third column: HorizontalAlignment="Far" -->
+              <me:ImagePart HorizontalAlignment="Far"
+                            VerticalAlignment="Near"
+                            AlignmentText="F,N"
+                            ImgMinimumSize="[ImgMinimumSize]"
+                            ImgMaximumSize="[ImgMaximumSize]"
+                            SourceImage="[SourceImage]"/>
+
+              <me:ImagePart HorizontalAlignment="Far"
+                            VerticalAlignment="Center"
+                            AlignmentText="F,C"
+                            ImgMinimumSize="[ImgMinimumSize]"
+                            ImgMaximumSize="[ImgMaximumSize]"
+                            SourceImage="[SourceImage]"/>
+
+              <me:ImagePart HorizontalAlignment="Far"
+                            VerticalAlignment="Far"
+                            AlignmentText="F,F"
+                            ImgMinimumSize="[ImgMinimumSize]"
+                            ImgMaximumSize="[ImgMaximumSize]"
+                            SourceImage="[SourceImage]"/>
+
+            </Children>
+          </Panel>
+        </Children>
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+  <!-- The ImagePart UI displays an image with the specified           -->
+  <!-- HorizontalAlignment and VerticalAlignment values.  The image is -->
+  <!-- overlaid with a text string that is passed in.                  -->
+  <UI Name="ImagePart">
+
+    <Properties>
+      <Size Name="ImgMinimumSize"/>
+      <Size Name="ImgMaximumSize"/>
+      <Image Name="SourceImage"
+             Image="$Required"/>
+      <ItemAlignment Name="HorizontalAlignment"
+                     ItemAlignment="Fill"/>
+      <ItemAlignment Name="VerticalAlignment"
+                     ItemAlignment="Fill"/>
+      <cor:String Name="AlignmentText"
+                  cor:String="$required"/>
+    </Properties>
+
+    <Content>
+      <ColorFill Content="LightBlue">
+        <Children>
+          <Text Font="Arial,18"
+                Alpha=".6"
+                Name="Alignment"
+                Content="[AlignmentText]"
+                Color="White"
+                BackColor="Black"/>
+          <Graphic Content="[SourceImage]"
+                   HorizontalAlignment="[HorizontalAlignment]"
+                   VerticalAlignment="[VerticalAlignment]"
+                   MaximumSize="[ImgMaximumSize]"
+                   MinimumSize="[ImgMinimumSize]"/>
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+</Mcml>

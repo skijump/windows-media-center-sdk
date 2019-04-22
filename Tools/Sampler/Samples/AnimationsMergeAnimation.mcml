@@ -1,0 +1,117 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to use a MergeAnimation to combine      -->
+  <!-- multiple source animations into one.                                 -->
+  <UI Name="MergeAnimation">
+
+    <Properties>
+
+      <!-- A looping animation that modifies position. -->
+      <Animation Name="PositionAnimation"
+                 Loop="-1">
+        <Keyframes>
+
+          <PositionKeyframe Time="0.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="2.0"
+                            Value="100,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="4.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+
+        </Keyframes>
+      </Animation>
+
+      <!-- A looping animation that modifies scale. -->
+      <Animation Name="ScaleAnimation"
+                 Loop="-1"
+                 CenterPointPercent="0.5, 0.5, 0.0">
+        <Keyframes>
+
+          <ScaleKeyframe Time="0.0"
+                         Value="1.0,1.0,1.0"
+                         Interpolation="SCurve"/>
+          <ScaleKeyframe Time="2.0"
+                         Value="0.5,0.5,0.5"
+                         Interpolation="SCurve"/>
+          <ScaleKeyframe Time="4.0"
+                         Value="1.0,1.0,1.0"
+                         Interpolation="SCurve"/>
+
+        </Keyframes>
+      </Animation>
+
+    </Properties>
+
+    <Content>
+
+      <Panel Layout="VerticalFlow">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Demonstrate what the unmodified Position animation looks     -->
+          <!-- like.                                                        -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="Position animation"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <Animation Animation="[PositionAnimation]"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Demonstrate what the unmodified Scale animation looks like.  -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="Scale animation"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <Animation Animation="[ScaleAnimation]"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Use a MergeAnimation to take the Position and Scale          -->
+          <!-- animations and create a single animation from them.          -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="Merged animation"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <MergeAnimation>
+                <Sources>
+
+                  <Animation Animation="[PositionAnimation]"/>
+                  <Animation Animation="[ScaleAnimation]"/>
+
+                </Sources>
+              </MergeAnimation>
+
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

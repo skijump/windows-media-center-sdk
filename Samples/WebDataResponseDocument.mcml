@@ -1,0 +1,117 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:ctrl="http://retrosight.com/samples/windowsmediacentersdk/6/Controls.mcml">
+
+  <UI Name="XmlRemoteValue">
+    
+    <!-- The Response Document is the fundamental piece of data          -->
+    <!-- used with Data Access Model Items. It is what will ultimately   -->
+    <!-- be bound to the content (view items) in the UI.                 -->
+    
+    <!-- However, there are times when you can use GetDataFromResource   -->
+    <!-- with a web service to cause something to happen on the server   -->
+    <!-- without a response document being returned (common with RESTful -->
+    <!-- interfaces). This sample demonstrates you can test the various  -->
+    <!-- status codes and descriptions prior to actually binding data.   -->
+
+    <!-- Web samples are designed to work when loaded       -->
+    <!-- via the HTTP:// or HTTPS:// protocol. Generally    -->
+    <!-- speaking, opening these samples using FILE:// will -->
+    <!-- not produce the desired results.                   -->
+    
+    <Locals>
+      <da:RemoteResourceUri Name="MyRemoteResourceUri"/>
+      <cor:Boolean Name="MyGetDataResult"/>
+      <Command Name="MyCommand1"
+               Description="Get Data From Resource"/>
+      <Command Name="MyCommand2"
+               Description="Show Response Document"/>
+      <da:XmlRemoteResource Name="MyXmlRemoteResource">
+        <Mappings>
+          <da:XmlRemoteValue Name="Title"
+                             Source="/feed/title" />
+        </Mappings>
+      </da:XmlRemoteResource>
+      <EditableText Name="MyEditableText"
+                    Value="http://retrosight.com/samples/windowsmediacentersdk/6/WebDataResponseDocumentData01.xml"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[MyRemoteResourceUri.FullString]"
+               Source="[MyEditableText.Value.ToString]" />
+      <Changed Source="[MyCommand1.Invoked]">
+        <Actions>
+          <Set Target="[MyXmlRemoteResource.RequestUri]"
+               Value="[MyRemoteResourceUri]"/>
+          <Invoke Target="[MyXmlRemoteResource.GetDataFromResource]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyCommand2.Invoked]">
+        <Actions>
+          <Set Target="[MyResponseDocument.Content]"
+               Value="[MyXmlRemoteResource.ResponseDocument]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyXmlRemoteResource.ResponseStatusDescription]">
+        <Conditions>
+          <IsValid Source="[MyXmlRemoteResource.ResponseStatusDescription]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[MyResponseStatusDescription.PropertyValue]"
+               Value="[MyXmlRemoteResource.ResponseStatusDescription]"/>
+        </Actions>
+      </Changed>
+      <Binding Target="[MyStatus.PropertyValue]"
+               Source="[MyXmlRemoteResource.Status.ToString]" />
+      <Binding Target="[MyResponseStatusCode.PropertyValue]"
+               Source="[MyXmlRemoteResource.ResponseStatusCode.ToString]" />
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <ctrl:Editbox EditableText="[MyEditableText]"
+                            LabelName="Uri" />
+              <ctrl:Button Command="[MyCommand1]"
+                           ButtonLabel="[MyCommand1.Description]" />
+              <ctrl:Button Command="[MyCommand2]"
+                           ButtonLabel="[MyCommand2.Description]" />
+              <ctrl:PropertyAndValue Name="MyStatus"
+                                     PropertyName="Status"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyResponseStatusCode"
+                                     PropertyName="Response Status Code"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyResponseStatusDescription"
+                                     PropertyName="Response Status Description"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.5"
+                               Right="Parent,1"
+                               Vertical="Center" />
+            </LayoutInput>
+            <Children>
+              <Text Name="MyResponseDocument"
+                    Color="White"
+                    WordWrap="true"
+                    Font="Calibri, 10" />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

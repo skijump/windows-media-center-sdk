@@ -1,0 +1,10 @@
+﻿<application title="iTvApp" id="{b890ce86-3dba-480f-b43a-c449b61008b2}">
+	<entrypoint id="{35447f31-4908-4111-bb9f-8f184d00c75a}"
+				addin="ItvApp.AddIn, iTvApp,Culture=Neutral,Version=1.0.0.0,PublicKeyToken=e142634e4401e283"
+				title="iTvApp"
+				description="ITV App Description"
+				ImageUrl=".\Application.png">
+    <category category="iTV\app:{91edb1f6-4574-41ec-ae77-71dff5517968}" />
+		<!--<category category="More Programs"/>-->
+	</entrypoint>
+</application>

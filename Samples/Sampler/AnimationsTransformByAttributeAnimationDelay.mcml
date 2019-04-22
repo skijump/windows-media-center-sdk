@@ -1,0 +1,108 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to use a TransformByAttributeAnimation  -->
+  <!-- to create index-driven animation transformations                     -->
+  <UI Name="TransformDelayByIndexAnimation">
+
+    <Properties>
+
+      <!-- This TransformByAttributeAnimation object will apply the Source  -->
+      <!-- animation differently to each item dependent on its index.  Each -->
+      <!-- item's Value will by magnified more than the previous.           -->
+
+      <!-- This object has a Delay of 0,5, which will lead to this pattern: -->
+      <!--   Index 0:  Time is unchanged                                    -->
+      <!--   Index 1:  Time is delayed by 0.5                               -->
+      <!--   Index 2:  Time is delayed by 1.0                               -->
+      <!--   (and so on...)                                                 -->
+      <TransformByAttributeAnimation Name="IndexAnimation"
+                                     Attribute="Index"
+                                     Delay="0.5">
+        <Source>
+
+          <!-- This is our reference animation.  We will be delaying the    -->
+          <!-- Time based on index.                                         -->
+          <Animation Loop="-1">
+            <Keyframes>
+
+              <AlphaKeyframe Time="0.0"
+                             Value="1.0"
+                             Interpolation="SCurve"/>
+              <AlphaKeyframe Time="1.0"
+                             Value="0.0"
+                             Interpolation="SCurve"/>
+              <AlphaKeyframe Time="2.0"
+                             Value="1.0"
+                             Interpolation="SCurve"/>
+
+            </Keyframes>
+          </Animation>
+
+        </Source>
+      </TransformByAttributeAnimation>
+
+    </Properties>
+
+    <Content>
+
+      <!-- Flow out a static list of 5 graphics. -->
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <!-- #1 -->
+          <Graphic Content="file://FourBoxGraphicSmall.png">
+            <Animations>
+
+              <TransformByAttributeAnimation TransformByAttributeAnimation="[IndexAnimation]"/>
+
+            </Animations>
+          </Graphic>
+
+          <!-- #2 -->
+          <Graphic Content="file://FourBoxGraphicSmall.png">
+            <Animations>
+
+              <TransformByAttributeAnimation TransformByAttributeAnimation="[IndexAnimation]"/>
+
+            </Animations>
+          </Graphic>
+
+          <!-- #3 -->
+          <Graphic Content="file://FourBoxGraphicSmall.png">
+            <Animations>
+
+              <TransformByAttributeAnimation TransformByAttributeAnimation="[IndexAnimation]"/>
+
+            </Animations>
+          </Graphic>
+
+          <!-- #4 -->
+          <Graphic Content="file://FourBoxGraphicSmall.png">
+            <Animations>
+
+              <TransformByAttributeAnimation TransformByAttributeAnimation="[IndexAnimation]"/>
+
+            </Animations>
+          </Graphic>
+
+          <!-- #5 -->
+          <Graphic Content="file://FourBoxGraphicSmall.png">
+            <Animations>
+
+              <TransformByAttributeAnimation TransformByAttributeAnimation="[IndexAnimation]"/>
+
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

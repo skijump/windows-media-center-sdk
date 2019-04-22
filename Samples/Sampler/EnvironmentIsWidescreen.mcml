@@ -1,0 +1,71 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <UI Name="BackgroundCrop">
+    <Locals>
+      <Environment Name="Environment" />
+      <Image Name="BackgroundImage"
+             Image="file://Environment.IsWidescreen.png" />
+      <AnchorLayoutInput Name="Background43"
+                         Left="Parent,0"
+                         Top="Parent,0"
+                         Right="Parent,200"
+                         Bottom="Parent,200"
+                         Vertical="Near"
+                         Horizontal="Near"
+                         ContributesToWidth="false"
+                         ContributesToHeight="false"/>
+      <AnchorLayoutInput Name="Background169"
+                         Left="Parent,0"
+                         Top="Parent,0"
+                         Right="Parent,200"
+                         Bottom="Parent,200"
+                         Vertical="Near"
+                         Horizontal="Near"
+                         ContributesToWidth="false"
+                         ContributesToHeight="false"/>
+
+    </Locals>
+    <Rules>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Environment.IsWidescreen]"
+                    Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[Background.LayoutInput]"
+               Value="[Background169]" />
+          <Set Target="[IsWidescreenResult.Content]"
+               Value="IsWidescreen = True" />
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Equality Source="[Environment.IsWidescreen]"
+                    Value="false" />
+        </Conditions>
+        <Actions>
+          <Set Target="[Background.LayoutInput]"
+               Value="[Background43]" />
+          <Set Target="[IsWidescreenResult.Content]"
+               Value="IsWidescreen = False" />
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Text Name="IsWidescreenResult"
+                Color="White" />
+          <Graphic Name="Background"
+                   Content="[BackgroundImage]"
+                   MaintainAspectRatio="true" />
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

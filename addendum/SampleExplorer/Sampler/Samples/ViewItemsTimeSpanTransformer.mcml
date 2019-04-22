@@ -1,0 +1,338 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- TimeSpanTransformer is used for converting a TimeSpan value to      -->
+  <!-- a String for display purposes.                                      -->
+
+  <!-- Several formats are available, and can be specified using the       -->
+  <!-- Format property.                                                    -->
+
+  <!-- Specify one of the following values as the Format:                  -->
+
+  <!-- Long:              Hours, minutes, and seconds, formatted as        -->
+  <!--                    "H:mm:ss". If timespan is less than one hour,    -->
+  <!--                    format is "m:ss" instead.                        -->
+  <!-- Short:             Hours and minutes, formatted as "H:mm".          -->
+  <!-- Words:             Timespan formatted using words:                  -->
+  <!--                    Greater than two hours: "H hours m minutes"      -->
+  <!--                    Less than 5 minutes: "m minutes s seconds"       -->
+  <!--                    All others: "m minutes"                          -->
+  <!--                    (Words are localized according to the user's     -->
+  <!--                    language settings.)                              -->
+
+  <!-- If the given format does not display seconds, the TimeSpan will be  -->
+  <!-- rounded to the nearest minute, prior to formatting.                 -->
+
+  <!-- The above values may be combined with the following flags:          -->
+
+  <!-- Abbreviate:        When combined with Words, uses abbreviations     -->
+  <!--                    ("hr", "min", "sec") instead of full words.      -->
+  <!-- RoundToMinute:     Rounds the TimeSpan to the nearest minute, for   -->
+  <!--                    any format.                                      -->
+
+  <!-- NOTE: The target of the TimeSpanTransformer must accept a String.   -->
+
+  <!-- The following tags support transformers:                            -->
+  <!--   Binding, Equality, Invoke, InvokeCommand, and Set                 -->
+
+  <!-- In this example, TimeSpan values are being bound to the Value       -->
+  <!-- propreties of several Text items.  TimeSpanTransformer will produce -->
+  <!-- a String value so that the binding will succeed.                    -->
+
+  <UI Name="TimeSpanTransformer">
+
+    <Locals>
+      <cor:TimeSpan Name="Prolonged"
+                    cor:TimeSpan="3:46:35"/>
+      <cor:TimeSpan Name="Medium"
+                    cor:TimeSpan="1:27:09"/>
+      <cor:TimeSpan Name="Brief"
+                    cor:TimeSpan="0:03:58"/>
+      <cor:TimeSpan Name="BriefOver5"
+                    cor:TimeSpan="0:05:28"/>
+      <Size Name="Column1"
+            Size="100,0"/>
+      <Size Name="Column2"
+            Size="175,0"/>
+      <Size Name="Column3"
+            Size="75,0"/>
+      <Size Name="Column4"
+            Size="250,0"/>
+      <Size Name="Column5"
+            Size="150,0"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[BriefOver5]"
+               Target="[BriefOver5_Words_Abbreviate.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Words,Abbreviate"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[BriefOver5]"
+               Target="[BriefOver5_Words.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Words"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[BriefOver5]"
+               Target="[BriefOver5_Short.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Short"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[BriefOver5]"
+               Target="[BriefOver5_Long_RoundToMinute.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Long,RoundToMinute"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[BriefOver5]"
+               Target="[BriefOver5_Long.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Long"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Brief]"
+               Target="[Brief_Words_Abbreviate.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Words,Abbreviate"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Brief]"
+               Target="[Brief_Words.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Words"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Brief]"
+               Target="[Brief_Short.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Short"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Brief]"
+               Target="[Brief_Long_RoundToMinute.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Long,RoundToMinute"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Brief]"
+               Target="[Brief_Long.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Long"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Medium]"
+               Target="[Medium_Words_Abbreviate.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Words,Abbreviate"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Medium]"
+               Target="[Medium_Words.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Words"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Medium]"
+               Target="[Medium_Short.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Short"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Medium]"
+               Target="[Medium_Long_RoundToMinute.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Long,RoundToMinute"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Medium]"
+               Target="[Medium_Long.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Long"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Prolonged]"
+               Target="[Prolonged_Words_Abbreviate.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Words,Abbreviate"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Prolonged]"
+               Target="[Prolonged_Words.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Words"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Prolonged]"
+               Target="[Prolonged_Short.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Short"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Prolonged]"
+               Target="[Prolonged_Long_RoundToMinute.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Long,RoundToMinute"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[Prolonged]"
+               Target="[Prolonged_Long.Content]">
+        <Transformer>
+          <TimeSpanTransformer Format="Long"/>
+        </Transformer>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <!-- Column headings -->
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:LabelText Content="Long"
+                            Size="[Column1]"/>
+              <me:LabelText Content="Long, RoundToMinute"
+                            Size="[Column2]"/>
+              <me:LabelText Content="Short"
+                            Size="[Column3]"/>
+              <me:LabelText Content="Words"
+                            Size="[Column4]"/>
+              <me:LabelText Content="Words, Abbreviate"
+                            Size="[Column5]"/>
+            </Children>
+          </Panel>
+
+          <!-- Row 1 -->
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:ValueText Name="Prolonged_Long"
+                            Size="[Column1]"/>
+              <me:ValueText Name="Prolonged_Long_RoundToMinute"
+                            Size="[Column2]"/>
+              <me:ValueText Name="Prolonged_Short"
+                            Size="[Column3]"/>
+              <me:ValueText Name="Prolonged_Words"
+                            Size="[Column4]"/>
+              <me:ValueText Name="Prolonged_Words_Abbreviate"
+                            Size="[Column5]"/>
+            </Children>
+          </Panel>
+
+          <!-- Row 2 -->
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:ValueText Name="Medium_Long"
+                            Size="[Column1]"/>
+              <me:ValueText Name="Medium_Long_RoundToMinute"
+                            Size="[Column2]"/>
+              <me:ValueText Name="Medium_Short"
+                            Size="[Column3]"/>
+              <me:ValueText Name="Medium_Words"
+                            Size="[Column4]"/>
+              <me:ValueText Name="Medium_Words_Abbreviate"
+                            Size="[Column5]"/>
+            </Children>
+          </Panel>
+
+          <!-- Row 3 -->
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:ValueText Name="Brief_Long"
+                            Size="[Column1]"/>
+              <me:ValueText Name="Brief_Long_RoundToMinute"
+                            Size="[Column2]"/>
+              <me:ValueText Name="Brief_Short"
+                            Size="[Column3]"/>
+              <me:ValueText Name="Brief_Words"
+                            Size="[Column4]"/>
+              <me:ValueText Name="Brief_Words_Abbreviate"
+                            Size="[Column5]"/>
+            </Children>
+          </Panel>
+
+          <!-- Row 4 -->
+
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <me:ValueText Name="BriefOver5_Long"
+                            Size="[Column1]"/>
+              <me:ValueText Name="BriefOver5_Long_RoundToMinute"
+                            Size="[Column2]"/>
+              <me:ValueText Name="BriefOver5_Short"
+                            Size="[Column3]"/>
+              <me:ValueText Name="BriefOver5_Words"
+                            Size="[Column4]"/>
+              <me:ValueText Name="BriefOver5_Words_Abbreviate"
+                            Size="[Column5]"/>
+            </Children>
+          </Panel>
+
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <UI Name="ValueText">
+
+    <Properties>
+      <cor:String Name="Content"
+                  String=""/>
+      <Size Name="Size"
+            Size="0,0"/>
+      <Color Name="Color"
+             Color="Khaki"/>
+    </Properties>
+
+    <Content>
+      <Text Content="[Content]"
+            Font="Verdana,16"
+            Color="[Color]"
+            MinimumSize="[Size]"
+            MaximumSize="[Size]"
+            Margins="10,5,10,5"
+            WordWrap="true"/>
+    </Content>
+
+  </UI>
+
+  <UI Name="LabelText"
+      BaseUI="me:ValueText">
+
+    <Properties>
+      <Color Name="Color"
+             Color="LightCoral"/>
+    </Properties>
+
+  </UI>
+
+</Mcml>

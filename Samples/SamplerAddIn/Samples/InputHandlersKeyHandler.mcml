@@ -1,0 +1,87 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml" >
+
+  <!-- KeyHandler sample.                                                   -->
+
+  <!-- Key handler provides key press input behavior to a UI element.       -->
+  <!-- Key handlers allow users the opportunity to handle keyboard input.   -->
+  <!-- They also have commands associated and the Invoke method on the      -->
+  <!-- command will be called when a key press occurs.                      -->
+
+  <!--  This example implements UI element (EnterUI) that has the           -->
+  <!--  text 'Press the Enter key.'                                         -->
+
+  <!--  When the Enter key is pressed, it changes the background and label  -->
+  <!--  color of the UI element.                                            -->
+  <UI Name="EnterUI">
+
+    <!-- Define the properties for this object. -->
+    <Properties>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor"
+             Color="DimGray"/>
+      <Color Name="BackgroundPressedColor"
+             Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor"
+             Color="White"/>
+      <Color Name="LabelPressedColor"
+             Color="FireBrick"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="Arial,20"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- Use the key handler to handle key press events. -->
+      <KeyHandler Name="EnterHandler"
+                  Key="Enter"/>
+
+    </Locals>
+
+    <!-- Define how to handle the input using rule. -->
+    <Rules>
+
+      <!-- Rule to define the behavior when Enter key is pressed.        -->
+      <!-- Change the background and label color using the colors above. -->
+      <Condition Source="[EnterHandler.Pressing]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[BackgroundPressedColor]" />
+          <Set Target="[Label.Color]"
+               Value="[LabelPressedColor]" />
+
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Solid background color. -->
+      <ColorFill Name="Background"
+                 Content="[BackgroundColor]"
+                 Padding="5,5,5,5"
+                 Layout="VerticalFlow">
+        <Children>
+
+          <!-- The label to display. -->
+          <Text Name="Label"
+                Content="Press the Enter key!"
+                Color="[LabelColor]"
+                Font="[LabelFont]"
+                Margins="30,30,30,30"/>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,29 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- Panels are ViewItems that do not draw anything on the screen.     -->
+  <!-- They are only used as layout containers to control the placement  -->
+  <!-- of children that are contained within them.                       -->
+
+  <UI Name="Panel">
+
+    <Content>
+
+      <!-- This Panel is being used to layout two children using -->
+      <!-- a vertical flow.                                      -->
+      <Panel Layout="VerticalFlow">
+
+        <Children>
+
+          <Text Content="Panels are layout containers."
+                Color="CornflowerBlue"/>
+          <Text Content="They have no drawing capability."
+                Color="Firebrick"/>
+
+        </Children>
+
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

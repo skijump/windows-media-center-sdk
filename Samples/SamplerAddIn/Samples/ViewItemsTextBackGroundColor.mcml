@@ -1,0 +1,26 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System">
+
+  <UI Name="Default">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="Text with BackColor=White"
+                BackColor="White"/>
+          <Text Content="Text with BackColor=Red"
+                BackColor="Red"/>
+          <Text Content="Text with BackColor=Blue"
+                BackColor="Blue"/>
+          <Text Content="Text with BackColor=Green"
+                BackColor="Green"/>
+          <Text Content="Text with BackColor=Yellow"
+                BackColor="Yellow"/>
+          <Text Content="Text with BackColor=100,100,100 (RGB)"
+                BackColor="100,100,100"/>
+          <Text Content="Text with no BackColor attribute."
+                Color="White"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

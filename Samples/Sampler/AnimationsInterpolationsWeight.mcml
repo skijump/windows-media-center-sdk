@@ -1,0 +1,181 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:types="file://AnimationsInterpolationsTypes.mcml">
+
+  <!-- This sample demonstrates how to modify the behavior of an            -->
+  <!-- interpolation using the Weight property.                             -->
+
+  <!-- Five of the interpolation types support Weight:                      -->
+  <!-- * Exponential (Exp)                                                  -->
+  <!-- * Logarithmic (Log)                                                  -->
+  <!-- * S-Curve (SCurve)                                                   -->
+  <!-- * EaseIn                                                             -->
+  <!-- * EaseOut                                                            -->
+
+  <!-- The Weight value controls the blending between your specified        -->
+  <!-- interpolation type and a Linear interpolation.  A weight of 1.0 will -->
+  <!-- have no effect on the interpolation.  A weight of 0.0 would produce  -->
+  <!-- the same effect as if you were using a Linear interpolation.         -->
+  <!-- Values greater than 1.0 are supported, and will produce more extreme -->
+  <!-- versions of your chosen interpolation type.                          -->
+
+  <!-- You specify your interpolation weights on a Keyframe using an        -->
+  <!-- argument to the Interpolation property:                              -->
+  <!--   <PositionKeyframe Interpolation="SCurve, 0.5"/>                    -->
+  <UI Name="InterpolationWeights">
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Fill"/>
+        </Layout>
+        <Children>
+
+          <!-- This bar represents the starting line. -->
+          <ColorFill Content="Red"
+                     MinimumSize="10,10"/>
+
+          <!-- The track -->
+          <ColorFill Content="DarkGreen"
+                     Layout="VerticalFlow">
+            <LayoutInput>
+              <DockLayoutInput Position="Left"/>
+            </LayoutInput>
+            <Children>
+
+              <!-- Here we have a flow of Horse UIs, each given a position  -->
+              <!-- animation with a different interpolation type.           -->
+
+              <!-- Exp: 2.00 Weight -->
+              <types:Horse Label="Exp: 2.00 Weight">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Exp,2.0"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Exp: 1.00 Weight -->
+              <types:Horse Label="Exp: 1.00 Weight">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Exp,1.0"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Exp: 0.50 Weight -->
+              <types:Horse Label="Exp: 0.50 Weight">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Exp,0.5"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+
+              <!-- Exp: 0.25 Weight -->
+              <types:Horse Label="Exp: 0.25 Weight">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Exp,0.25"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+              <!-- Exp: 0.00 Weight -->
+              <types:Horse Label="Exp: 0.00 Weight">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Exp,0.0"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+              <!-- Linear (for reference) -->
+              <types:Horse Label="Linear">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Linear"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </types:Horse>
+
+            </Children>
+          </ColorFill>
+
+          <!-- This bar represents the finishing line. -->
+          <ColorFill Content="Red"
+                     MinimumSize="10,10"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

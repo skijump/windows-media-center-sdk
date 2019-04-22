@@ -1,0 +1,17 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- Core controls -->
+  <Aggregate Source="resx://Z/Z.Resources/Button"/>
+  <Aggregate Source="resx://Z/Z.Resources/ThumbnailButton"/>
+  <Aggregate Source="resx://Z/Z.Resources/CheckBox"/>
+  <Aggregate Source="resx://Z/Z.Resources/EditBox"/>
+  <Aggregate Source="resx://Z/Z.Resources/EditBoxWithKeyboard"/>
+  <Aggregate Source="resx://Z/Z.Resources/ProgressBar"/>
+
+  <!-- Common page controls -->
+  <Aggregate Source="resx://Z/Z.Resources/Header"/>
+  <Aggregate Source="resx://Z/Z.Resources/Footer"/>
+  <Aggregate Source="resx://Z/Z.Resources/BackgroundLayer"/>
+
+</Mcml>

@@ -1,0 +1,237 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <!-- This sample shows many different examples of using ScaleLayout.      -->
+
+  <!-- ScaleLayout lays its children out with an infinite constraint        -->
+  <!-- regardless of the actual space available.  It then maps their used   -->
+  <!-- size to the real constraint using a scale transform.  This enables   -->
+  <!-- your UI underneath the scale to be authored to some reference size   -->
+  <!-- without having to worry about intelligently modifying its layout to  -->
+  <!-- some complicated constraint.                                         -->
+  <UI Name="ScaleLayout">
+
+    <Properties>
+      <Size Name="GridCell"
+            Size="100,100"/>
+    </Properties>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <Text Content="A source 75x75 item is laid out by ScaleLayout within a series of constraints.  The columns below go through different property combinations.  The rows provide different constraints."
+                Color="White"
+                Font="Arial, 20"
+                WordWrap="true"/>
+
+          <Panel Margins="0,10,0,0">
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="20, 0"
+                          AllowWrap="true"/>
+            </Layout>
+            <Children>
+
+              <!-- This part lays out the descriptions of what each grid    -->
+              <!-- cell means.  It is meant to be kept in sync with the     -->
+              <!-- layout of the TestStrip UI.                              -->
+              <Panel>
+                <Layout>
+                  <GridLayout Orientation="Vertical"
+                              ReferenceSize="[GridCell]"
+                              MajorAlignment="Center"
+                              MinorAlignment="Near"
+                              Spacing="20,20"/>
+                </Layout>
+                <Children>
+
+                  <!-- 1 -->
+                  <Text Content="Scale Layout"
+                        Color="White"
+                        Font="Arial, 18"
+                        WordWrap="true"/>
+
+                  <!-- 2 -->
+                  <Text Content="Default (Scale down and maintain)"
+                        Color="White"
+                        Font="Arial, 12"
+                        WordWrap="true"/>
+
+                  <!-- 3 -->
+                  <Text Content="Scale to fit (up or down) and maintain"
+                        Color="White"
+                        Font="Arial, 12"
+                        WordWrap="true"/>
+
+                  <!-- 4 -->
+                  <Text Content="Scale to fit (up or down), without maintaining"
+                        Color="White"
+                        Font="Arial, 12"
+                        WordWrap="true"/>
+
+                  <!-- 5 -->
+                  <Text Content="Don't scale up or down"
+                        Color="White"
+                        Font="Arial, 12"
+                        WordWrap="true"/>
+
+                </Children>
+              </Panel>
+
+              <!-- Add a couple of test strips with a variety of constraint -->
+              <!-- combinations.  Namely:                                   -->
+              <!-- * Larger in both X and Y                                 -->
+              <!-- * Larger in X, Smaller in Y                              -->
+              <!-- * Smaller in X, Larger in Y                              -->
+              <!-- * Smaller in both X and Y                                -->
+
+              <me:ScaleTestStrip Constraint="100,100"
+                                 Title="100x100"
+                                 GridCell="[GridCell]"/>
+
+              <me:ScaleTestStrip Constraint="100,50"
+                                 Title="100x50"
+                                 GridCell="[GridCell]"/>
+
+              <me:ScaleTestStrip Constraint="50,100"
+                                 Title="50x100"
+                                 GridCell="[GridCell]"/>
+
+              <me:ScaleTestStrip Constraint="50,50"
+                                 Title="50x50"
+                                 GridCell="[GridCell]"/>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+
+  <!-- This is a strip of Test items. -->
+  <UI Name="ScaleTestStrip">
+
+    <Properties>
+      <cor:String Name="Title"
+                  String="$Required"/>
+      <Size Name="Constraint"
+            Size="0,0"/>
+      <Size Name="GridCell"
+            Size="0,0"/>
+    </Properties>
+
+    <Content>
+
+      <!-- Here we have grid of Test UIs.  The order and number of them is  -->
+      <!-- kept in sync with the label descriptions above.                  -->
+      <Panel>
+        <Layout>
+          <GridLayout Orientation="Vertical"
+                      ReferenceSize="[GridCell]"
+                      MajorAlignment="Near"
+                      MinorAlignment="Near"
+                      Spacing="20,20"/>
+        </Layout>
+        <Children>
+
+          <!-- 1 -->
+          <Panel Layout="Center">
+            <Children>
+              <Text Content="[Title]"
+                    Color="White"
+                    Font="Arial, 18"/>
+            </Children>
+          </Panel>
+
+          <!-- 2 -->
+          <me:ScaleItem Constraint="[Constraint]">
+            <ItemLayout>
+              <ScaleLayout AllowScaleUp="false"
+                           AllowScaleDown="true"
+                           MaintainAspectRatio="true"/>
+            </ItemLayout>
+          </me:ScaleItem>
+
+          <!-- 3 -->
+          <me:ScaleItem Constraint="[Constraint]">
+            <ItemLayout>
+              <ScaleLayout AllowScaleUp="true"
+                           AllowScaleDown="true"
+                           MaintainAspectRatio="true"/>
+            </ItemLayout>
+          </me:ScaleItem>
+
+          <!-- 4 -->
+          <me:ScaleItem Constraint="[Constraint]">
+            <ItemLayout>
+              <ScaleLayout AllowScaleUp="true"
+                           AllowScaleDown="true"
+                           MaintainAspectRatio="false"/>
+            </ItemLayout>
+          </me:ScaleItem>
+
+          <!-- 5 -->
+          <me:ScaleItem Constraint="[Constraint]">
+            <ItemLayout>
+              <ScaleLayout AllowScaleUp="false"
+                           AllowScaleDown="false"
+                           MaintainAspectRatio="false"/>
+            </ItemLayout>
+          </me:ScaleItem>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+
+  <!-- This UI describes our actual usage of the ScaleLayout.  It contains  -->
+  <!-- a colored box that represents the constraint and a gradient within   -->
+  <!-- that box that is the laid out item.                                  -->
+  <UI Name="ScaleItem">
+    <Properties>
+      <ScaleLayout Name="ItemLayout"
+                   ScaleLayout="$Required"/>
+      <Size Name="Constraint"
+            Size="0,0"/>
+    </Properties>
+
+    <Content>
+
+      <Panel>
+        <Children>
+
+          <Panel Layout="[ItemLayout]"
+                 MaximumSize="[Constraint]">
+            <Children>
+
+              <Graphic Content="file://LayoutGraphic.png"
+                       MaximumSize="75,75"
+                       Alpha="0.85"/>
+
+            </Children>
+          </Panel>
+
+          <ColorFill Content="64,255,255,255"
+                     MinimumSize="[Constraint]"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

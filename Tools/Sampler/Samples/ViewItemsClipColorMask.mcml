@@ -1,0 +1,51 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test the application of various ColorMask settings on Clip items. 
+       Applying the ColorMask will mask that color from the Base color for the Fade
+       Ex. Yellow=1.0, 1.0, 0.0  Green=0.0, 1.0, 0.0 
+               when masked = 1.0, 0.0, 0.0 which equals Red.        
+       So in the example, Yellow with a Green ColorMask results in Red -->
+
+  <UI Name="ClipColorMask">
+    <Content>
+      <Panel Layout="VerticalFlow" >
+        <Children>
+
+          <!-- The colormask will control the color of the Fade  -->
+          <me:ClipItem ColorMask="Blue"
+                       Description="Yellow Clip with ColorMask=Blue, results in Yellow"/>
+          <me:ClipItem ColorMask="Green"
+                       Description="Yellow Clip with ColorMask=Green, results in Red"/>
+          <me:ClipItem ColorMask="Red"
+                       Description="Yellow Clip with ColorMask=Red, results in Green"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name ="ClipItem">
+    <Properties>
+      <Color Name="ColorMask"
+             Color="Black"/>
+      <cor:String Name="Description"
+                  String="Description"/>
+    </Properties>
+
+    <Content>
+      <Clip Name="ClipItem"
+            FadeSize="150"
+            ColorMask="[ColorMask]"
+            MaximumSize="750,0">
+        <Children>
+          <Text Color="Yellow"
+                Content="[Description]"/>
+        </Children>
+      </Clip>
+    </Content>
+
+  </UI>
+
+</Mcml>

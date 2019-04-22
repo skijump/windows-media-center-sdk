@@ -1,0 +1,88 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls"
+      xmlns:a="assembly://Sampler/Sampler">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <mc:MediaCollection Name="TestCollection"/>
+      <cor:String Name="Video1"
+                  String="[Sampler.LocalContentVideo01]" />
+      <cor:String Name="Video2"
+                  String="[Sampler.LocalContentVideo02]" />
+      <cor:String Name="Video3"
+                  String="[Sampler.LocalContentVideo03]" />
+    </Locals>
+
+    <Rules>
+
+      <Rule>
+        <Actions>
+          <Set Target="[TestCollection.ContinueOnError]"
+               Value="True"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Actions>
+          <Invoke Target="[TestCollection.AddItem]"
+                  ExclusiveApply="false"
+                  media="[Video1]"
+                  index="0" />
+          <Invoke Target="[TestCollection.AddItem]"
+                  ExclusiveApply="false"
+                  media="[Video2]"
+                  index="1" />
+          <Invoke Target="[TestCollection.AddItem]"
+                  ExclusiveApply="false"
+                  media="[Video3]"
+                  index="2" />
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  ExclusiveApply="false"
+                  mediaType="MediaCollection"
+                  media="[TestCollection]"
+                  addToQueue="false"/>
+        </Actions>
+      </Rule>
+
+      <Binding Target="[Count.PropertyValue]"
+               Source="[TestCollection.Count.ToString]"/>
+
+      <Binding Target="[CurrentIndex.PropertyValue]"
+               Source="[TestCollection.CurrentIndex.ToString]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Video MinimumSize="400,300"
+                 Visible="true" />
+          <ctrl:PropertyAndValue Name="Count"
+                                 PropertyName="Items in the collection"
+                                 PropertyValue="" />
+          <ctrl:PropertyAndValue Name="CurrentIndex"
+                                 PropertyName="CurrentIndex"
+                                 PropertyValue="" />
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

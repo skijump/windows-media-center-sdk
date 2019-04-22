@@ -1,0 +1,81 @@
+// DataReceiver.idl : IDL source for DataReceiver
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (DataReceiver.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[	
+	object,
+	uuid(4D6194C9-09E1-4440-A54E-05678CD01834),
+	helpstring("IDataConsumer Interface"),
+	pointer_default(unique)
+]
+interface IDataConsumer : IUnknown
+{
+	HRESULT ReceiveAppData(int iRowCount,
+						   int iColCount,
+						   int iVideoWidth,
+						   int iVideoHeight,
+						   int iCellWidth,
+						   int iCellHeight);
+
+	HRESULT ReceiveCellData(int iRowIndex,
+							int iColIndex,
+							int iAudioPid,
+							int iLeft,
+							int iTop,
+							BSTR tuneString,
+							BSTR programInfo1,
+							BSTR programInfo2,
+							BSTR programInfo3);	
+
+	HRESULT ReceiveInfoTextFormat(int	iTop,
+								  int	iLeft,
+							      int	iWidth,
+							      int	iFontSize,
+							      BSTR	sInfoColor,
+							      BSTR	sInfoFont);
+
+	HRESULT Stop();	 
+	HRESULT Start();
+};
+
+[
+	object,
+	uuid(CC3C44BC-9D6C-498D-952E-025D52CBDBC4),
+	helpstring("IAddinDataReceiver Interface"),
+	pointer_default(unique)
+]
+interface IAddinDataReceiver : IUnknown
+{
+	HRESULT ReacquireDataSource();
+	HRESULT AdviseConsumer(IDataConsumer*, GUID gGuid);	
+	HRESULT UnAdviseConsumer();
+};
+
+[
+	uuid(90AC705B-72CD-4CFB-9B70-A5060583C312),
+	version(1.0),
+	helpstring("DataReceiver 1.0 Type Library")
+]
+library DataReceiverLib
+{
+	importlib("stdole2.tlb");
+	[			
+		uuid(4D6194C9-09E1-4440-A54E-05678CD01834),
+		helpstring("IDataConsumer Interface")		
+	]
+	interface IDataConsumer;
+	
+	[
+		uuid(F9EE33E9-BB5E-4D54-94D8-48EF630984B4),
+		helpstring("AddinDataReceiver Class")
+	]
+	coclass AddinDataReceiver
+	{
+		[default] interface IAddinDataReceiver;
+	};
+};

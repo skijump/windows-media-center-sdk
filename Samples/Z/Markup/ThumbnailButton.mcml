@@ -1,0 +1,230 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:z="assembly://Z/Z"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:me="Me">
+
+  <!-- Simple button with image -->
+  <UI Name="ThumbnailButton">
+    <Properties>
+      <!-- The action that will be invoked when this button is pressed -->
+      <z:ThumbnailCommand Name="Model"
+                          ThumbnailCommand="$Required"/>
+
+      <!-- Focus border images -->
+      <Image Name="BackgroundImage"
+             Source="resx://Z/Z.Resources/GalleryFocus"
+             NineGrid="4,4,4,9"/>
+
+      <!-- Button label properties -->
+      <Color Name="LabelColor"
+             Color="color://styles:Text.Active"/>
+      <Color Name="LabelFocusColor"
+             Color="color://styles:Text.Negative"/>
+      <Font Name="LabelFont"
+            Font="font://styles:TertiaryText"/>
+      <Font Name="LabelFocusFont"
+            Font="font://styles:TertiaryText"/>
+      <Inset Name="LabelMargins"
+             Inset="6,0,6,4"/>
+      <Size Name="LabelPanelMinSize"
+            Size="0,50"/>
+      <sys:Boolean Name="ShowLabel"
+                   Boolean="true"/>
+
+      <!-- Metadata properties -->
+      <Font Name="MetadataLabelFont"
+            Font="font://styles:GalleryItemSubText"/>
+
+      <!-- Tile metrics -->
+      <Size Name="TileSize"
+            Size="150,200"/>
+    </Properties>
+
+    <Locals>
+      <!-- Make this button clickable -->
+      <ClickHandler Name="Clicker"
+                    Command="[Model]"/>
+    </Locals>
+
+    <Rules>
+      <!-- Bind the button's labels -->
+      <Binding Source="[Model.Description]"
+               Target="[Label.Content]"/>
+      <Binding Source="[Model.Metadata]"
+               Target="[Metadata.Content]"/>
+
+      <!-- Bind the button's image -->
+      <Binding Source="[Model.Image]"
+               Target="[Image.Content]"/>
+
+      <!-- Because of our focus scaling we need to push the focused guy to the top -->
+      <Default Target="[Input.MakeTopmostOnFocus]"
+               Value="true"/>
+
+      <!-- Pressed styling -->
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <!--<PlaySound Sound="sound://styles:SelectSound"/>-->
+          <PlayAnimation Target="[ItemPanel]"
+                         Animation="animation://me:ButtonPress"/>
+        </Actions>
+      </Condition>
+
+      <!-- Focused styling -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Color]"
+               Value="[LabelFocusColor]"/>
+          <Set Target="[Label.Font]"
+               Value="[LabelFocusFont]"/>
+          <Set Target="[Metadata.Color]"
+               Value="[LabelFocusColor]"/>
+          <Set Target="[Background.Visible]"
+               Value="true"/>
+          <Set Target="[Image.Alpha]"
+               Value="1.0"/>
+          <Set Target="[ItemPanel.Scale]"
+               Value="1.1,1.1,1.0"/>
+          <Set Target="[Metadata.Visible]"
+               Value="[ShowLabel]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Style adjustments if the label is disabled -->
+      <Condition Source="[ShowLabel]"
+                 SourceValue="false">
+        <Actions>
+          <Set Target="[Label.Visible]"
+               Value="false"/>
+          <Set Target="[Metadata.Visible]"
+               Value="false"/>
+          <Set Target="[LabelPanel.MinimumSize]"
+               Value="0,0"/>
+        </Actions>
+      </Condition>
+
+      <!-- Apply tile metrics -->
+      <Binding Source="[TileSize]"
+               Target="[ImagePanel.MaximumSize]"/>
+
+      <!-- If there is no image to display, show the no image message. -->
+      <Condition Source="[Model.Image]"
+                 SourceValue="null"
+                 Target="[NoImage.Visible]"
+                 Value="true"/>
+    </Rules>
+
+    <Content>
+      <Panel Name="ItemPanel"
+             Layout="Anchor"
+             Scale="1.0,1.0,1.0"
+             CenterPointPercent="0.5,0.75,0.0">
+        <Animations>
+          <Animation Animation="animation://me:Scale"/>
+        </Animations>
+        <Children>
+
+          <!-- Metadata -->
+          <Panel Name="LabelPanel"
+                 Layout="VerticalFlow"
+                 Margins="[LabelMargins]"
+                 MinimumSize="[LabelPanelMinSize]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="ImagePanel,0"
+                                 Right="ImagePanel,1"
+                                 Top="ImagePanel,1,5"
+                                 Bottom="Parent,1,30"
+                                 Vertical="Near"/>
+            </LayoutInput>
+            <Children>
+
+              <Text Name="Label"
+                    Color="[LabelColor]"
+                    Font="[LabelFont]"
+                    Margins="0,-2,0,0"
+                    Visible="true"/>
+
+              <Text Name="Metadata"
+                    Color="[LabelColor]"
+                    Font="[MetadataLabelFont]"
+                    Margins="0,-5,0,0"
+                    Visible="false"/>
+
+            </Children>
+          </Panel>
+
+          <Panel Name="ImagePanel"
+                 Margins="5,5,5,0">
+            <Children>
+
+              <!-- Display if there is no image -->
+              <ColorFill Name="NoImage"
+                         Content="color://styles:Container.A"
+                         Layout="Center"
+                         Padding="8,8,8,8"
+                         Visible="false">
+                <Children>
+
+                  <Text Name="NoImageText"
+                        Content="resx://Z/Z.Resources/Shell_NoImage"
+                        Color="color://styles:Text.Copy"
+                        Font="[LabelFont]"
+                        WordWrap="true"/>
+
+                </Children>
+              </ColorFill>
+
+              <!-- Image -->
+              <Graphic Name="Image"
+                       Alpha="0.6"
+                       SizingPolicy="SizeToConstraint"/>
+
+            </Children>
+          </Panel>
+
+          <!-- Focus surround -->
+          <Graphic Name="Background"
+                   Content="[BackgroundImage]"
+                   Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="ImagePanel,0"
+                                 Right="ImagePanel,1"
+                                 Top="ImagePanel,0"
+                                 Bottom="LabelPanel,1"/>
+            </LayoutInput>
+          </Graphic>
+
+        </Children>
+
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <!-- Animations -->
+  <Animation Name="ButtonPress">
+    <Keyframes>
+      <ScaleKeyframe Time="0.00"
+                     RelativeTo="Current"
+                     Interpolation="Log"/>
+      <ScaleKeyframe Time="0.08"
+                     Value="0.9,0.9,1.0"/>
+      <ScaleKeyframe Time="0.15"
+                     Value="1.0,1.0,1.0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="Scale"
+             Type="Scale">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     RelativeTo="Current"/>
+      <ScaleKeyframe Time="0.05"
+                     RelativeTo="Final"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

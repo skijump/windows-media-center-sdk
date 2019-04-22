@@ -1,0 +1,90 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:host="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+  
+  <!-- The MediaContext object is only populated on invocation of a More   -->
+  <!-- With This integration location; This sample will only work in that  -->
+  <!-- context (i.e., won't work unless launched with More With This.      -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <host:AddInHost Name="AddInHost"/>
+    </Locals>
+
+    <Rules>
+
+      <Binding Target="[MyAlbumArtist.PropertyValue]"
+               Source="[AddInHost.MediaContext!coll:IDictionary.#AlbumArtist.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaContext!coll:IDictionary.#AlbumArtist.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyAlbumTitle.PropertyValue]"
+               Source="[AddInHost.MediaContext!coll:IDictionary.#AlbumTitle.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaContext!coll:IDictionary.#AlbumTitle.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyGenre.PropertyValue]"
+               Source="[AddInHost.MediaContext!coll:IDictionary.#Genre.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaContext!coll:IDictionary.#Genre.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyLabel.PropertyValue]"
+               Source="[AddInHost.MediaContext!coll:IDictionary.#Label.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaContext!coll:IDictionary.#Label.ToString]"/>
+        </Conditions>
+      </Binding>
+      
+      <Binding Target="[MyReleaseDate.PropertyValue]"
+               Source="[AddInHost.MediaContext!coll:IDictionary.#ReleaseDate.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaContext!coll:IDictionary.#ReleaseDate.ToString]"/>
+        </Conditions>
+      </Binding>
+      
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Center">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <ctrl:PropertyAndValue Name="MyAlbumArtist"
+                                     PropertyName="AlbumArtist"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyAlbumTitle"
+                                     PropertyName="AlbumTitle"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyGenre"
+                                     PropertyName="Genre"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyLabel"
+                                     PropertyName="Label"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyReleaseDate"
+                                     PropertyName="ReleaseDate"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

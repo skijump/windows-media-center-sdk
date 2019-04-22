@@ -1,0 +1,39 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:button="resx://Z/Z.Resources/Button"
+      xmlns:z="assembly://Z/Z">
+
+  <!-- The footer for the Z app contains buttons to navigate to Search or Details. -->
+  <UI Name="Footer">
+    <Properties>
+      <z:Application Name="Application"
+                     Application="$Required"/>
+    </Properties>
+
+    <Content>
+      <Panel Navigation="PreferFocusOrder">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <button:Button FocusOrder="1">
+            <Model>
+              <InvokeCommand Description="Search"
+                             Target="[Application.GoToSearch]"/>
+            </Model>
+          </button:Button>
+
+          <button:Button FocusOrder="2">
+            <Model>
+              <InvokeCommand Description="Downloads"
+                             Target="[Application.GoToDownloads]"/>
+            </Model>
+          </button:Button>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

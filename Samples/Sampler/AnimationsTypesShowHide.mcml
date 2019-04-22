@@ -1,0 +1,104 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cb="file://ControlsSimpleCheckbox.mcml">
+
+  <!-- This sample demonstrates how a Show or Hide animation can animate    -->
+  <!-- the result of a change in layout visibility.  Whenever an item is    -->
+  <!-- made visible any attached animation of type Show will be played.     -->
+  <!-- Whenever an item is made invisible any attached animation of type    -->
+  <!-- Hide will be played.                                                 -->
+
+  <!-- How that animation chooses to apply the Show/Hide transition is      -->
+  <!-- completely up to the author.  The item could fade in, spin in, fly   -->
+  <!-- in from far away, or even do some combination of all of those.       -->
+  <!-- The only expectation is that at the end of a Show animation the      -->
+  <!-- item is left in its layout appointed state and is visible.           -->
+  <UI Name="ShowHideAnimations">
+
+    <Locals>
+      <!-- This bool will track whether our item should be shown or not -->
+      <BooleanChoice Name="ShowItem"
+                     Value="true"
+                     Description="Visible"/>
+    </Locals>
+
+    <Rules>
+      <!-- Bind our boolean value to the visibility of our Show/Hide target.-->
+      <Binding Source="[ShowItem.Value]"
+               Target="[MyGraphic.Visible]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Form">
+        <Children>
+
+          <!-- This is the item that we will show or hide when the checkbox -->
+          <!-- is toggled.                                                  -->
+          <Graphic Name="MyGraphic"
+                   Content="file://FourBoxGraphicSmall.png">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,1"
+                               Top="Parent,0"
+                               Bottom="Parent,1"
+                               Horizontal="Center"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Animations>
+
+              <!-- This animation is of type Show.  It will play whenever   -->
+              <!-- the item it is attached to is made visible.              -->
+              <Animation Type="Show">
+                <Keyframes>
+
+                  <!-- We apply the Hide effect by taking alpha from zero   -->
+                  <!-- to its appropriate value.                            -->
+                  <AlphaKeyframe Time="0.0"
+                                 Value="0.0"
+                                 Interpolation="Exp"/>
+                  <AlphaKeyframe Time="1.5"
+                                 Value="1.0"/>
+
+                </Keyframes>
+              </Animation>
+
+              <!-- This animation is of type Hide.  It will play whenever   -->
+              <!-- the item it is attached to is made invisible.            -->
+              <Animation Type="Hide">
+                <Keyframes>
+
+                  <!-- We apply the Hide effect by taking alpha from        -->
+                  <!-- wherever it currently is to zero.                    -->
+                  <AlphaKeyframe Time="0.0"
+                                 Value="1.0"
+                                 RelativeTo="Current"
+                                 Interpolation="Log"/>
+                  <AlphaKeyframe Time="1.5"
+                                 Value="0.0"/>
+
+                </Keyframes>
+              </Animation>
+
+            </Animations>
+          </Graphic>
+
+          <!-- Display a checkbox to control our boolean value. -->
+          <cb:SimpleCheckBox Name="CheckBox"
+                             Model="[ShowItem]">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,1"
+                               Top="Parent,0,150"
+                               Horizontal="Center"/>
+            </LayoutInput>
+          </cb:SimpleCheckBox>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

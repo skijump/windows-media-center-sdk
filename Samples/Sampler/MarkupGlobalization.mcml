@@ -1,0 +1,242 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Globalization (Flipping) sample                                      -->
+  <!-- In certain locales, the default reading order is from right to left, -->
+  <!-- rather than left to right.  In those cases, the UI can be flipped to -->
+  <!-- provide a more natural experience for that locale.  When running in  -->
+  <!-- Right-to-left mode (i.e. Environment.IsRightToLeft == true), layout  -->
+  <!-- coordinates for UIs marked as Flippable are automatically flipped    -->
+  <!-- across the Y axis, and images marked as Flippable are rendered       -->
+  <!-- flipped as well.                                                     -->
+  <!-- By default, Flippable is true on UI, and false on Images.  Scenarios -->
+  <!-- where you might want to set Flippable=false on a UI would be if you  -->
+  <!-- were displaying a transport toolbar with rewind and fast forward     -->
+  <!-- buttons, which are universal in meaning.                             -->
+  <!-- Generally, most images should not be flipped, except those that      -->
+  <!-- convey some sense of direction, such as an arrow.                    -->
+  <!-- You can force Windows Media Center to launch in RTL mode by starting -->
+  <!-- it with the -rtl argument.  This is necessary to view and understand -->
+  <!-- the effects of this sample.                                          -->
+  <UI Name="Main">
+
+    <Locals>
+      <Environment Name="Environment"/>
+
+      <!-- Non-flippable images                                            -->
+      <!-- If Flippable="false" on an image, then it is rendered the same  -->
+      <!-- irregardless of whether the environment is Right to Left or not.-->
+      <!-- This is desirable for photo-type images.                        -->
+      <Image Name="Horse"
+             Source="file://MarkupGlobalizationRaceHorse.png"/>
+      <Image Name="HorseFlippable"
+             Source="file://MarkupGlobalizationRaceHorse.png"
+             Flippable="true"/>
+
+      <!-- Flippable images                                                 -->
+      <!-- When in Right To Left mode, these images will be flipped across  -->
+      <!-- their Y axis.  When not in Right To Left mode, they are rendered -->
+      <!-- normally.   You would want to use this on images that convey a   -->
+      <!-- direction (like arrows, or horses and carts)                     -->
+      <Image Name="Cart"
+             Source="file://MarkupGlobalizationCart.png"/>
+      <Image Name="CartFlippable"
+             Source="file://MarkupGlobalizationCart.png"
+             Flippable="true"/>
+
+      <!-- Common properties we'll be using later. -->
+      <Font Name="TextFont"
+            Font="Segoe,16"/>
+      <Color Name="TextColor"
+             Color="White"/>
+      <Inset Name="TextMargins"
+             Inset="0,0,0,10"/>
+      <Inset Name="LargeMargins"
+             Inset="0,0,0,25"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- Set our description text appropriately based on whether we're in -->
+      <!-- RTL mode or not.                                                 -->
+      <Condition Source="[Environment.IsRightToLeft]"
+                 SourceValue="true"
+                 Target="[EnvironmentDescription.Content]"
+                 Value="Currently in Right To Left mode"/>
+
+      <Condition Source="[Environment.IsRightToLeft]"
+                 SourceValue="false"
+                 Target="[EnvironmentDescription.Content]"
+                 Value="Currently NOT in Right To Left mode.  This sample needs to be displayed in RTL mode to illustrate the use of the Flippable property.  To do this, launch Windows Media Center with the -rtl flag."/>
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- Description text -->
+          <Text Name="EnvironmentDescription"
+                MaximumSize="600,300"
+                WordWrap="true"
+                Color="[TextColor]"
+                Margins="[LargeMargins]"/>
+
+          <!-- For this row, we're using a UI that's marked as             -->
+          <!-- Flippable=false.  This means that when in RTL mode, the     -->
+          <!-- layout coordinates are not transformed.                     -->
+
+          <Text Content="Flipping disabled on the UI and images"
+                WordWrap="true"
+                Color="[TextColor]"
+                Font="[TextFont]"
+                Margins="[TextMargins]"/>
+          <me:NonFlippableRow Horse="[Horse]"
+                              Cart="[Cart]"
+                              Margins="[LargeMargins]"/>
+
+
+          <!-- For this row, the UI is Flippable, but the images aren't.  -->
+          <!-- This means that they will appear laid out from right to    -->
+          <!-- left, but the image bits will still be rendered normally.  -->
+          <Text Content="Flipping enabled for the UI (layout) but not the images - the cart is before the horse!"
+                WordWrap="true"
+                Color="[TextColor]"
+                Font="[TextFont]"
+                Margins="[TextMargins]"/>
+          <me:Row Horse="[Horse]"
+                  Cart="[Cart]"
+                  Margins="[LargeMargins]"/>
+
+          <!-- For this row, not only is the UI flippable, but so are the-->
+          <!-- images.  This means that the images appear laid out right -->
+          <!-- to left, and the images themselves are also flipped.  So, -->
+          <!-- the horse and cart are both pointing to the left.         -->
+          <Text Content="Flipping enabled for the UI and the images.  That's more like it!"
+                WordWrap="true"
+                Color="[TextColor]"
+                Font="[TextFont]"
+                Margins="[TextMargins]"/>
+          <me:Row Horse="[HorseFlippable]"
+                  Cart="[CartFlippable]"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- This UI displays our horse and cart over top of a color fill.  When -->
+  <!-- not in Left to Right mode, the cart is displayed to the left of the -->
+  <!-- horse.  However, when in RTL mode, layouts are flipped, so the cart -->
+  <!-- actually appears to the right of the horse.                         -->
+  <UI Name="Row">
+
+    <Properties>
+      <Image Name="Horse"
+             Image="$Required"/>
+      <Image Name="Cart"
+             Image="$Required"/>
+    </Properties>
+
+    <Content>
+
+      <ColorFill Content="White"
+                 Padding="0,30,0,0">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- Cart -->
+          <Graphic Content="[Cart]"
+                   MaximumSize="150,0"
+                   MaintainAspectRatio="true">
+            <Animations>
+              <Animation Animation="animation://me:CartRotate"/>
+            </Animations>
+          </Graphic>
+
+          <!-- Horse -->
+          <Graphic Content="[Horse]"
+                   MaximumSize="150,0"
+                   MaintainAspectRatio="true">
+            <Animations>
+              <MergeAnimation>
+                <Sources>
+                  <Animation Animation="animation://me:HorseRotate"/>
+                  <Animation Animation="animation://me:HorseUpDown"/>
+                </Sources>
+              </MergeAnimation>
+
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+  <!-- This UI is identical to our Row UI, except that it sets Flippable to-->
+  <!-- false.  This means that irregardless of whether we're in RTL or not,-->
+  <!-- the cart will *always* appear to the left of the horse.             -->
+  <UI Name="NonFlippableRow"
+      BaseUI="me:Row"
+      Flippable="false"/>
+
+
+  <!-- Animations we apply to the cart and horse -->
+  <Animation Name="CartRotate"
+             Loop="-1">
+    <Keyframes>
+      <RotateKeyframe Time="0"
+                      Value="0deg;0,0,1"
+                      RelativeTo="Current"/>
+      <RotateKeyframe Time=".25"
+                      Value="-2deg;0,0,1"
+                      Interpolation="Sine"/>
+      <RotateKeyframe Time=".75"
+                      Value="2deg;0,0,1"/>
+      <RotateKeyframe Time="1"
+                      Value="0deg;0,0,1"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="HorseRotate"
+             Loop="-1">
+    <Keyframes>
+      <RotateKeyframe Time="0"
+                      Value="0deg;0,0,1"
+                      Interpolation="Sine"
+                      RelativeTo="Current"/>
+      <RotateKeyframe Time=".4"
+                      Value="-3deg;0,0,1"/>
+      <RotateKeyframe Time=".8"
+                      Value="3deg;0,0,1"/>
+      <RotateKeyframe Time="1"
+                      Value="0deg;0,0,1"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation  Name="HorseUpDown"
+              Loop="-1">
+    <Keyframes>
+      <PositionKeyframe Time="0"
+                        Value="0,0,0"
+                        Interpolation="Exp"
+                        RelativeTo="Current"/>
+      <PositionKeyframe Time=".5"
+                        Value="0,-25,0"
+                        Interpolation="Exp"/>
+      <PositionKeyframe Time="1"
+                        Value="0,0,0"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

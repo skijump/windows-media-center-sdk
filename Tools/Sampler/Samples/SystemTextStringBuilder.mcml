@@ -1,0 +1,41 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:text="assembly://MsCorLib/System.Text">
+
+  <UI Name="Default">
+
+    <Locals>
+      <cor:String Name="myString"
+                  String="1234567"/>
+      <text:StringBuilder Name="myStringBuilder"
+                          StringBuilder="ABCDEFG" />
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[myStringBuilder.Append]"
+                  value="[myString]"
+                  ExclusiveApply="false"
+                  InvokePolicy="Synchronous" />
+          <Invoke Target="[myStringBuilder.Insert]"
+                  value="[myStringBuilder.ToString]"
+                  index="0"
+                  ExclusiveApply="false"
+                  InvokePolicy="Synchronous" />
+          <Set Target="[myText.Content]"
+               Value="[myStringBuilder.ToString]"
+               ExclusiveApply="false"
+               InvokePolicy="Synchronous" />
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <Text Name="myText"
+            Color="White" />
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,137 @@
+<Mcml
+  xmlns="http://schemas.microsoft.com/2008/mcml"
+  xmlns:styles="resx://Z/Z.Resources/Styles"
+  xmlns:me="Me">
+
+  <UI Name="CheckBox">
+    <Properties>
+      <!-- The value of this checkbox -->
+      <BooleanChoice Name="Model"
+                     BooleanChoice="$Required"/>
+
+      <Size Name="BoxSize"
+            Size="50,50"/>
+
+      <!-- Images -->
+      <Image Name="BoxFocusImage"
+             Source="resx://Z/Z.Resources/CheckBoxFocus"
+             NineGrid="12,12,12,12"/>
+      <Image Name="BoxNonFocusImage"
+             Source="resx://Z/Z.Resources/CheckBoxNonFocus"
+             NineGrid="12,12,12,12"/>
+      <Image Name="BoxCheckedImage"
+             Source="resx://Z/Z.Resources/CheckBoxChecked"/>
+
+      <!-- Label color properties -->
+      <Color Name="LabelColor"
+             Color="color://styles:Text.Copy"/>
+      <Color Name="LabelFocusedColor"
+             Color="color://styles:Text.Copy"/>
+      <Color Name="LabelHoverColor"
+             Color="color://styles:Text.Copy"/>
+      <Color Name="LabelPressedColor"
+             Color="color://styles:Text.Copy"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="font://styles:SecondaryText"/>
+    </Properties>
+
+    <Locals>
+      <!-- Make this checkbox clickable -->
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <!-- Bind the model value to the check visibility. -->
+      <Binding Source="[Model.Value]"
+               Target="[Check.Visible]"/>
+
+      <!-- Bind the check box's label -->
+      <Binding Source="[Model.Description]"
+               Target="[Label.Content]"/>
+
+      <!-- The checkbox has been clicked - toggle the value -->
+      <Changed Source="[Clicker.Invoked]">
+        <Actions>
+          <Set Target="[Model.Value]"
+               Value="[Model.Value]">
+            <Transformer>
+              <BooleanTransformer Inverse="true"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Changed>
+
+      <!-- Pressed styling -->
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Color]"
+               Value="[LabelPressedColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Mouse focused styling -->
+      <Condition Source="[Input.MouseFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Color]"
+               Value="[LabelHoverColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Focused styling -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Box.Content]"
+               Value="[BoxFocusImage]"/>
+          <Set Target="[Label.Color]"
+               Value="[LabelFocusedColor]"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- The box around the check -->
+          <Graphic Name="Box"
+                   Content="[BoxNonFocusImage]"
+                   MouseInteractive="true"
+                   MaximumSize="[BoxSize]"
+                   Layout="Form">
+            <Children>
+
+              <!-- A check mark - visible if the value is true -->
+              <Graphic Name="Check"
+                       Content="[BoxCheckedImage]">
+                <LayoutInput>
+                  <FormLayoutInput Left="Parent,0.2"
+                                   Right="Parent,0.8"
+                                   Top="Parent,0.2"
+                                   Bottom="Parent,0.8"/>
+                </LayoutInput>
+              </Graphic>
+
+            </Children>
+          </Graphic>
+
+          <!-- The checkbox label -->
+          <Text Name="Label"
+                Color="[LabelColor]"
+                Font="[LabelFont]"
+                Margins="5,0,0,0"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

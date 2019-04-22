@@ -1,0 +1,35 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- ColorFills are used to draw rectangles with a solid color. They    -->
+  <!-- are typically used for adding background color to ViewItems.       -->
+
+  <!-- ColorFills that do not have any children and have no padding or    -->
+  <!-- minimum size will not show up on the screen. This is because the   -->
+  <!-- content of a ColorFill (i.e. a color) has no intrinsic size        -->
+  <!-- associated with it.                                                -->
+
+  <!-- This example demonstrates nested ColorFills. The deepest ColorFill -->
+  <!-- requires a minimum size value so that it will be visible           -->
+  <!-- since it does not have any children.                               -->
+
+  <UI Name="ColorFill">
+
+    <Content>
+
+      <ColorFill Content="MistyRose"
+                 Padding="100,100,100,100">
+        <Children>
+          <ColorFill Content="Goldenrod"
+                     Padding="100,100,100,100">
+            <Children>
+              <ColorFill Content="SlateBlue"
+                         MinimumSize="100,100"/>
+            </Children>
+          </ColorFill>
+        </Children>
+      </ColorFill>
+
+    </Content>
+  </UI>
+
+</Mcml>

@@ -1,0 +1,65 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <cor:String Name="LocalMediaPath"
+                  String="c:\users\public\music\Windows Media Center SDK\Audio03.mp3"/>
+      <cor:String Name="WebMediaPath"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/audio01.mp3"/>
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <Command Name="PlayAudioLocal"
+               Description="Play Local Audio" />
+      <Command Name="PlayAudioWeb"
+               Description="Play Web Audio" />
+    </Locals>
+
+    <Rules>
+      <Changed Source="[PlayAudioWeb.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Audio"
+                  media="[WebMediaPath]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[PlayAudioLocal.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Audio"
+                  media="[LocalMediaPath]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <ctrl:Button Command="[PlayAudioLocal]"
+                           ButtonLabel="[PlayAudioLocal.Description]" />
+              <ctrl:Button Command="[PlayAudioWeb]"
+                           ButtonLabel="[PlayAudioWeb.Description]" />
+              <NowPlaying ShowFullMetadata="Always" SnapToDefaultPosition="true"/>
+            </Children>
+          </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

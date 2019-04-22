@@ -1,0 +1,48 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- Changed rules watch for modifications on a Source. They do not   -->
+  <!-- watch for any particular values. Instead, all that matters is if -->
+  <!-- the Source changes.                                              -->
+
+  <!-- This UI demonstrates how a Changed rule is used to react to the  -->
+  <!-- Timer alarm.                                                     -->
+  <UI Name="Changed">
+
+    <!-- Add a non-repeating Timer that will tick in 1 second. -->
+    <Locals>
+      <Timer Name="Timer"
+             Enabled="true"
+             AutoRepeat="false"
+             Interval="1000"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- The timer will notify its Tick event in the same way property   -->
+      <!-- changes are notified. Therefore, the Changed rule can be used   -->
+      <!-- to watch for this event.                                        -->
+      <Changed Source="[Timer.Tick]">
+
+        <!-- The Changed rule has no properties that refer to Targets.     -->
+        <!-- Instead, explicit Actions must declared. In this case, when   -->
+        <!-- the Timer ticks, set the content on the Label.                -->
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="WAKE UP!!!"/>
+        </Actions>
+
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <Text Name="Label"
+            Content="zzzzzzzzzzzzzzzzzzzzzzzzz"
+            Color="SeaShell"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

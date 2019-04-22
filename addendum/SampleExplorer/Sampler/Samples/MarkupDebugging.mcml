@@ -1,0 +1,108 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:b="resx://Sampler/Sampler.Resources/ControlsSimpleButton"
+      xmlns:e="resx://Sampler/Sampler.Resources/ControlsSimpleEditbox">
+
+  <!-- MCML and McmlPad support various methods for helping debug problems -->
+  <!-- in your markup. MCML supports debug tracing and McmlPad supports    -->
+  <!-- runtime exception dumping.                                          -->
+
+  <!-- MCML supports the ability to generate traces from your Rule         -->
+  <!-- declarations by using the DebugTrace action. The DebugTrace action  -->
+  <!-- supports outputting debug traces which includes dumping any state   -->
+  <!-- in your UI that is reachable via an object path. This is useful for -->
+  <!-- checking if Rules are getting run and also dumping intermediate UI  -->
+  <!-- state.                                                              -->
+
+  <!-- McmlPad supports dumping unhandled runtime exceptions. The platform -->
+  <!-- will attempt to verify (at parse-time) your markup as much as       -->
+  <!-- it can to ensure a stable runtime. Given the nature of MCML (such   -->
+  <!-- as object-paths) it's very possible to cause crashes at runtime.    -->
+  <!-- No attempt is made to hide these runtime exceptions since it        -->
+  <!-- indicates a design error (either in markup or code). McmlPad will   -->
+  <!-- output errors as debug traces.                                      -->
+
+  <!-- In order to use this support, you must be running a debug trace     -->
+  <!-- monitor. Running under a debugger (such as Visual Studio) will      -->
+  <!-- display traces in the debugger's output window. The disadvantage is -->
+  <!-- that you have to start your application under the debugger or       -->
+  <!-- attached it at runtime. An alternative is to run a standalone       -->
+  <!-- debugging monitor tool.                                             -->
+
+  <!-- The following example shows how to use DebugTrace. It also displays -->
+  <!-- a button which, when clicked, will cause a crash which will be      -->
+  <!-- dumped by McmlPad.                                                  -->
+
+  <UI Name="Debugging">
+
+    <Locals>
+      <EditableText Name="EditableText"/>
+    </Locals>
+
+    <Rules>
+      <!-- When the user enters something in the edit box, dump a -->
+      <!-- trace showing the current value. Notice the use of     -->
+      <!-- ObjectPath. It can access anything available within    -->
+      <!-- the scope of this UI. The number of 'Params' must      -->
+      <!-- match the number of placeholders in the Message        -->
+      <!-- string.                                                -->
+      <Changed Source="[EditableText.Activity]">
+        <Actions>
+          <DebugTrace Message="Current edit value: '{0}'">
+            <Params>
+              <ObjectPath ObjectPath="[EditableText.Value]"/>
+            </Params>
+          </DebugTrace>
+        </Actions>
+      </Changed>
+
+      <!-- When the user hits enter, dump a trace. -->
+      <Changed Source="[EditableText.Submitted]">
+        <Actions>
+          <DebugTrace Message="User just hit enter"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="150,0"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <Panel>
+            <Layout>
+              <FlowLayout Spacing="10,0"/>
+            </Layout>
+            <Children>
+              <Text Content="Check out the Debug traces as you type:"
+                    Color="White"/>
+
+              <e:SimpleEditbox EditableText="[EditableText]"/>
+            </Children>
+          </Panel>
+
+          <!-- This will crash the application! EditableText has a Description -->
+          <!-- property on it that was never initialized (i.e. it is null).    -->
+          <!-- The InvokeCommand here will attempt to call a method on a null  -->
+          <!-- causing a runtime null-reference exception. If running under    -->
+          <!-- McmlPad, the exception will be dumped via debug traces.         -->
+          <b:SimpleButton>
+            <Command>
+              <InvokeCommand Description="Crash the application (CAREFUL!)"
+                             Target="[EditableText.Description.Length.ToString]"
+                             ResultTarget="[EditableText.Value]"/>
+            </Command>
+          </b:SimpleButton>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

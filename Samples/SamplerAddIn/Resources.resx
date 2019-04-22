@@ -1,0 +1,1069 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ActionsInvoke" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\actionsinvoke.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ActionsPlayAnimation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\actionsplayanimation.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ActionsPlaySound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\actionsplaysound.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ActionsSet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\actionsset.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ApplicationTitle" xml:space="preserve">
+    <value>Windows Media Center SDK Sampler</value>
+  </data>
+  <data name="CodeDataModelItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\codedatamodelitems.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CodeDataThreading" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\codedatathreading.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CodeDataVirtualization" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\codedatavirtualization.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Controls" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controls.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controlsbutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsEditbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controlseditbox.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsGroupHeader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controlsgroupheader.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsPropertyAndValue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controlspropertyandvalue.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsSimpleButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlssimplebutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsSimpleEditbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlssimpleeditbox.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsSpinner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\controlsspinner.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Default" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\default.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FocusFocusOrder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\focusfocusorder.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FocusNavigateInto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\focusnavigateinto.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FundamentalsHelloWorld" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fundamentalshelloworld.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FundamentalsMarkupLibraries" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fundamentalsmarkuplibraries.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FundamentalsModelViewSeparation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fundamentalsmodelviewseparation.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FundamentalsResourceAccess" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fundamentalsresourceaccess.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FundamentalsXMLSyntax" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fundamentalsxmlsyntax.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GoToMainMenu" xml:space="preserve">
+    <value>Main Menu</value>
+  </data>
+  <data name="Greeting" xml:space="preserve">
+    <value>Greetings and Salutations!</value>
+  </data>
+  <data name="Header" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\header.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputHandlersClickHandler" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputhandlersclickhandler.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputHandlersKeyHandler" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputhandlerskeyhandler.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputHandlersMouseWheelHandler" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputhandlersmousewheelhandler.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputHandlersShortcutHandler" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputhandlersshortcuthandler.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputHandlersStagesHandling" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputhandlersstageshandling.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputHandlersTypingHandler" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputhandlerstypinghandler.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputKeyFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputkeyfocus.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputMouseFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputmousefocus.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputMouseFocusFlowerBlue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputmousefocusflowerblue.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="InputMouseFocusFlowerGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputmousefocusflowergreen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyboardNavigationArrowDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationarrowdown.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyboardNavigationArrowLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationarrowleft.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyboardNavigationArrowUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationarrowup.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyboardNavigationCenterGradient" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationcentergradient.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyboardNavigationContain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationcontain.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KeyboardNavigationContainerFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationcontainerfocus.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KeyboardNavigationFlow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationflow.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KeyboardNavigationGroups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationgroups.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KeyboardNavigationRowColumn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationrowcolumn.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KeyboardNavigationWrap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationwrap.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutAnchor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutanchor.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutAnchorToFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutanchortofocus.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutBorder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutborder.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutCenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutcenter.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutDefault" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutdefault.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutFill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutfill.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutForm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutform.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutGraphic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutgraphic.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayoutGraphicArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutgraphicarrow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayoutGraphicOutlineRounded" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutgraphicoutlinerounded.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayoutGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutgrid.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutHorizontalFlow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layouthorizontalflow.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutMarginsPadding" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutmarginspadding.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutMinimumSizeMaximumSize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutminimumsizemaximumsize.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutRotate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutrotate.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutScale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutscale.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutVerticalFlow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\layoutverticalflow.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupAccessibility" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupaccessibility.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupAggregates" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupaggregates.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupBaseUIs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupbaseuis.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupColorSchemes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupcolorschemes.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupDebugging" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupdebugging.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupGlobalization" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupglobalization.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupGlobalizationCart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupglobalizationcart.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MarkupGlobalizationRaceHorse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupglobalizationracehorse.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MarkupHostViewItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markuphostviewitem.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupInvokeCommand" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupinvokecommand.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupLocals" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markuplocals.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupProperties" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupproperties.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupStringTableAccess" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupstringtableaccess.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelApplicationContextInstallApplication" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelapplicationcontextinstallapplication.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelHostingHistoryOrientedPageSession" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelhostinghistoryorientedpagesession.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterBackgroundModes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterbackgroundmodes.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterMediaCollectionAddItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacentermediacollectionadditem.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterMediaCollectionAddItemRepeater" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacentermediacollectionadditemrepeater.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterMediaCollectionBasic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacentermediacollectionbasic.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RulesBinding" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\rulesbinding.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RulesChanged" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\ruleschanged.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RulesCondition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\rulescondition.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RulesCustomRuleEqualityCondition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\rulescustomruleequalitycondition.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RulesCustomRuleModifiedCondition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\rulescustomrulemodifiedcondition.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RulesDefault" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\rulesdefault.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RulesIsTypeCondition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\rulesistypecondition.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RulesIsValidCondition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\rulesisvalidcondition.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RulesMixedSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\rulesmixedsample.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Samples" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\samples.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Styles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\styles.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Test" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>markup\test.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TransformersBooleanTransformer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\transformersbooleantransformer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TransformersDateTimeTransformer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\transformersdatetimetransformer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TransformersFormatTransformer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\transformersformattransformer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TransformersMathTransformer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\transformersmathtransformer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TransformersTimeSpanTransformer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\transformerstimespantransformer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsClip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsclip.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsColorFill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemscolorfill.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsColorFillColors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemscolorfillcolors.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsGraphic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsgraphic.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsGraphicDog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsgraphicdog.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ViewItemsGraphicDogSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsgraphicdogsmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ViewItemsNowPlaying" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsnowplaying.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemspanel.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstext.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsVideo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsvideo.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsVideoCrackedTube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsvideocrackedtube.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ViewItemsVideoGlassBreaking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsvideoglassbreaking.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsVideoTV" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsvideotv.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentVersion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentversion.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ScrollingLists" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollinglists.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ScrollingListsXbox360" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollinglistsxbox360.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScrollingLocking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollinglocking.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ScrollingLockingPurpleStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollinglockingpurplestar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScrollingLockingYellowStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollinglockingyellowstar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScrollingPadding" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollingpadding.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ScrollingPaddingPurpleStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollingpaddingpurplestar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScrollingPaddingPurpleStar1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollingpaddingpurplestar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScrollingPaddingYellowStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollingpaddingyellowstar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScrollingPaddingYellowStar1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollingpaddingyellowstar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScrollingScrollerViewItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollingscrollerviewitem.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ScrollingStaticContent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\scrollingstaticcontent.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsJellyButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsjellybutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsJellyButtonAquaHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsjellybuttonaquahover.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsJellyButtonAquaSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsjellybuttonaquaselected.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsJellyButtonAquaSelecting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsjellybuttonaquaselecting.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsJellyButtonBrownRectangle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsjellybuttonbrownrectangle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ControlsJellyButtonRedRectangle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsjellybuttonredrectangle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ControlsSimpleSpinner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlssimplespinner.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RepeaterContentSelectors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeatercontentselectors.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RepeaterContentSelectorsCD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeatercontentselectorscd.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeaterDividers" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeaterdividers.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RepeaterFlowLayout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeaterflowlayout.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RepeaterFlowLayoutBlueStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeaterflowlayoutbluestar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeaterFlowLayoutGreenStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeaterflowlayoutgreenstar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeaterFlowLayoutPurpleStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeaterflowlayoutpurplestar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeaterFlowLayoutYellowStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeaterflowlayoutyellowstar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeaterGridLayout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeatergridlayout.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RepeaterGridLayoutBlueStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeatergridlayoutbluestar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeaterGridLayoutGreenStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeatergridlayoutgreenstar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeaterGridLayoutPurpleStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeatergridlayoutpurplestar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeaterGridLayoutYellowStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeatergridlayoutyellowstar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeaterListDataSet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeaterlistdataset.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RepeaterRepeaterViewItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeaterrepeaterviewitem.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GraphicsAlignment" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\graphicsalignment.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GraphicsAlignmentDog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\graphicsalignmentdog.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GraphicsAlignmentDogTiny" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\graphicsalignmentdogtiny.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GraphicsImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\graphicsimage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GraphicsImageRedRectangle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\graphicsimageredrectangle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GraphicsImageStringCast" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\graphicsimagestringcast.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsCenterPoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationscenterpoint.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsCenterPointDunkingBirdBody" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationscenterpointdunkingbirdbody.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AnimationsCenterPointDunkingBirdLegs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationscenterpointdunkingbirdlegs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AnimationsInterpolationsBezierHandles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationsinterpolationsbezierhandles.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsInterpolationsEaseInOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationsinterpolationseaseinout.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsInterpolationsTypes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationsinterpolationstypes.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsInterpolationsTypesRaceHorse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationsinterpolationstypesracehorse.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AnimationsInterpolationsWeight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationsinterpolationsweight.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsKeyframesAlpha" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationskeyframesalpha.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsKeyframesColor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationskeyframescolor.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsKeyframesMixedSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationskeyframesmixedsample.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsKeyframesPosition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationskeyframesposition.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsKeyframesRotate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationskeyframesrotate.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsKeyframesScale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationskeyframesscale.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsKeyframesSize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationskeyframessize.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsMergeAnimation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationsmergeanimation.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsRelativeTo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationsrelativeto.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsSwitchAnimation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationsswitchanimation.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTransformAnimationDelay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstransformanimationdelay.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTransformAnimationFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstransformanimationfilter.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTransformAnimationMagnitude" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstransformanimationmagnitude.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTransformAnimationTimeScale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstransformanimationtimescale.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTransformByAttributeAnimationDelay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstransformbyattributeanimationdelay.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTransformByAttributeAnimationMagnitude" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstransformbyattributeanimationmagnitude.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTransformByAttributeAnimationOverride" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstransformbyattributeanimationoverride.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTransformByAttributeAnimationTimeScale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstransformbyattributeanimationtimescale.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTransformByAttributeAnimationValueTransformer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstransformbyattributeanimationvaluetransformer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesAlpha" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesalpha.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesContentChangeShowHide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypescontentchangeshowhide.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesGainLoseFocus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesgainlosefocus.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesGainLoseFocusBagBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesgainlosefocusbagbottom.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AnimationsTypesGainLoseFocusBagTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesgainlosefocusbagtop.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AnimationsTypesGainLoseFocusPeanut1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesgainlosefocuspeanut1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AnimationsTypesGainLoseFocusPeanut2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesgainlosefocuspeanut2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AnimationsTypesGainLoseFocusPeanut3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesgainlosefocuspeanut3.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AnimationsTypesIdle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesidle.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesMixedSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesmixedsample.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesMove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesmove.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesRotate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesrotate.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesScale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesscale.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesShowHide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypesshowhide.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AnimationsTypesSize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\animationstypessize.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsSimpleCheckBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlssimplecheckbox.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FourBoxGraphic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fourboxgraphic.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FourBoxGraphicSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fourboxgraphicsmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WhiteGraphic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\whitegraphic.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WhiteGraphicSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\whitegraphicsmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ControlsColorPicker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlscolorpicker.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsColorPickerWithConstants" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlscolorpickerwithconstants.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsGreenBallButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsgreenballbutton.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsGreenBallButtonDark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsgreenballbuttondark.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ControlsGreenBallButtonGlow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsgreenballbuttonglow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ControlsGreenBallButtonLight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsgreenballbuttonlight.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ControlsGreenBallButtonShadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsgreenballbuttonshadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ControlsListMarquee" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlslistmarquee.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsMarquee" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsmarquee.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsSimpleClock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlssimpleclock.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsSimpleRadioGroup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlssimpleradiogroup.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FunAlphabetSoup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funalphabetsoup.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FunHelix" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funhelix.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FunMelt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funmelt.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FunMeltGraphic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funmeltgraphic.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FunMovement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funmovement.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FunOthello" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funothello.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FunOthelloBlack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funothelloblack.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FunOthelloBlank" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funothelloblank.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FunOthelloRed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funothellored.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentdialog.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KeyboardNavigationArrowRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\keyboardnavigationarrowright.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentDialogNotification" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentdialognotification.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentCapabilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentcapabilities.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentNavigateToPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentnavigatetopage.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentPlayMediaAudio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentplaymediaaudio.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentShowOnScreenKeyboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentshowonscreenkeyboard.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FundamentalsObjectPaths" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fundamentalsobjectpaths.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SystemTextStringBuilder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\systemtextstringbuilder.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Launch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\launch.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaExperienceTransport" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediaexperiencetransport.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentPlayMediaVideo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentplaymediavideo.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaExperienceMediaMetadataVideo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediaexperiencemediametadatavideo.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaExperienceMediaMetadataSong" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediaexperiencemediametadatasong.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaExperienceEntryPointID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediaexperienceentrypointid.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaExperienceUrl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediaexperienceurl.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelNavigateAndNavigateCommand" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelnavigateandnavigatecommand.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputHandlersKeyHandlerAny" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputhandlerskeyhandlerany.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsGraphicAcquiringImageHTTP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsgraphicacquiringimagehttp.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FunColumnExpansion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\funcolumnexpansion.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelApplicationContextReturnToApplication" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelapplicationcontextreturntoapplication.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelApplicationContextSingleInstance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelapplicationcontextsingleinstance.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaExperienceGoToFullscreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediaexperiencegotofullscreen.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupResourceGroup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\markupresourcegroup.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RepeaterDivider" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\repeaterdivider.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ViewItemsClipAlpha" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsclipalpha.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsClipColorFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsclipcolorfilter.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsClipColorMask" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsclipcolormask.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsClipFadeAmount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsclipfadeamount.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsClipFadeSize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsclipfadesize.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsClipOffsets" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsclipoffsets.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsClipOrientation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemscliporientation.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsClipRotation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemscliprotation.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsClipShowFade" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsclipshowfade.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsNowPlayingIsActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsnowplayingisactive.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsNowPlayingMetadata" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsnowplayingmetadata.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataLockedHorizontal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatalockedhorizontal.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataLockedVertical" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatalockedvertical.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataRelativePaddingNear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatarelativepaddingnear.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsDateTimeTransformerDatesBasic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsdatetimetransformerdatesbasic.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsDateTimeTransformerDatesComplex" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsdatetimetransformerdatescomplex.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsDateTimeTransformerTimes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsdatetimetransformertimes.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsFormatTransformer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsformattransformer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataPaddingHorizontal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatapaddinghorizontal.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataPaddingVertical" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatapaddingvertical.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataRelativePaddingFar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatarelativepaddingfar.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsSecureEditableText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemssecureeditabletext.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsTextAlignment" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstextalignment.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsTextBackGroundColor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstextbackgroundcolor.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsTextBigFontCharacter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstextbigfontcharacter.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsTextColor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstextcolor.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsTextContent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstextcontent.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsTextFont" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstextfont.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsTextMaxLines" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstextmaxlines.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsTextWordWrap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstextwordwrap.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsTimeSpanTransformer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemstimespantransformer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentCpuClass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentcpuclass.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterAddInHostMediaContextAlbum" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraddinhostmediacontextalbum.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterAddInHostMediaContextArtist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraddinhostmediacontextartist.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterAddInHostMediaContextGenre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraddinhostmediacontextgenre.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterAddInHostMediaContextPlaylist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraddinhostmediacontextplaylist.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterAddInHostMediaContextSong" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraddinhostmediacontextsong.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterAddInHostMediaContextDVD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraddinhostmediacontextdvd.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterAddInHostMediaContextPicture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraddinhostmediacontextpicture.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterAddInHostMediaContextVideo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraddinhostmediacontextvideo.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FourBoxGraphicNoBorder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fourboxgraphicnoborder.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FourBoxGraphicTransparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fourboxgraphictransparent.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FourBoxGraphicTransparentNoBorder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fourboxgraphictransparentnoborder.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectModelMediaCenterAddInHostMediaContextTV" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraddinhostmediacontexttv.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsGraphicFromCode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsgraphicfromcode.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaExperienceMediaType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediaexperiencemediatype.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataNoRepeaterHorizontal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatanorepeaterhorizontal.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataNoRepeaterVertical" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatanorepeatervertical.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataPageStepNoRepeater" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatapagestepnorepeater.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataRepeaterHorizontal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatarepeaterhorizontal.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataRepeaterVertical" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatarepeatervertical.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ViewItemsScrollingDataScrollStepNoRepeater" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\viewitemsscrollingdatascrollstepnorepeater.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentCurrentCulture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentcurrentculture.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FundamentalsObjectModelAccess" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\fundamentalsobjectmodelaccess.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterMediaCollectionMixed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacentermediacollectionmixed.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputHandlersGesturePan" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputhandlersgesturepan.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InputHandlersGesturePanEnabledScrolling" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\inputhandlersgesturepanenabledscrolling.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelEnvironmentIsWidescreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelenvironmentiswidescreen.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterAudioMixer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenteraudiomixer.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelApplicationContextIsCurrentlyVisible" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelapplicationcontextiscurrentlyvisible.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelApplicationContextIsEntryPointRegistered" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelapplicationcontextisentrypointregistered.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelApplicationContextIsForegroundApplication" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelapplicationcontextisforegroundapplication.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentCreateDesktopShortcut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentcreatedesktopshortcut.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Sampler" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sampler.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ControlsRadioGroup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsradiogroup.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ControlsScrollingText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\controlsscrollingtext.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelAddInHostApplicationControlEnabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodeladdinhostapplicationcontrolenabled.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelAddInHostMetadataAccessEnabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodeladdinhostmetadataaccessenabled.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelMediaCenterEnvironmentLaunchEntryPoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodelmediacenterenvironmentlaunchentrypoint.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ObjectModelAddInHostEntryPointParameters" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>samples\objectmodeladdinhostentrypointparameters.mcml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

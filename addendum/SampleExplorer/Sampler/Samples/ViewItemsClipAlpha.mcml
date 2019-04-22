@@ -1,0 +1,55 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test the application of various Alpha settings on Clip items.
+       As the alpha number increases, the item should become brighter/more intense -->
+
+  <UI Name="ClipAlpha">
+    <Rules>
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="ClipAlphaPane"/>
+      <Default Target="[Accessible.Role]"
+               Value="Pane"/>
+    </Rules>
+    <Content>
+      <Panel Layout="VerticalFlow" >
+        <Children>
+
+          <me:ClipItem AlphaValue=".3"
+                       Description="Clip with Alpha=.3"/>
+          <me:ClipItem AlphaValue=".5"
+                       Description="Clip with Alpha=.5"/>
+          <me:ClipItem AlphaValue=".7"
+                       Description="Clip with Alpha=.7"/>
+          <me:ClipItem AlphaValue="1.0"
+                       Description="Clip with Alpha=1.0"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name ="ClipItem">
+    <Properties>
+      <cor:Single Name="AlphaValue"
+                  Single="0.0"/>
+      <cor:String Name="Description"
+                  String="Description"/>
+    </Properties>
+
+    <Content>
+      <Clip Name="ClipItem"
+            Alpha="[AlphaValue]">
+        <Children>
+          <Text  Color="Yellow"
+                 BackColor="Blue"
+                 Content="[Description]"/>
+        </Children>
+      </Clip>
+    </Content>
+
+  </UI>
+
+</Mcml>

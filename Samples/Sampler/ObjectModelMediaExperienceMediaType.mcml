@@ -1,0 +1,80 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:host="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <cor:String Name="MediaPathAudio"
+                  String="C:\Users\Public\Music\Windows Media Center SDK\Audio01.mp3" />
+      <cor:String Name="MediaPathVideo"
+                  String="c:\users\public\videos\Windows Media Center SDK\Video03.wmv" />
+    </Properties>
+
+    <Locals>
+      <host:AddInHost Name="host"/>
+      <Command Name="PlayAudioLocal"
+               Description="Play Audio" />
+      <Command Name="PlayVideoLocal"
+               Description="Play Video" />
+    </Locals>
+
+    <Rules>
+      <Binding Target="[MyMediaType.PropertyValue]"
+               Source="[host.MediaCenterEnvironment.MediaExperience.MediaType.ToString]">
+        <Conditions>
+          <IsValid Source="[host.MediaCenterEnvironment.MediaExperience.MediaType.ToString]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[MyCurrentMediaType.PropertyValue]"
+               Source="[host.Current.MediaCenterEnvironment.MediaExperience.MediaType.ToString]">
+        <Conditions>
+          <IsValid Source="[host.Current.MediaCenterEnvironment.MediaExperience.MediaType.ToString]"/>
+        </Conditions>
+      </Binding>
+      <Changed Source="[PlayAudioLocal.Invoked]">
+        <Actions>
+          <Invoke Target="[host.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Audio"
+                  media="[MediaPathAudio]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[PlayVideoLocal.Invoked]">
+        <Actions>
+          <Invoke Target="[host.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[MediaPathVideo]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <ctrl:Button Command="[PlayVideoLocal]"
+                           ButtonLabel="[PlayVideoLocal.Description]" />
+              <ctrl:Button Command="[PlayAudioLocal]"
+                           ButtonLabel="[PlayAudioLocal.Description]" />
+              <ctrl:PropertyAndValue Name="MyMediaType"
+                                     PropertyName="MediaType"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyCurrentMediaType"
+                                     PropertyName="MediaType (Current)"
+                                     PropertyValue="" />
+              <Video MinimumSize="400,300" />
+            </Children>
+          </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

@@ -1,0 +1,26 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <UI Name="Default">
+
+    <Content>
+      <ColorFill Content="Blue">
+        <Children>
+
+          <!-- The parent (a blue colorfill) is clipped to the size specified by the -->
+          <!-- MinimumSize and MaximumSize values. -->
+          <!-- The Padding allows the child (a silver colorfill) to exceed this size. -->
+
+          <Clip FadeSize="25"
+                MinimumSize="100,100"
+                MaximumSize="100,100"
+                Padding="-100,-100,-100,-100">
+            <Children>
+              <ColorFill Content="Silver" />
+            </Children>
+          </Clip>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+</Mcml>

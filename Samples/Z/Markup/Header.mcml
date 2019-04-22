@@ -1,0 +1,156 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:z="assembly://Z/Z"
+      xmlns:me="Me">
+
+  <!-- The header for the Z app contains a button to navigate to the Main Menu. -->
+  <UI Name="Header">
+    <Properties>
+      <z:Application Name="Application"
+                     Application="$Required"/>
+    </Properties>
+
+    <Content>
+      <me:LogoButton>
+        <Command>
+          <InvokeCommand Description="resx://Z/Z.Resources/Shell_GoToMain"
+                         Target="[Application.GoToMenu]"/>
+        </Command>
+      </me:LogoButton>
+    </Content>
+  </UI>
+
+  <!-- The expanding Z logo button -->
+  <UI Name="LogoButton"
+      Flippable="false">
+    <Properties>
+      <!-- The action that will be invoked when this button is pressed -->
+      <ICommand Name="Command"
+                ICommand="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- Make this button clickable -->
+      <ClickHandler Name="Clicker"
+                    Command="[Command]"/>
+    </Locals>
+
+    <Rules>
+      <!-- Bind the button's label-->
+      <Binding Source="[Command.Description]"
+               Target="[Label.Content]"/>
+
+      <!-- Focused styling -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Label.Visible]"
+                 Value="true"/>
+
+      <!-- Accessibility -->
+      <Binding Target="[Accessible.IsPressed]"
+               Source="[Clicker.Clicking]"/>
+      <Binding Target="[Accessible.IsFocusable]"
+               Source="[Input.KeyInteractive]"/>
+      <Binding Target="[Accessible.IsFocused]"
+               Source="[Input.KeyFocus]"/>
+      <Binding Target="[Accessible.Name]"
+               Source="[Command.Description]"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Command]"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor"
+             MaximumSize="0,40">
+        <Children>
+
+          <!-- Left half of the logo -->
+          <Graphic Name="Left"
+                   Content="image://me:LogoLeft"
+                   MaintainAspectRatio="true"/>
+
+          <!-- The label area -->
+          <!-- We wrap the Text in additional Panel so that we can toggle -->
+          <!-- visibility without confusing the anchor layout. -->
+          <Panel Name="LabelPanel">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Left,1"
+                                 Top="Left,0"
+                                 Bottom="Left,1"
+                                 Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+
+              <!-- The label -->
+              <Text Name="Label"
+                    Font="font://styles:SecondaryText"
+                    Color="color://styles:Text.Negative"
+                    Visible="false">
+                <Animations>
+                  <Animation Type="Show">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0.0"
+                                     Value="0.0"/>
+                      <AlphaKeyframe Time="0.3"
+                                     Value="0.0"
+                                     Interpolation="Exp"/>
+                      <AlphaKeyframe Time="0.4"
+                                     RelativeTo="Final"/>
+                    </Keyframes>
+                  </Animation>
+                  <Animation Type="Hide">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0.0"
+                                     RelativeTo="Current"
+                                     Interpolation="Log"/>
+                      <AlphaKeyframe Time="0.1"
+                                     Value="0.0"/>
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+              </Text>
+
+            </Children>
+          </Panel>
+
+          <!-- Right half of the logo - anchored to the text -->
+          <Graphic Name="Right"
+                   Content="image://me:LogoRight"
+                   SizingPolicy="SizeToConstraint">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Left,1"
+                                 Top="Left,0"
+                                 Bottom="Left,1"
+                                 Right="LabelPanel,1,35"/>
+            </LayoutInput>
+            <Animations>
+              <Animation Type="Size">
+                <Keyframes>
+                  <SizeKeyframe Time="0.0"
+                                RelativeTo="Current"
+                                Interpolation="Log"/>
+                  <SizeKeyframe Time="0.3"
+                                RelativeTo="Final"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <!-- Images -->
+  <Image Name="LogoLeft"
+         Source="resx://Z/Z.Resources/ZLogo_Left"/>
+  <Image Name="LogoRight"
+         Source="resx://Z/Z.Resources/ZLogo_Right"
+         NineGrid="0,0,26,0"/>
+
+</Mcml>

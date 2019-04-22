@@ -1,0 +1,10 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\VCSExpress\9.0\External Tools]
+"ToolNumKeys"=dword:00000001
+"ToolTitle0"="Get Public Key"
+"ToolCmd0"="C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\bin\\sn.exe"
+"ToolArg0"="-Tp \"$(TargetPath)\""
+"ToolDir0"=""
+"ToolSourceKey0"=""
+"ToolOpt0"=dword:00000018

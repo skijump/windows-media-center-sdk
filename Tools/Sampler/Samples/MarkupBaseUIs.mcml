@@ -1,0 +1,80 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:b="resx://Sampler/Sampler.Resources/ControlsSimpleButton"
+      xmlns:me="Me">
+
+  <!-- BaseUIs enable the ability to inherit and override state and        -->
+  <!-- behavior from a UI without having to reimplement functionality.     -->
+
+  <!-- A UI's Properties, Rules, and Content may all be overriden. It is   -->
+  <!-- done via the "BaseUI" property available on the UI tag.             -->
+
+  <!-- Properties:                                                         -->
+  <!-- A base UI's Properties may be overriden by specifiying alternate    -->
+  <!-- default values. This the simplest use of UI inheritance. You can    -->
+  <!-- use property overrides without knowing much about the base UI.      -->
+
+  <!-- Rules:                                                              -->
+  <!-- All Rules are inherited from a base UI. Any additional Rules are    -->
+  <!-- appended to the inherited Rules. Since Rules commonly access        -->
+  <!-- Locals and Content, this feature should be used with caution since  -->
+  <!-- the base UI owns its own named Locals and Content. Appending rules  -->
+  <!-- is typically done in simple situations (such as accessing objects   -->
+  <!-- only in the derived UI). Or, derived UI Rules can access base UI    -->
+  <!-- content (in which case the base UI makeup is well known).           -->
+
+  <!-- Content:                                                            -->
+  <!-- This is the most advanced usage of UI inhertiance. Any Content      -->
+  <!-- specified in the derived UI replaces the base UI. Use this feature  -->
+  <!-- with caution. The base UI is designed assuming its Content exits.   -->
+  <!-- Content overriding is typically used when the makeup of the base UI -->
+  <!-- is well known (in which case the derived UI creates a Content tree   -->
+  <!-- that meets the expectations of the base UI).                        -->
+
+  <!-- Secondary Content:                                                  -->
+  <!-- Named Content blocks in the UI are used by Repeaters. A derived UI  -->
+  <!-- may override a named Content block or add a named Content block     -->
+  <!-- that the base UI is expecting to override.                          -->
+
+  <!-- The following example demonstrates the most common use of UI        -->
+  <!-- derivation: Property overrides.                                     -->
+
+  <UI Name="BaseUIs">
+
+    <Content>
+      <me:CustomizedSimpleButton>
+        <Command>
+          <Command Description="This is my customized button. Convenient isn't it?"/>
+        </Command>
+      </me:CustomizedSimpleButton>
+    </Content>
+
+  </UI>
+
+  <!-- SimpleButton is an existing UI that is defined externally. It       -->
+  <!-- supports several properties for customization (such as colors and   -->
+  <!-- fonts). -->
+  <UI Name="CustomizedSimpleButton"
+      BaseUI="b:SimpleButton">
+
+    <Properties>
+      <Color Name="BackgroundColor"
+             Color="DarkRed"/>
+      <Color Name="BackgroundFocusedColor"
+             Color="DarkRed"/>
+      <Color Name="BackgroundHoverColor"
+             Color="Firebrick"/>
+      <Color Name="BackgroundPressedColor"
+             Color="Gray"/>
+      <Color Name="LabelColor"
+             Color="Goldenrod"/>
+      <Color Name="LabelFocusedColor"
+             Color="Gold"/>
+      <Color Name="LabelHoverColor"
+             Color="LightYellow"/>
+      <Color Name="LabelPressedColor"
+             Color="Yellow"/>
+    </Properties>
+
+  </UI>
+
+</Mcml>

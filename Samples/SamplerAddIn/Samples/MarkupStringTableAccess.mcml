@@ -1,0 +1,41 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- String tables are useful for storing text in a separate container   -->
+  <!-- that can be chosen by the system at runtime for localization        -->
+  <!-- purposes.                                                           -->
+
+  <!-- MCML string table access is done using the same resource access     -->
+  <!-- syntax as Images and Sounds. The difference is that Images and      -->
+  <!-- Sounds can only take resource references as their sources. Whereas  -->
+  <!-- string table resource references can exist anywhere a string type   -->
+  <!-- is expected (such as Text's Content property).                      -->
+
+  <!-- NOTE: To treat a string table reference as literal (i.e. treat the  -->
+  <!-- value as simply a string, not a resource), use the '@' modifier.    -->
+
+  <!-- The sample demonstrates how to access a string table resource.      -->
+
+  <UI Name="StringTables">
+
+    <Content>
+
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <!-- Access a string resource from the Sampler assembly. -->
+          <Text Content="resx://Sampler,Version=7.0.2009.0228,Culture=Neutral,PublicKeyToken=27f898ecd1eb808a/Sampler.Resources/Greeting"
+                Color="White"/>
+
+          <!-- @resx: Treat the string as a literal (don't do a resource -->
+          <!-- lookup).                                                  -->
+          <Text Content="@resx://Sampler/Sampler.Resources/Greeting"
+                Color="White"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

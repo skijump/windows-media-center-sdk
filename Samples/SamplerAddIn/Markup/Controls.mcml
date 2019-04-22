@@ -1,0 +1,8 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+  
+	<Aggregate Source="resx://Sampler/Sampler.Resources/ControlsButton"/>
+	<Aggregate Source="resx://Sampler/Sampler.Resources/ControlsEditbox"/>
+	<Aggregate Source="resx://Sampler/Sampler.Resources/ControlsPropertyAndValue"/>
+        <Aggregate Source="resx://Sampler/Sampler.Resources/ControlsGroupHeader"/>
+
+</Mcml>

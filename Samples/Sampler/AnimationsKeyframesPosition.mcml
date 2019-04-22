@@ -1,0 +1,42 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to animate an item's position.          -->
+  <!-- We build an Animation object and add it to the item's Animations     -->
+  <!-- collection.  We populate that Animation object with two or more      -->
+  <!-- keyframes, starting at time "0.0".                                   -->
+  <UI Name="PositionKeyframe">
+
+    <Content>
+
+      <!-- The target of the animation... -->
+      <Graphic Name="MyGraphic"
+               Content="file://FourBoxGraphicSmall.png">
+        <Animations>
+
+          <!-- Create an animation that will loop forever. -->
+          <Animation Loop="-1">
+            <Keyframes>
+
+              <!-- Start in the "neutral" position -->
+              <PositionKeyframe Time="0.0"
+                                Value="0,0,0"/>
+
+              <!-- Go to the right...  -->
+              <PositionKeyframe Time="2.0"
+                                Value="200,0,0"/>
+
+              <!-- Back to the "neutral" position  -->
+              <PositionKeyframe Time="4.0"
+                                Value="0,0,0"/>
+
+            </Keyframes>
+          </Animation>
+
+        </Animations>
+      </Graphic>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

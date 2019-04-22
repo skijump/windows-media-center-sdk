@@ -1,0 +1,58 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:s="resx://$projectname$/$safeprojectname$.Resources/Styles">
+
+  <UI Name="Button">
+
+    <Properties>
+      <ICommand Name="Model"
+                ICommand="$Required"/>
+      <Color Name="MyNonFocusColor"
+             Color="color://s:NonFocusColor"/>
+      <Color Name="MyFocusColor"
+             Color="color://s:FocusColor"/>
+      <Color Name="MySelectedColor"
+             Color="color://s:SelectedColor"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[Model.Description]"
+               Target="[Label.Content]"/>
+      <Binding Source="[Model]"
+               Target="[Clicker.Command]"/>
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[MySelectedColor]"/>
+        </Actions>
+      </Condition>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[MyFocusColor]"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <ColorFill Name="Background"
+                 Content="[MyNonFocusColor]"
+                 Padding="5,5,5,5"
+                 MinimumSize="300,50"
+                 MaximumSize="300,50">
+        <Children>
+          <Text Name="Label"
+                Color="Black"
+                Font="Calibri,24"/>
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+
+</Mcml>

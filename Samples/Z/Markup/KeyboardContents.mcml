@@ -1,0 +1,270 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:sys="assembly://mscorlib/System">
+
+  <!-- This file contains the contents for Z's keyboard grid.  The data   -->
+  <!-- is placed in a separate file so that this keyboard can easily be   -->
+  <!-- localized.                                                         -->
+
+  <!-- The data is structured as a Choice of modes.  Each mode is a       -->
+  <!-- PropertySet with three important properties:                       -->
+  <!--   "Description" : The name of the mode that will display in the UI -->
+  <!--   "Left"  : A list of Strings that are the characters that go in   -->
+  <!--             the grid on the left in the UI.  This grid is 7 wide.  -->
+  <!--   "Right" : A list of Strings that are the characters that go in   -->
+  <!--             the grid on the right in the UI.  This grid is 3 wide. -->
+
+  <!-- More modes can easily be added by adding another PropertySet.      -->
+  <!-- Localizers can change the contents of the grid, the mode names,    -->
+  <!-- and the number of modes.  For localizing the keyboard this should  -->
+  <!-- be the only file they need to touch.                               -->
+
+  <!-- As the markup is written now, the number of columns is static.     -->
+  <!-- However it would be very easy with some slight modifications to    -->
+  <!-- move that declaration into the PropertySet so that each mode can   -->
+  <!-- define the grid sizes it needs.  This would allow you to build a   -->
+  <!-- real QWERTY key layout, for example (which requires a grid that is -->
+  <!-- at least 10 characters wide).                                      -->
+
+  <Choice Name="KeyboardData">
+    <Options>
+
+      <!-- Uppercase alpha-numeric -->
+      <PropertySet Description="Uppercase">
+        <Entries>
+          <ArrayListDataSet Name="Left">
+            <Source>
+              <sys:String String="A"/>
+              <sys:String String="B"/>
+              <sys:String String="C"/>
+              <sys:String String="D"/>
+              <sys:String String="E"/>
+              <sys:String String="F"/>
+              <sys:String String="G"/>
+              <sys:String String="H"/>
+              <sys:String String="I"/>
+              <sys:String String="J"/>
+              <sys:String String="K"/>
+              <sys:String String="L"/>
+              <sys:String String="M"/>
+              <sys:String String="N"/>
+              <sys:String String="O"/>
+              <sys:String String="P"/>
+              <sys:String String="Q"/>
+              <sys:String String="R"/>
+              <sys:String String="S"/>
+              <sys:String String="T"/>
+              <sys:String String="U"/>
+              <sys:String String="V"/>
+              <sys:String String="W"/>
+              <sys:String String="X"/>
+              <sys:String String="Y"/>
+              <sys:String String="Z"/>
+              <sys:String String="_"/>
+              <sys:String String="@"/>
+            </Source>
+          </ArrayListDataSet>
+          <ArrayListDataSet Name="Right">
+            <Source>
+              <sys:String String="1"/>
+              <sys:String String="2"/>
+              <sys:String String="3"/>
+              <sys:String String="4"/>
+              <sys:String String="5"/>
+              <sys:String String="6"/>
+              <sys:String String="7"/>
+              <sys:String String="8"/>
+              <sys:String String="9"/>
+              <sys:String String="-"/>
+              <sys:String String="0"/>
+              <sys:String String="."/>
+            </Source>
+          </ArrayListDataSet>
+        </Entries>
+      </PropertySet>
+
+      <!-- Lowercase alpha-numeric -->
+      <PropertySet Description="Lowercase">
+        <Entries>
+          <ArrayListDataSet Name="Left">
+            <Source>
+              <sys:String String="a"/>
+              <sys:String String="b"/>
+              <sys:String String="c"/>
+              <sys:String String="d"/>
+              <sys:String String="e"/>
+              <sys:String String="f"/>
+              <sys:String String="g"/>
+              <sys:String String="h"/>
+              <sys:String String="i"/>
+              <sys:String String="j"/>
+              <sys:String String="k"/>
+              <sys:String String="l"/>
+              <sys:String String="m"/>
+              <sys:String String="n"/>
+              <sys:String String="o"/>
+              <sys:String String="p"/>
+              <sys:String String="q"/>
+              <sys:String String="r"/>
+              <sys:String String="s"/>
+              <sys:String String="t"/>
+              <sys:String String="u"/>
+              <sys:String String="v"/>
+              <sys:String String="w"/>
+              <sys:String String="x"/>
+              <sys:String String="y"/>
+              <sys:String String="z"/>
+              <sys:String String="_"/>
+              <sys:String String="@"/>
+            </Source>
+          </ArrayListDataSet>
+          <ArrayListDataSet Name="Right">
+            <Source>
+              <sys:String String="1"/>
+              <sys:String String="2"/>
+              <sys:String String="3"/>
+              <sys:String String="4"/>
+              <sys:String String="5"/>
+              <sys:String String="6"/>
+              <sys:String String="7"/>
+              <sys:String String="8"/>
+              <sys:String String="9"/>
+              <sys:String String="-"/>
+              <sys:String String="0"/>
+              <sys:String String="."/>
+            </Source>
+          </ArrayListDataSet>
+        </Entries>
+      </PropertySet>
+
+      <!-- Symbols -->
+      <PropertySet Description="Symbols">
+        <Entries>
+          <ArrayListDataSet Name="Left">
+            <Source>
+              <sys:String String=","/>
+              <sys:String String=";"/>
+              <sys:String String=":"/>
+              <sys:String String="'"/>
+              <sys:String String="&quot;"/>
+              <sys:String String="!"/>
+              <sys:String String="?"/>
+              <sys:String String="["/>
+              <sys:String String="]"/>
+              <sys:String String="{"/>
+              <sys:String String="}"/>
+              <sys:String String="`"/>
+              <sys:String String="$"/>
+              <sys:String String="&#163;"/>
+              <!-- pound sign -->
+              <sys:String String="&lt;"/>
+              <sys:String String="&gt;"/>
+              <sys:String String="("/>
+              <sys:String String=")"/>
+              <sys:String String="&#8364;"/>
+              <!-- euro sign -->
+              <sys:String String="&#165;"/>
+              <!-- yen sign -->
+              <sys:String String="&#8361;"/>
+              <!-- won sign -->
+              <sys:String String="|"/>
+              <sys:String String="="/>
+              <sys:String String="*"/>
+              <sys:String String="/"/>
+              <sys:String String="+"/>
+              <sys:String String="-"/>
+              <sys:String String="@"/>
+            </Source>
+          </ArrayListDataSet>
+          <ArrayListDataSet Name="Right">
+            <Source>
+              <sys:String String="&#161;"/>
+              <!-- inverted ! -->
+              <sys:String String="&#191;"/>
+              <!-- inverted ? -->
+              <sys:String String="%"/>
+              <sys:String String="&#171;"/>
+              <!-- double left arrow -->
+              <sys:String String="&#187;"/>
+              <!-- double right arrow -->
+              <sys:String String="#"/>
+              <sys:String String="~"/>
+              <sys:String String="^"/>
+              <sys:String String="\"/>
+              <sys:String String="-"/>
+              <sys:String String="&amp;"/>
+              <sys:String String="."/>
+            </Source>
+          </ArrayListDataSet>
+        </Entries>
+      </PropertySet>
+
+      <!-- QWERTY uppercase alpha-numeric -->
+      <!-- This is an example of how to extend the keyboard with -->
+      <!-- alternate layouts.                                    -->
+      <!--
+			<PropertySet Description="QWERTY">
+				<Entries>
+					<ArrayListDataSet Name="Left">
+						<Source>
+							<sys:String String="1"/>
+							<sys:String String="2"/>
+							<sys:String String="3"/>
+							<sys:String String="4"/>
+							<sys:String String="5"/>
+							<sys:String String="6"/>
+							<sys:String String="7"/>
+							
+							<sys:String String="Q"/>
+							<sys:String String="W"/>
+							<sys:String String="E"/>
+							<sys:String String="R"/>
+							<sys:String String="T"/>
+							<sys:String String="Y"/>
+							<sys:String String="U"/>
+							
+							<sys:String String="A"/>
+							<sys:String String="S"/>
+							<sys:String String="D"/>
+							<sys:String String="F"/>
+							<sys:String String="G"/>
+							<sys:String String="H"/>
+							<sys:String String="J"/>
+							
+							
+							<sys:String String="Z"/>
+							<sys:String String="X"/>
+							<sys:String String="C"/>
+							<sys:String String="V"/>
+							<sys:String String="B"/>
+							<sys:String String="N"/>
+							<sys:String String="M"/>
+							
+						</Source>
+					</ArrayListDataSet>
+					<ArrayListDataSet Name="Right">
+						<Source>
+							<sys:String String="8"/>
+							<sys:String String="9"/>
+							<sys:String String="0"/>
+							
+							<sys:String String="I"/>
+							<sys:String String="O"/>
+							<sys:String String="P"/>
+							
+							<sys:String String="K"/>
+							<sys:String String="L"/>
+							<sys:String String=";"/>
+							
+							<sys:String String="&lt;"/>
+							<sys:String String="&gt;"/>
+							<sys:String String="?"/>
+						</Source>
+					</ArrayListDataSet>
+				</Entries>
+			</PropertySet>
+			-->
+
+    </Options>
+  </Choice>
+
+</Mcml>

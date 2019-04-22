@@ -1,0 +1,1330 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <UI Name="Shell">
+    <Locals>
+      <IntRangedValue Name="CurrentPlayer"
+                      MinValue="0"
+                      MaxValue="1"
+                      Value="0"/>
+      <Command        Name="Placed"/>
+      <EditableText   Name="Mode"
+                      Value="None"/>
+
+      <IntRangedValue Name="RedCount"
+                      Value="2"/>
+      <IntRangedValue Name="BlackCount"
+                      Value="2"/>
+      <IntRangedValue Name="Counted"
+                      Value="0"/>
+      <IntRangedValue Name="FlipCount"
+                      Value="0"/>
+
+      <IntRangedValue Name="BaseRow"
+                      Value="0"/>
+      <IntRangedValue Name="BaseCol"
+                      Value="0"/>
+      <IntRangedValue Name="CurrentRow"
+                      Value="-1"/>
+      <IntRangedValue Name="CurrentCol"
+                      Value="-1"/>
+      <IntRangedValue Name="StepRow"
+                      Value="0"/>
+      <IntRangedValue Name="StepCol"
+                      Value="0"/>
+      <IntRangedValue Name="BasePlayer"
+                      Value="-1"/>
+      <BooleanChoice  Name="Found"
+                      Value="false"/>
+      <EditableText   Name="Direction"
+                      Value="None"/>
+
+      <ArrayListDataSet Name="List">
+        <Source>
+          <cor:Int32 Int32="1"/>
+          <cor:Int32 Int32="2"/>
+          <cor:Int32 Int32="3"/>
+          <cor:Int32 Int32="4"/>
+          <cor:Int32 Int32="5"/>
+          <cor:Int32 Int32="6"/>
+          <cor:Int32 Int32="7"/>
+          <cor:Int32 Int32="8"/>
+        </Source>
+      </ArrayListDataSet>
+    </Locals>
+
+    <Rules>
+      <!-- Count the chips -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Counted.Value]"
+                    Value="64"/>
+          <Equality Source="[Mode.Value]"
+                    Value="Counting"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Mode.Value]"
+               Value="None"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    ConditionOp="ChangedTo"
+                    Value="Count"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[RedCount.Value]"
+               Value="0"/>
+          <Set Target="[BlackCount.Value]"
+               Value="0"/>
+          <Set Target="[Counted.Value]"
+               Value="0"/>
+          <Set Target="[Mode.Value]"
+               Value="Counting"/>
+        </Actions>
+      </Rule>
+
+      <!-- Done flipping so move on -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Done"/>
+          <Equality Source="[Direction.Value]"
+                    Value="NE"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Mode.Value]"
+               Value="Count"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check to the northeast -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Success"/>
+          <Equality Source="[Direction.Value]"
+                    Value="NE"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[FlipCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+          <Set Target="[StepRow.Value]"
+               Value="1"/>
+          <Set Target="[StepCol.Value]"
+               Value="-1"/>
+          <Set Target="[Mode.Value]"
+               Value="Flip"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Check"/>
+          <Equality Source="[Direction.Value]"
+                    Value="NE"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[StepRow.Value]"
+               Value="-1"/>
+          <Set Target="[StepCol.Value]"
+               Value="1"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[BaseRow.Value]"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[BaseCol.Value]"/>
+          <Set Target="[Found.Value]"
+               Value="false"/>
+          <Set Target="[Mode.Value]"
+               Value="StartCheck"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check to the north -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Done"/>
+          <Equality Source="[Direction.Value]"
+                    Value="N"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Direction.Value]"
+               Value="NE"/>
+          <Set Target="[Mode.Value]"
+               Value="Check"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Success"/>
+          <Equality Source="[Direction.Value]"
+                    Value="N"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[FlipCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+          <Set Target="[StepRow.Value]"
+               Value="1"/>
+          <Set Target="[StepCol.Value]"
+               Value="0"/>
+          <Set Target="[Mode.Value]"
+               Value="Flip"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Check"/>
+          <Equality Source="[Direction.Value]"
+                    Value="N"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[StepRow.Value]"
+               Value="-1"/>
+          <Set Target="[StepCol.Value]"
+               Value="0"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[BaseRow.Value]"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[BaseCol.Value]"/>
+          <Set Target="[Found.Value]"
+               Value="false"/>
+          <Set Target="[Mode.Value]"
+               Value="StartCheck"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check to the northwest -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Done"/>
+          <Equality Source="[Direction.Value]"
+                    Value="NW"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Direction.Value]"
+               Value="N"/>
+          <Set Target="[Mode.Value]"
+               Value="Check"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Success"/>
+          <Equality Source="[Direction.Value]"
+                    Value="NW"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[FlipCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+          <Set Target="[StepRow.Value]"
+               Value="1"/>
+          <Set Target="[StepCol.Value]"
+               Value="1"/>
+          <Set Target="[Mode.Value]"
+               Value="Flip"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Check"/>
+          <Equality Source="[Direction.Value]"
+                    Value="NW"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[StepRow.Value]"
+               Value="-1"/>
+          <Set Target="[StepCol.Value]"
+               Value="-1"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[BaseRow.Value]"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[BaseCol.Value]"/>
+          <Set Target="[Found.Value]"
+               Value="false"/>
+          <Set Target="[Mode.Value]"
+               Value="StartCheck"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check to the west -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Done"/>
+          <Equality Source="[Direction.Value]"
+                    Value="W"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Direction.Value]"
+               Value="NW"/>
+          <Set Target="[Mode.Value]"
+               Value="Check"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Success"/>
+          <Equality Source="[Direction.Value]"
+                    Value="W"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[FlipCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+          <Set Target="[StepRow.Value]"
+               Value="0"/>
+          <Set Target="[StepCol.Value]"
+               Value="1"/>
+          <Set Target="[Mode.Value]"
+               Value="Flip"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Check"/>
+          <Equality Source="[Direction.Value]"
+                    Value="W"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[StepRow.Value]"
+               Value="0"/>
+          <Set Target="[StepCol.Value]"
+               Value="-1"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[BaseRow.Value]"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[BaseCol.Value]"/>
+          <Set Target="[Found.Value]"
+               Value="false"/>
+          <Set Target="[Mode.Value]"
+               Value="StartCheck"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check to the southwest -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Done"/>
+          <Equality Source="[Direction.Value]"
+                    Value="SW"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Direction.Value]"
+               Value="W"/>
+          <Set Target="[Mode.Value]"
+               Value="Check"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Success"/>
+          <Equality Source="[Direction.Value]"
+                    Value="SW"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[FlipCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+          <Set Target="[StepRow.Value]"
+               Value="-1"/>
+          <Set Target="[StepCol.Value]"
+               Value="1"/>
+          <Set Target="[Mode.Value]"
+               Value="Flip"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Check"/>
+          <Equality Source="[Direction.Value]"
+                    Value="SW"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[StepRow.Value]"
+               Value="1"/>
+          <Set Target="[StepCol.Value]"
+               Value="-1"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[BaseRow.Value]"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[BaseCol.Value]"/>
+          <Set Target="[Found.Value]"
+               Value="false"/>
+          <Set Target="[Mode.Value]"
+               Value="StartCheck"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check to the south -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Done"/>
+          <Equality Source="[Direction.Value]"
+                    Value="S"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Direction.Value]"
+               Value="SW"/>
+          <Set Target="[Mode.Value]"
+               Value="Check"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Success"/>
+          <Equality Source="[Direction.Value]"
+                    Value="S"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[FlipCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+          <Set Target="[StepRow.Value]"
+               Value="-1"/>
+          <Set Target="[StepCol.Value]"
+               Value="0"/>
+          <Set Target="[Mode.Value]"
+               Value="Flip"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Check"/>
+          <Equality Source="[Direction.Value]"
+                    Value="S"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[StepRow.Value]"
+               Value="1"/>
+          <Set Target="[StepCol.Value]"
+               Value="0"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[BaseRow.Value]"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[BaseCol.Value]"/>
+          <Set Target="[Found.Value]"
+               Value="false"/>
+          <Set Target="[Mode.Value]"
+               Value="StartCheck"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check to the southeast -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Done"/>
+          <Equality Source="[Direction.Value]"
+                    Value="SE"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Direction.Value]"
+               Value="S"/>
+          <Set Target="[Mode.Value]"
+               Value="Check"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Success"/>
+          <Equality Source="[Direction.Value]"
+                    Value="SE"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[FlipCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+          <Set Target="[StepRow.Value]"
+               Value="-1"/>
+          <Set Target="[StepCol.Value]"
+               Value="-1"/>
+          <Set Target="[Mode.Value]"
+               Value="Flip"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Check"/>
+          <Equality Source="[Direction.Value]"
+                    Value="SE"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[StepRow.Value]"
+               Value="1"/>
+          <Set Target="[StepCol.Value]"
+               Value="1"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[BaseRow.Value]"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[BaseCol.Value]"/>
+          <Set Target="[Found.Value]"
+               Value="false"/>
+          <Set Target="[Mode.Value]"
+               Value="StartCheck"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check to the east -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Done"/>
+          <Equality Source="[Direction.Value]"
+                    Value="E"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Direction.Value]"
+               Value="SE"/>
+          <Set Target="[Mode.Value]"
+               Value="Check"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Success"/>
+          <Equality Source="[Direction.Value]"
+                    Value="E"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[FlipCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+          <Set Target="[StepRow.Value]"
+               Value="0"/>
+          <Set Target="[StepCol.Value]"
+               Value="-1"/>
+          <Set Target="[Mode.Value]"
+               Value="Flip"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Check"/>
+          <Equality Source="[Direction.Value]"
+                    Value="E"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[StepRow.Value]"
+               Value="0"/>
+          <Set Target="[StepCol.Value]"
+               Value="1"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[BaseRow.Value]"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[BaseCol.Value]"/>
+          <Set Target="[Found.Value]"
+               Value="false"/>
+          <Set Target="[Mode.Value]"
+               Value="StartCheck"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check for chips that are trapped and need flipping -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Equality Source="[CurrentCol.Value]"
+                    Value="0"/>
+          <Equality Source="[CurrentCol.Value]"
+                    Value="9"/>
+          <Equality Source="[CurrentRow.Value]"
+                    Value="0"/>
+          <Equality Source="[CurrentRow.Value]"
+                    Value="9"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[CurrentRow.Value]"
+               Value="-1"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="-1"/>
+          <Set Target="[Mode.Value]"
+               Value="Done"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    ConditionOp="ChangedTo"
+                    Value="CheckSetup"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[FlipCount.Value]"
+               Value="0"/>
+          <Set Target="[Direction.Value]"
+               Value="E"/>
+          <Set Target="[Mode.Value]"
+               Value="Check"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <Modified Source="[Placed.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Mode.Value]"
+               Value="CheckSetup"/>
+          <Set Target="[CurrentPlayer.Value]"
+               Value="[CurrentPlayer.Value]">
+            <Transformer>
+              <MathTransformer Add="1"
+                               Mod="2"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Rule>
+
+      <Binding Target="[BlackScore.Content]"
+               Source="[BlackCount.Value.ToString]"/>
+      <Binding Target="[RedScore.Content]"
+               Source="[RedCount.Value.ToString]"/>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Layout="Anchor">
+            <Children>
+              <Repeater Source="[List]">
+                <Layout>
+                  <FlowLayout Orientation="Vertical"/>
+                </Layout>
+                <Content>
+                  <me:Row RowNum="[RepeatedItem!cor:Int32]"
+                          CurrentPlayer="[CurrentPlayer]"
+                          Counted="[Counted]"
+                          RedCount="[RedCount]"
+                          BlackCount="[BlackCount]"
+                          BaseRow="[BaseRow]"
+                          BaseCol="[BaseCol]"
+                          CurrentRow="[CurrentRow]"
+                          CurrentCol="[CurrentCol]"
+                          StepRow="[StepRow]"
+                          StepCol="[StepCol]"
+                          Found="[Found]"
+                          BasePlayer="[BasePlayer]"
+                          Mode="[Mode]"
+                          Placed="[Placed]"/>
+                </Content>
+              </Repeater>
+            </Children>
+          </Panel>
+          <Text Name="RedScore"
+                Margins="20, 60, 0, 0"
+                Font="Segoe, 36"
+                Color="Red">
+            <LayoutInput>
+              <AnchorLayoutInput Horizontal="Near"
+                                 Vertical="Near"/>
+            </LayoutInput>
+          </Text>
+          <Text Name="BlackScore"
+                Margins="0, 60, 20, 0"
+                Font="Segoe, 36"
+                Color="Black">
+            <LayoutInput>
+              <AnchorLayoutInput Horizontal="Far"
+                                 Vertical="Near"/>
+            </LayoutInput>
+          </Text>
+          <ColorFill Content="ForestGreen">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent, 0"
+                                 Top="Parent, 0"
+                                 Right="Parent, 1"
+                                 Bottom="Parent, 1"/>
+            </LayoutInput>
+          </ColorFill>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="Row">
+    <Properties>
+      <cor:Int32      Name="RowNum"/>
+      <IntRangedValue Name="CurrentPlayer"
+                      Value="1"/>
+      <IntRangedValue Name="RedCount"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="BlackCount"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="Counted"
+                      IntRangedValue="$Required"/>
+      <EditableText   Name="Mode"
+                      EditableText="$Required"/>
+      <Command        Name="Placed"
+                      Command="$Required"/>
+
+      <IntRangedValue Name="BaseRow"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="BaseCol"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="CurrentRow"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="CurrentCol"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="StepRow"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="StepCol"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="BasePlayer"
+                      IntRangedValue="$Required"/>
+      <BooleanChoice  Name="Found"
+                      BooleanChoice="$Required"/>
+    </Properties>
+
+    <Locals>
+      <ArrayListDataSet Name="List">
+        <Source>
+          <cor:Int32 Int32="1"/>
+          <cor:Int32 Int32="2"/>
+          <cor:Int32 Int32="3"/>
+          <cor:Int32 Int32="4"/>
+          <cor:Int32 Int32="5"/>
+          <cor:Int32 Int32="6"/>
+          <cor:Int32 Int32="7"/>
+          <cor:Int32 Int32="8"/>
+        </Source>
+      </ArrayListDataSet>
+    </Locals>
+
+    <Content>
+      <Repeater Source="[List]">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"/>
+        </Layout>
+        <Content>
+          <me:Tile RowNum="[RowNum]"
+                   ColNum="[RepeatedItem!cor:Int32]"
+                   CurrentPlayer="[CurrentPlayer]"
+                   Counted="[Counted]"
+                   RedCount="[RedCount]"
+                   BlackCount="[BlackCount]"
+                   BaseRow="[BaseRow]"
+                   BaseCol="[BaseCol]"
+                   CurrentRow="[CurrentRow]"
+                   CurrentCol="[CurrentCol]"
+                   StepRow="[StepRow]"
+                   StepCol="[StepCol]"
+                   Found="[Found]"
+                   BasePlayer="[BasePlayer]"
+                   Mode="[Mode]"
+                   Placed="[Placed]"/>
+        </Content>
+      </Repeater>
+    </Content>
+  </UI>
+
+  <UI Name="Tile">
+    <Properties>
+      <cor:Int32      Name="RowNum"/>
+      <cor:Int32      Name="ColNum"/>
+      <IntRangedValue Name="CurrentPlayer"
+                      Value="1"/>
+      <IntRangedValue Name="RedCount"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="BlackCount"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="Counted"
+                      IntRangedValue="$Required"/>
+      <EditableText   Name="Mode"
+                      EditableText="$Required"/>
+      <Command        Name="Placed"
+                      Command="$Required"/>
+
+      <IntRangedValue Name="BaseRow"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="BaseCol"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="CurrentRow"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="CurrentCol"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="StepRow"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="StepCol"
+                      IntRangedValue="$Required"/>
+      <IntRangedValue Name="BasePlayer"
+                      IntRangedValue="$Required"/>
+      <BooleanChoice  Name="Found"
+                      BooleanChoice="$Required"/>
+
+      <Image Name="RedChip"
+             Source="file://FunOthelloRed.png"/>
+      <Image Name="BlackChip"
+             Source="file://FunOthelloBlack.png"/>
+      <Image Name="BlankChip"
+             Source="file://FunOthelloBlank.png"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+
+      <cor:Boolean Name="Setup"
+                   Boolean="true"/>
+      <cor:Int32 Name="ThisPlayer"
+                 Int32="-1"/>
+
+      <cor:Int32 Name="temp"
+                 Int32="0"/>
+      <MathTransformer Name="Math"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- Initialize the initial board setup -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Setup]"
+                    Value="true"/>
+          <Equality Source="[RowNum]"
+                    Value="5"/>
+          <Equality Source="[ColNum]"
+                    Value="4"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Setup]"
+               Value="false"/>
+          <Set Target="[ThisPlayer]"
+               Value="1"/>
+          <Set Target="[Chip.Content]"
+               Value="[BlackChip]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Setup]"
+                    Value="true"/>
+          <Equality Source="[RowNum]"
+                    Value="4"/>
+          <Equality Source="[ColNum]"
+                    Value="5"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Setup]"
+               Value="false"/>
+          <Set Target="[ThisPlayer]"
+               Value="1"/>
+          <Set Target="[Chip.Content]"
+               Value="[BlackChip]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Setup]"
+                    Value="true"/>
+          <Equality Source="[RowNum]"
+                    Value="5"/>
+          <Equality Source="[ColNum]"
+                    Value="5"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Setup]"
+               Value="false"/>
+          <Set Target="[ThisPlayer]"
+               Value="0"/>
+          <Set Target="[Chip.Content]"
+               Value="[RedChip]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Setup]"
+                    Value="true"/>
+          <Equality Source="[RowNum]"
+                    Value="4"/>
+          <Equality Source="[ColNum]"
+                    Value="4"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Setup]"
+               Value="false"/>
+          <Set Target="[ThisPlayer]"
+               Value="0"/>
+          <Set Target="[Chip.Content]"
+               Value="[RedChip]"/>
+        </Actions>
+      </Rule>
+
+      <!-- When in score counting mode, increment the total count and conditionally the player scores -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    ConditionOp="ChangedTo"
+                    Value="Counting"/>
+          <Equality Source="[ThisPlayer]"
+                    Value="1"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[BlackCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    ConditionOp="ChangedTo"
+                    Value="Counting"/>
+          <Equality Source="[ThisPlayer]"
+                    Value="0"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[RedCount.NextValue]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    ConditionOp="ChangedTo"
+                    Value="Counting"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Counted.NextValue]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+
+      <!-- Flip the chips that need flipping -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Flip"/>
+          <Equality Source="[CurrentRow.Value]"
+                    Value="[RowNum]"/>
+          <Equality Source="[CurrentCol.Value]"
+                    Value="[ColNum]"/>
+          <Equality Source="[BaseRow.Value]"
+                    Value="[RowNum]"/>
+          <Equality Source="[BaseCol.Value]"
+                    Value="[ColNum]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Mode.Value]"
+               Value="Done"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Flip"/>
+          <Equality Source="[CurrentRow.Value]"
+                    Value="[RowNum]"/>
+          <Equality Source="[CurrentCol.Value]"
+                    Value="[ColNum]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ThisPlayer]"
+               Value="[BasePlayer.Value]"/>
+          <Set Target="[Math.AddInt]"
+               Value="[StepRow.Value]"
+               ExclusiveApply="false"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[CurrentRow.Value]"
+               Transformer="[Math]"
+               ExclusiveApply="false"/>
+          <Set Target="[Math.AddInt]"
+               Value="[StepCol.Value]"
+               ExclusiveApply="false"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[CurrentCol.Value]"
+               Transformer="[Math]"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+
+      <!-- Check for flippable chips -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    ConditionOp="ChangedTo"
+                    Value="StartCheck"/>
+          <Equality Source="[CurrentRow.Value]"
+                    Value="[RowNum]"/>
+          <Equality Source="[CurrentCol.Value]"
+                    Value="[ColNum]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[BasePlayer.Value]"
+               Value="[ThisPlayer]"/>
+          <Set Target="[Math.AddInt]"
+               Value="[StepRow.Value]"
+               ExclusiveApply="false"/>
+          <Set Target="[temp]"
+               Value="[CurrentRow.Value]"
+               Transformer="[Math]"
+               ExclusiveApply="false"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[temp]"/>
+          <Set Target="[Math.AddInt]"
+               Value="[StepCol.Value]"
+               ExclusiveApply="false"/>
+          <Set Target="[temp]"
+               Value="[CurrentCol.Value]"
+               Transformer="[Math]"
+               ExclusiveApply="false"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[temp]"/>
+          <Set Target="[Mode.Value]"
+               Value="Checking"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Checking"/>
+          <Equality Source="[CurrentRow.Value]"
+                    Value="[RowNum]"/>
+          <Equality Source="[CurrentCol.Value]"
+                    Value="[ColNum]"/>
+          <Equality Source="[ThisPlayer]"
+                    Value="[BasePlayer.Value]"/>
+          <Equality Source="[Found.Value]"
+                    Value="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Mode.Value]"
+               Value="Success"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Checking"/>
+          <Equality Source="[CurrentRow.Value]"
+                    Value="[RowNum]"/>
+          <Equality Source="[CurrentCol.Value]"
+                    Value="[ColNum]"/>
+          <Equality Source="[ThisPlayer]"
+                    Value="[BasePlayer.Value]"/>
+          <Equality Source="[Found.Value]"
+                    Value="false"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Mode.Value]"
+               Value="Done"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Checking"/>
+          <Equality Source="[CurrentRow.Value]"
+                    Value="[RowNum]"/>
+          <Equality Source="[CurrentCol.Value]"
+                    Value="[ColNum]"/>
+          <Equality Source="[ThisPlayer]"
+                    ConditionOp="NotEquals"
+                    Value="-1"/>
+          <Equality Source="[ThisPlayer]"
+                    ConditionOp="NotEquals"
+                    Value="[BasePlayer.Value]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Found.Value]"
+               Value="true"/>
+          <Set Target="[Math.AddInt]"
+               Value="[StepRow.Value]"
+               ExclusiveApply="false"/>
+          <Set Target="[temp]"
+               Value="[CurrentRow.Value]"
+               Transformer="[Math]"
+               ExclusiveApply="false"/>
+          <Set Target="[CurrentRow.Value]"
+               Value="[temp]"/>
+          <Set Target="[Math.AddInt]"
+               Value="[StepCol.Value]"
+               ExclusiveApply="false"/>
+          <Set Target="[temp]"
+               Value="[CurrentCol.Value]"
+               Transformer="[Math]"
+               ExclusiveApply="false"/>
+          <Set Target="[CurrentCol.Value]"
+               Value="[temp]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Mode.Value]"
+                    Value="Checking"/>
+          <Equality Source="[CurrentRow.Value]"
+                    Value="[RowNum]"/>
+          <Equality Source="[CurrentCol.Value]"
+                    Value="[ColNum]"/>
+          <Equality Source="[ThisPlayer]"
+                    Value="-1"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Mode.Value]"
+               Value="Done"
+               ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+
+      <!-- React to player actions -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[Clicker.Invoked]"/>
+          <Equality Source="[ThisPlayer]"
+                    Value="-1"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ThisPlayer]"
+               Value="[CurrentPlayer.Value]"/>
+          <Set Target="[BaseRow.Value]"
+               Value="[RowNum]"/>
+          <Set Target="[BaseCol.Value]"
+               Value="[ColNum]"/>
+          <Invoke Target="[Placed.Invoke]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Input.MouseFocus]"
+                    Value="true"/>
+          <Equality Source="[CurrentPlayer.Value]"
+                    Value="1"/>
+          <Equality Source="[ThisPlayer]"
+                    Value="-1"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Chip.DetachAnimation]"
+                  type="ContentChangeShow"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[Chip.DetachAnimation]"
+                  type="ContentChangeHide"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Set Target="[Chip.Content]"
+               Value="[BlackChip]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Input.MouseFocus]"
+                    Value="true"/>
+          <Equality Source="[CurrentPlayer.Value]"
+                    Value="0"/>
+          <Equality Source="[ThisPlayer]"
+                    Value="-1"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Chip.DetachAnimation]"
+                  type="ContentChangeShow"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[Chip.DetachAnimation]"
+                  type="ContentChangeHide"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Set Target="[Chip.Content]"
+               Value="[RedChip]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[Input.MouseFocus]"
+                    Value="true"/>
+          <Equality Source="[ThisPlayer]"
+                    Value="-1"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Chip.AttachAnimation]"
+                  animation="animation://me:Twirl"
+                  ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Equality Source="[Input.MouseFocus]"
+                    Value="false"/>
+          <Equality Source="[ThisPlayer]"
+                    ConditionOp="NotEquals"
+                    Value="-1"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Chip.AttachAnimation]"
+                  animation="animation://me:Still"
+                  ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+
+      <!-- Show the correct graphic -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[ThisPlayer]"
+                    Value="1"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Chip.AttachAnimation]"
+                  animation="animation://me:FlipIn"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[Chip.AttachAnimation]"
+                  animation="animation://me:FlipOut"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Set Target="[Chip.Content]"
+               Value="[BlackChip]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[ThisPlayer]"
+                    Value="0"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Chip.AttachAnimation]"
+                  animation="animation://me:FlipIn"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[Chip.AttachAnimation]"
+                  animation="animation://me:FlipOut"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Set Target="[Chip.Content]"
+               Value="[RedChip]"/>
+        </Actions>
+      </Rule>
+      <Rule>
+        <Conditions>
+          <Equality Source="[ThisPlayer]"
+                    Value="-1"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Chip.DetachAnimation]"
+                  type="ContentChangeShow"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Invoke Target="[Chip.DetachAnimation]"
+                  type="ContentChangeHide"
+                  InvokePolicy="Synchronous"
+                  ExclusiveApply="false"/>
+          <Set Target="[Chip.Content]"
+               Value="[BlankChip]"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+          <Graphic Name="Chip" >
+            <Animations>
+              <Animation Animation="animation://me:FlipIn"/>
+              <Animation Animation="animation://me:FlipOut"/>
+            </Animations>
+          </Graphic>
+          <ColorFill Content="Black">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Chip,0,-1"
+                                 Right="Chip,0,1"
+                                 Top="Chip,0"
+                                 Bottom="Chip,1"
+                                 ContributesToWidth="false"
+                                 ContributesToHeight="false"/>
+            </LayoutInput>
+          </ColorFill>
+          <ColorFill Content="Black">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Chip,1,-1"
+                                 Right="Chip,1,1"
+                                 Top="Chip,0"
+                                 Bottom="Chip,1"
+                                 ContributesToWidth="false"
+                                 ContributesToHeight="false"/>
+            </LayoutInput>
+          </ColorFill>
+          <ColorFill Content="Black">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Chip,0"
+                                 Right="Chip,1"
+                                 Top="Chip,0,-1"
+                                 Bottom="Chip,0,1"
+                                 ContributesToWidth="false"
+                                 ContributesToHeight="false"/>
+            </LayoutInput>
+          </ColorFill>
+          <ColorFill Content="Black">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Chip,0"
+                                 Right="Chip,1"
+                                 Top="Chip,1,-1"
+                                 Bottom="Chip,1,1"
+                                 ContributesToWidth="false"
+                                 ContributesToHeight="false"/>
+            </LayoutInput>
+          </ColorFill>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <Animation Name="Still"
+             Type="Idle"
+             Loop="-1">
+    <Keyframes>
+      <RotateKeyframe Time="0"
+                      Value="0deg;0,1,0"/>
+      <RotateKeyframe Time="1"
+                      Value="0deg;0,1,0"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Twirl"
+             Type="Idle"
+             Loop="-1"
+             CenterPointPercent="0.5, 0.5, 0.0">
+    <Keyframes>
+      <RotateKeyframe Time="0"
+                      Value="0deg;0,1,0"/>
+      <RotateKeyframe Time="1"
+                      Value="360deg;0,1,0"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="FlipIn"
+             Type="ContentChangeShow"
+             CenterPointPercent="0.5, 0.5, 0.0">
+    <Keyframes>
+      <RotateKeyframe Time="0"
+                      Value="-90deg;1,0,0"/>
+      <RotateKeyframe Time="0.25"
+                      Value="-90deg;1,0,0"/>
+      <RotateKeyframe Time="0.5"
+                      Value="0deg;1,0,0"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="FlipOut"
+             Type="ContentChangeHide"
+             CenterPointPercent="0.5, 0.5, 0.0">
+    <Keyframes>
+      <RotateKeyframe Time="0"
+                      Value="0deg;1,0,0"/>
+      <RotateKeyframe Time="0.25"
+                      Value="90deg;1,0,0"/>
+    </Keyframes>
+  </Animation>
+</Mcml>

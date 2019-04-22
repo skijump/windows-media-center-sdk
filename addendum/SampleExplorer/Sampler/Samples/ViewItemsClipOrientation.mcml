@@ -1,0 +1,50 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test the application of Orentation on Clip items. This controls the
+       Orientation of the Fade. Horizontal will fade from the left/right sides
+       Vertical will fade from the top/bottom -->
+
+  <UI Name="ClipOrientation">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <me:ClipItem Orientation="Horizontal"
+                       Description="Clip with Orientation=Horizontal"/>
+          <me:ClipItem Orientation="Vertical"
+                       Description="Clip with Orientation=Vertical"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- Definition of the clip item -->
+  <UI Name ="ClipItem">
+    <Properties>
+      <Orientation Name="Orientation"
+                   Orientation="Horizontal"/>
+      <cor:String Name="Description"
+                  String="Description"/>
+    </Properties>
+
+    <Content>
+      <Clip Name="ClipItem"
+            Orientation="[Orientation]"
+            FadeSize="50"
+            MaximumSize="180,150"
+            Margins="10,50,10,10">
+        <Children>
+          <Text  Color="Yellow"
+                 Content="[Description]"
+                 WordWrap="true"/>
+        </Children>
+      </Clip>
+    </Content>
+
+  </UI>
+
+</Mcml>
+

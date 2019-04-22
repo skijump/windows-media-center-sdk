@@ -1,0 +1,29 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:r="./WebRelativePathsAnother.mcml">
+
+  <!-- Relative paths only work for HTTP resources.              -->
+  <!-- Loading this sample from the file system will result      -->
+  <!-- in a 'Failure to load markup' error.                      -->
+
+  <!-- The base URI to which the relative is appended to produce -->
+  <!-- the absolute path is always the first HTTP response URI   -->
+  <!-- for the lifetime of the application.                      -->
+
+  <!-- Web samples are designed to work when loaded       -->
+  <!-- via the HTTP:// or HTTPS:// protocol. Generally    -->
+  <!-- speaking, opening these samples using FILE:// will -->
+  <!-- not produce the desired results.                   -->
+
+  <UI Name="Default">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="Relative MCML HTTP paths test"
+                Color="White"/>
+          <r:Another/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

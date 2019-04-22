@@ -1,0 +1,71 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- An animation of type Alpha is used to commit a change in opacity     -->
+  <!-- with an animation instead of an immediate change.  When the item's   -->
+  <!-- Alpha property value changes, the animation is fired.                -->
+
+  <!-- Alpha animations generally make use of AlphaKeyframes with           -->
+  <!-- RelativeTo="Current" for the first one and RelativeTo="Final" for    -->
+  <!-- the last one.  This essentially means "Transition from where you are -->
+  <!-- to where you're supposed to be."                                     -->
+  <UI Name="AlphaAnimations">
+
+    <Rules>
+      <!-- If we have mouse focus, become opaque. -->
+      <Condition Source="[Input.MouseFocus]"
+                 SourceValue="true"
+                 Target="[Image.Alpha]"
+                 Value="1.0"/>
+
+      <!-- By default, be somewhat transparent. -->
+      <Default Target="[Image.Alpha]"
+               Value="0.5"/>
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <Text Content="Mouse over the graphic to change its alpha."
+                Color="White"
+                Font="Arial, 20"/>
+
+          <!-- This is the item that we will be changing the Alpha of. -->
+          <Graphic Name="Image"
+                   Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall"
+                   MouseInteractive="true">
+            <Animations>
+
+              <!-- This animation is of type Alpha.  It will play whenever -->
+              <!-- the opacity of this item is modified.                   -->
+              <Animation Type="Alpha">
+                <Keyframes>
+
+                  <!-- Animate from our current alpha value... -->
+                  <AlphaKeyframe Time="0.0"
+                                 Value="1.0"
+                                 RelativeTo="Current"/>
+
+                  <!-- ... to the new alpha value. -->
+                  <AlphaKeyframe Time="0.5"
+                                 Value="1.0"/>
+
+                </Keyframes>
+              </Animation>
+
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

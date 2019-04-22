@@ -1,0 +1,235 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <!-- This sample demonstrates the different ways a GridLayout can         -->
+  <!-- calculate the cell size:                                             -->
+  <!-- * Specified Column/Row count                                         -->
+  <!-- * Specified ReferenceSize                                            -->
+  <!-- * Implicit measurement                                               -->
+
+  <!-- These don't all need to be used exclusively.  A zero value for       -->
+  <!-- Column, Row, ReferenceSize.Width, or ReferenceSize.Height means      -->
+  <!-- that value is unspecified.  You may combine a specified Column with  -->
+  <!-- a ReferenceSize.Height, for example.                                 -->
+  <UI Name="GridLayout">
+
+    <Properties>
+
+      <Size Name="TestSize"
+            Size="0,145"/>
+      <Inset Name="TestSpacing"
+             Inset="0,2,0,10"/>
+
+      <Size Name="GridSpacing"
+            Size="10,10"/>
+
+    </Properties>
+
+    <Content>
+
+      <Panel Layout="VerticalFlow"
+             Margins="20,0,20,0">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      FillStrip="true"/>
+        </Layout>
+        <Children>
+
+          <!-- This grid layout specifies that it should be a 5x2 grid.     -->
+          <!-- The grid cells size will be calculated to match that         -->
+          <!-- division.                                                    -->
+
+          <Text Font="Arial, 20"
+                Color="White"
+                Content="Specified 5 columns by 2 rows"/>
+
+          <me:AlphabetGrid Size="[TestSize]"
+                           Padding="[TestSpacing]">
+            <GridLayout>
+              <GridLayout Orientation="Horizontal"
+                          Columns="5"
+                          Rows="2"
+                          AllowWrap="true"
+                          Spacing="[GridSpacing]"
+                          MajorAlignment="Fill"
+                          MinorAlignment="Fill"/>
+            </GridLayout>
+          </me:AlphabetGrid>
+
+
+          <!-- This grid layout specifies the cell size as being 50x50.     -->
+          <!-- The number of rows and columns will be determined            -->
+          <!-- dynamically by comparing the cell size to the constraint.    -->
+
+          <Text Font="Arial, 20"
+                Color="White"
+                Content="Specified 50x50 reference size"/>
+
+          <me:AlphabetGrid Size="[TestSize]"
+                           Padding="[TestSpacing]">
+            <GridLayout>
+              <GridLayout Orientation="Horizontal"
+                          ReferenceSize="50,50"
+                          AllowWrap="true"
+                          Spacing="[GridSpacing]"
+                          MajorAlignment="Fill"
+                          MinorAlignment="Fill"/>
+            </GridLayout>
+          </me:AlphabetGrid>
+
+
+          <!-- This usage of grid layout does not indicate an intended      -->
+          <!-- row/column count or a reference size.  The grid cell size    -->
+          <!-- will be determined by the first item in the list.            -->
+
+          <Text Font="Arial, 20"
+                Color="White"
+                Content="Automatically detected reference size"/>
+
+          <me:AlphabetGrid Size="[TestSize]"
+                           Padding="[TestSpacing]">
+            <GridLayout>
+              <GridLayout Orientation="Horizontal"
+                          AllowWrap="true"
+                          Spacing="[GridSpacing]"
+                          MajorAlignment="Fill"
+                          MinorAlignment="Fill"/>
+            </GridLayout>
+          </me:AlphabetGrid>
+
+
+          <!-- This grid layout specifies how many columns are desired, but -->
+          <!-- not how many rows.  The horizontal cell size is known.  The  -->
+          <!-- vertical cell size will be determined by the first item.     -->
+
+          <Text Font="Arial, 20"
+                Color="White"
+                Content="Specified 5 columns, but no row count or reference size"/>
+
+          <me:AlphabetGrid Size="[TestSize]"
+                           Padding="[TestSpacing]">
+            <GridLayout>
+              <GridLayout Orientation="Horizontal"
+                          Columns="5"
+                          AllowWrap="true"
+                          Spacing="[GridSpacing]"
+                          MajorAlignment="Fill"
+                          MinorAlignment="Fill"/>
+            </GridLayout>
+          </me:AlphabetGrid>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+
+  <!-- This UI will display a grid of letters. -->
+  <UI Name="AlphabetGrid">
+
+    <Properties>
+
+      <!-- The layout we will use to display the alphabet. -->
+      <GridLayout Name="GridLayout"
+                  GridLayout="$Required"/>
+
+      <!-- The size to constrain this layout to. -->
+      <Size Name="Size"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- Our data source for the grid will be the alphabet. -->
+      <ArrayListDataSet Name="Alphabet">
+        <Source>
+          <cor:String String="A"/>
+          <cor:String String="B"/>
+          <cor:String String="C"/>
+          <cor:String String="D"/>
+          <cor:String String="E"/>
+          <cor:String String="F"/>
+          <cor:String String="G"/>
+          <cor:String String="H"/>
+          <cor:String String="I"/>
+          <cor:String String="J"/>
+          <cor:String String="K"/>
+          <cor:String String="L"/>
+          <cor:String String="M"/>
+          <cor:String String="N"/>
+          <cor:String String="O"/>
+          <cor:String String="P"/>
+          <cor:String String="Q"/>
+          <cor:String String="R"/>
+          <cor:String String="S"/>
+          <cor:String String="T"/>
+          <cor:String String="U"/>
+          <cor:String String="V"/>
+          <cor:String String="W"/>
+          <cor:String String="X"/>
+          <cor:String String="Y"/>
+          <cor:String String="Z"/>
+        </Source>
+      </ArrayListDataSet>
+
+    </Locals>
+
+    <Content>
+
+      <!-- Draw an outline that will represent the constraint. -->
+      <Graphic Content="image://me:Outline"
+               MaximumSize="[Size]"
+               Layout="Center">
+        <Children>
+
+          <!-- This color will show the total used size of the grid. -->
+          <ColorFill Content="DarkGray">
+            <Children>
+
+              <!-- Repeat out each letter of the alphabet. -->
+              <Repeater Source="[Alphabet]"
+                        Layout="[GridLayout]">
+                <Content>
+
+                  <!-- Each letter is displayed with this background -->
+                  <Graphic Content="image://me:LayoutItemImage"
+                           Padding="5,5,5,5"
+                           SizingPolicy="SizeToChildren">
+                    <Children>
+
+                      <!-- Here's the letter -->
+                      <Text Font="Arial, 20"
+                            Color="White"
+                            Content="[RepeatedItem!cor:String]"/>
+
+                    </Children>
+                  </Graphic>
+
+                </Content>
+              </Repeater>
+
+            </Children>
+          </ColorFill>
+
+        </Children>
+      </Graphic>
+
+    </Content>
+
+  </UI>
+
+  <!-- An image of an outline, done with nine-gridding to allow it to -->
+  <!-- stretch well.                                                  -->
+  <Image Name="Outline"
+         Source="resx://Sampler/Sampler.Resources/LayoutGraphicOutlineRounded"
+         NineGrid="6,6,6,6"/>
+
+  <!-- The background image that will be displayed behind each grid cell. -->
+  <Image Name="LayoutItemImage"
+         Source="resx://Sampler/Sampler.Resources/LayoutGraphic"
+         NineGrid="4,4,4,4"/>
+
+</Mcml>

@@ -1,0 +1,93 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:mce="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:a="assembly://Sampler/Sampler">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- The Now Playing UI in Windows Media Center displays information     -->
+  <!-- about the currently playing media. Like Windows Media Center        -->
+  <!-- dialogs, the Now Playing UI is owned by the MediaCenter object.     -->
+
+  <!-- The NowPlaying tag is only used for positioning purposes. This      -->
+  <!-- means that, unlike all other view items, a NowPlaying view item     -->
+  <!-- does not respond to animations and other transforms (like scaling   -->
+  <!-- and rotation). Wherever the NowPlaying view item is placed on the   -->
+  <!-- screen, the Windows Media Center Now Playing UI will be placed      -->
+  <!-- there. It supports some configuration (such as how much information -->
+  <!-- to show about the currently playing media).                         -->
+
+  <!-- The NowPlaying tag has a property named SnapToDefaultPosition that  -->
+  <!-- can be set if you want the size and location to to match pixel-     -->
+  <!-- perfect with the standard positioning inside of the Now Playing UI  -->
+  <!-- within Windows Media Center.  If it is set to true and the position -->
+  <!-- of the NowPlaying view item has a sufficient amount of overlap with -->
+  <!-- the default Windows Media Center position, then the actual Now      -->
+  <!-- Playing UI will be displayed in the same position that Windows      -->
+  <!-- Media Center uses.                                                  -->
+
+  <!-- By default, the NowPlaying view item has a MinimumSize of 735 x 132 -->
+  <!-- pixels, which is sufficient to display the inset and all metadata   -->
+  <!-- associated with the currently playing item.  If desired, you can    -->
+  <!-- set ShowFullMetadata=Never, and the inset will only require a size  -->
+  <!-- of 176 x 132 pixels.  You can override the default minimum size     -->
+  <!-- in your markup, but if you set it too small, then the NowPlaying    -->
+  <!-- view item may display incorrectly or not at all.                    -->
+
+  <!-- This sample shows how to host the Windows Media Center Now Playing  -->
+  <!-- UI in markup.                                                       -->
+
+  <!-- Note: When this sample is viewed within McmlSampler, the NowPlaying -->
+  <!--       view item will not be visible. McmlSampler scales down the    -->
+  <!--       size of the entire page, and as a result the size of the      -->
+  <!--       NowPlaying view item will be smaller than the minimum size    -->
+  <!--       and will be invisible as a result.                            -->
+
+  <UI Name="MediaCenterServices">
+
+    <Properties>
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+
+    <Locals>
+      <mce:AddInHost Name="MCEHost"/>
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[MCEHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[Sampler.LocalContentVideo03]"
+                  addToQueue="false" />
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Form">
+        <Children>
+          <Text Content="Audio or video must be playing for the Now Playing inset to appear."
+                Color="White" />
+
+          <!-- Place the Now Playing UI at the bottom left of the screen. -->
+          <NowPlaying ShowFullMetadata="OnFocus"
+                      SnapToDefaultPosition="true">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Bottom="Parent,1"/>
+            </LayoutInput>
+          </NowPlaying>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,265 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- Test data for JellyButton. -->
+  <UI Name="TestJellyButton">
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:JellyButton>
+            <Command>
+              <Command Description="Jelly Button 1"/>
+            </Command>
+          </me:JellyButton>
+          <me:JellyButton>
+            <Command>
+              <Command Description="Jelly Button 2"/>
+            </Command>
+          </me:JellyButton>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+
+  <!-- Jelly button -->
+  <UI Name="JellyButton">
+
+    <Properties>
+
+      <!-- Command is a required parameter. -->
+      <ICommand Name="Command"
+                ICommand="$Required"/>
+
+      <!-- Label color properties. -->
+      <Color   Name="TextColor"
+               Color="White"/>
+      <Color   Name="TextHoverColor"
+               Color="Black"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- React to "click" input. -->
+      <ClickHandler Name="Clicker"
+                    Command="[Command]"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- The command description is displayed by the text box. A  -->
+      <!-- binding is used in case the description changes at       -->
+      <!-- runtime.                                                 -->
+      <Binding Source="[Command.Description]"
+               Target="[Label.Content]"/>
+
+      <!-- Clicked effects -->
+      <Changed Source="[Clicker.Invoked]">
+        <Actions>
+          <PlayAnimation Target="[Root]"
+                         Animation="animation://me:JellyWobbleBig"/>
+          <PlaySound     Sound="resx://Sampler/Sampler.Resources/ControlsJellyButtonAquaSelected"/>
+        </Actions>
+      </Changed>
+
+      <!-- Clicking state and effects -->
+      <Condition Source="[Clicker.Clicking]"
+                 ConditionOp="ChangedTo"
+                 SourceValue="true">
+        <Actions>
+          <PlayAnimation Target="[Root]"
+                         Animation="animation://me:JellyPressing"/>
+          <PlaySound     Sound="resx://Sampler/Sampler.Resources/ControlsJellyButtonAquaSelecting"/>
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Input.MouseFocus]"
+                 ConditionOp="ChangedTo"
+                 SourceValue="false">
+        <Actions>
+          <PlayAnimation Target="[Root]"
+                         Animation="animation://me:JellyWobbleOut"/>
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Input.MouseFocus]"
+                 ConditionOp="ChangedTo"
+                 SourceValue="true">
+        <Actions>
+          <PlayAnimation Target="[Root]"
+                         Animation="animation://me:JellyWobbleIn"/>
+          <PlaySound     Sound="resx://Sampler/Sampler.Resources/ControlsJellyButtonAquaHover"/>
+        </Actions>
+      </Condition>
+
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <PlayAnimation Target="[Root]"
+                         Animation="animation://me:JellyWobbleIn"/>
+          <PlaySound     Sound="resx://Sampler/Sampler.Resources/ControlsJellyButtonAquaHover"/>
+          <Set Target="[Background.Content]"
+               Value="image://me:JellyButtonHoverImage"/>
+          <Set Target="[Label.Color]"
+               Value="[TextHoverColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Mouse focused state and effects -->
+      <Condition Source="[Input.MouseFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="image://me:JellyButtonHoverImage"/>
+          <Set Target="[Label.Color]"
+               Value="[TextHoverColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Accessibility -->
+      <Binding Target="[Accessible.IsPressed]"
+               Source="[Clicker.Clicking]"/>
+      <Binding Target="[Accessible.IsFocusable]"
+               Source="[Input.KeyInteractive]"/>
+      <Binding Target="[Accessible.IsFocused]"
+               Source="[Input.KeyFocus]"/>
+      <Binding Target="[Accessible.Name]"
+               Source="[Command.Description]"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Command]"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+
+    </Rules>
+
+    <Content>
+      <Panel Name="Root">
+        <Children>
+
+          <Graphic Name="Background"
+                   MinimumSize="100,0"
+                   Content="image://me:JellyButtonImage"
+                   SizingPolicy="SizeToChildren">
+            <Children>
+              <Text Name="Label"
+                    Content="JellyButton!"
+                    Color="[TextColor]"
+                    Font="Tahoma,18"
+                    Margins="20,20,20,20"/>
+            </Children>
+          </Graphic>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+
+  <!-- Images -->
+
+  <Image Name="JellyButtonImage"
+         Source="resx://Sampler/Sampler.Resources/ControlsJellyButtonRedRectangle"
+         NineGrid="14,13,15,14"/>
+  <Image Name="JellyButtonHoverImage"
+         Source="resx://Sampler/Sampler.Resources/ControlsJellyButtonBrownRectangle"
+         NineGrid="14,13,15,14"/>
+
+
+  <!-- Animations -->
+
+  <Animation Name="JellyWobbleIn"
+             Loop="1"
+             CenterPointPercent="0.5,0.5,1.0">
+    <Keyframes>
+      <ScaleKeyframe Time="0.00"
+                     RelativeTo="Current"/>
+      <ScaleKeyframe Time="0.01"
+                     Value="1.1,1.1,1.0"/>
+      <ScaleKeyframe Time="0.02"
+                     Value="1.0,1.0,1.0"/>
+      <ScaleKeyframe Time="0.03"
+                     Value="0.9,0.9,1.0"/>
+      <ScaleKeyframe Time="0.04"
+                     Value="1.0,1.0,1.0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="JellyWobbleOut"
+             Loop="0"
+             CenterPointPercent="0.5,0.5,1.0">
+    <Keyframes>
+      <ScaleKeyframe Time="0.00"
+                     RelativeTo="Current"/>
+      <ScaleKeyframe Time="0.01"
+                     Value="1.1,1.1,1.0"/>
+      <ScaleKeyframe Time="0.02"
+                     Value="1.0,1.0,1.0"/>
+      <ScaleKeyframe Time="0.03"
+                     Value="0.9,0.9,1.0"/>
+      <ScaleKeyframe Time="0.04"
+                     Value="1.0,1.0,1.0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="JellyWobbleBig"
+             Loop="0"
+             CenterPointPercent="0.5,0.5,1.0">
+    <Keyframes>
+      <ScaleKeyframe    Time="0.00"
+                        RelativeTo="Current"
+                        Interpolation="Log"/>
+      <PositionKeyframe Time="0.0"
+                        RelativeTo="Current"/>
+      <PositionKeyframe Time="0.1"
+                        Value="0,0,-1"/>
+      <ScaleKeyframe    Time="0.30"
+                        Value="1.2,1.2,1.0"
+                        Interpolation="SCurve"/>
+      <ScaleKeyframe    Time="0.40"
+                        Value="0.8,0.8,1.0"
+                        Interpolation="SCurve"/>
+      <ScaleKeyframe    Time="0.50"
+                        Value="1.1,1.1,1.0"/>
+      <ScaleKeyframe    Time="0.55"
+                        Value="0.9,0.9,1.0"/>
+      <PositionKeyframe Time="0.55"
+                        Value="0,0,-1"/>
+      <ScaleKeyframe    Time="0.60"
+                        Value="1.0,1.0,1.0"/>
+      <PositionKeyframe Time="0.6"
+                        Value="0,0,0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="JellyPressing"
+             Loop="0"
+             CenterPointPercent="0.5,0.5,1.0">
+    <Keyframes>
+      <ScaleKeyframe Time="0.00"
+                     RelativeTo="Current"
+                     Interpolation="Log"/>
+      <ScaleKeyframe Time="0.08"
+                     Value="0.9,0.9,1.0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="JellyRestoring"
+             Loop="0"
+             CenterPointPercent="0.5,0.5,1.0">
+    <Keyframes>
+      <ScaleKeyframe Time="0.00"
+                     RelativeTo="Current"/>
+      <ScaleKeyframe Time="0.07"
+                     Value="1.0,1.0,1.0"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

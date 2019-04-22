@@ -1,0 +1,236 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="BackgroundProperties">
+
+    <Properties>
+      <cor:String Name="MyAudio"
+                  String="C:\Users\Public\Music\Windows Media Center SDK\Audio01.mp3" />
+      <cor:String Name="MyVideo"
+                  String="C:\Users\Public\Videos\Windows Media Center SDK\Video04.wmv" />
+      <cor:String Name="FourBoxGraphicNoBorder"
+                  String="file://FourBoxGraphicNoBorder.png" />
+      <cor:String Name="FourBoxGraphicTransparentNoBorder"
+                  String="file://FourBoxGraphicTransparentNoBorder.png" />
+    </Properties>
+    
+    <Locals>
+      
+      <addin:AddInHost Name="AddInHost"/>
+
+      <!-- Background Modes - No Audio, No Video -->
+      <Command Name="BackgroundModeStandardAnimatedCommand"
+               Description="StandardAnimated"/>
+      <Command Name="BackgroundModeStandardImageCommand"
+               Description="StandardImage"/>
+      <Command Name="BackgroundModeNoneCommand"
+               Description="None"/>
+      <Command Name="BackgroundModeColorCommand"
+               Description="Color"/>
+      <Command Name="BackgroundModeImageCommand"
+               Description="Image"/>
+
+      <!-- Background Modes - Audio -->
+      <Command Name="BackgroundModeAudioAnimatedCommand"
+               Description="AudioAnimated"/>
+      <Command Name="BackgroundModeAlbumArtMosaicCommand"
+               Description="AlbumArtMosaic"/>
+
+      <!-- Background Modes - Video -->
+      <Command Name="BackgroundModeVideoCommand"
+               Description="Video"/>
+      <Command Name="BackgroundModeHeavyMaskedVideoCommand"
+               Description="HeavyMaskedVideo"/>
+      <Command Name="BackgroundModeLightMaskedVideoCommand"
+               Description="LightMaskedVideo"/>
+      <Command Name="BackgroundModeCustomMaskedVideoCommand"
+               Description="CustomMaskedVideo"/>
+
+      <Command Name="PlayAudioLocal"
+               Description="Play Audio" />
+      <Command Name="PlayVideoLocal"
+               Description="Play Video" />
+    </Locals>
+
+    <Rules>
+
+      <!-- Background Modes - No Audio, No Video -->
+      <Changed Source="[BackgroundModeStandardAnimatedCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="StandardAnimated"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[BackgroundModeStandardImageCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="StandardImage"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[BackgroundModeNoneCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="None"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[BackgroundModeColorCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="Color"/>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundColor2]"
+               Value="MediumPurple"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[BackgroundModeImageCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.SetBackgroundImage]"
+                  source="[FourBoxGraphicNoBorder]"/>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="Image"/>
+        </Actions>
+      </Changed>
+      
+      <!-- Background Modes - Audio -->
+      <Changed Source="[BackgroundModeAudioAnimatedCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="AudioAnimated"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[BackgroundModeAlbumArtMosaicCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="AlbumArtMosaic"/>
+        </Actions>
+      </Changed>
+
+      <!-- Background Modes - Video -->
+      <Changed Source="[BackgroundModeVideoCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="Video"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[BackgroundModeCustomMaskedVideoCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.SetBackgroundImage]"
+                  source="[FourBoxGraphicTransparentNoBorder]"/>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="CustomMaskedVideo"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[BackgroundModeHeavyMaskedVideoCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="HeavyMaskedVideo"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[BackgroundModeLightMaskedVideoCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="LightMaskedVideo"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[PlayAudioLocal.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Audio"
+                  media="[MyAudio]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[PlayVideoLocal.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[MyVideo]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+
+      <Binding Target="[CurrentBackgroundMode.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.BackgroundMode.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.BackgroundMode.ToString]"/>
+        </Conditions>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              
+              <!-- Background Modes - No Audio, No Video -->
+              <ctrl:GroupHeader GroupName="Background Modes" />
+              <ctrl:Button Command="[BackgroundModeStandardAnimatedCommand]"
+                           ButtonLabel="[BackgroundModeStandardAnimatedCommand.Description]"/>
+              <ctrl:Button Command="[BackgroundModeStandardImageCommand]"
+                           ButtonLabel="[BackgroundModeStandardImageCommand.Description]"/>
+              <ctrl:Button Command="[BackgroundModeNoneCommand]"
+                           ButtonLabel="[BackgroundModeNoneCommand.Description]"/>
+              <ctrl:Button Command="[BackgroundModeColorCommand]"
+                           ButtonLabel="[BackgroundModeColorCommand.Description]"/>
+              <ctrl:Button Command="[BackgroundModeImageCommand]"
+                           ButtonLabel="[BackgroundModeImageCommand.Description]"/>
+
+              <!-- Background Modes - Audio -->
+              <ctrl:GroupHeader GroupName="Audio Background Modes" />
+              <ctrl:Button Command="[PlayAudioLocal]"
+                           ButtonLabel="[PlayAudioLocal.Description]" />
+              <ctrl:Button Command="[BackgroundModeAudioAnimatedCommand]"
+                           ButtonLabel="[BackgroundModeAudioAnimatedCommand.Description]"/>
+              <ctrl:Button Command="[BackgroundModeAlbumArtMosaicCommand]"
+                           ButtonLabel="[BackgroundModeAlbumArtMosaicCommand.Description]"/>
+
+              <!-- Background Modes - Video -->
+              <ctrl:GroupHeader GroupName="Video Background Modes" />
+              <ctrl:Button Command="[PlayVideoLocal]"
+                           ButtonLabel="[PlayVideoLocal.Description]" />
+              <ctrl:Button Command="[BackgroundModeVideoCommand]"
+                           ButtonLabel="[BackgroundModeVideoCommand.Description]"/>
+              <ctrl:Button Command="[BackgroundModeHeavyMaskedVideoCommand]"
+                           ButtonLabel="[BackgroundModeHeavyMaskedVideoCommand.Description]"/>
+              <ctrl:Button Command="[BackgroundModeLightMaskedVideoCommand]"
+                           ButtonLabel="[BackgroundModeLightMaskedVideoCommand.Description]"/>
+              <ctrl:Button Command="[BackgroundModeCustomMaskedVideoCommand]"
+                           ButtonLabel="[BackgroundModeCustomMaskedVideoCommand.Description]"/>
+            </Children>
+          </Panel>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,.5"
+                               Right="Parent,1"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <ctrl:PropertyAndValue Name="CurrentBackgroundMode"
+                                     PropertyName="Current BackgroundMode"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

@@ -1,0 +1,85 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- If TransformAnimation is this:                           -->
+  <!-- (A) > [Transform] > (A')                                 -->
+
+  <!-- And MergeAnimation is this:                              -->
+  <!-- (A)                                                      -->
+  <!--   \                                                      -->
+  <!--     [Merge] > (A + B)                                    -->
+  <!--   /                                                      -->
+  <!-- (B)                                                      -->
+
+  <!-- Then SwitchAnimation is this:                            -->
+  <!-- (A)                                                      -->
+  <!--   \                                                      -->
+  <!--     [Choose] > (A)                                       -->
+  <!--   /                                                      -->
+  <!-- (B)                                                      -->
+
+  <!-- It chooses one of its animation options depending        -->
+  <!-- on the value produced by some expression based on        -->
+  <!-- a Choice, BooleanChoice, RangedValue or IntRangedValue). -->
+  
+  <!-- This allows the expression to be a shared by reference   -->
+  <!-- value, vastly reducing the number of rules written to    -->
+  <!-- coordinate which animation to show.                      -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <Timer Name="Timer"
+             Interval="1000"
+             Enabled="true"
+             AutoRepeat="true" />
+      <Choice Name="Direction"
+              Wrap="true">
+        <Options>
+          <cor:String String="Left" />
+          <cor:String String="Right" />
+        </Options>
+      </Choice>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[Label.Content]"
+               Source="[Direction.Chosen!cor:String]" />
+      <Changed Source="[Timer.Tick]">
+        <Actions>
+          <Invoke Target="[Direction.NextValue]" />
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Text Name="Label"
+            Content="Text"
+            Color="White">
+        <Animations>
+          <SwitchAnimation Expression="[Direction]"
+                           Type="ContentChangeShow">
+            <Options>
+              <Animation Name="Right">
+                <Keyframes>
+                  <PositionKeyframe Time="0.0"
+                                    Value="-200,0,0"/>
+                  <PositionKeyframe Time="0.5"/>
+                </Keyframes>
+              </Animation>
+              <Animation Name="Left">
+                <Keyframes>
+                  <PositionKeyframe Time="0.0"
+                                    Value="200,0,0"/>
+                  <PositionKeyframe Time="0.5"/>
+                </Keyframes>
+              </Animation>
+            </Options>
+          </SwitchAnimation>
+        </Animations>
+      </Text>
+    </Content>
+
+  </UI>
+
+</Mcml>

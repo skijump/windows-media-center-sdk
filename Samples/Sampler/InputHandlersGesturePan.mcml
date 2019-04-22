@@ -1,0 +1,93 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <UI Name="Default">
+
+    <Locals>
+      <GesturePanHandler Name="MyGesturePanHandler" />
+      <GestureRatchetSettings Name="MyGestureRatchetSettings"
+                              RatchetSize="20,20"
+                              AutoRatchetSize="10,10" />
+      <cor:Int32 Name="MyInt32"
+                 Int32="0" />
+      <AnchorEdge Name="AnchorEdgeLeft"
+                  Id="Parent"
+                  Percent="0"
+                  Offset="0" />
+      <AnchorEdge Name="AnchorEdgeTop"
+                  Id="Parent"
+                  Percent="0"
+                  Offset="0" />
+      <MathTransformer Name="MathTransformerLeft"
+                       Absolute="false"
+                       AddInt="0"/>
+      <MathTransformer Name="MathTransformerTop"
+                       Absolute="false"
+                       AddInt="0"/>
+    </Locals>
+
+    <Rules>
+      <Default Target="[MyGesturePanHandler.RatchetSettings]"
+               Value="[MyGestureRatchetSettings]" />
+      <Binding Source="[MyGesturePanHandler.IsPanning.ToString]"
+               Target="[MyIsPanning.Content]" />
+      <Binding Source="[MyGesturePanHandler.IsPanningInertia.ToString]"
+               Target="[MyIsPanningInertia.Content]" />
+      <Binding Source="[MyGesturePanHandler.Offset.ToString]"
+               Target="[MyOffset.Content]" />
+      <Binding Source="[MyGesturePanHandler.RatchetOffset.ToString]"
+               Target="[MyRatchetOffset.Content]" />
+      <Changed Source="[MyGesturePanHandler.Offset]">
+        <Actions>
+          <Set Target="[MathTransformerTop.AddInt]"
+               Value="[MyGesturePanHandler.Offset.Height]" />
+          <Set Target="[AnchorEdgeTop.Offset]"
+               Value="[MyInt32]"
+               Transformer="[MathTransformerTop]" />
+          <Set Target="[MathTransformerLeft.AddInt]"
+               Value="[MyGesturePanHandler.Offset.Width]" />
+          <Set Target="[AnchorEdgeLeft.Offset]"
+               Value="[MyInt32]"
+               Transformer="[MathTransformerLeft]" />
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form"
+             TouchInteractive="True">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <Text Color="White"
+                    Content="Is Panning?"/>
+              <Text Name="MyIsPanning"
+                    Color="White" />
+              <Text Color="White"
+                    Content="Is Inertia?"/>
+              <Text Name="MyIsPanningInertia"
+                    Color="White" />
+              <Text Color="White"
+                    Content="Offset: "/>
+              <Text Name="MyOffset"
+                    Color="White" />
+              <Text Color="White"
+                    Content="RatchetOffset: "/>
+              <Text Name="MyRatchetOffset"
+                    Color="White" />
+            </Children>
+          </Panel>
+          <Graphic Name="MyGraphic"
+                   Content="file://FourBoxGraphic.png">
+            <LayoutInput>
+              <FormLayoutInput Left="[AnchorEdgeLeft]"
+                               Top="[AnchorEdgeTop]"/>
+            </LayoutInput>
+          </Graphic>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

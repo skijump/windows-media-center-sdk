@@ -1,0 +1,19 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This file and the Images folder must be placed on -->
+  <!-- a web server to properly demonstrate the functionality. -->
+
+  <UI Name="Another">
+
+    <!-- Web samples are designed to work when loaded       -->
+    <!-- via the HTTP:// or HTTPS:// protocol. Generally    -->
+    <!-- speaking, opening these samples using FILE:// will -->
+    <!-- not produce the desired results.                   -->
+    
+    <Content>
+      <!-- Relative image path -->
+      <Graphic Content="Images/FourBoxGraphic.png"/>
+    </Content>
+  </UI>
+
+</Mcml>

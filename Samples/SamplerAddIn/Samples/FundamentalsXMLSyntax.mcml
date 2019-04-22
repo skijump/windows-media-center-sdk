@@ -1,0 +1,47 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- MCML is a type-safe XML-based language. The XML tags are .NET   -->
+  <!-- Framework objects and the XML attributes are .NET Framework     -->
+  <!-- properties. Other nested tags are expanded property values.     -->
+  <UI Name="XMLSyntax">
+
+    <!-- Content is a property on UI. -->
+    <Content>
+
+      <!-- ColorFill is the value for Content. -->
+      <ColorFill Content="Firebrick">
+
+        <!-- Children is a property on ColorFill. -->
+        <Children>
+
+          <Text Content="Some property values on this Text are being set using expanded form.">
+
+            <!-- Expanded form is typically used for properties whose   -->
+            <!-- values cannot be expressed in inline form. They can be -->
+            <!-- used for any property value.                           -->
+            <Color>
+              <!-- Create a Color object.                         -->
+              <!-- A best practice for an object like color is to -->
+              <!-- use the inline form.                           -->
+              <Color A="255"
+                     R="255"
+                     G="255"
+                     B="225"/>
+            </Color>
+
+            <Font>
+              <!-- Create a Font object using the inline constructor form. -->
+              <Font Font="Impact, 20"/>
+            </Font>
+
+          </Text>
+
+        </Children>
+
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

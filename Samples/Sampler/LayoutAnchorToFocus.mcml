@@ -1,0 +1,170 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- AnchorLayout and FormLayout allow you to anchor not only to other    -->
+  <!-- named peers, but also to the current key focus.  This is done by     -->
+  <!-- using the "Focus" keyword when describing your relative anchor edge. -->
+  <UI Name="AnchorToFocus">
+
+    <Content>
+
+      <!-- Here we use a Form layout.  The anchor to focus feature works    -->
+      <!-- just as well with an Anchor layout, but for this particular      -->
+      <!-- example we want to fill everything to our constraint.            -->
+
+      <!-- Underneath this container we will have HotSpots (a UI declared   -->
+      <!-- below) that receive input.  A selection overlay will be anchored -->
+      <!-- to the currently active HotSpot by using the "Focus" keyword.    -->
+      <ColorFill Content="Beige"
+                 Layout="Form">
+        <Children>
+
+          <!-- Selection overlay that will anchor itself to focus. -->
+          <ColorFill Content="Brown"
+                     Alpha="0.5">
+            <LayoutInput>
+              <!-- Our ColorFill is anchored the edges of the "Focus" item. -->
+              <!-- That will resolve to whichever of our peers has deep key -->
+              <!-- focus.                                                   -->
+              <FormLayoutInput Left="Focus,0"
+                               Right="Focus,1"
+                               Top="Focus,0"
+                               Bottom="Focus,1"/>
+            </LayoutInput>
+            <Animations>
+
+              <!-- This Position animation will make it easier to see how   -->
+              <!-- our selection overlay moves from one HotSpot to another. -->
+              <Animation Type="Move">
+                <Keyframes>
+                  <PositionKeyframe Time="0.00"
+                                    Value="0,0,0"
+                                    RelativeTo="Current"
+                                    Interpolation="SCurve, 0.5"/>
+                  <PositionKeyframe Time="0.25"
+                                    Value="0,0,0"/>
+                </Keyframes>
+              </Animation>
+
+              <!-- Our HotSpots are different sizes, and this Size     -->
+              <!-- animation smooths out the resizing of our selection -->
+              <!-- overlay.                                            -->
+              <Animation Type="Size">
+                <Keyframes>
+                  <SizeKeyframe Time="0.00"
+                                Value="0,0,0"
+                                RelativeTo="Current"
+                                Interpolation="SCurve, 0.5"/>
+                  <SizeKeyframe Time="0.25"
+                                Value="0,0,0"/>
+                </Keyframes>
+              </Animation>
+
+            </Animations>
+          </ColorFill>
+
+          <!-- The following 5 HotSpots are anchored to various places in -->
+          <!-- the constraint: Left, Right, Top, Bottom, and one in the   -->
+          <!-- Center.                                                    -->
+
+          <!-- Left -->
+          <me:HotSpot Color="Gray"
+                      FocusColor="White">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,0.1"
+                               Top="Parent,0.1"
+                               Bottom="Parent,0.9"/>
+            </LayoutInput>
+          </me:HotSpot>
+
+          <!-- Right -->
+          <me:HotSpot>
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1"
+                               Left="Parent,0.9"
+                               Top="Parent,0.1"
+                               Bottom="Parent,0.9"/>
+            </LayoutInput>
+          </me:HotSpot>
+
+          <!-- Top -->
+          <me:HotSpot>
+            <LayoutInput>
+              <FormLayoutInput Top="Parent,0"
+                               Bottom="Parent,0.1"
+                               Left="Parent,0.1"
+                               Right="Parent,0.9"/>
+            </LayoutInput>
+          </me:HotSpot>
+
+          <!-- Bottom -->
+          <me:HotSpot>
+            <LayoutInput>
+              <FormLayoutInput Bottom="Parent,1"
+                               Top="Parent,0.9"
+                               Left="Parent,0.1"
+                               Right="Parent,0.9"/>
+            </LayoutInput>
+          </me:HotSpot>
+
+          <!-- Center -->
+          <me:HotSpot>
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.4"
+                               Right="Parent,0.6"
+                               Top="Parent,0.4"
+                               Bottom="Parent,0.6"/>
+            </LayoutInput>
+          </me:HotSpot>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+
+  <!-- This UI describes a very simple focusable box which we'll call a -->
+  <!-- "Hot Spot".                                                      -->
+  <UI Name="HotSpot">
+
+    <Properties>
+      <Color Name="Color"
+             Color="Gray"/>
+      <Color Name="FocusColor"
+             Color="White"/>
+    </Properties>
+
+    <Rules>
+      <!-- When we have key focus change colors. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Fill.Content]"
+                 Value="[FocusColor]"/>
+
+      <!-- Make this UI key focusable. -->
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+    </Rules>
+
+    <Content>
+
+      <ColorFill Content="Black"
+                 Padding="2,2,2,2">
+        <Children>
+
+          <ColorFill Name="Fill"
+                     Content="[Color]"
+                     MouseInteractive="true"/>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

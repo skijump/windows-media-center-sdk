@@ -1,0 +1,322 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:me="Me">
+
+  <Aggregate Source="resx://Z/Z.Resources/FilterList"/>
+
+  <!-- A scrolling content list -->
+  <!-- This template is built to be generic with respect to the direction -->
+  <!-- of scrolling.  Setting the scrolling orientation property will     -->
+  <!-- automatically adjust the positioning of the scroll arrows.         -->
+  <UI Name="ContentList">
+
+    <Properties>
+      <!-- The source of content for this list -->
+      <z:ContentPage Name="Page"
+                     ContentPage="$Required"/>
+
+      <!-- The direction to scroll -->
+      <Orientation Name="ScrollOrientation"
+                   Orientation="Horizontal"/>
+
+      <!-- The layout of the items -->
+      <GridLayout Name="GridLayout"
+                  Orientation="Horizontal"
+                  Rows="1"
+                  Spacing="10,10"
+                  AllowWrap="false"/>
+
+      <!-- An object to track which item in the list currently has focus -->
+      <IntRangedValue Name="FocusedIndex"/>
+
+      <!-- These anchors represent the four places we could position  -->
+      <!-- our scroll arrows.  Depending on the orientation of the    -->
+      <!-- scroller we will pick a pair of these.                     -->
+      <AnchorLayoutInput Name="AlignToTop"
+                         Top="Scroller,0,-100"
+                         Bottom="Scroller,0,-15"
+                         Vertical="Far"
+                         Left="Scroller,0"
+                         Right="Scroller,1"
+                         Horizontal="Center"
+                         ContributesToHeight="false"/>
+      <AnchorLayoutInput Name="AlignToBottom"
+                         Top="Scroller,1,15"
+                         Bottom="Scroller,1,100"
+                         Vertical="Near"
+                         Left="Scroller,0"
+                         Right="Scroller,1"
+                         Horizontal="Center"
+                         ContributesToHeight="false"/>
+      <AnchorLayoutInput Name="AlignToLeft"
+                         Left="Scroller,0,-100"
+                         Right="Scroller,0,-15"
+                         Horizontal="Far"
+                         Top="Scroller,0"
+                         Bottom="Scroller,1"
+                         Vertical="Center"
+                         ContributesToWidth="false"/>
+      <AnchorLayoutInput Name="AlignToRight"
+                         Left="Scroller,1,15"
+                         Right="Scroller,1,100"
+                         Horizontal="Near"
+                         Top="Scroller,0"
+                         Bottom="Scroller,1"
+                         Vertical="Center"
+                         ContributesToWidth="false"/>
+    </Properties>
+
+    <Locals>
+      <!-- Scrolling state -->
+      <ScrollingHandler Name="ScrollHandler"
+                        HandlerStage="Bubbled"/>
+      <ScrollingData Name="ScrollData"/>
+
+      <!-- Scroll actions -->
+      <Command Name="ScrollUp"
+               Description="Up"/>
+      <Command Name="ScrollDown"
+               Description="Down"/>
+    </Locals>
+
+    <Rules>
+      <!-- Associate all the scrolling objects -->
+      <Default Target="[ScrollHandler.ScrollingData]"
+               Value="[ScrollData]"/>
+      <Default Target="[ScrollData.Repeater]"
+               Value="[Repeater]"/>
+
+      <!-- Only show the scroll buttons if we can scroll in that direction -->
+      <Binding Source="[ScrollData.CanScrollUp]"
+               Target="[ScrollUpButton.Visible]"/>
+      <Binding Source="[ScrollData.CanScrollDown]"
+               Target="[ScrollDownButton.Visible]"/>
+
+      <!-- Scroll up/left -->
+      <Changed Source="[ScrollUp.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollData.PageUp]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Scroll down/right -->
+      <Changed Source="[ScrollDown.Invoked]">
+        <Actions>
+          <Invoke Target="[ScrollData.PageDown]"/>
+        </Actions>
+      </Changed>
+
+      <!-- If we are vertical use the top/bottom scroll button positions -->
+      <Condition Source="[ScrollOrientation]"
+                 SourceValue="Vertical">
+        <Actions>
+          <Set Target="[ScrollUpButton.LayoutInput]"
+               Value="[AlignToTop]"/>
+          <Set Target="[ScrollDownButton.LayoutInput]"
+               Value="[AlignToBottom]"/>
+          <Set Target="[ScrollUpButton.Image]"
+               Value="resx://Z/Z.Resources/MouseNavUp"/>
+          <Set Target="[ScrollUpButton.FocusImage]"
+               Value="resx://Z/Z.Resources/MouseNavUpFocus"/>
+          <Set Target="[ScrollDownButton.Image]"
+               Value="resx://Z/Z.Resources/MouseNavDown"/>
+          <Set Target="[ScrollDownButton.FocusImage]"
+               Value="resx://Z/Z.Resources/MouseNavDownFocus"/>
+        </Actions>
+      </Condition>
+
+      <Binding Source="[Page.Content]"
+               Target="[Repeater.Source]" />
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <!-- Scroll up -->
+          <me:ScrollButton Name="ScrollUpButton"
+                           Model="[ScrollUp]"
+                           Image="resx://Z/Z.Resources/MouseNavLeft"
+                           FocusImage="resx://Z/Z.Resources/MouseNavLeftFocus"
+                           LayoutInput="[AlignToLeft]"/>
+
+          <!-- Scroll down -->
+          <me:ScrollButton Name="ScrollDownButton"
+                           Model="[ScrollDown]"
+                           Image="resx://Z/Z.Resources/MouseNavRight"
+                           FocusImage="resx://Z/Z.Resources/MouseNavRightFocus"
+                           LayoutInput="[AlignToRight]"/>
+
+          <!-- Scrolling area -->
+          <Scroller Name="Scroller"
+                    Orientation="[ScrollOrientation]"
+                    ScrollingData="[ScrollData]"
+                    FadeSize="-5">
+            <Children>
+
+              <!-- Content repeater -->
+              <Repeater Name="Repeater"
+                        ContentName="Item"
+                        Layout="[GridLayout]">
+                <Animations>
+
+                  <!-- Scrolling animation -->
+                  <Animation Type="Move">
+                    <Keyframes>
+                      <PositionKeyframe Time="0.00"
+                                        RelativeTo="Current"/>
+                      <PositionKeyframe Time="0.25"
+                                        RelativeTo="Final"/>
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+              </Repeater>
+
+            </Children>
+          </Scroller>
+
+        </Children>
+      </Panel>
+    </Content>
+
+    <!-- We use a named Content here instead of inline repeater content -->
+    <!-- so that derived templates may customize the repeated item      -->
+    <!-- without replacing the entire content tree.                     -->
+    <Content Name="Item">
+      <me:ThumbnailButton Model="[RepeatedItem!z:ThumbnailCommand]"
+                          Index="[RepeatedItemIndex]"
+                          FocusedIndex="[FocusedIndex]"/>
+    </Content>
+  </UI>
+
+
+  <!-- A wrapper around the thumbnail button that adds focus tracking -->
+  <UI Name="ThumbnailButton"
+      BaseUI="core:ThumbnailButton">
+    <Properties>
+      <Index Name="Index"
+             Index="$Required"/>
+      <IntRangedValue Name="FocusedIndex"
+                      IntRangedValue="$Required"/>
+    </Properties>
+
+    <Rules>
+      <!-- Inform any listeners of FocusedIndex that we have received -->
+      <!-- key focus.-->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[FocusedIndex.Value]"
+                 Value="[Index.Value]"/>
+    </Rules>
+  </UI>
+
+
+  <!-- A textual display of our current focus relative to the size of the -->
+  <!-- total list (e.g. 2 of 50).                                         -->
+  <UI Name="ItemCounter">
+    <Properties>
+      <z:ContentPage Name="Page"
+                     ContentPage="$Required"/>
+      <IntRangedValue Name="FocusedIndex"
+                      IntRangedValue="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- An intermediate used to display the value of FocusedIndex -->
+      <sys:String Name="FocusedIndexString"
+                  String=""/>
+    </Locals>
+
+    <Rules>
+      <!-- Whenever the focused index changes recreate our string. -->
+      <Changed Source="[FocusedIndex.Value]"
+               InitialEvaluate="true">
+        <Actions>
+          <Set Target="[FocusedIndexString]"
+               Value="[FocusedIndex.Value]">
+            <!-- Convert from zero-based to a one-based index -->
+            <Transformer>
+              <MathTransformer AddInt="1"
+                               Type="String"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Changed>
+
+      <!-- Concatenate FocusedIndexString and ItemCountString. -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Modified Source="[FocusedIndexString]"/>
+          <Modified Source="[Page.Content.Count]"/>
+        </Conditions>
+        <Actions>
+          <!-- The final value will be something like "2 of 50" -->
+          <Invoke Target="[FocusedIndexString.Concat]"
+                  ResultTarget="[Text.Content]"
+                  str0="[FocusedIndexString]"
+                  str1="resx://Z/Z.Resources/Shell_ItemCounterSeperator"
+                  str2="[Page.Content.Count.ToString]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Only display anything if the count is non-zero. -->
+      <Condition Source="[Page.Content.Count]"
+                 ConditionOp="GreaterThan"
+                 SourceValue="0"
+                 Target="[Text.Visible]"
+                 Value="true"/>
+
+      <!-- Accessibility -->
+      <Binding Target="[Accessible.Value]"
+               Source="[Text.Content]"/>
+      <Default Target="[Accessible.Role]"
+               Value="StaticText"/>
+    </Rules>
+
+    <Content>
+      <!-- The label -->
+      <Text Name="Text"
+            Color="color://styles:Text.Copy"
+            Font="font://styles:SecondaryText"
+            Visible="false"/>
+    </Content>
+  </UI>
+
+
+  <!-- A list scroll button -->
+  <UI Name="ScrollButton"
+      BaseUI="core:Button">
+    <Properties>
+      <Size Name="TileMinSize"
+            Size="0,0"/>
+      <Size Name="TileMaxSize"
+            Size="20,20"/>
+    </Properties>
+
+    <Rules>
+      <!-- Mouse interactive only -->
+      <Default Target="[Input.KeyInteractive]"
+               Value="false"/>
+
+      <!-- No label -->
+      <Default Target="[Label.Visible]"
+               Value="false"/>
+      <Default Target="[Background.SizingPolicy]"
+               Value="SizeToConstraint"/>
+
+      <!-- Mouse focused styling -->
+      <Condition Source="[Input.MouseFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[FocusImage]"/>
+        </Actions>
+      </Condition>
+    </Rules>
+  </UI>
+
+</Mcml>

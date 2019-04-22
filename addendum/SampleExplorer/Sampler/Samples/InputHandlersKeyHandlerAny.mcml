@@ -1,0 +1,36 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System">
+
+  <UI Name="Default">
+
+    <Properties>
+      <cor:String Name="Text"
+                  String="Press any key." />
+    </Properties>
+
+    <Locals>
+      <KeyHandler Name="MyKeyHandler"
+                  Key="Any"
+                  Handle="true"
+                  HandlerStage="Direct"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[MyKeyHandler.Invoked]">
+        <Actions>
+          <Set Target="[Text]"
+               Value="You pressed a key." />
+        </Actions>
+      </Changed>
+      <Binding Source="[Text]"
+               Target="[MyLabel.Content]" />
+    </Rules>
+
+    <Content>
+      <Text Name="MyLabel"
+            Color="White"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

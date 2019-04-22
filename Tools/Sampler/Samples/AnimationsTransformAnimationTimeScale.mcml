@@ -1,0 +1,102 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to use a TransformAnimation to modify   -->
+  <!-- the time of an animation.                                            -->
+
+  <!-- A TransformAnimation takes a reference animation and produces a new  -->
+  <!-- animation based on that animation.  One of the ways the source       -->
+  <!-- animation can be transformed is by scaling the Time of all           -->
+  <!-- keyframes by some value, causing the animation to either take more   -->
+  <!-- or less time.  The TimeScale property on TransformAnimtion enables   -->
+  <!-- this.                                                                -->
+  <UI Name="TransformAnimationTimeScale">
+
+    <Properties>
+
+      <!-- This is our reference animation.  We will take this animation   -->
+      <!-- and modify the Time by a scalar.                                -->
+      <Animation Name="Reference"
+                 Loop="-1">
+        <Keyframes>
+
+          <PositionKeyframe Time="0.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="1.0"
+                            Value="100,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="2.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+
+        </Keyframes>
+      </Animation>
+
+    </Properties>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Demonstrate what the unmodified reference animation looks    -->
+          <!-- like.                                                        -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="Reference animation"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <Animation Animation="[Reference]"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Take the reference animation and apply a TimeScale of 2.0.   -->
+          <!-- This will cause the animation to take twice as long to run.  -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="2.0 TimeScale"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <TransformAnimation Source="[Reference]"
+                                  TimeScale="2.0"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Take the reference animation and apply a TimeScale of 0.5.  -->
+          <!-- This will cause the animation to take half as long to run.  -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="0.5 TimeScale"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <TransformAnimation Source="[Reference]"
+                                  TimeScale="0.5"/>
+
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

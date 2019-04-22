@@ -1,0 +1,154 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:btn="file://ControlsSimpleButton.mcml">
+
+  <!-- This sample demonstrates how the Rotate animation can animate the    -->
+  <!-- result of a change in an items rotation value.  Whenever an item is  -->
+  <!-- rotated any attached animation of type Rotate will be played.        -->
+
+  <!-- Rotate animations generally make use of RotateKeyframes with         -->
+  <!-- RelativeTo="Current" for the first one and RelativeTo="Final" for    -->
+  <!-- the last one.  This essentially means "Rotate from where you are to  -->
+  <!-- where you're supposed to be."                                        -->
+
+  <!-- This sample demonstrates Rotate animations by presenting UI with     -->
+  <!-- four buttons along the edges of a square.  There is an item within   -->
+  <!-- the square that will rotate to point to an edge when the             -->
+  <!-- corresponding button is pressed.  The change in rotation is applied  -->
+  <!-- with a Rotate animation.                                             -->
+  <UI Name="RotateAnimations">
+
+    <Locals>
+      <!-- Create layout inputs for the four poles.  We will be applying    -->
+      <!-- these to multiple items, so it's more concise to just declare    -->
+      <!-- them once.                                                       -->
+      <DockLayoutInput Name="Left"
+                       Position="Left"
+                       Alignment="Center"/>
+      <DockLayoutInput Name="Right"
+                       Position="Right"
+                       Alignment="Center"/>
+      <DockLayoutInput Name="Top"
+                       Position="Top"
+                       Alignment="Center"/>
+      <DockLayoutInput Name="Bottom"
+                       Position="Bottom"
+                       Alignment="Center"/>
+
+      <!-- These commands when invoked will change our target's rotation. -->
+      <!-- That will be wired up with our Rules below.                    -->
+      <Command Name="LeftCommand"
+               Description="Left"/>
+      <Command Name="RightCommand"
+               Description="Right"/>
+      <Command Name="TopCommand"
+               Description="Top"/>
+      <Command Name="BottomCommand"
+               Description="Bottom"/>
+    </Locals>
+
+    <Rules>
+      <!-- The bottom button was clicked - change the target's position. -->
+      <Changed Source="[BottomCommand.Invoked]">
+        <Actions>
+          <Set Target="[Arrow.Rotation]"
+               Value="180deg;0,0,1"/>
+        </Actions>
+      </Changed>
+
+      <!-- The top button was clicked - change the target's position. -->
+      <Changed Source="[TopCommand.Invoked]">
+        <Actions>
+          <Set Target="[Arrow.Rotation]"
+               Value="0deg;0,0,1"/>
+        </Actions>
+      </Changed>
+
+      <!-- The right button was clicked - change the target's position. -->
+      <Changed Source="[RightCommand.Invoked]">
+        <Actions>
+          <Set Target="[Arrow.Rotation]"
+               Value="90deg;0,0,1"/>
+        </Actions>
+      </Changed>
+
+      <!-- The left button was clicked - change the target's position. -->
+      <Changed Source="[LeftCommand.Invoked]">
+        <Actions>
+          <Set Target="[Arrow.Rotation]"
+               Value="-90deg;0,0,1"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="VerticalFlow"
+             Padding="10,50,10,100">
+        <Children>
+
+          <Text Content="Click one of the buttons to change where the arrow points.  A Rotate animation will animate the arrow from where it currently is to its new rotation."
+                Font="Arial, 20"
+                Color="White"
+                WordWrap="true"/>
+
+          <ColorFill Name="Test"
+                     Content="Azure"
+                     Layout="Dock">
+            <Children>
+
+              <!-- These buttons when invoked will change the rotation of   -->
+              <!-- the target.                                              -->
+              <btn:SimpleButton Command="[LeftCommand]"
+                                LayoutInput="[Left]"/>
+              <btn:SimpleButton Command="[RightCommand]"
+                                LayoutInput="[Right]"/>
+              <btn:SimpleButton Command="[TopCommand]"
+                                LayoutInput="[Top]"/>
+              <btn:SimpleButton Command="[BottomCommand]"
+                                LayoutInput="[Bottom]"/>
+
+              <!-- The target of the animation... -->
+              <Graphic Name="Arrow"
+                       Content="file://FourBoxGraphic.png"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
+                <LayoutInput>
+                  <DockLayoutInput Position="Client"/>
+                </LayoutInput>
+                <Animations>
+
+                  <!-- This animation will happen whenever a "Rotate" event -->
+                  <!-- happens (when our rotation changes).                 -->
+                  <Animation Type="Rotate"
+                             CenterPointPercent="0.5, 0.5, 1.0">
+                    <Keyframes>
+
+                      <!-- Start the position at "Current", which is -->
+                      <!-- wherever it was left last.                -->
+                      <RotateKeyframe Time="0.00"
+                                      Value="0deg;0,0,1"
+                                      RelativeTo="Current"
+                                      Interpolation="Log"/>
+
+                      <!-- End the position at "Final", which is where       -->
+                      <!-- layout designated as the rotation we should have. -->
+                      <RotateKeyframe Time="0.50"
+                                      Value="0deg;0,0,1"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+              </Graphic>
+
+            </Children>
+          </ColorFill>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

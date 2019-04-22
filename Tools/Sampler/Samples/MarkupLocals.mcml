@@ -1,0 +1,64 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- A UI can define local variables that can be used directly by the UI -->
+  <!-- or passed down to child UIs. A local variable can be any type (MCML -->
+  <!-- or a user-defined type). The only requirement for locals is that    -->
+  <!-- they must be able to be instantiated via a default constructor.     -->
+
+  <UI Name="Locals">
+
+    <!-- The Locals tag is used to define local state. Unlike properties,   -->
+    <!-- new locals are created for every instance of the UI and they       -->
+    <!-- can be changed by the UI at runtime.                               -->
+    <Locals>
+
+      <!-- Locals to hold the current Second count and host a Timer. -->
+      <cor:Int32 Name="Seconds"
+                 Int32="0"/>
+      <Timer Name="Timer"
+             Interval="1000"
+             Enabled="true"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- Bind Seconds value to the text display. -->
+      <Binding Source="[Seconds.ToString]"
+               Target="[SecondsDisplay.Content]"/>
+
+      <!-- When the timer ticks, increment the local Seconds count. -->
+      <Changed Source="[Timer.Tick]">
+        <Actions>
+          <Set Target="[Seconds]"
+               Value="[Seconds]">
+            <Transformer>
+              <MathTransformer Add="1"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="VerticalFlow">
+        <Children>
+
+          <Text Content="UI and Locals"
+                Color="Red"/>
+
+          <!-- Display for the current second count. -->
+          <Text Name="SecondsDisplay"
+                Color="Yellow"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

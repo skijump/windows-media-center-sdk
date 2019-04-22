@@ -1,0 +1,78 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <cor:String Name="MediaPath"
+                  String="c:\users\public\music\Windows Media Center SDK\Audio01.mp3"/>
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+    </Locals>
+
+    <Rules>
+
+      <Rule>
+        <Actions>
+
+          <!--Play some content which should be considered to determine if we are the foreground application.-->
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Audio"
+                  media="[MediaPath]"
+                  addToQueue="false" />
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"/>
+          <Equality Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"
+                    Value="2"/>
+          <Equality Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="true"/>
+        </Conditions>
+        <Actions>
+          <!--Set the Url so we return to a particular web location when the Now Playing PIP is selected by the user.-->
+          <Set Target="[AddInHost.MediaCenterEnvironment.MediaExperience.UrlType]"
+               Value="mcml"
+               InvokePolicy="Synchronous" />
+          <Set Target="[AddInHost.MediaCenterEnvironment.MediaExperience.Url]"
+               Value="http://retrosight.com/samples/windowsmediacentersdk/6/WebRelativePaths.mcml"
+               InvokePolicy="Synchronous" />
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Panel>
+            <Layout>
+              <FlowLayout AllowWrap="true"
+                          Spacing="5,5"
+                          Orientation="Vertical"/>
+            </Layout>
+            <Children>
+              <Text Name="Label"
+                    Color="White"
+                    Content="MediaCenter.MediaCenterEnvironment.MediaExperience.Url Sample" />
+              <NowPlaying />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

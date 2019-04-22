@@ -1,0 +1,37 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:a="assembly://$projectname$/$safeprojectname$"
+      xmlns:c="resx://$projectname$/$safeprojectname$.Resources/Controls">
+
+  <UI Name="RepeatItem">
+    
+    <Properties>
+      <a:Application Name="Application"
+                     Application="$Required"/>
+      <cor:String Name="Text"
+                  String="$Required"/>
+    </Properties>
+
+    <Locals>
+      <Command Name="MyCommand"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[MyCommand.Description]"
+               Source="[Text]"/>
+      <Changed Source="[MyCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[Application.DialogTest]"
+                  strClickedText="[Text]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <c:Button Name="Button"
+                Model="[MyCommand]" />
+    </Content>
+
+  </UI>
+
+</Mcml>

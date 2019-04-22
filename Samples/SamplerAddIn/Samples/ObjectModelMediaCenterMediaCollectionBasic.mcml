@@ -1,0 +1,314 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls"
+      xmlns:a="assembly://Sampler/Sampler">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+
+      <mc:MediaCollection Name="TestCollection"/>
+      <mc:MediaCollection Name="SecondaryCollection"/>
+
+      <EditableText Name="AddIndex"
+                    Value="0"/>
+      <EditableText Name="RandomUri"
+                    Value="[Sampler.LocalContentVideo01]"/>
+      <EditableText Name="Tag"
+                    Value="This is my tag."/>
+      <EditableText Name="PlaybackFlags"
+                    Value="-1"/>
+      <EditableText Name="ContinueOnError"
+                    Value="true"/>
+      <EditableText Name="Start"
+                    Value="00:00:30"/>
+      <EditableText Name="End"
+                    Value="00:00:45"/>
+
+      <PropertySet Name="FriendlyData">
+        <Entries>
+          <cor:String Name="Title"
+                      String="Friendly Title!"/>
+          <cor:DateTime Name="CreationTime"
+                        DateTime="11/2/1968"/>
+          <cor:TimeSpan Name="Duration"
+                        TimeSpan="1:1:1"/>
+        </Entries>
+      </PropertySet>
+
+      <cor:Object Name="CurrentItem"/>
+    </Locals>
+
+    <Rules>
+
+      <Binding Target="[PlayRate.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate.ToString]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[PlayState.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState.ToString]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[Position.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position.ToString]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[BufferingProgress.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.BufferingProgress.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.BufferingProgress.ToString]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[Count.PropertyValue]"
+               Source="[TestCollection.Count.ToString]"/>
+      <Binding Target="[Index.PropertyValue]"
+               Source="[TestCollection.CurrentIndex.ToString]"/>
+      <Binding Target="[IsActive.PropertyValue]"
+               Source="[TestCollection.IsActive.ToString]"/>
+      <Binding Target="[OnError.PropertyValue]"
+               Source="[TestCollection.ContinueOnError.ToString]"/>
+      <Binding Target="[SecondaryIndex.PropertyValue]"
+               Source="[SecondaryCollection.CurrentIndex.ToString]"/>
+
+      <Binding Target="[TagField.PropertyValue]"
+               Source="[CurrentItem!mc:MediaCollectionItem.Tag.ToString]">
+        <Conditions>
+          <IsValid Source="[CurrentItem!mc:MediaCollectionItem.Tag]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[Uri.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Uri.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Uri.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Rule>
+        <Actions>
+          <Set Target="[TestCollection.ContinueOnError]"
+               Value="True"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Form">
+        <Children>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+
+              <ctrl:Editbox EditableText="[AddIndex]"
+                            LabelName="Index" />
+
+              <ctrl:Editbox EditableText="[PlaybackFlags]"
+                            LabelName="Playback Flags" />
+
+              <ctrl:Editbox EditableText="[Tag]"
+                            LabelName="Tag" />
+
+              <ctrl:Editbox EditableText="[RandomUri]"
+                            LabelName="Uri" />
+
+              <ctrl:Editbox EditableText="[ContinueOnError]"
+                            LabelName="Continue On Error" />
+
+              <ctrl:Editbox EditableText="[Start]"
+                            LabelName="Start" />
+
+              <ctrl:Editbox EditableText="[End]"
+                            LabelName="End" />
+
+              <ctrl:Button ButtonLabel="Play Collection">
+                <Command>
+                  <InvokeCommand Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                                 mediaType="MediaCollection"
+                                 media="[TestCollection]"
+                                 addToQueue="false"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="Play Secondary Collection">
+                <Command>
+                  <InvokeCommand Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                                 mediaType="MediaCollection"
+                                 media="[SecondaryCollection]"
+                                 addToQueue="false"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="Clear Collection">
+                <Command>
+                  <InvokeCommand Target="[TestCollection.Clear]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="AddItem(media)">
+                <Command>
+                  <InvokeCommand Target="[TestCollection.AddItem]"
+                                 media="[RandomUri.Value!cor:String]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="AddItem(m,index)">
+                <Command>
+                  <InvokeCommand Target="[TestCollection.AddItem]"
+                                 media="[RandomUri.Value!cor:String]"
+                                 index="[AddIndex.Value!cor:Int32]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="AddItem(m,i,playbackflags)">
+                <Command>
+                  <InvokeCommand Target="[TestCollection.AddItem]"
+                                 media="[RandomUri.Value!cor:String]"
+                                 index="[AddIndex.Value!cor:Int32]"
+                                 playbackFlags="[PlaybackFlags.Value!cor:Int32]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="AddItem(m,i,p,tag)">
+                <Command>
+                  <InvokeCommand Target="[TestCollection.AddItem]"
+                                 media="[RandomUri.Value!cor:String]"
+                                 index="[AddIndex.Value!cor:Int32]"
+                                 playbackFlags="[PlaybackFlags.Value!cor:Int32]"
+                                 tag="[Tag.Value!cor:String]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="AddItem(m,i,p,t,friendlydata)">
+                <Command>
+                  <InvokeCommand Target="[TestCollection.AddItem]"
+                                 media="[RandomUri.Value!cor:String]"
+                                 index="[AddIndex.Value!cor:Int32]"
+                                 playbackFlags="[PlaybackFlags.Value!cor:Int32]"
+                                 tag="[Tag.Value!cor:String]"
+                                 friendlyData="[FriendlyData]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="AddItem(m,i,p,t,f,start,end">
+                <Command>
+                  <InvokeCommand Target="[TestCollection.AddItem]"
+                                 media="[RandomUri.Value!cor:String]"
+                                 index="[AddIndex.Value!cor:Int32]"
+                                 playbackFlags="[PlaybackFlags.Value!cor:Int32]"
+                                 tag="[Tag.Value!cor:String]"
+                                 friendlyData="[FriendlyData]"
+                                 start="[Start.Value!cor:TimeSpan]"
+                                 end="[End.Value!cor:TimeSpan]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="RemoveAtIndex">
+                <Command>
+                  <InvokeCommand Target="[TestCollection.RemoveAt]"
+                                 index="[AddIndex.Value!cor:Int32]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="Get Tag">
+                <Command>
+                  <InvokeCommand ResultTarget="[CurrentItem]"
+                                 Target="[TestCollection!coll:IList.get_Item]"
+                                 index="[TestCollection.CurrentIndex]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="Retrieve Collection">
+                <Command>
+                  <InvokeCommand Target="[AddInHost.MediaCenterEnvironment.MediaExperience.GetMediaCollection]"
+                                 destination="[SecondaryCollection]"/>
+                </Command>
+              </ctrl:Button>
+
+              <ctrl:Button ButtonLabel="Duplicate Collection">
+                <Command>
+                  <InvokeCommand Target="[AddInHost.MediaCenterEnvironment.MediaExperience.GetMediaCollection]"
+                                 destination="[TestCollection]"/>
+                </Command>
+              </ctrl:Button>
+
+            </Children>
+          </Panel>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.5"
+                               Right="Parent,1"
+                               Vertical="Center" />
+            </LayoutInput>
+            <Children>
+              <Video MinimumSize="400,300"
+                     Visible="true" />
+              <ctrl:PropertyAndValue Name="PlayRate"
+                                     PropertyName="PlayRate"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="PlayState"
+                                     PropertyName="PlayState"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="Position"
+                                     PropertyName="Position"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="Uri"
+                                     PropertyName="Uri"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="BufferingProgress"
+                                     PropertyName="BufferingProgress"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="TagField"
+                                     PropertyName="TagField"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="Count"
+                                     PropertyName="Count"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="Index"
+                                     PropertyName="Index"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="IsActive"
+                                     PropertyName="IsActive"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="OnError"
+                                     PropertyName="OnError"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="SecondaryIndex"
+                                     PropertyName="SecondaryIndex"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

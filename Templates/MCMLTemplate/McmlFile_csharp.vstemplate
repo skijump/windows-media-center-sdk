@@ -1,0 +1,13 @@
+<VSTemplate Version="2.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>MCML File</Name>
+    <Description>Media Center Markup Language File 6.0</Description>
+    <Icon>McmlFile.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>1</SortOrder>
+    <DefaultName>McmlFile.mcml</DefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$fileinputname$.mcml">McmlFile.mcml</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

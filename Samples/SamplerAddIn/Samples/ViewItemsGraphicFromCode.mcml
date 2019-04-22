@@ -1,0 +1,63 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:fn="assembly://Sampler,Version=7.0.2009.0228,Culture=Neutral,PublicKeyToken=27f898ecd1eb808a/Sampler.CodeData.Images">
+
+  <UI Name="Default">
+
+    <Locals>
+      <fn:Images Name="Images"/>
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[Images.SetImages]" />
+        </Actions>
+      </Rule>
+      <Binding Source="[Images.ImageFromStreamPng]"
+               Target="[MyStreamPngGraphic.Content]">
+        <Conditions>
+          <IsValid Source="[Images.ImageFromStreamPng]"/>
+        </Conditions>
+      </Binding>
+      <Binding Source="[Images.ImageFromStreamJpg]"
+               Target="[MyStreamJpgGraphic.Content]">
+        <Conditions>
+          <IsValid Source="[Images.ImageFromStreamJpg]"/>
+        </Conditions>
+      </Binding>
+      <Binding Source="[Images.ImageFromSystemImagePng]"
+               Target="[MySystemImagePngGraphic.Content]">
+        <Conditions>
+          <IsValid Source="[Images.ImageFromSystemImagePng]"/>
+        </Conditions>
+      </Binding>
+      <Binding Source="[Images.ImageFromSystemImageJpg]"
+               Target="[MySystemImageJpgGraphic.Content]">
+        <Conditions>
+          <IsValid Source="[Images.ImageFromSystemImageJpg]"/>
+        </Conditions>
+      </Binding>
+    </Rules>
+
+    <Content>
+      <Panel Layout="HorizontalFlow">
+        <Children>
+          <Graphic Name="MyStreamPngGraphic"
+                   MaintainAspectRatio="true"
+                   MaximumSize="200,200"/>
+          <Graphic Name="MyStreamJpgGraphic"
+                   MaintainAspectRatio="true"
+                   MaximumSize="200,200"/>
+          <Graphic Name="MySystemImagePngGraphic"
+                   MaintainAspectRatio="true"
+                   MaximumSize="200,200"/>
+          <Graphic Name="MySystemImageJpgGraphic"
+                   MaintainAspectRatio="true"
+                   MaximumSize="200,200"/>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

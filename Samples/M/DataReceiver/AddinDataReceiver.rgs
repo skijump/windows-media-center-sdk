@@ -1,0 +1,25 @@
+HKCR
+{
+	DataReceiver.AddinDataReceiver.1 = s 'AddinDataReceiver Class'
+	{
+		CLSID = s '{F9EE33E9-BB5E-4D54-94D8-48EF630984B4}'
+	}
+	DataReceiver.AddinDataReceiver = s 'AddinDataReceiver Class'
+	{
+		CLSID = s '{F9EE33E9-BB5E-4D54-94D8-48EF630984B4}'
+		CurVer = s 'DataReceiver.AddinDataReceiver.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {F9EE33E9-BB5E-4D54-94D8-48EF630984B4} = s 'AddinDataReceiver Class'
+		{
+			ProgID = s 'DataReceiver.AddinDataReceiver.1'
+			VersionIndependentProgID = s 'DataReceiver.AddinDataReceiver'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{90AC705B-72CD-4CFB-9B70-A5060583C312}'
+		}
+	}
+}

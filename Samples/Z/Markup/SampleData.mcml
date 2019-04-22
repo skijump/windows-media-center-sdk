@@ -1,0 +1,165 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:me="Me">
+
+  <!-- Sample application object -->
+  <z:Application Name="SampleApplication"/>
+
+  <!-- Sample data for a GalleryPage object -->
+  <z:GalleryPage Name="SampleGalleryPage.Movies"
+                 Description="Movies:all">
+    <Filters>
+      <Choice>
+        <Options>
+          <z:DownloadFilter Description="featured"/>
+          <z:DownloadFilter Description="all"/>
+          <z:DownloadFilter Description="action"/>
+          <z:DownloadFilter Description="comedy"/>
+          <z:DownloadFilter Description="documentary"/>
+          <z:DownloadFilter Description="romance"/>
+        </Options>
+      </Choice>
+    </Filters>
+    <Content>
+      <z:ThumbnailCommand Description="Batman Begins"/>
+      <z:ThumbnailCommand Description="Blow"/>
+      <z:ThumbnailCommand Description="Charlie and the Chocolate Factory"/>
+      <z:ThumbnailCommand Description="The Da Vinci Code"/>
+      <z:ThumbnailCommand Description="Fear and Loathing in Las Vegas"/>
+      <z:ThumbnailCommand Description="Fight Club"/>
+      <z:ThumbnailCommand Description="Casino Royale"/>
+      <z:ThumbnailCommand Description="This is Spinal Tap"/>
+      <z:ThumbnailCommand Description="Serenity"/>
+      <z:ThumbnailCommand Description="Snakes on a Plane"/>
+      <z:ThumbnailCommand Description="Blah 1"/>
+      <z:ThumbnailCommand Description="Blah 2"/>
+      <z:ThumbnailCommand Description="Blah 3"/>
+      <z:ThumbnailCommand Description="Blah 4"/>
+      <z:ThumbnailCommand Description="Blah 5"/>
+    </Content>
+  </z:GalleryPage>
+
+  <!-- Sample data for a MainMenu object -->
+  <ArrayListDataSet Name="SampleMainMenu">
+    <Source>
+      <z:MenuCategory Title="Movies"
+                      SubTitle="view all 89 movies">
+        <Items>
+
+          <z:ThumbnailCommand Description="Curious George"/>
+          <z:ThumbnailCommand Description="Harry Potter and the Goblet of Fire"/>
+          <z:ThumbnailCommand Description="Amelie"/>
+
+        </Items>
+      </z:MenuCategory>
+      <z:MenuCategory Title="TV"
+                      SubTitle="something something">
+        <Items>
+
+          <z:ThumbnailCommand Description="Lost"/>
+          <z:ThumbnailCommand Description="Desparate Housewives"/>
+          <z:ThumbnailCommand Description="Night Stalker"/>
+
+        </Items>
+      </z:MenuCategory>
+      <z:MenuCategory Title="Music"
+                      SubTitle="something something">
+        <Items>
+
+          <z:ThumbnailCommand Description="Album 1"/>
+          <z:ThumbnailCommand Description="Album 2"/>
+          <z:ThumbnailCommand Description="Album 3"/>
+
+        </Items>
+      </z:MenuCategory>
+    </Source>
+  </ArrayListDataSet>
+
+  <!-- Sample data for a DetailsPage object -->
+  <z:DetailsPage Name="SampleDetailsPage.Movie"
+                 Title="Casino Royale"
+                 Summary="The very first outing of James &quot;Agent 007&quot; Bond, as he infiltrates a high stakes casino housing a banker that funds a who's who of terrorist organizations."
+                 Metadata="drama/mystery&#10;cast: Tom Hanks, Audrey Tatou&#10;123 min, USA, 2006">
+    <Commands>
+      <Command Description="preview"/>
+      <Command Description="purchase"/>
+      <Command Description="related"/>
+    </Commands>
+  </z:DetailsPage>
+
+  <!-- Sample data for a Downloads page object -->
+  <z:DownloadsPage Name="SampleDownloadsPage"
+                   Description="Downloads">
+    <Filters>
+      <Choice>
+        <Options>
+          <z:DownloadFilter Description="All">
+            <Content>
+              <ArrayListDataSet>
+                <Source>
+                  <z:SearchResult Type="Movie"
+                                  Description="A Scanner Darkly"
+                                  Metadata1="sci-fi/drama&#10;cast: Keanu Reeves, Winoda Ryder"
+                                  Metadata2="123 min, USA, 2006"/>
+                  <z:SearchResult Type="Music"
+                                  Description="Fisherspooner - Odyssey"
+                                  Metadata1="alternative/electronica&#10;Warner, 2005"
+                                  Metadata2="12 tracks, 62 min"
+                                  DownloadProgress="0.5"/>
+                  <z:SearchResult Type="Movie"
+                                  Description="Harry Potter and the Goblet of Fire"
+                                  DownloadProgress="0.05"/>
+                  <z:SearchResult Type="Movie"
+                                  Description="Amelie"
+                                  DownloadProgress="0.75"/>
+                  <z:SearchResult Type="Episode"
+                                  Description="Lost"/>
+                  <z:SearchResult Type="Episode"
+                                  Description="Desparate Housewives"
+                                  DownloadProgress="0.05"/>
+                  <z:SearchResult Type="Episode"
+                                  Description="Night Stalker"
+                                  DownloadProgress="0.75"/>
+                </Source>
+              </ArrayListDataSet>
+            </Content>
+          </z:DownloadFilter>
+        </Options>
+      </Choice>
+    </Filters>
+  </z:DownloadsPage>
+
+  <!-- Sample data for a Search page object -->
+  <z:SearchPage Name="SampleSearchPage"
+                Description="Search">
+    <Filters>
+      <BooleanChoice Description="Movies"
+                     Value="true"/>
+      <BooleanChoice Description="TV"
+                     Value="false"/>
+      <BooleanChoice Description="Music"
+                     Value="true"/>
+    </Filters>
+    <Content>
+      <z:SearchResult Type="Movie"
+                      Description="A Scanner Darkly"
+                      Metadata1="sci-fi/drama&#10;cast: Keanu Reeves, Winoda Ryder"
+                      Metadata2="123 min, USA, 2006"/>
+      <z:SearchResult Type="Music"
+                      Description="Fisherspooner - Odyssey"
+                      Metadata1="alternative/electronica&#10;Warner, 2005"
+                      Metadata2="12 tracks, 62 min"/>
+      <z:SearchResult Type="Movie"
+                      Description="Harry Potter and the Goblet of Fire"/>
+      <z:SearchResult Type="Movie"
+                      Description="Amelie"/>
+      <z:SearchResult Type="Episode"
+                      Description="Lost"/>
+      <z:SearchResult Type="Episode"
+                      Description="Desparate Housewives"/>
+      <z:SearchResult Type="Episode"
+                      Description="Night Stalker"/>
+    </Content>
+  </z:SearchPage>
+
+</Mcml>

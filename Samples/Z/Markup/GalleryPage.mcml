@@ -1,0 +1,179 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:z="assembly://Z/Z"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:content="resx://Z/Z.Resources/ContentList"
+      xmlns:core="resx://Z/Z.Resources/CoreControls"
+      xmlns:me="Me">
+
+  <!-- A gallery page -->
+  <UI Name="GalleryPage">
+    <Properties>
+      <z:GalleryPage Name="Page"
+                     GalleryPage="$Required"/>
+      <z:Application Name="Application"
+                     Application="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- An object to track which item in the list currently has focus. -->
+      <IntRangedValue Name="FocusedIndex"/>
+    </Locals>
+
+    <Rules>
+      <!-- Large thumbnail mode -->
+      <Condition Source="[Page.ItemSize]"
+                 SourceValue="Large"
+                 Target="[Gallery.Margins]"
+                 Value="0,25,0,0"/>
+
+      <!-- When the filter changes, move focus into the gallery. -->
+      <Changed Source="[Page.Filters.Chosen]">
+        <Actions>
+          <Invoke Target="[Gallery.NavigateInto]"
+                  InvokePolicy="AsynchronousLowPri"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <core:Header Name="Header"
+                       Application="[Application]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Top="Parent,0,40"/>
+            </LayoutInput>
+          </core:Header>
+
+          <core:Footer Name="Footer"
+                       Application="[Application]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,105"
+                                 Bottom="Parent,1,-40"/>
+            </LayoutInput>
+          </core:Footer>
+
+          <Panel Layout="Anchor">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,40"
+                                 Right="Parent,1,-40"
+                                 Horizontal="Fill"
+                                 Top="Parent,0,120"
+                                 Bottom="Parent,1,-120"
+                                 Vertical="Fill"/>
+            </LayoutInput>
+            <Children>
+
+              <Panel Name="Content"
+                     Layout="VerticalFlow"
+                     Margins="65,30,65,35">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0"
+                                     Right="Parent,1"
+                                     Horizontal="Near"/>
+                </LayoutInput>
+                <Children>
+
+                  <!-- Title -->
+                  <Text Color="color://styles:Text.Copy"
+                        Content="[Page.Description]"
+                        Font="font://styles:SectionTitle"/>
+
+                  <!-- Filters -->
+                  <content:FilterList Page="[Page]"
+                                      Margins="0,-4,100,0"
+                                      MinimumSize="0,32"/>
+
+                  <!-- Gallery -->
+                  <me:GalleryList Name="Gallery"
+                                  Page="[Page]"
+                                  FocusedIndex="[FocusedIndex]"
+                                  FocusOrder="0"
+                                  Margins="0,10,0,0"/>
+
+                </Children>
+              </Panel>
+
+              <!-- Item counter -->
+              <content:ItemCounter Page="[Page]"
+                                   FocusedIndex="[FocusedIndex]">
+                <LayoutInput>
+                  <AnchorLayoutInput Top="Content,0,48"
+                                     Right="Parent,1,-65"/>
+                </LayoutInput>
+              </content:ItemCounter>
+
+              <!-- Container graphic -->
+              <Graphic Content="image://styles:ContainerImage"
+                       Alpha="0.5"
+                       SizingPolicy="SizeToConstraint"/>
+
+            </Children>
+          </Panel>
+
+          <core:Background/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+
+  <!-- The scrolling area of a gallery page -->
+  <UI Name="GalleryList"
+      BaseUI="content:ContentList">
+    <Properties>
+      <z:GalleryPage Name="Page"
+                     GalleryPage="$Required"/>
+      <Orientation Name="ScrollOrientation"
+                   Orientation="Horizontal"/>
+      <GridLayout Name="GridLayout"
+                  Orientation="Vertical"
+                  Rows="2"
+                  Spacing="1,0"
+                  AllowWrap="true"/>
+    </Properties>
+
+    <Locals>
+      <Size Name="ItemSize"/>
+    </Locals>
+
+    <Rules>
+      <!-- Large thumbnail mode -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Page.ItemSize]"
+                    Value="Large"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ItemSize]"
+               Value="171,240"/>
+          <Set Target="[GridLayout.Orientation]"
+               Value="Horizontal"/>
+          <Set Target="[GridLayout.Rows]"
+               Value="0"/>
+        </Actions>
+      </Rule>
+      <!-- Small thumbnail mode -->
+      <Default Target="[GridLayout.Orientation]"
+               Value="Vertical"/>
+      <Default Target="[GridLayout.Rows]"
+               Value="2"/>
+      <Default Target="[ItemSize]"
+               Value="210,120"/>
+    </Rules>
+
+    <Content Name="Item">
+
+      <content:ThumbnailButton Model="[RepeatedItem!z:ThumbnailCommand]"
+                               Index="[RepeatedItemIndex]"
+                               FocusedIndex="[FocusedIndex]"
+                               TileSize="[ItemSize]"/>
+
+    </Content>
+  </UI>
+
+</Mcml>

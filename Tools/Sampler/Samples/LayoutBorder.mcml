@@ -1,0 +1,102 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Dock layout is used to layout out children in a docking manner.    -->
+  <!-- By default, dock layout is a "size-to-constraint" layout, meaning  -->
+  <!-- it will use the entire size given to it and arrange children       -->
+  <!-- within that space.                                                 -->
+
+  <!-- DockLayoutInput layout inputs are expected to be present on each   -->
+  <!-- child. This layout input is used to inform the dock layout where   -->
+  <!-- it wants to be placed.                                             -->
+
+  <!-- Dock layout supports positioning children using Top, Bottom, Left  -->
+  <!-- and Right parameters. It does so in a subtractive way. After the   -->
+  <!-- first child has been positioned, any remaining space is available  -->
+  <!-- to the next child and so on.                                       -->
+
+  <!-- Dock layout also supports aligning children within the space       -->
+  <!-- allocated for them. Available alignment options are Near, Center,  -->
+  <!-- Far, and Fill.                                                     -->
+
+  <!-- This example shows children within a parent dock layout.           -->
+
+  <UI Name="Dock">
+
+    <Content>
+
+      <ColorFill Content="White"
+                 Layout="Dock">
+        <Children>
+
+          <me:LayoutItem Display="Pos=Top, Align=Near"
+                         MinimumSize="550,10">
+            <LayoutInput>
+              <DockLayoutInput Position="Top"/>
+            </LayoutInput>
+          </me:LayoutItem>
+
+          <me:LayoutItem Display="Pos=Left, Align=Near"
+                         MinimumSize="10,550">
+            <LayoutInput>
+              <DockLayoutInput Position="Left"/>
+            </LayoutInput>
+          </me:LayoutItem>
+
+          <me:LayoutItem Display="Pos=Client, Align=Center"
+                         MinimumSize="300,300">
+            <LayoutInput>
+              <DockLayoutInput Position="Client"
+                               Alignment="Center"/>
+            </LayoutInput>
+          </me:LayoutItem>
+
+          <me:LayoutItem Display="Pos=Bottom, Align=Far"
+                         MinimumSize="550,10">
+            <LayoutInput>
+              <DockLayoutInput Position="Bottom"
+                               Alignment="Far"/>
+            </LayoutInput>
+          </me:LayoutItem>
+
+          <me:LayoutItem Display="Pos=Right, Align=Far"
+                         MinimumSize="10,550">
+            <LayoutInput>
+              <DockLayoutInput Position="Right"
+                               Alignment="Far"/>
+            </LayoutInput>
+          </me:LayoutItem>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <!-- UI that displays an image with some text. The image content -->
+  <!-- fills to the size of the Graphic.                           -->
+  <UI Name="LayoutItem">
+
+    <Properties>
+      <cor:String Name="Display"
+                  String="null"/>
+    </Properties>
+
+    <Content>
+      <Graphic Content="image://me:LayoutItemImage"
+               Padding="5,5,5,5">
+        <Children>
+          <Text Content="[Display]"
+                Color="White"
+                Font="Tahoma,12"
+                WordWrap="true"/>
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+  <Image Name="LayoutItemImage"
+         Source="resx://Sampler/Sampler.Resources/LayoutGraphic"
+         NineGrid="4,4,4,4"/>
+
+</Mcml>

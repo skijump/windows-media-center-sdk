@@ -1,0 +1,182 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <UI Name="Default">
+    <Content>
+      <ColorFill Content="Transparent">
+        <Layout>
+          <FlowLayout Orientation="Vertical" AllowWrap="true" />
+        </Layout>
+        <Children>
+          <me:ColorBlock BlockColor="AliceBlue" FriendlyName="AliceBlue"/>
+          <me:ColorBlock BlockColor="AntiqueWhite" FriendlyName="AntiqueWhite"/>
+          <me:ColorBlock BlockColor="Aqua" FriendlyName="Aqua"/>
+          <me:ColorBlock BlockColor="Aquamarine" FriendlyName="Aquamarine"/>
+          <me:ColorBlock BlockColor="Azure" FriendlyName="Azure"/>
+          <me:ColorBlock BlockColor="Beige" FriendlyName="Beige"/>
+          <me:ColorBlock BlockColor="Bisque" FriendlyName="Bisque"/>
+          <me:ColorBlock BlockColor="Black" FriendlyName="Black"/>
+          <me:ColorBlock BlockColor="BlanchedAlmond" FriendlyName="BlanchedAlmond"/>
+          <me:ColorBlock BlockColor="Blue" FriendlyName="Blue"/>
+          <me:ColorBlock BlockColor="BlueViolet" FriendlyName="BlueViolet"/>
+          <me:ColorBlock BlockColor="Brown" FriendlyName="Brown"/>
+          <me:ColorBlock BlockColor="BurlyWood" FriendlyName="BurlyWood"/>
+          <me:ColorBlock BlockColor="CadetBlue" FriendlyName="CadetBlue"/>
+          <me:ColorBlock BlockColor="Chartreuse" FriendlyName="Chartreuse"/>
+          <me:ColorBlock BlockColor="Chocolate" FriendlyName="Chocolate"/>
+          <me:ColorBlock BlockColor="Coral" FriendlyName="Coral"/>
+          <me:ColorBlock BlockColor="CornflowerBlue" FriendlyName="CornflowerBlue"/>
+          <me:ColorBlock BlockColor="Cornsilk" FriendlyName="Cornsilk"/>
+          <me:ColorBlock BlockColor="Crimson" FriendlyName="Crimson"/>
+          <me:ColorBlock BlockColor="Cyan" FriendlyName="Cyan"/>
+          <me:ColorBlock BlockColor="DarkBlue" FriendlyName="DarkBlue"/>
+          <me:ColorBlock BlockColor="DarkCyan" FriendlyName="DarkCyan"/>
+          <me:ColorBlock BlockColor="DarkGoldenrod" FriendlyName="DarkGoldenrod"/>
+          <me:ColorBlock BlockColor="DarkGray" FriendlyName="DarkGray"/>
+          <me:ColorBlock BlockColor="DarkGreen" FriendlyName="DarkGreen"/>
+          <me:ColorBlock BlockColor="DarkKhaki" FriendlyName="DarkKhaki"/>
+          <me:ColorBlock BlockColor="DarkMagenta" FriendlyName="DarkMagenta"/>
+          <me:ColorBlock BlockColor="DarkOliveGreen" FriendlyName="DarkOliveGreen"/>
+          <me:ColorBlock BlockColor="DarkOrange" FriendlyName="DarkOrange"/>
+          <me:ColorBlock BlockColor="DarkOrchid" FriendlyName="DarkOrchid"/>
+          <me:ColorBlock BlockColor="DarkRed" FriendlyName="DarkRed"/>
+          <me:ColorBlock BlockColor="DarkSalmon" FriendlyName="DarkSalmon"/>
+          <me:ColorBlock BlockColor="DarkSeaGreen" FriendlyName="DarkSeaGreen"/>
+          <me:ColorBlock BlockColor="DarkSlateBlue" FriendlyName="DarkSlateBlue"/>
+          <me:ColorBlock BlockColor="DarkSlateGray" FriendlyName="DarkSlateGray"/>
+          <me:ColorBlock BlockColor="DarkTurquoise" FriendlyName="DarkTurquoise"/>
+          <me:ColorBlock BlockColor="DarkViolet" FriendlyName="DarkViolet"/>
+          <me:ColorBlock BlockColor="DeepPink" FriendlyName="DeepPink"/>
+          <me:ColorBlock BlockColor="DeepSkyBlue" FriendlyName="DeepSkyBlue"/>
+          <me:ColorBlock BlockColor="DimGray" FriendlyName="DimGray"/>
+          <me:ColorBlock BlockColor="DodgerBlue" FriendlyName="DodgerBlue"/>
+          <me:ColorBlock BlockColor="Feldspar" FriendlyName="Feldspar"/>
+          <me:ColorBlock BlockColor="Firebrick" FriendlyName="Firebrick"/>
+          <me:ColorBlock BlockColor="FloralWhite" FriendlyName="FloralWhite" />
+          <me:ColorBlock BlockColor="ForestGreen" FriendlyName="ForestGreen"/>
+          <me:ColorBlock BlockColor="Fuchsia" FriendlyName="Fuchsia"/>
+          <me:ColorBlock BlockColor="Gainsboro" FriendlyName="Gainsboro"/>
+          <me:ColorBlock BlockColor="GhostWhite" FriendlyName="GhostWhite" />
+          <me:ColorBlock BlockColor="Gold" FriendlyName="Gold"/>
+          <me:ColorBlock BlockColor="Goldenrod" FriendlyName="Goldenrod"/>
+          <me:ColorBlock BlockColor="Gray" FriendlyName="Gray"/>
+          <me:ColorBlock BlockColor="Green" FriendlyName="Green"/>
+          <me:ColorBlock BlockColor="GreenYellow" FriendlyName="GreenYellow"/>
+          <me:ColorBlock BlockColor="Honeydew" FriendlyName="Honeydew"/>
+          <me:ColorBlock BlockColor="HotPink" FriendlyName="HotPink"/>
+          <me:ColorBlock BlockColor="IndianRed" FriendlyName="IndianRed"/>
+          <me:ColorBlock BlockColor="Indigo" FriendlyName="Indigo"/>
+          <me:ColorBlock BlockColor="Ivory" FriendlyName="Ivory"/>
+          <me:ColorBlock BlockColor="Khaki" FriendlyName="Khaki"/>
+          <me:ColorBlock BlockColor="Lavender" FriendlyName="Lavender"/>
+          <me:ColorBlock BlockColor="LavenderBlush" FriendlyName="LavenderBlush"/>
+          <me:ColorBlock BlockColor="LawnGreen" FriendlyName="LawnGreen"/>
+          <me:ColorBlock BlockColor="LemonChiffon" FriendlyName="LemonChiffon"/>
+          <me:ColorBlock BlockColor="LightBlue" FriendlyName="LightBlue"/>
+          <me:ColorBlock BlockColor="LightCoral" FriendlyName="LightCoral"/>
+          <me:ColorBlock BlockColor="LightCyan" FriendlyName="LightCyan"/>
+          <me:ColorBlock BlockColor="LightGoldenrodYellow" FriendlyName="LightGoldenrodYellow"/>
+          <me:ColorBlock BlockColor="LightGray" FriendlyName="LightGray"/>
+          <me:ColorBlock BlockColor="LightGreen" FriendlyName="LightGreen"/>
+          <me:ColorBlock BlockColor="LightPink" FriendlyName="LightPink"/>
+          <me:ColorBlock BlockColor="LightSalmon" FriendlyName="LightSalmon"/>
+          <me:ColorBlock BlockColor="LightSeaGreen" FriendlyName="LightSeaGreen"/>
+          <me:ColorBlock BlockColor="LightSkyBlue" FriendlyName="LightSkyBlue"/>
+          <me:ColorBlock BlockColor="LightSlateBlue" FriendlyName="LightSlateBlue"/>
+          <me:ColorBlock BlockColor="LightSlateGray" FriendlyName="LightSlateGray"/>
+          <me:ColorBlock BlockColor="LightSteelBlue" FriendlyName="LightSteelBlue"/>
+          <me:ColorBlock BlockColor="LightYellow" FriendlyName="LightYellow"/>
+          <me:ColorBlock BlockColor="Lime" FriendlyName="Lime"/>
+          <me:ColorBlock BlockColor="LimeGreen" FriendlyName="LimeGreen"/>
+          <me:ColorBlock BlockColor="Linen" FriendlyName="Linen"/>
+          <me:ColorBlock BlockColor="Magenta" FriendlyName="Magenta"/>
+          <me:ColorBlock BlockColor="Maroon" FriendlyName="Maroon"/>
+          <me:ColorBlock BlockColor="MediumAquamarine" FriendlyName="MediumAquamarine"/>
+          <me:ColorBlock BlockColor="MediumBlue" FriendlyName="MediumBlue"/>
+          <me:ColorBlock BlockColor="MediumOrchid" FriendlyName="MediumOrchid"/>
+          <me:ColorBlock BlockColor="MediumPurple" FriendlyName="MediumPurple"/>
+          <me:ColorBlock BlockColor="MediumSeaGreen" FriendlyName="MediumSeaGreen"/>
+          <me:ColorBlock BlockColor="MediumSlateBlue" FriendlyName="MediumSlateBlue"/>
+          <me:ColorBlock BlockColor="MediumSpringGreen" FriendlyName="MediumSpringGreen"/>
+          <me:ColorBlock BlockColor="MediumTurquoise" FriendlyName="MediumTurquoise"/>
+          <me:ColorBlock BlockColor="MediumVioletRed" FriendlyName="MediumVioletRed"/>
+          <me:ColorBlock BlockColor="MidnightBlue" FriendlyName="MidnightBlue"/>
+          <me:ColorBlock BlockColor="MintCream" FriendlyName="MintCream"/>
+          <me:ColorBlock BlockColor="MistyRose" FriendlyName="MistyRose"/>
+          <me:ColorBlock BlockColor="Moccasin" FriendlyName="Moccasin"/>
+          <me:ColorBlock BlockColor="NavajoWhite" FriendlyName="NavajoWhite"/>
+          <me:ColorBlock BlockColor="Navy" FriendlyName="Navy"/>
+          <me:ColorBlock BlockColor="OldLace" FriendlyName="OldLace"/>
+          <me:ColorBlock BlockColor="Olive" FriendlyName="Olive"/>
+          <me:ColorBlock BlockColor="OliveDrab" FriendlyName="OliveDrab"/>
+          <me:ColorBlock BlockColor="Orange" FriendlyName="Orange"/>
+          <me:ColorBlock BlockColor="OrangeRed" FriendlyName="OrangeRed"/>
+          <me:ColorBlock BlockColor="Orchid" FriendlyName="Orchid"/>
+          <me:ColorBlock BlockColor="PaleGoldenrod" FriendlyName="PaleGoldenrod"/>
+          <me:ColorBlock BlockColor="PaleGreen" FriendlyName="PaleGreen"/>
+          <me:ColorBlock BlockColor="PaleTurquoise" FriendlyName="PaleTurquoise"/>
+          <me:ColorBlock BlockColor="PaleVioletRed" FriendlyName="PaleVioletRed"/>
+          <me:ColorBlock BlockColor="PapayaWhip" FriendlyName="PapayaWhip"/>
+          <me:ColorBlock BlockColor="PeachPuff" FriendlyName="PeachPuff"/>
+          <me:ColorBlock BlockColor="Peru" FriendlyName="Peru"/>
+          <me:ColorBlock BlockColor="Pink" FriendlyName="Pink"/>
+          <me:ColorBlock BlockColor="Plum" FriendlyName="Plum"/>
+          <me:ColorBlock BlockColor="PowderBlue" FriendlyName="PowderBlue"/>
+          <me:ColorBlock BlockColor="Purple" FriendlyName="Purple"/>
+          <me:ColorBlock BlockColor="Red" FriendlyName="Red"/>
+          <me:ColorBlock BlockColor="RosyBrown" FriendlyName="RosyBrown"/>
+          <me:ColorBlock BlockColor="RoyalBlue" FriendlyName="RoyalBlue"/>
+          <me:ColorBlock BlockColor="SaddleBrown" FriendlyName="SaddleBrown"/>
+          <me:ColorBlock BlockColor="Salmon" FriendlyName="Salmon"/>
+          <me:ColorBlock BlockColor="SandyBrown" FriendlyName="SandyBrown"/>
+          <me:ColorBlock BlockColor="SeaGreen" FriendlyName="SeaGreen"/>
+          <me:ColorBlock BlockColor="SeaShell" FriendlyName="SeaShell"/>
+          <me:ColorBlock BlockColor="Sienna" FriendlyName="Sienna"/>
+          <me:ColorBlock BlockColor="Silver" FriendlyName="Silver"/>
+          <me:ColorBlock BlockColor="SkyBlue" FriendlyName="SkyBlue"/>
+          <me:ColorBlock BlockColor="SlateBlue" FriendlyName="SlateBlue"/>
+          <me:ColorBlock BlockColor="SlateGray" FriendlyName="SlateGray"/>
+          <me:ColorBlock BlockColor="Snow" FriendlyName="Snow"/>
+          <me:ColorBlock BlockColor="SpringGreen" FriendlyName="SpringGreen"/>
+          <me:ColorBlock BlockColor="SteelBlue" FriendlyName="SteelBlue"/>
+          <me:ColorBlock BlockColor="Tan" FriendlyName="Tan"/>
+          <me:ColorBlock BlockColor="Teal" FriendlyName="Teal"/>
+          <me:ColorBlock BlockColor="Thistle" FriendlyName="Thistle"/>
+          <me:ColorBlock BlockColor="Tomato" FriendlyName="Tomato"/>
+          <me:ColorBlock BlockColor="Transparent" FriendlyName="Transparent"/>
+          <me:ColorBlock BlockColor="Turquoise" FriendlyName="Turquoise"/>
+          <me:ColorBlock BlockColor="TVBlack" FriendlyName="TVBlack"/>
+          <me:ColorBlock BlockColor="TVWhite" FriendlyName="TVWhite"/>
+          <me:ColorBlock BlockColor="Violet" FriendlyName="Violet"/>
+          <me:ColorBlock BlockColor="VioletRed" FriendlyName="VioletRed"/>
+          <me:ColorBlock BlockColor="Wheat" FriendlyName="Wheat"/>
+          <me:ColorBlock BlockColor="WhiteSmoke" FriendlyName="WhiteSmoke"/>
+          <me:ColorBlock BlockColor="Yellow" FriendlyName="Yellow"/>
+          <me:ColorBlock BlockColor="YellowGreen" FriendlyName="YellowGreen"/>
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <UI Name="ColorBlock">
+    <Properties>
+      <Color Name="BlockColor" Color="White" />
+      <Color Name="TextColor" Color="White" />
+      <cor:String Name="FriendlyName" String="" />
+    </Properties>
+
+    <Content>
+      <Panel Layout="VerticalFlow" Padding="9,0,9,0">
+        <Children>
+          <Text Content="[FriendlyName]" Font="font://me:MyFont" Color="[TextColor]" />
+          <ColorFill Name="MyColorFill" Content="[BlockColor]" MinimumSize="125,15" MaximumSize="125,15" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <Font Name="MyFont"  Font="Calibri,10" />
+
+</Mcml>

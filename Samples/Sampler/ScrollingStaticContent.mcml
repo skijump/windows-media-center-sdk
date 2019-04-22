@@ -1,0 +1,158 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:me="Me">
+
+  <!-- Static content-based scrolling is useful for non-interactive        -->
+  <!-- content such as multiple pages of text or images. By default, a     -->
+  <!-- Scroller automatically keeps the current descendent with focus in   -->
+  <!-- view. Since non-focusable content (such as static text) can't       -->
+  <!-- receive focus, the scroller must be configured to respond to        -->
+  <!-- key-based input (page-up/page-down/home/end/etc.).                  -->
+
+  <!-- To enable scrolling with key support in this scenario, a few        -->
+  <!-- objects need to be created and hooked up to each other. Here are    -->
+  <!-- the main players:                                                   -->
+
+  <!-- ScrollingData:                                                      -->
+  <!-- The main point of synchronization of scrolling. It contains the     -->
+  <!-- current position of the scroll as well as multiple properties and   -->
+  <!-- methods used to change the current scroll position. The main        -->
+  <!-- scenario for calling these methods is when creating separate UI for -->
+  <!-- enabling the user to change the scroll position using buttons on    -->
+  <!-- the screen.                                                         -->
+
+  <!-- ScrollingHandler:                                                   -->
+  <!-- Handles user input (both mouse and keyboard) and is the main driver -->
+  <!-- of ScrollingData. It has a ScrollingData property that you must     -->
+  <!-- supply a ScrollingData instance. ScrollingHandler will react to     -->
+  <!-- user input and set properties and call methods on the ScrollingData -->
+  <!-- to change the current scroll position.                              -->
+  <!-- NOTE: ScrollingHandler must be configured with HandlerStage set as  -->
+  <!--       "Direct." This is because the Scroller needs to react         -->
+  <!--       directly to user input. By default, ScrollingHandler's        -->
+  <!--       HandlerStage is Direct.                                       -->
+
+  <!-- Scroller:                                                           -->
+  <!-- The ViewItem itself. It reacts to changes to the ScrollingData. Its -->
+  <!-- ScrollingData property must be set with the ScrollingData instance. -->
+
+  <!-- The following example shows how to scroll a large text block.       -->
+
+  <UI Name="NonFocusBasedScroller">
+
+    <Locals>
+      <!-- The ScrollingHandler which reacts to user keyboard input. -->
+      <!-- Turn on handing of arrow keys for scrolling (not on by    -->
+      <!-- default).                                                 -->
+      <!-- NOTE: HandlerStage must be "Direct" (which is default).   -->
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandleDirectionalKeys="true"/>
+
+      <!-- ScrollingData contains many ways to customize how scrolling -->
+      <!-- should behave. It has methods to change the current scroll  -->
+      <!-- position and it also reports the position. In this case,    -->
+      <!-- the default values are used for the sample.                 -->
+      <ScrollingData Name="ScrollingData"/>
+    </Locals>
+
+    <!-- This is where the scrolling objects get hooked up to each     -->
+    <!-- other. Default rules are a good place to do this since Rules  -->
+    <!-- get run after the rest of the UI is created and ready to go.  -->
+    <Rules>
+
+      <!-- Give ScrollingData to ScrollingHandler. -->
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+
+      <!-- Change background color when gaining focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true"
+                 Target="[Background.Content]"
+                 Value="LightGray"/>
+
+      <!-- Bind the current page from the scrolling data to our display. -->
+      <Binding Source="[ScrollingData.CurrentPage]"
+               Target="[CurrentPage.Content]">
+        <Transformer>
+          <FormatTransformer Format="Current page: {0:F0}"/>
+        </Transformer>
+      </Binding>
+
+      <!-- Bind the total page count from the scrolling data to our display. -->
+      <Binding Source="[ScrollingData.TotalPages]"
+               Target="[TotalPages.Content]">
+        <Transformer>
+          <FormatTransformer Format="Total pages: {0:F0}"/>
+        </Transformer>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="More about about MediaCenter and Xbox360:"
+                Font="Tahoma,30"
+                Color="Gold"
+                Margins="20,0,0,20"/>
+
+          <!-- Scroller's parent which displays background color. It offsets -->
+          <!-- the Scroller using padding and the Scroller fades the clipped -->
+          <!-- text outside itself (negative fade size).                     -->
+          <!-- This piece of the UI is MouseInteractive.                     -->
+          <ColorFill Name="Background"
+                     Content="Gray"
+                     MouseInteractive="true"
+                     Padding="30,30,30,30"
+                     MaximumSize="0,400"
+                     Margins="30,0,30,0">
+            <Children>
+
+              <!-- The Scroller. It referrs to the ScrollingData too. -->
+              <Scroller Orientation="Vertical"
+                        FadeSize="-30"
+                        ScrollingData="[ScrollingData]">
+                <Children>
+
+                  <Text Color="Black"
+                        Font="Tahoma,30"
+                        WordWrap="true"
+                        Content="Incidunt improbis defuturum tenetur inportuno suam confidet hominum aliquam fugit civium confidet noctesque harum factis diis mollitia legum umquam fugit. Sic utilitatibus supplicii animadversionis collegisti hoc. Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu. In nisl sumo principes eam. In vis modo essent persius. Id pro nisl veritus salutatus, sed natum nostrud aliquyam et, suscipit recteque duo ut pri. Apeirian verterem cu vim, tritani verterem sed id. Vero movet te nec, ea sed dicit quando prodesset, tota ponderum ne per! Est ad kasd ridens. Facer vocent disputando id quo, nemore scribentur eu has! Cim ut stet ludus inimicus, aliquid argumentum et sea. Unum oratio quo id! Ius kasd tantas. Eos ad utamur convenire, veritus mentitum facilisis cim no! Ex justo etiam vix, affert possit usu ne? Choro verear eu mel, ad veri soleat quo. Everti deterruisset ex sea, duo. Firmissima odioque neque nullo ruant. Voluptates tanta voluptate et oratio animadversionis illum evertitur tanta laudantium perspiciatis. Semper ut in quae nam eorum totum eveniet possint dubio factis nesciunt res quamvis voluptate quia itaque accessio indicaverunt improborum vestra nollem umquam. Perspiciatis quippiam eaque est laudem hominum. Segniorem accessio. Ipsam tamque inventore labore consecutus legum non quorum nam deleniti fugiat gravissimo ferae inmortalibus imperii minima poena emolumento magnam laudantium copulatas dignissimos eius commemorandis natus. Commemorandis fugiat sint. Sollicitant hanc metu rem.">
+
+                    <!-- Smooth scrolling. -->
+                    <Animations>
+                      <Animation Type="Move">
+                        <Keyframes>
+                          <PositionKeyframe Time="0"
+                                            Value="0,0,0"
+                                            RelativeTo="Current"
+                                            Interpolation="Exp"/>
+                          <PositionKeyframe Time=".1"
+                                            Value="0,0,0"/>
+                        </Keyframes>
+                      </Animation>
+                    </Animations>
+                  </Text>
+
+                </Children>
+              </Scroller>
+
+            </Children>
+          </ColorFill>
+
+          <!-- Display for current/total number of pages -->
+          <Text Name="CurrentPage"
+                Font="Tahoma,20"
+                Color="Gold"
+                Margins="20,20,0,0"/>
+          <Text Name="TotalPages"
+                Font="Tahoma,20"
+                Color="Gold"
+                Margins="20,0,0,0"/>
+
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+</Mcml>

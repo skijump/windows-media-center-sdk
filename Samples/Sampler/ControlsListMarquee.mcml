@@ -1,0 +1,157 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://mscorlib/System">
+
+  <UI Name="ListMarquee">
+    <Properties>
+      <!-- To make the animation look just right we need to know about how  -->
+      <!-- much space is available for the marquee.  Without this           -->
+      <!-- information we can't have the last part of the animation where   -->
+      <!-- it pauses on the final part of the string.                       -->
+      <cor:Single Name="AvailableSpace"
+                  Single="1024"/>
+    </Properties>
+
+    <Content>
+
+      <!-- This scroller will create an infinite horizontal constraint for  -->
+      <!-- our content to lay out in.  Otherwise our content would be       -->
+      <!-- clipped when it hit the edge of the screen.                      -->
+      <Scroller Orientation="Horizontal"
+                FadeSize="-20"
+                Margins="20,0,20,0" >
+        <Children>
+
+          <!-- This panel contains the marquee content container.  We will   -->
+          <!-- flow out its children and animate this Panel.                -->
+          <Panel>
+            <Layout>
+              <!-- We specify that we do not want to hide offscreen items.  -->
+              <!-- This is necessary as that our animation is not           -->
+              <!-- considered when the layout process decides what is       -->
+              <!-- visible and what is offscreen.  Without this we would    -->
+              <!-- only see the first page or so of content.  Note that for -->
+              <!-- performance reasons it is not recommended to use this    -->
+              <!-- setting in combination with large data sets.             -->
+              <FlowLayout Orientation="Horizontal"
+                          ItemAlignment="Center"
+                          Spacing="20,0"
+                          HideOffscreenItems="false"/>
+            </Layout>
+            <Animations>
+
+              <!-- Our animation will be a merger of a couple of different  -->
+              <!-- components.                                              -->
+              <MergeAnimation>
+                <Sources>
+
+                  <!-- This is the first part of the animation, where the   -->
+                  <!-- text is totally still.  We don't want to have this   -->
+                  <!-- part time shifted like the rest.                     -->
+                  <Animation>
+                    <Keyframes>
+                      <PositionKeyframe Time="0.0"/>
+                      <PositionKeyframe Time="0.5"/>
+
+                      <AlphaKeyframe Time="0.0"
+                                     Value="1.0"/>
+                    </Keyframes>
+                  </Animation>
+
+                  <!-- Take our position animation and delay it by some     -->
+                  <!-- fraction the text size.  This ensures that varying   -->
+                  <!-- text lengths have a similar scroll speed.            -->
+                  <TransformByAttributeAnimation Attribute="Width"
+                                                 Delay="0.0050">
+                    <ValueTransformer>
+                      <MathTransformer Subtract="[AvailableSpace]"/>
+                    </ValueTransformer>
+                    <Source>
+
+                      <!-- Take our unit-vector (0 to 1) position animation -->
+                      <!-- and magnify it by the width of our text content. -->
+                      <TransformByAttributeAnimation Attribute="Width"
+                                                     Magnitude="1.0"
+                                                     Filter="Position">
+                        <ValueTransformer>
+                          <MathTransformer Subtract="[AvailableSpace]"/>
+                        </ValueTransformer>
+                        <Source>
+
+                          <!-- The source animation is a position loop.     -->
+                          <!-- Note that it doesn't include the beginning   -->
+                          <!-- keyframes, because we don't want them time   -->
+                          <!-- shifted.                                     -->
+                          <Animation Type="Idle"
+                                     Loop="-1">
+                            <Keyframes>
+                              <PositionKeyframe Time="0.80"
+                                                Value="-1,0,0"/>
+                              <PositionKeyframe Time="1.70"
+                                                Value="-1,0,0"/>
+                              <PositionKeyframe Time="1.75"
+                                                Value="0,0,0"/>
+                              <PositionKeyframe Time="2.50"
+                                                Value="0,0,0"/>
+
+                              <AlphaKeyframe Time="1.00"
+                                             Value="1.0"/>
+                              <AlphaKeyframe Time="1.70"
+                                             Value="0.0"/>
+                              <AlphaKeyframe Time="1.75"
+                                             Value="0.0"/>
+                              <AlphaKeyframe Time="1.95"
+                                             Value="1.0"/>
+                              <AlphaKeyframe Time="2.50"
+                                             Value="1.0"/>
+                            </Keyframes>
+                          </Animation>
+
+                        </Source>
+                      </TransformByAttributeAnimation>
+
+                    </Source>
+                  </TransformByAttributeAnimation>
+
+                </Sources>
+              </MergeAnimation>
+
+            </Animations>
+
+            <!-- This is our actuall marquee-ing content. -->
+            <Children>
+
+              <Text Color="White"
+                    Font="Arial, 128"
+                    Content="Media"/>
+
+              <ColorFill MinimumSize="150,80"
+                         Content="Red"/>
+
+              <Text Color="White"
+                    Font="Arial, 128"
+                    Content="Center"/>
+
+              <ColorFill MinimumSize="150,80"
+                         Content="Green"/>
+
+              <Text Color="White"
+                    Font="Arial, 128"
+                    Content="Markup"/>
+
+              <ColorFill MinimumSize="150,80"
+                         Content="Blue"/>
+
+              <Text Color="White"
+                    Font="Arial, 128"
+                    Content="Language"/>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Scroller>
+
+    </Content>
+  </UI>
+
+</Mcml>

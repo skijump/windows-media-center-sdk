@@ -1,0 +1,182 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:b="resx://Sampler/Sampler.Resources/ControlsJellyButton">
+
+  <!-- Content Selectors are used by Repeaters to enable repeating of     -->
+  <!-- non-uniform visual content. If the Repeater has a source that      -->
+  <!-- contains non-homogeneous data items, content selectors can be used -->
+  <!-- to choose different visual sub-trees that match each individual    -->
+  <!-- data item.                                                         -->
+
+  <!-- Content selectors rely on named UI sub-Content to identify the     -->
+  <!-- selected content to use for the repeated item.                     -->
+
+  <!-- Available content selectors:                                       -->
+
+  <!-- TypeSelector:                                                      -->
+  <!-- Chooses content based on type of the data item. If the data item   -->
+  <!-- is the type or a subclass of the type specified, the specified     -->
+  <!-- Content block will be used for repeating of that item.             -->
+
+  <!-- ValueSelector:                                                     -->
+  <!-- Chooses content based on the result of an evaluated object path.   -->
+  <!-- Object paths can query values from properties, methods, or         -->
+  <!-- indexers. If the result of the query matches the supplied value,   -->
+  <!-- the selector's content is chosen. Any ValueSelector's object-path  -->
+  <!-- that is incompatible with the current data item (i.e. members      -->
+  <!-- within the path don't exist on the item's type), are ignored and   -->
+  <!-- considered a non-match.                                            -->
+
+  <!-- ValueSelectors work well with Windows Media Center Presentation    -->
+  <!-- Layer web applications which have no means of creating custom data -->
+  <!-- structures for the purpose of repeating custom data. PropertySets  -->
+  <!-- can be used for this need (the negative, of course, is the lack of -->
+  <!-- parse-time validation).                                            -->
+
+  <!-- This sample demonstrates the use of content selectors. A data list -->
+  <!-- is created with many different types of data. Using content        -->
+  <!-- selectors, the Repeater knows how to visualize every data item.    -->
+
+  <UI Name="ContentSelectors">
+
+    <!-- Create non-homogeneous list of objects to be repeated. -->
+    <Locals>
+      <ArrayListDataSet Name="TestData">
+        <Source>
+          <!-- String type. -->
+          <cor:String String="This is a string!"/>
+
+          <!-- Integer type. -->
+          <cor:Int32 Int32="1234"/>
+
+          <!-- "ContactData" virtual data type. -->
+          <PropertySet Description="ContactData">
+            <Entries>
+              <cor:String Name="Name"
+                          String="John Doe"/>
+              <cor:String Name="EMail"
+                          String="johndoe@contoso.com"/>
+            </Entries>
+          </PropertySet>
+
+          <!-- Command type. -->
+          <Command Description="This is a Command!"/>
+
+          <!-- Single type. -->
+          <cor:Single Single="3.14"/>
+
+          <!-- "AlbumInfo" virtual data type. -->
+          <PropertySet Description="AlbumInfo">
+            <Entries>
+              <Image Name="CoverArt"
+                     Image="resx://Sampler/Sampler.Resources/RepeaterContentSelectorsCD"/>
+              <cor:String Name="Title"
+                          String="CD Title"/>
+            </Entries>
+          </PropertySet>
+
+        </Source>
+      </ArrayListDataSet>
+    </Locals>
+
+    <Content>
+
+      <!-- The Repeater knows how to repeat out various types of   -->
+      <!-- data items. It also has a "catch-all" of type 'object'  -->
+      <!-- which will handle any data that can't be matched.       -->
+
+      <!-- Selector matching order is top-down. The first matching -->
+      <!-- selector wins.                                          -->
+      <Repeater Source="[TestData]">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+        <ContentSelectors>
+          <TypeSelector Type="cor:Int32"
+                        ContentName="IntegerItem"/>
+          <TypeSelector Type="Command"
+                        ContentName="CommandItem"/>
+          <TypeSelector Type="cor:String"
+                        ContentName="StringItem"/>
+          <ValueSelector Source="[RepeatedItem!PropertySet.Description]"
+                         Value="ContactData"
+                         ContentName="ContactDataItem"/>
+          <ValueSelector Source="[RepeatedItem!PropertySet.Description]"
+                         Value="AlbumInfo"
+                         ContentName="AlbumInfoItem"/>
+          <TypeSelector Type="cor:Object"
+                        ContentName="CatchAll"/>
+        </ContentSelectors>
+      </Repeater>
+
+    </Content>
+
+    <!-- Integer: Display the number in red. -->
+    <Content Name="IntegerItem">
+      <Text Color="Red"
+            Content="[RepeatedItem!cor:Int32.ToString]"/>
+    </Content>
+
+    <!-- String: Display the string in large yellow letters. -->
+    <Content Name="StringItem">
+      <Text Color="Yellow"
+            Content="[RepeatedItem.ToString]"
+            Font="Verdana,40"/>
+    </Content>
+
+    <!-- Command: Host a Button. -->
+    <Content Name="CommandItem">
+      <b:JellyButton Command="[RepeatedItem!Command]"/>
+    </Content>
+
+    <!-- Command: Display Contact Data. -->
+    <Content Name="ContactDataItem">
+      <ColorFill Content="LightSteelBlue"
+                 Padding="5,5,5,5">
+        <Children>
+          <Text Color="Coral"
+                Content="[RepeatedItem!PropertySet.#EMail.ToString]"
+                Margins="20,20,0,0"
+                Font="Tahoma,15"/>
+          <Text Color="Navy"
+                Content="[RepeatedItem!PropertySet.#Name.ToString]"/>
+        </Children>
+      </ColorFill>
+    </Content>
+
+    <!-- Command: Display Album Info. -->
+    <Content Name="AlbumInfoItem">
+      <ColorFill Content="SteelBlue">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Fill"/>
+        </Layout>
+        <Children>
+          <Panel>
+            <Layout>
+              <RotateLayout AngleDegrees="270"/>
+            </Layout>
+            <Children>
+              <Text Color="SteelBlue"
+                    BackColor="Silver"
+                    Font="Verdana,20"
+                    Content="[RepeatedItem!PropertySet.#Title.ToString]"
+                    HorizontalAlignment="Center"/>
+            </Children>
+          </Panel>
+          <Graphic Content="[RepeatedItem!PropertySet.#CoverArt!Image]"/>
+        </Children>
+      </ColorFill>
+    </Content>
+
+    <!-- Catch all: Simply call ToString on it. -->
+    <Content Name="CatchAll">
+      <Text Color="LightGray"
+            Content="[RepeatedItem.ToString]"
+            Font="Tahoma,10"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

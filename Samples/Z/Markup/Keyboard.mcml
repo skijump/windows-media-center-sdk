@@ -1,0 +1,572 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:sys="assembly://mscorlib/System"
+      xmlns:styles="resx://Z/Z.Resources/Styles"
+      xmlns:button="resx://Z/Z.Resources/Button"
+      xmlns:edit="resx://Z/Z.Resources/EditBox"
+      xmlns:keys="resx://Z/Z.Resources/KeyboardContents"
+      xmlns:me="Me">
+
+  <!-- A control for entering in letters and numbers to a text string. -->
+  <UI Name="Keyboard">
+    <Properties>
+      <!-- The text that we're currently editing. -->
+      <EditableText Name="Model"
+                    EditableText="$Required"/>
+
+      <!-- Is this a password field? -->
+      <sys:Boolean Name="Password"
+                   Boolean="false"/>
+
+      <!-- When the user selects "Done" should that also submit? -->
+      <sys:Boolean Name="SubmitWhenDone"
+                   Boolean="false"/>
+
+      <!-- A Choice of different modes.  Each mode is a PropertySet   -->
+      <!-- with lists of characters for the Primary and Secondary     -->
+      <!-- grids.                                                     -->
+      <Choice Name="KeyboardChoice"
+              Choice="global://keys:KeyboardData"/>
+
+      <!-- The event to fire when the user is done with the keybaord. -->
+      <Command Name="Exit"/>
+    </Properties>
+
+    <Locals>
+      <!-- We will apply all input to this EditableText.  This        -->
+      <!-- enables us to have a "Cancel" button by not applying all   -->
+      <!-- changes to the real model.                                 -->
+      <EditableText Name="ModelInProgress"
+                    Value="[Model.Value]"/>
+
+      <!-- Terminating commands -->
+      <Command Name="Cancel"
+               Description="resx://Z/Z.Resources/Shell_Keyboard_Cancel"/>
+      <Command Name="Done"
+               Description="resx://Z/Z.Resources/Shell_Keyboard_Done"/>
+
+      <!-- Shortcuts -->
+      <ShortcutHandler Name="PreviousMode"
+                       Shortcut="ChannelUp"
+                       HandlerStage="Routed"
+                       Handle="true"/>
+      <ShortcutHandler Name="NextMode"
+                       Shortcut="ChannelDown"
+                       HandlerStage="Routed"
+                       Handle="true"/>
+      <ShortcutHandler Name="DoneShortcut"
+                       Shortcut="Play"
+                       HandlerStage="Routed"
+                       Handle="true"/>
+    </Locals>
+
+    <Rules>
+      <!-- The user has accepted their changes -->
+      <Changed Source="[Done.Invoked]">
+        <Actions>
+          <Set Target="[Model.Value]"
+               Value="[ModelInProgress.Value]"/>
+          <Invoke Target="[Exit.Invoke]"/>
+        </Actions>
+      </Changed>
+
+      <!-- The user has accepted their changes - Submit -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[Done.Invoked]"/>
+          <Equality Source="[SubmitWhenDone]"
+                    Value="true"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Model.Submit]"/>
+        </Actions>
+      </Rule>
+
+      <!-- The user has rejected their changes -->
+      <Changed Source="[Cancel.Invoked]">
+        <Actions>
+          <Set Target="[ModelInProgress.Value]"
+               Value="[Model.Value]"/>
+          <Invoke Target="[Exit.Invoke]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Change modes -->
+      <Changed Source="[PreviousMode.Invoked]">
+        <Actions>
+          <Invoke Target="[KeyboardChoice.PreviousValue]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[NextMode.Invoked]">
+        <Actions>
+          <Invoke Target="[KeyboardChoice.NextValue]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Shortcuts for done -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Modified Source="[DoneShortcut.Invoked]"/>
+          <Modified Source="[ModelInProgress.Submitted]"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Done.Invoke]"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor"
+             Navigation="WrapAll">
+        <Children>
+
+          <!-- The keyboard -->
+          <me:KeyboardArea Name="Keyboard"
+                           KeyboardChoice="[KeyboardChoice]"
+                           Model="[ModelInProgress]"
+                           Cancel="[Cancel]"
+                           Done="[Done]"
+                           FocusOrder="1"/>
+
+          <!-- The input field -->
+          <edit:Editbox EditableText="[ModelInProgress]"
+                        PasswordMasked="[Password]"
+                        TileMaxSize="0,0"
+                        FocusOrder="0">
+            <LayoutInput>
+              <AnchorLayoutInput Bottom="Keyboard,0,-4"
+                                 Left="Keyboard,0,20"
+                                 Right="Keyboard,1,-20"/>
+            </LayoutInput>
+          </edit:Editbox>
+
+          <!-- Instructions on keyboard shortcuts -->
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Keyboard,1,4"
+                                 Left="Keyboard,0,20"
+                                 Right="Keyboard,1,-20"/>
+            </LayoutInput>
+            <Children>
+
+              <Text Content="resx://Z/Z.Resources/Shell_Keyboard_Instructions1"
+                    Color="color://styles:Text.Active"
+                    Font="font://styles:TertiaryText"
+                    WordWrap="true"/>
+
+              <Text Content="resx://Z/Z.Resources/Shell_Keyboard_Instructions2"
+                    Color="color://styles:Text.Active"
+                    Font="font://styles:TertiaryText"
+                    WordWrap="true"/>
+
+            </Children>
+          </Panel>
+
+          <!-- Previous mode shortcut -->
+          <Text Content="resx://Z/Z.Resources/Shell_Keyboard_ChannelUp"
+                Color="color://styles:Text.Active"
+                Font="font://styles:SecondaryText">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Keyboard,0"
+                                 Left="Keyboard,1,28"/>
+            </LayoutInput>
+          </Text>
+
+          <!-- Next mode shortcut -->
+          <Text Content="resx://Z/Z.Resources/Shell_Keyboard_ChannelDown"
+                Color="color://styles:Text.Active"
+                Font="font://styles:SecondaryText">
+            <LayoutInput>
+              <AnchorLayoutInput Bottom="Keyboard,1"
+                                 Left="Keyboard,1,28"/>
+            </LayoutInput>
+          </Text>
+
+          <!-- Mode switching list -->
+          <me:ModeList Model="[KeyboardChoice]"
+                       FocusOrder="3">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Keyboard,1,20"
+                                 Top="Keyboard,0"
+                                 Bottom="Keyboard,1"
+                                 Vertical="Center"/>
+            </LayoutInput>
+          </me:ModeList>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+
+  <!-- A list of modes - essentially a radio group -->
+  <UI Name="ModeList">
+    <Properties>
+      <!-- The mode options -->
+      <Choice Name="Model"
+              Choice="$Required"/>
+    </Properties>
+
+    <Content>
+      <Repeater Source="[Model.Options]"
+                Layout="VerticalFlow">
+        <Content>
+
+          <me:ModeButton Choice="[Model]"
+                         Index="[RepeatedItemIndex]">
+            <Model>
+              <Command Description="[RepeatedItem!PropertySet.Description]"/>
+            </Model>
+          </me:ModeButton>
+
+        </Content>
+      </Repeater>
+    </Content>
+  </UI>
+
+
+  <!-- A button in a ModeList -->
+  <UI Name="ModeButton"
+      BaseUI="button:Button">
+    <Properties>
+      <Choice Name="Choice"
+              Choice="$Required"/>
+      <Index Name="Index"
+             Index="$Required"/>
+    </Properties>
+
+    <Rules>
+      <!-- Map the Selected property to whether we are selected       -->
+      <!-- within the Choice.                                         -->
+      <Condition Source="[Choice.ChosenIndex]"
+                 SourceValue="[Index.Value]"
+                 Target="[Model.Selected]"
+                 Value="true"/>
+      <Default Target="[Model.Selected]"
+               Value="false"/>
+
+      <!-- When the command is invoked, set ourselves as the chosen.  -->
+      <Changed Source="[Model.Invoked]">
+        <Actions>
+          <Set Target="[Choice.ChosenIndex]"
+               Value="[Index.Value]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+  </UI>
+
+
+  <!-- This is the part of the keyboard with the character keys and also  -->
+  <!-- the operation keys (space, backspace, etc.)                        -->
+  <UI Name="KeyboardArea">
+    <Properties>
+      <Choice Name="KeyboardChoice"
+              Choice="$Required"/>
+      <EditableText Name="Model"
+                    EditableText="$Required"/>
+
+      <Command Name="Cancel"
+               Command="$Required"/>
+      <Command Name="Done"
+               Command="$Required"/>
+    </Properties>
+
+    <Rules>
+      <!-- When the mode changes, refresh the grid. -->
+      <Changed Source="[KeyboardChoice.Chosen]">
+        <Actions>
+          <Set Target="[Grid.KeyboardCharacterSet]"
+               Value="[KeyboardChoice.Chosen!PropertySet]"/>
+          <Invoke Target="[Grid.ForceRefresh]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+
+          <!-- Primary grid -->
+          <me:CharacterGrid Name="Grid"
+                            Model="[Model]"
+                            KeyboardCharacterSet="[KeyboardChoice.Chosen!PropertySet]"/>
+
+          <!-- Other buttons -->
+          <Panel Name="OtherButtons"
+                 Layout="Anchor">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Grid,0"
+                                 Right="Grid,1"
+                                 Top="Grid,1,6"/>
+            </LayoutInput>
+            <Children>
+
+              <!-- Divider -->
+              <ColorFill Name="Divider"
+                         Content="color://styles:Text.Active">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0.5,-1"
+                                     Right="Parent,0.5,1"
+                                     Horizontal="Fill"
+                                     Top="Parent,0"
+                                     Bottom="Parent,0,70"
+                                     Vertical="Fill"/>
+                </LayoutInput>
+              </ColorFill>
+
+              <!-- Left area -->
+              <Panel Name="Left">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0"
+                                     Right="Divider,0,-4"
+                                     Top="Parent,0"
+                                     Bottom="Divider,1"/>
+                </LayoutInput>
+                <Layout>
+                  <GridLayout Orientation="Vertical"
+                              MinorAlignment="Center"
+                              Columns="1"
+                              Rows="2"/>
+                </Layout>
+                <Children>
+
+                  <!-- Space -->
+                  <me:CharacterButton Target="[Model]"
+                                      Value=" ">
+                    <Model>
+                      <Command Description="resx://Z/Z.Resources/Shell_Keyboard_Space"/>
+                    </Model>
+                  </me:CharacterButton>
+
+                  <!-- Cancel -->
+                  <me:KeyboardButton Model="[Cancel]"/>
+
+                </Children>
+              </Panel>
+
+              <!-- Right area -->
+              <Panel Name="Right">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Divider,1,4"
+                                     Right="Parent,1"
+                                     Top="Parent,0"
+                                     Bottom="Divider,1"/>
+                </LayoutInput>
+                <Layout>
+                  <GridLayout Orientation="Vertical"
+                              MinorAlignment="Center"
+                              Columns="1"
+                              Rows="2"/>
+                </Layout>
+                <Children>
+
+                  <!-- Backspace -->
+                  <me:BackspaceButton Target="[Model]">
+                    <Model>
+                      <Command Description="resx://Z/Z.Resources/Shell_Keyboard_Backspace"/>
+                    </Model>
+                  </me:BackspaceButton>
+
+                  <!-- Done -->
+                  <me:KeyboardButton Model="[Done]"/>
+
+                </Children>
+              </Panel>
+
+            </Children>
+          </Panel>
+
+          <Graphic Content="image://styles:ContainerImage"
+                   Alpha="0.5">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Grid,0,-30"
+                                 Right="Grid,1,30"
+                                 Top="Grid,0,-30"
+                                 Bottom="OtherButtons,1,30"/>
+            </LayoutInput>
+          </Graphic>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+
+  <!-- The primary grid of characters in the keyboard -->
+  <UI Name="CharacterGrid">
+    <Properties>
+      <!-- The list of characters (divided into a Left and Right grid) -->
+      <PropertySet Name="KeyboardCharacterSet"
+                   PropertySet="$Required"/>
+
+      <!-- The text to modify -->
+      <EditableText Name="Model"
+                    EditableText="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- The grid division.  These could be possibly be driven by   -->
+      <!-- KeyboardCharacterSet to describe alternate keyboard        -->
+      <!-- layouts.                                                   -->
+      <sys:Int32 Name="NumLeftColumns"
+                 Int32="7"/>
+      <sys:Int32 Name="NumRightColumns"
+                 Int32="3"/>
+    </Locals>
+
+    <Content>
+      <Panel Layout="Anchor"
+             MaximumSize="500,0">
+        <Children>
+
+          <!-- Divider -->
+          <ColorFill Name="Divider"
+                     Content="color://styles:Text.Active">
+            <LayoutInput>
+              <AnchorLayoutInput Left="LeftGrid,1,-1"
+                                 Right="LeftGrid,1,1"
+                                 Horizontal="Fill"
+                                 Top="Parent,0"
+                                 Bottom="LeftGrid,1"/>
+            </LayoutInput>
+          </ColorFill>
+
+          <!-- The left grid -->
+          <Repeater Name="LeftGrid"
+                    Source="[KeyboardCharacterSet.Entries.#Left!ListDataSet]"
+                    ContentName="Character"
+                    Margins="0,0,10,0" >
+            <Layout>
+              <GridLayout Columns="[NumLeftColumns]"
+                          Orientation="Horizontal"
+                          AllowWrap="true"
+                          MajorAlignment="Fill"
+                          MinorAlignment="Fill"/>
+            </Layout>
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0"
+                                 Right="Parent,0.7"
+                                 Top="Parent,0"/>
+            </LayoutInput>
+          </Repeater>
+
+          <!-- The right grid -->
+          <Repeater Name="RightGrid"
+                    Source="[KeyboardCharacterSet.Entries.#Right!ListDataSet]"
+                    ContentName="Character"
+                    Margins="10,0,0,0">
+            <Layout>
+              <GridLayout Columns="[NumRightColumns]"
+                          Orientation="Horizontal"
+                          AllowWrap="true"
+                          MajorAlignment="Fill"
+                          MinorAlignment="Fill"/>
+            </Layout>
+            <LayoutInput>
+              <AnchorLayoutInput Left="LeftGrid,1"
+                                 Right="Parent,1"
+                                 Top="Parent,0"/>
+            </LayoutInput>
+          </Repeater>
+
+        </Children>
+      </Panel>
+    </Content>
+
+    <!-- A character in the grid -->
+    <Content Name="Character">
+      <me:CharacterButton Target="[Model]"
+                          Value="[RepeatedItem!sys:String]">
+        <Model>
+          <Command Description="[RepeatedItem!sys:String]"/>
+        </Model>
+      </me:CharacterButton>
+    </Content>
+  </UI>
+
+
+  <!-- A button in the keyboard grid UI.  Changes the font and adjusts    -->
+  <!-- the metrics to accomodate.                                         -->
+  <UI Name="KeyboardButton"
+      BaseUI="button:Button">
+    <Properties>
+      <sys:Boolean Name="CenterText"
+                   Boolean="true"/>
+      <Font Name="TextFont"
+            Font="font://styles:KeyboardText"/>
+      <Size Name="TileMaxSize"
+            Size="0,34"/>
+      <Size Name="TileMinSize"
+            Size="0,34"/>
+    </Properties>
+  </UI>
+
+
+  <!-- A button that when clicked will append a character to the          -->
+  <!-- EditableText Target.                                               -->
+  <UI Name="CharacterButton"
+      BaseUI="me:KeyboardButton">
+    <Properties>
+      <sys:String Name="Value"
+                  String="$Required"/>
+      <EditableText Name="Target"
+                    EditableText="$Required"/>
+    </Properties>
+
+    <Rules>
+      <Changed Source="[Model.Invoked]">
+        <Actions>
+          <!-- Concatenate this value to the editable text. -->
+          <Invoke Target="[Target.Value.Concat]"
+                  ResultTarget="[Target.Value]"
+                  str0="[Target.Value]"
+                  str1="[Value]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+  </UI>
+
+
+  <!-- A button that when clicked will remove the last character from the -->
+  <!-- EditableText Target.                                               -->
+  <UI Name="BackspaceButton"
+      BaseUI="me:KeyboardButton">
+    <Properties>
+      <EditableText Name="Target"
+                    EditableText="$Required"/>
+    </Properties>
+
+    <Locals>
+      <!-- Intermediate value used in length calculations -->
+      <sys:Int32 Name="LengthMinusOne"/>
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Conditions>
+          <!-- When the button is clicked... -->
+          <Modified Source="[Model.Invoked]"/>
+
+          <!-- But only if the string is not null or empty... -->
+          <IsValid Source="[Target.Value]"/>
+          <Equality Source="[Target.Value.Length]"
+                    ConditionOp="GreaterThan"
+                    Value="0"/>
+        </Conditions>
+        <Actions>
+          <!-- Calculate Length - 1 -->
+          <Set Target="[LengthMinusOne]"
+               Value="[Target.Value.Length]">
+            <Transformer>
+              <MathTransformer SubtractInt="1"/>
+            </Transformer>
+          </Set>
+          <!-- Remove the last character -->
+          <Invoke Target="[Target.Value.Remove]"
+                  ResultTarget="[Target.Value]"
+                  startIndex="[LengthMinusOne]" />
+        </Actions>
+      </Rule>
+    </Rules>
+  </UI>
+
+</Mcml>

@@ -1,0 +1,49 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- Images are used as content in Graphic view items. Images support    -->
+  <!-- "nine-grid" rendering, where applicable.                            -->
+
+  <!-- This sample demonstrates standard uses of images as well as nine-   -->
+  <!-- grid support and access to images placed in shared globals.         -->
+
+  <!-- Any image defined at top-level is shared and accessible via the     -->
+  <!-- 'image' library.                                                    -->
+
+  <!-- This image is designed to be stretched as a "nine-grid". This means -->
+  <!-- that the corners will not be stretched and the edges will be        -->
+  <!-- stretched in their primary dimension.                               -->
+
+  <!-- Nine-grid is expressed using insets: Left, Top, Right, and Bottom.  -->
+  <Image Name="RedRectangle"
+         Source="resx://Sampler/Sampler.Resources/GraphicsImageRedRectangle"
+         NineGrid="16,13,16,13"/>
+
+  <UI Name="Images">
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="20,0"/>
+        </Layout>
+        <Children>
+
+          <!-- This is a normal use of image. It is forced to 200,200 size. -->
+          <!-- However, the stretch looks bad. This is because it should    -->
+          <!-- be using nine-grid.                                          -->
+          <Graphic Content="resx://Sampler/Sampler.Resources/GraphicsImageRedRectangle"
+                   MinimumSize="200,200"/>
+
+          <!-- Reference to top-level image which sets the NineGrid property. -->
+          <Graphic Content="image://me:RedRectangle"
+                   MinimumSize="200,200"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

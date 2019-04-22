@@ -1,0 +1,105 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+ 
+      xmlns:me="Me">
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <cor:DateTime Name="Value"
+                    cor:DateTime=""/>
+      <Timer Enabled="true"
+             Interval="500"
+             Name="MyTimer"
+             AutoRepeat="true" />
+    </Locals>
+
+    <Rules>
+      <Binding Source="[Value]"
+               Target="[MyTime.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="LongTime"/>
+        </Transformer>
+      </Binding>
+      <Binding Source="[Value]"
+               Target="[MyDate.Content]">
+        <Transformer>
+          <DateTimeTransformer Format="LongDate"/>
+        </Transformer>
+      </Binding>
+      <Changed Source="[MyTimer.Tick]">
+        <Actions>
+          <Set Target="[Value]"
+               Value="[Value.Now]" />
+          <Set Target="[MyTime.Visible]"
+               Value="true" />
+          <Set Target="[MyPanel.Visible]"
+               Value="true" />
+        </Actions>
+      </Changed>
+      <Default Target="[AddInHost.MediaCenterEnvironment.BackgroundMode]"
+               Value="AlbumArtMosaic" />
+    </Rules>
+
+    <Content>
+      <Panel Name="MyPanel"
+             Visible="false"
+             Layout="Form">
+        <Animations>
+          <Animation Type="Show">
+            <Keyframes>
+              <AlphaKeyframe Time="0.0"
+                             Value="0.0"
+                             Interpolation="Exp"/>
+              <AlphaKeyframe Time="0.5"
+                             Value="1.0"/>
+            </Keyframes>
+          </Animation>
+        </Animations>
+        <Children>
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          ItemAlignment="Center"
+                          StripAlignment="Center"/>
+            </Layout>
+            <Children>
+              <Text Name="MyTime"
+                    Color="White"
+                    Font="Calibri Bold, 100"/>
+              <Text Name="MyDate"
+                    Color="White"
+                    Font="Calibri, 50" />
+            </Children>
+          </Panel>
+          <me:BackgroundImage>
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,1"
+                               Top="Parent,0.28"
+                               Bottom="Parent,.75"/>
+            </LayoutInput>
+          </me:BackgroundImage>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <UI Name="BackgroundImage">
+
+    <Content>
+      <Clip FadeSize="50"
+            Orientation="Vertical">
+        <Children>
+          <ColorFill Content="Black"
+                     Alpha="0.7"/>
+        </Children>
+      </Clip>
+    </Content>
+
+  </UI>
+
+</Mcml>

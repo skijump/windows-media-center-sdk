@@ -1,0 +1,81 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Equality conditions are used in expanded rule syntax for adding    -->
+  <!-- value comparison based a variety of logical operations. The        -->
+  <!-- logical operation is configured via the ConditionOp property.      -->
+  <!-- Available conditional operations are: Equals, NotEquals, LessThan, -->
+  <!-- GreaterThan, and ChangedTo. Equals is the default if a ConditionOp -->
+  <!-- value is not provided.                                             -->
+
+  <!-- Equality condition Sources can be 1) properties, 2) parameterless  -->
+  <!-- methods that return a value, or 3) dictionaries.                   -->
+
+  <!-- This UI contains child UIs which demonstrate the use of the        -->
+  <!-- Equality condition. Different text is chosen for display           -->
+  <!-- depending on the value passed in.                                  -->
+  <UI Name="EqualityCondition">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:InRangeDisplayer Value="2"/>
+          <me:InRangeDisplayer Value="5"/>
+          <me:InRangeDisplayer Value="10"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="InRangeDisplayer">
+
+    <!-- Value property. -->
+    <Properties>
+      <cor:Int32 Name="Value"/>
+    </Properties>
+
+    <Rules>
+
+      <!-- The Condition convenience rule has a built-in Equality   -->
+      <!-- condition. This full Rule definition demonstates how to  -->
+      <!-- build a custom rule using the Equality condition when    -->
+      <!-- a predefined convenience rule does not apply.            -->
+
+      <!-- In this case, the Rule only matches when the value is    -->
+      <!-- within a range.                                          -->
+
+      <!-- Another feature of custom Rules is that you can change   -->
+      <!-- the default combination type between conditions. By      -->
+      <!-- default all conditions are combined with an AND clause.  -->
+      <!-- You can change it to an OR clause via the                -->
+      <!-- ConditionLogicalOp property on the Rule.                 -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Value]"
+                    ConditionOp="GreaterThan"
+                    Value="4"/>
+          <Equality Source="[Value]"
+                    ConditionOp="LessThan"
+                    Value="8"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="Value is in range!"/>
+        </Actions>
+      </Rule>
+
+      <Default Target="[Label.Content]"
+               Value="Value is NOT in range!"/>
+
+    </Rules>
+
+    <Content>
+
+      <Text Name="Label"
+            Color="SeaShell"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

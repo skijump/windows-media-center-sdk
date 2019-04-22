@@ -1,0 +1,135 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- Test data for SimpleButton. -->
+  <UI Name="TestSimpleButton">
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:SimpleButton>
+            <Command>
+              <Command Description="Button 1"/>
+            </Command>
+          </me:SimpleButton>
+          <me:SimpleButton>
+            <Command>
+              <Command Description="Button 2"/>
+            </Command>
+          </me:SimpleButton>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+
+  <!-- Simple button -->
+  <UI Name="SimpleButton">
+
+    <Properties>
+
+      <!-- Command is a required parameter. -->
+      <ICommand Name="Command"
+                ICommand="$Required"/>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor"
+             Color="DimGray"/>
+      <Color Name="BackgroundFocusedColor"
+             Color="DarkGray"/>
+      <Color Name="BackgroundHoverColor"
+             Color="PaleGoldenrod"/>
+      <Color Name="BackgroundPressedColor"
+             Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor"
+             Color="White"/>
+      <Color Name="LabelFocusedColor"
+             Color="White"/>
+      <Color Name="LabelHoverColor"
+             Color="DimGray"/>
+      <Color Name="LabelPressedColor"
+             Color="Black"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont"
+            Font="Arial,20"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- React to "click" input. -->
+      <ClickHandler Name="Clicker"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- The command description is displayed by the text box. A  -->
+      <!-- binding is used in case the description changes at       -->
+      <!-- runtime.                                                 -->
+      <Binding Source="[Command.Description]"
+               Target="[Label.Content]"/>
+
+      <Binding Source="[Command]"
+               Target="[Clicker.Command]"/>
+
+      <!-- Change color on click. -->
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[BackgroundPressedColor]"/>
+          <Set Target="[Label.Color]"
+               Value="[LabelPressedColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Change color on mouse focus. -->
+      <Condition Source="[Input.MouseFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[BackgroundHoverColor]"/>
+          <Set Target="[Label.Color]"
+               Value="[LabelHoverColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Change color on key focus. -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[BackgroundFocusedColor]"/>
+          <Set Target="[Label.Color]"
+               Value="[LabelFocusedColor]"/>
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Solid background color. -->
+      <ColorFill Name="Background"
+                 Content="[BackgroundColor]"
+                 Padding="5,5,5,5">
+        <Children>
+
+          <!-- The label to display. -->
+          <Text Name="Label"
+                Color="[LabelColor]"
+                Font="[LabelFont]"/>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

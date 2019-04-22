@@ -1,0 +1,178 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Anchor layout is used to position children relative to each other. -->
+  <!-- Anchor layout is configured using edges (Left, Top, Right, and     -->
+  <!-- Bottom). Edges are anchored relative to siblings based on          -->
+  <!-- percentages plus an optional offset. Edges are specified using     -->
+  <!-- AnchorLayoutInputs. Every child of an anchor layout has this type  -->
+  <!-- of layout input to declare how they should be laid out.            -->
+
+  <!-- Anchor layout is a "size-to-children" layout. It will return a     -->
+  <!-- size based on the size of all its children. For this reason, it is -->
+  <!-- a best practice to designate one child as the starting reference   -->
+  <!-- in which all other siblings ultimately build off of.               -->
+
+  <!-- For example, say sibling B has a Left edge value set to 50% (.5)   -->
+  <!-- of sibling A's width and sibling B has a Top edge set to 25% (.25) -->
+  <!-- of sibling A's height. The end result will be that sibling B is    -->
+  <!-- positioned half way to the right and a quarter of the way down     -->
+  <!-- from sibling A.                                                    -->
+
+  <!-- Every edge of a child can be relative to a different sibling. The  -->
+  <!-- anchor layout will use the edge information to determine how each  -->
+  <!-- child should be positioned and how the parent (the one with the    -->
+  <!-- anchor layout attached) should be sized. If a child should not     -->
+  <!-- contribute to the size of the parent, its contribution can be      -->
+  <!-- controlled via the AnchorLayoutInput.                              -->
+
+  <!-- Anchor layout (like any layout) must honor the constraints that    -->
+  <!-- is given to it. This has implications on the starting reference    -->
+  <!-- child. By default, anchor layout gives equal area around the       -->
+  <!-- starting reference for other siblings to anchor off of. For        -->
+  <!-- this reason, if the intended layout of all the siblings is to be   -->
+  <!-- positioned to one side of the starting reference, for example,     -->
+  <!-- siblings may run out of room and undesired results such as         -->
+  <!-- clipping may occur. If this happens, it is best to switch to a     -->
+  <!-- Form layout in order to determine how large the area is that you   -->
+  <!-- have to work with, adjust positioning and constraints as needed,   -->
+  <!-- and then switch back to an Anchor layout.                          -->
+
+  <!-- A reserved Parent ID is available for use when configuring anchor  -->
+  <!-- edges. Because Anchor layout is a "size-to-children" layout, the   -->
+  <!-- Parent is always relative to the full constraint that the layout   -->
+  <!-- has to work with. If Parent, MinimumOffset, MinimumPercent,        -->
+  <!-- MaximumOffset or or MaximumPercent are used, it is best to start   -->
+  <!-- by using a Form layout, adjust positioning and constraints as      -->
+  <!-- needed and then switch to an Anchor layout.                        -->
+
+  <!-- This example demonstrates various anchor layout concepts. Every    -->
+  <!-- direct child of the root has an anchor layout. The child's size is -->
+  <!-- shown with a white color fill.                                     -->
+
+  <UI Name="Anchor">
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Spacing="20,0"
+                      ItemAlignment="Center"/>
+        </Layout>
+
+        <Children>
+
+          <!-- Demonstration of how siblings reference one another. -->
+          <!-- Child A is the starting reference.                   -->
+          <ColorFill Layout="Anchor"
+                     Content="White">
+            <Children>
+
+              <me:LayoutItem Display="Second: Left is 75% B1, Bottom is 25% A1">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="B1,.75"
+                                     Bottom="A1,.25"/>
+                </LayoutInput>
+              </me:LayoutItem>
+
+              <me:LayoutItem Name="B1"
+                             Display="B1: Left is 50% A1, Top is 50% A1">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="A1,.5"
+                                     Top="A1,.5"/>
+                </LayoutInput>
+              </me:LayoutItem>
+
+              <me:LayoutItem Name="A1"
+                             Display="A1: Starting reference"/>
+
+            </Children>
+          </ColorFill>
+
+          <!-- Child C does not contribute to the resultant width or height -->
+          <!-- of the parent with the anchor layout.                        -->
+          <ColorFill Layout="Anchor"
+                     Content="White">
+            <Children>
+
+              <me:LayoutItem Display="Second: Left is 75% B2, Bottom is 25% A2, No W/H Contrib">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="B2,.75"
+                                     Bottom="A2,.25"
+                                     ContributesToWidth="false"
+                                     ContributesToHeight="false"/>
+                </LayoutInput>
+              </me:LayoutItem>
+
+              <me:LayoutItem Name="B2"
+                             Display="B2: Left is 50% A2, Top is 50% A2">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="A2,.5"
+                                     Top="A2,.5"/>
+                </LayoutInput>
+              </me:LayoutItem>
+
+              <me:LayoutItem Name="A2"
+                             Display="A: Starting reference"/>
+
+            </Children>
+          </ColorFill>
+
+          <!-- Child B is fully constrained (the Left, Top, Right and  -->
+          <!-- Bottom edges are all defined). This forces the child to -->
+          <!-- be an exact size.                                       -->
+          <ColorFill Layout="Anchor"
+                     Content="White">
+            <Children>
+
+              <me:LayoutItem Display="B3: Left is 75% A3, Top is 75% A3, Right is 250% A3, Bottom is 250% A3, No Height Contrib">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="A3,.75"
+                                     Top="A3,.75"
+                                     Right="A3,2.5"
+                                     Bottom="A3,2.5"
+                                     ContributesToHeight="false"/>
+                </LayoutInput>
+              </me:LayoutItem>
+
+              <me:LayoutItem Name="A3"
+                             Display="A3: Starting reference"/>
+
+            </Children>
+          </ColorFill>
+
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+  <!-- UI that displays an image with some text. The image content -->
+  <!-- fills to the size of the Graphic.                           -->
+  <UI Name="LayoutItem">
+
+    <Properties>
+      <cor:String Name="Display"
+                  String="null"/>
+    </Properties>
+
+    <Content>
+      <Graphic Content="image://me:LayoutItemImage"
+               Padding="5,5,5,5">
+        <Children>
+          <Text Content="[Display]"
+                Color="White"
+                Font="Tahoma,12"
+                WordWrap="true"/>
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+  <Image Name="LayoutItemImage"
+         Source="file://LayoutGraphic.png"
+         NineGrid="4,4,4,4"/>
+
+</Mcml>

@@ -1,0 +1,119 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:me="Me">
+  
+  <UI Name="ScrollingTextTest">
+    
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:ScrollingText TextFont="Calibri,14"
+                            TextColor="Green"
+                            ScrollerSize="400,300"
+                            Text="Incidunt improbis defuturum tenetur inportuno suam confidet hominum aliquam fugit civium confidet noctesque harum factis diis mollitia legum umquam fugit. Sic utilitatibus supplicii animadversionis collegisti hoc. Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu. In nisl sumo principes eam. In vis modo essent persius. Id pro nisl veritus salutatus, sed natum nostrud aliquyam et, suscipit recteque duo ut pri. Apeirian verterem cu vim, tritani verterem sed id. Vero movet te nec, ea sed dicit quando prodesset, tota ponderum ne per! Est ad kasd ridens. Facer vocent disputando id quo, nemore scribentur eu has! Cim ut stet ludus inimicus, aliquid argumentum et sea. Unum oratio quo id! Ius kasd tantas. Eos ad utamur convenire, veritus mentitum facilisis cim no! Ex justo etiam vix, affert possit usu ne? Choro verear eu mel, ad veri soleat quo. Everti deterruisset ex sea, duo. Firmissima odioque neque nullo ruant. Voluptates tanta voluptate et oratio animadversionis illum evertitur tanta laudantium perspiciatis. Semper ut in quae nam eorum totum eveniet possint dubio factis nesciunt res quamvis voluptate quia itaque accessio indicaverunt improborum vestra nollem umquam. Perspiciatis quippiam eaque est laudem hominum. Segniorem accessio. Ipsam tamque inventore labore consecutus legum non quorum nam deleniti fugiat gravissimo ferae inmortalibus imperii minima poena emolumento magnam laudantium copulatas dignissimos eius commemorandis natus. Commemorandis fugiat sint. Sollicitant hanc metu rem.
+                            Incidunt improbis defuturum tenetur inportuno suam confidet hominum aliquam fugit civium confidet noctesque harum factis diis mollitia legum umquam fugit. Sic utilitatibus supplicii animadversionis collegisti hoc. Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu. In nisl sumo principes eam. In vis modo essent persius. Id pro nisl veritus salutatus, sed natum nostrud aliquyam et, suscipit recteque duo ut pri. Apeirian verterem cu vim, tritani verterem sed id. Vero movet te nec, ea sed dicit quando prodesset, tota ponderum ne per! Est ad kasd ridens. Facer vocent disputando id quo, nemore scribentur eu has! Cim ut stet ludus inimicus, aliquid argumentum et sea. Unum oratio quo id! Ius kasd tantas. Eos ad utamur convenire, veritus mentitum facilisis cim no! Ex justo etiam vix, affert possit usu ne? Choro verear eu mel, ad veri soleat quo. Everti deterruisset ex sea, duo. Firmissima odioque neque nullo ruant. Voluptates tanta voluptate et oratio animadversionis illum evertitur tanta laudantium perspiciatis. Semper ut in quae nam eorum totum eveniet possint dubio factis nesciunt res quamvis voluptate quia itaque accessio indicaverunt improborum vestra nollem umquam. Perspiciatis quippiam eaque est laudem hominum. Segniorem accessio. Ipsam tamque inventore labore consecutus legum non quorum nam deleniti fugiat gravissimo ferae inmortalibus imperii minima poena emolumento magnam laudantium copulatas dignissimos eius commemorandis natus. Commemorandis fugiat sint. Sollicitant hanc metu rem.">
+          </me:ScrollingText>
+          <me:ScrollingText ScrollerSize="400,100"
+                            Text="This one is shorter.
+Quo senserit suavitate cu, vix agam vocibus eu. Pertinax laboramus ne mei, solum labore suscipit sed te! Nec cibo error noster at, duis option eu. In nisl sumo principes eam. In vis modo essent persius. Id pro nisl veritus salutatus, sed natum nostrud aliquyam et, suscipit recteque duo ut pri. Apeirian verterem cu vim, tritani verterem sed id. Vero movet te nec, ea sed dicit quando prodesset, tota ponderum ne per! Est ad kasd ridens. Facer vocent disputando id quo, nemore scribentur eu has! Cim ut stet ludus inimicus, aliquid argumentum et sea. Unum oratio quo id! Ius kasd tantas. Eos ad utamur convenire, veritus mentitum facilisis cim no! Ex justo etiam vix, affert possit usu ne? Choro verear eu mel, ad veri soleat quo. Everti deterruisset ex sea, duo. Firmissima odioque neque nullo ruant. Voluptates tanta voluptate et oratio animadversionis illum evertitur tanta laudantium perspiciatis. Semper ut in quae nam eorum totum eveniet possint dubio factis nesciunt res quamvis voluptate quia itaque accessio indicaverunt improborum vestra nollem umquam. Perspiciatis quippiam eaque est laudem hominum. Segniorem accessio. Ipsam tamque inventore labore consecutus legum non quorum nam deleniti fugiat gravissimo ferae inmortalibus imperii minima poena emolumento magnam laudantium copulatas dignissimos eius commemorandis natus. Commemorandis fugiat sint. Sollicitant hanc metu rem.">
+          </me:ScrollingText>
+        </Children>
+      </Panel>
+    </Content>
+    
+  </UI>
+
+  <UI Name="ScrollingText">
+    
+    <Properties>
+      <cor:String Name="Text"
+                  String ="$Required"/>
+      <Font Name="TextFont"
+            Font="Calibri,12"/>
+      <Color Name="TextColor"
+             Color="White"/>
+      <Size Name="ScrollerSize"
+            Size="300,200"/>
+    </Properties>
+
+    <Locals>
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandleDirectionalKeys="true"/>
+      <ScrollingData Name="ScrollingData"/>
+    </Locals>
+
+    <Rules>
+      <!-- Give ScrollingData to ScrollingHandler. -->
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="false">
+        <Actions>
+          <Set Target="[Background.Alpha]"
+               Value="0.5" />
+        </Actions>
+      </Condition>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Alpha]"
+               Value="1.0" />
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <Panel Name="Background">
+        <Animations>
+          <Animation Animation="animation://me:Focus"/>
+          <Animation Animation="animation://me:NoFocus"/>
+        </Animations>
+        <Children>
+          <Scroller MaximumSize="[ScrollerSize]"
+                    MinimumSize="[ScrollerSize]"
+                    FadeSize="-10"
+                    Orientation="Vertical"
+                    ScrollingData="[ScrollingData]">
+            <Children>
+              <Text Content="[Text]"
+                    Color="[TextColor]"
+                    Font="[TextFont]"
+                    WordWrap="true"/>
+            </Children>
+          </Scroller>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <Animation Name="Focus"
+             Loop="0"
+             CenterPointPercent="0,0.5,1.0"
+             Type="GainFocus">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     Value="1,1,1"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+      <ScaleKeyframe Time="0.1"
+                     Value="1.1,1.1,1"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="NoFocus"
+             Loop="0"
+             CenterPointPercent="0,0.5,1.0"
+             Type="LoseFocus">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0"
+                     RelativeTo="Current"
+                     Interpolation="Linear"/>
+      <ScaleKeyframe Time="0.04"
+                     Value="1,1,1"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

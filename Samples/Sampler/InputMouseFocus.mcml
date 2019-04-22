@@ -1,0 +1,90 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:Me="me">
+
+  <!-- Mouse Focus                                                   -->
+
+  <!-- Input.MouseFocus is true when the mouse is active over a      -->
+  <!-- view item in a UI object that is mouse interactive.           -->
+
+  <!-- By default, mouse interactivity will be enabled for the root  -->
+  <!-- view item in a UI when:                                       -->
+
+  <!--    1) A mouse-based InputHandler is attached, or              -->
+  <!--    2) Key interactivity is enabled and input is configured    -->
+  <!--       to become key focused on mouse enter or click.          -->
+
+  <!-- Alternatively, individual view items can be marked as         -->
+  <!-- MouseInteractive. In this case, no automatic configuration    -->
+  <!-- of the root view item will occur.                             -->
+
+  <!-- The area of a UI that will be able to respond to mouse events -->
+  <!-- is the union of all view items that are marked as mouse       -->
+  <!-- interactive. For this reason, view item mouse interactivity   -->
+  <!-- is not inherited. Setting the MouseInteractive property to    -->
+  <!-- true on a view item has no effect on its subtree. The mouse   -->
+  <!-- interactive region for a view item will only include its      -->
+  <!-- bounding area.                                                -->
+
+  <!-- NOTE: To disable mouse interactivity within a UI, set the     -->
+  <!--       Input.Enabled property to false.                        -->
+
+  <!-- If the mouse is not active, or the mouse cursor is not on an  -->
+  <!-- item marked as MouseInteractive, then Input.MouseFocus will   -->
+  <!-- be false.                                                     -->
+
+  <UI Name="MouseFocusSample">
+    <Rules>
+
+      <!-- When the UI receives mouse focus, change the Graphic  -->
+      <!-- and background color to provide feedback to the user. -->
+      <Condition Source="[Input.MouseFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Button.Content]"
+               Value="image://Me:BlueFlower"/>
+          <Set Target="[Background.Content]"
+               Value="Lawngreen"/>
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <!-- The only item marked as mouse interactive is the Graphic.    -->
+    <!-- Moving the mouse over other parts of the UI will not affect  -->
+    <!-- the value of Input.MouseFocus.                               -->
+    <Content>
+      <ColorFill Name="Background"
+                 Padding="15,15,15,15"
+                 Content="DeepSkyBlue">
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <!-- Mark the graphic as mouse interactive so that it receives -->
+          <!-- mouse focus when the mouse cursor is over the graphic.    -->
+          <Graphic Name="Button"
+                   MouseInteractive="true"
+                   Content="image://Me:GreenFlower"/>
+
+          <!-- The text is not mouse interactive. Moving the mouse over it -->
+          <!-- will not affect the value of Input.MouseFocus.              -->
+          <Text Name="Message"
+                Content="Hover over the flower"
+                Margins="0,15,0,0"/>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <Image Name="BlueFlower"
+         Source="file://InputMouseFocusFlowerBlue.png"
+         NineGrid="14,13,15,14"/>
+
+  <Image Name="GreenFlower"
+         Source="file://InputMouseFocusFlowerGreen.png"
+         NineGrid="14,13,15,14"/>
+
+</Mcml>

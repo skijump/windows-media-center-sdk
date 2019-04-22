@@ -1,0 +1,72 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:b="file://ControlsSimpleButton.mcml">
+
+  <UI Name="Default">
+
+    <!-- *** Windows Media Center Required *** -->
+    <!-- This sample will only display correctly if run within Windows Media -->
+    <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+    <!-- an markup load error or a runtime error.                            -->
+
+    <!-- The OnscreenKeyboard is used for text entry for any keyboard layout that is  -->
+    <!-- installed on the user's machine.  A TypingHandler object should be created   -->
+    <!-- and used to link the EditableText in the UI to the Onscreen Keyboard. The    -->
+    <!-- TypingHandler is also used to link the EditableText object with the OSK      -->
+    <!-- and dictates the ength of the text field and whether the value should be     -->
+    <!-- obscurred on the OSK.                                                        -->
+
+    <Locals>
+      <!-- AddInHost is where all Windows Media Center specific services start -->
+      <!-- from. It must appear in the Locals section of a markup file.        -->
+      <addin:AddInHost Name="AddInHost"/>
+      <!-- EditableText field is used to display the entered text to the user  -->
+      <!-- Its contents are passed into the OSK when launched so the text      -->
+      <!-- shown by this field and the OSK stay in sync -->
+      <EditableText Name="TextEditControl"
+                    Value="This is editable text."/>
+      <!-- The TypingHandler is the object that listens for keypresses and      -->
+      <!-- updates the editable text field.  It is also used to keep track      -->
+      <!-- of the various properties we want our OSK to have including the max  -->
+      <!-- number of characters to accept and whether the OSK should obscure    -->
+      <!-- the text that is entered.  These values can be added in the          -->
+      <!-- TypingHandler Constructor.                                           -->
+      <!-- Here is an example of a case where someone creates a TypingHandler that allows -->
+      <!-- 10 chars and obscures it                                                       -->
+      <!-- <TypingHandler Name="myTypingHandler" PasswordMasked="False" MaxLength="10"/>  -->
+      <!--                                                                                -->
+      <!-- The simplest way to use the OSK is by creating a TypingHandler like this:      -->
+      <TypingHandler Name="myTypingHandler"/>
+    </Locals>
+
+    <Rules>
+      <!-- These Bindlings Link the content in the TextEditControl to the      -->
+      <!-- OnscreenKeyboard                                                    -->
+      <Binding Source="[TextEditControl.Value]"
+               Target="[DisplayText.Content]" />
+      <Binding Source="[TextEditControl]"
+               Target="[myTypingHandler.EditableText]" />
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Name="DisplayText"
+                Color="White"/>
+          <b:SimpleButton>
+            <Command>
+              <!-- This command invokes the Onscreen Keyboard and passes in -->
+              <!-- the link to the text field on the page as an argument    -->
+              <InvokeCommand Description="Click to bring up the On Screen Keyboard"
+                             Target="[AddInHost.MediaCenterEnvironment.ShowOnscreenKeyboard]"
+                             editableText="[myTypingHandler.EditableText]"
+                             passwordMasked="[myTypingHandler.PasswordMasked]"
+                             maxLength="[myTypingHandler.MaxLength]"/>
+            </Command>
+          </b:SimpleButton>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+</Mcml>

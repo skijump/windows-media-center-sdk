@@ -1,0 +1,99 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System">
+
+  <!-- FormatTransformer is used in a variety of places where a conversion -->
+  <!-- of data is required. FormatTransformer can take any object and      -->
+  <!-- format it to a string. It supports "extended" formatting on objects -->
+  <!-- that implement IFormattable.                                        -->
+
+  <!-- NOTE: The target of the FormatTransformer must accept a string.     -->
+
+  <!-- Since transformers only operate on a single object, the Format      -->
+  <!-- property must contain a "{0}" to denote the location of the         -->
+  <!-- string representation. If a type-specific ExtendedFormat is         -->
+  <!-- provided, it will be applied before the Format is applied.          -->
+
+  <!-- The following tags support transformers:                            -->
+  <!--   Binding, Equality, Invoke, InvokeCommand, and Set                 -->
+
+  <!-- In this example, a numeric value is extended formatted (as a phone  -->
+  <!-- number) and then formatted with some additional text.               -->
+
+  <UI Name="FormatTransformer">
+
+    <Locals>
+      <cor:Double Name="PhoneNumber"
+                  Double="4255551212"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- Accessibility -->
+      <Default Target="[Accessible.Name]"
+               Value="FormatTransformerPane"/>
+      <Default Target="[Accessible.Role]"
+               Value="Pane"/>
+
+      <Binding Source="[PhoneNumber]"
+               Target="[ToLowerIsFalseCallerPhone.Content]">
+        <Transformer>
+          <FormatTransformer Format="(ToLower=False) The Phone Number Is: {0}."
+                             ExtendedFormat="(###) ###-####"
+                             ToLower="false"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[PhoneNumber]"
+               Target="[ToLowerIsTrueCallerPhone.Content]">
+        <Transformer>
+          <FormatTransformer Format="(ToLower=True) The Phone Number Is: {0}."
+                             ExtendedFormat="(###) ###-####"
+                             ToLower="true"/>
+        </Transformer>
+      </Binding>
+
+      <Binding Source="[PhoneNumber]"
+               Target="[ToUpperIsFalseCallerPhone.Content]">
+        <Transformer>
+          <FormatTransformer Format="(ToUpper=False) The Phone Number Is: {0}."
+                             ExtendedFormat="(###) ###-####"
+                             ToUpper="false"/>
+        </Transformer>
+      </Binding>
+
+      <!-- The target is Content on a Text which expects as string so -->
+      <!-- FormatTransformer can be used here.                        -->
+      <Binding Source="[PhoneNumber]"
+               Target="[ToUpperIsTrueCallerPhone.Content]">
+        <Transformer>
+          <FormatTransformer Format="(ToUpper=True) The Phone Number Is: {0}."
+                             ExtendedFormat="(###) ###-####"
+                             ToUpper="true"/>
+        </Transformer>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Name="ToUpperIsTrueCallerPhone"
+                Color="Orchid"
+                Font="Verdana,15"/>
+          <Text Name="ToUpperIsFalseCallerPhone"
+                Color="Orchid"
+                Font="Verdana,15"/>
+          <Text Name="ToLowerIsTrueCallerPhone"
+                Color="Aqua"
+                Font="Verdana,15"/>
+          <Text Name="ToLowerIsFalseCallerPhone"
+                Color="Aqua"
+                Font="Verdana,15"/>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>
+

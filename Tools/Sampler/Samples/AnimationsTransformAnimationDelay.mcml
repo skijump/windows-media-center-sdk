@@ -1,0 +1,101 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to use a TransformAnimation to modify   -->
+  <!-- the time of an animation.                                            -->
+
+  <!-- A TransformAnimation takes a reference animation and produces a new  -->
+  <!-- animation based on that animation.  One of the ways the source       -->
+  <!-- animation can be transformed is by shifting the Time of all          -->
+  <!-- keyframes by some value.  The Delay property value allows you to do  -->
+  <!-- this.                                                                -->
+  <UI Name="TransformAnimationDelay">
+
+    <Properties>
+
+      <!-- This is our reference animation.  We will take this animation    -->
+      <!-- and modify the Time by an offset.                                -->
+      <Animation Name="Reference"
+                 Loop="-1">
+        <Keyframes>
+
+          <PositionKeyframe Time="0.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="1.0"
+                            Value="100,0,0"
+                            Interpolation="SCurve"/>
+          <PositionKeyframe Time="2.0"
+                            Value="0,0,0"
+                            Interpolation="SCurve"/>
+
+        </Keyframes>
+      </Animation>
+
+    </Properties>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Demonstrate what the unmodified reference animation looks    -->
+          <!-- like.                                                        -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="Reference animation:"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <Animation Animation="[Reference]"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Take the reference animation and apply a Delay of 1.0        -->
+          <!-- seconds.                                                     -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="1.0 second Delay"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <TransformAnimation Source="[Reference]"
+                                  Delay="1.0"/>
+
+            </Animations>
+          </Graphic>
+
+
+          <!-- Take the reference animation and apply a Delay of 2.0        -->
+          <!-- seconds.                                                     -->
+
+          <Text Color="White"
+                Font="Arial, 20"
+                Content="2.0 second Delay"/>
+
+          <Graphic Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+            <Animations>
+
+              <TransformAnimation Source="[Reference]"
+                                  Delay="2.0"/>
+
+            </Animations>
+          </Graphic>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,65 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:host="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <host:AddInHost Name="host"/>
+    </Locals>
+
+    <Rules>
+      <Rule>
+        <Conditions>
+          <IsValid Source="[host.MediaCenterEnvironment.Version]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[MyBuild.PropertyValue]"
+               Value="[host.MediaCenterEnvironment.Version.Build.ToString]"/>
+          <Set Target="[MyMajor.PropertyValue]"
+               Value="[host.MediaCenterEnvironment.Version.Major.ToString]"/>
+          <Set Target="[MyMajorRevision.PropertyValue]"
+               Value="[host.MediaCenterEnvironment.Version.MajorRevision.ToString]"/>
+          <Set Target="[MyMinor.PropertyValue]"
+               Value="[host.MediaCenterEnvironment.Version.Minor.ToString]"/>
+          <Set Target="[MyMinorRevision.PropertyValue]"
+               Value="[host.MediaCenterEnvironment.Version.MinorRevision.ToString]"/>
+          <Set Target="[MyRevision.PropertyValue]"
+               Value="[host.MediaCenterEnvironment.Version.Revision.ToString]"/>
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <ctrl:GroupHeader GroupName="MediaCenterEnvironment.Version" />
+              <ctrl:PropertyAndValue Name="MyBuild"
+                                     PropertyName="Build"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyMajor"
+                                     PropertyName="Major"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyMajorRevision"
+                                     PropertyName="MajorRevision"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyMinor"
+                                     PropertyName="Minor"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyMinorRevision"
+                                     PropertyName="MinorRevision"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyRevision"
+                                     PropertyName="Revision"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

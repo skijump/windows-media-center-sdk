@@ -1,0 +1,60 @@
+﻿<application id="{2A49FED3-B912-4705-BE9F-F7E59B3CA187}"
+             Title="Application.2.Title"
+             Description="Application.2.Description"
+             CompanyName="Application.2.CompanyName"
+             StartMenuStripTitle="StartMenuTitle2"
+             StartMenuStripCategory="Custom Start Menu\Application2">
+  <entrypoint id="{72DCFBBC-D633-42a0-AEB7-FB134C8BA7DD}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.2.MorePrograms"
+              Description="Description.2.MorePrograms"
+              ImageUrl="Image.MorePrograms.2.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="More Programs"/>
+  </entrypoint>
+  <entrypoint id="{00F22745-8FC0-48ba-BBF3-AEB8EF700739}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.2.1"
+              description="description.StartMenuTile.2.1"
+              imageURL = "Image.Start.App.2.1.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application2"
+              order="0"/>
+  </entrypoint>
+  <entrypoint id="{4ECC1FB1-8696-456b-AEF7-E38885063B97}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.2.2"
+              description="description.StartMenuTile.2.2"
+              imageURL="Image.Start.App.2.2.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application2"
+              order="1"/>
+  </entrypoint>
+  <entrypoint id="{FB3E3A88-6B57-4cb0-8B78-AE3833A04144}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.2.3"
+              description="description.StartMenuTile.2.3"
+              imageURL="Image.Start.App.2.3.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application2"
+              order="2"/>
+  </entrypoint>
+  <entrypoint id="{E8F8FA86-E5E1-4ac3-B9ED-67A685D4264F}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.2.4"
+              description="description.StartMenuTile.2.4"
+              imageURL="Image.Start.App.2.4.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application2"
+              order="3"/>
+  </entrypoint>
+  <entrypoint id="{0ECB14E5-7F3F-4a24-9DAA-516A3FBB6C0F}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Title.StartMenuTile.2.5"
+              description="description.StartMenuTile.2.5"
+              imageURL="Image.Start.App.2.5.png"
+              context="http://play.mediacentersandbox.com/mcml/sample/HelloWorld/Default.mcml">
+    <category category="Custom Start Menu\Application2"
+              order="4"/>
+  </entrypoint>
+</application>

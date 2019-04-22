@@ -1,0 +1,86 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+typedef enum EHIMECharFlags
+{
+    EHIMECF_Normal = 0,
+    EHIMECF_Candidate = 1,
+    EHIMECF_TimedCandidate = 2,
+} EHIMECharFlags;
+
+typedef SAFEARRAY(BSTR) BSTRARRAY;
+
+typedef enum MediaCenterInputSpecialKey
+{
+    LeftArrow,
+    RightArrow,
+    UpArrow,
+    DownArrow,
+    Kanji,
+    ConvertChar,
+    NonConvert,
+    DBE_Katakana,
+    DBE_Hiragana,
+    DBE_SBCSChar,
+    DBE_DBCSChar,
+    DBE_Roman,
+    DBE_NoRoman,
+    ShiftZero,
+    DBE_Hangul,
+    DBE_Hanja
+} MediaCenterInputSpecialKey;
+
+
+[
+    object,
+    uuid(3cdf9df9-cd84-4b21-a843-b077e9004840),
+    pointer_default(unique)
+]
+interface IMediaCenterInputKeyMap : IUnknown
+{
+    [propget] HRESULT UIModeCount([out,retval] INT* pcModes);
+    HRESULT UIModeKeyMap([in] INT iMode, [out,retval] BSTRARRAY* pKeyMap);
+};
+
+[
+    object,
+    uuid(052c5888-4283-45a5-8016-257add903bc4),
+    pointer_default(unique)
+]
+interface IMediaCenterInputCallback : IUnknown
+{
+    HRESULT SelectKeyMap([in] INT iMode);
+    HRESULT DisplayCandidateList([in] INT cCandidates, [in] BSTRARRAY rgCandidates, [in] INT iTopIndex);
+    HRESULT UpdateField([in] BSTR bstrValue, [in] UINT* uiFlags);
+};
+
+[
+    object,
+    uuid(863fc2d6-6505-437a-b0f0-548ce1b9d06b),
+    pointer_default(unique)
+]
+interface IMediaCenterInputField  : IUnknown
+{
+    HRESULT SetString([in] BSTR bstrValue);
+    HRESULT ProcessInput([in] WCHAR chInput, [in] VARIANT_BOOL fRemote);
+    HRESULT ProcessSpecialInput([in] MediaCenterInputSpecialKey iInput,  [in] VARIANT_BOOL fRemote);
+    HRESULT ProcessCandidateSelection([in] INT iSelection);
+    HRESULT CandidateTimeout();
+    HRESULT SelectNextMode();
+};
+
+
+[
+    object,
+    uuid(3542d16d-8028-4520-913c-4619166d71a1),
+    pointer_default(unique)
+]
+interface IMediaCenterInputModule : IUnknown
+{
+    HRESULT Activate([in] IMediaCenterInputCallback* pCallback, [out,retval] IMediaCenterInputField** ppField);
+    
+    [propget] HRESULT KeyMap([out,retval] IMediaCenterInputKeyMap **ppKeyMap);
+    [propget] HRESULT SupportsCandidateList([out,retval] VARIANT_BOOL* pbSupportsCandList);
+    [propget] HRESULT SendArrowKeys([out,retval] VARIANT_BOOL* pbSendArrowKeys);
+};
+

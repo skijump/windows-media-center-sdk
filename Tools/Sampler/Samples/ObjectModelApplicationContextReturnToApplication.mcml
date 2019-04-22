@@ -1,0 +1,80 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:b="resx://Sampler/Sampler.Resources/ControlsSimpleButton"
+      xmlns:a="assembly://Sampler/Sampler">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <Timer Name="MyTimer"
+             Interval="20000"
+             Enabled="true"/>
+    </Locals>
+
+    <Rules>
+
+      <Rule>
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[Sampler.LocalContentVideo03]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+
+      <Changed Source="[MyTimer.Tick]">
+        <Conditions>
+          <Equality ConditionOp="Equals"
+                    Source="[AddInHost.ApplicationContext.IsForegroundApplication]"
+                    Value="True" />
+          <Equality ConditionOp="Equals"
+                    Source="[AddInHost.MediaCenterEnvironment.MediaExperience.IsFullScreen]"
+                    Value="True" />
+        </Conditions>
+        <Actions>
+          <Invoke Target="[AddInHost.ApplicationContext.ReturnToApplication]" />
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="There is a 20 second timer which starts when this page loads."
+                Color="White" />
+          <Text Content="Press the button before the timer ticks to go to full screen."
+                Color="White" />
+          <Text Content="When the timer ticks, you will return to this page if the criteria are met."
+                Color="White" />
+          <b:SimpleButton MinimumSize="250,0"
+                          Padding="2,2,2,2"
+                          LabelFont="Tahoma,16" >
+            <Command>
+              <InvokeCommand Description="Go Fullscreen"
+                             Target="[AddInHost.MediaCenterEnvironment.MediaExperience.GoToFullScreen]"/>
+            </Command>
+          </b:SimpleButton>
+          <Video MinimumSize="400,300"/>
+        </Children>
+      </Panel>
+
+
+    </Content>
+  </UI>
+
+</Mcml>

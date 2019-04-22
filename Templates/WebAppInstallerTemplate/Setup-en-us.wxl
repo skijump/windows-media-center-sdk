@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+
+	<String Id="LaunchCondition_AdminPrivs">You must have Administrative rights on this machine to install [ProductName].</String>
+	<String Id="LaunchCondition_LaterVersion">A later version of [ProductName] is already installed.</String>
+	<String Id="LaunchCondition_WrongOSVersion">[ProductName] was not designed for this version of Windows Media Center.</String>
+
+  <String Id="Property_ArpHelpLink">PLACE_THE_HTTP_URL_HERE_FOR_END_USER_HELP_WITH_THE_INSTALLER</String>
+	<String Id="Property_ArpUrlInfoAbout">PLACE_THE_HTTP_URL_HERE_FOR_THE_APPLICATION_ABOUT_PAGE</String>
+	
+  <!-- Insert the proper LCID decimal value for the application from http://www.microsoft.com/globaldev/reference/lcid-all.mspx -->
+  <!-- The template defaults to 1033 which is English - United States -->
+  <String Id="Property_ProductLanguage">1033</String>
+  
+	<String Id="Property_ProductName">PLACE_YOUR_APPLICATION_NAME_HERE</String>
+	<String Id="Property_CompanyName">PLACE_YOUR_COMPANY_NAME_HERE</String>
+
+	<String Id="Package_Description">PLACE_YOUR_APPLICATION_NAME_HERE</String>
+	<String Id="Package_Comments">This Installer database contains the logic and data required to install PLACE_YOUR_APPLICATION_NAME_HERE.</String>
+
+</WixLocalization>

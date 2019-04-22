@@ -1,0 +1,335 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- The Windows Media Center extensibility platform includes a        -->
+  <!-- NavigateToPage API to direct Windows Media Center to navigate to  -->
+  <!-- a specified page in the Windows Media Center user interface. This -->
+  <!-- API takes a page ID as an input parameter. In some cases, it also -->
+  <!-- takes a set of additional parameters to provide context data to   -->
+  <!-- the page. A full list of supported page ID values can be found in -->
+  <!-- the Windows Media Center SDK documentation.                       -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <cor:String Name="TheExtensibilityURL"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/useragent.asp" />
+      <cor:String Name="ThePicturesFolder"
+                  String="C:\Users\Public\Pictures\Windows Media Center SDK\" />
+      <cor:String Name="APicturePath"
+                  String="C:\Users\Public\Pictures\Windows Media Center SDK\Photo01.jpg" />
+      <cor:String Name="TheVideoFolder"
+                  String="C:\Users\Public\Videos\Windows Media Center SDK" />
+      <cor:String Name="TheVisualization"
+                  String="Alchemy:Random" />
+      <cor:String Name="TheWebAddInUrl"
+                  String="http://retrosight.com/samples/windowsmediacentersdk/6/FundamentalsHelloWorld.mcml" />
+      <Command Name="MyExtensibilityEntryPointCommand"
+               Description="ExtensibilityEntryPoint" />
+      <Command Name="MyExtensibilityURLCommand"
+               Description="ExtensibilityURL" />
+      <Command Name="MyFMRadioCommand"
+               Description="FMRadio" />
+      <Command Name="MyInternetRadioCommand"
+               Description="InternetRadio" />
+      <Command Name="MyLiveTVCommand"
+               Description="LiveTV" />
+      <Command Name="MyMoreProgramsCommand"
+               Description="MorePrograms" />
+      <Command Name="MyMusicAlbumsCommand"
+               Description="MusicAlbums" />
+      <Command Name="MyMusicArtistsCommand"
+               Description="MusicArtists" />
+      <Command Name="MyMusicSongsCommand"
+               Description="MusicSongs" />
+      <Command Name="MyMusicCommand"
+               Description="MyMusic" />
+      <Command Name="MyPicturesCommand"
+               Description="MyPictures" />
+      <Command Name="MyPhotoDetailsCommand"
+               Description="Photo Details" />
+      <Command Name="MyTVCommand"
+               Description="MyTV" />
+      <Command Name="MyVideosCommand"
+               Description="MyVideos" />
+      <Command Name="MyRecordedTVCommand"
+               Description="RecordedTV" />
+      <Command Name="MyRecorderStorageSettingsCommand"
+               Description="RecorderStorageSettings" />
+      <Command Name="MyScheduledTVRecordingsCommand"
+               Description="ScheduledTVRecordings" />
+      <Command Name="MySlideShowCommand"
+               Description="SlideShow" />
+      <Command Name="MySlideshowSettings"
+               Description="SlideshowSettings" />
+      <Command Name="MyStartCommand"
+               Description="Start" />
+      <Command Name="MyTVGuideCommand"
+               Description="TVGuide" />
+      <Command Name="MyVisualizationsCommand"
+               Description="Visualizations" />
+      <Command Name="MyManageDisksCommand"
+               Description="ManageDisks" />
+      <Command Name="MyMovieLibraryCommand"
+               Description="MovieLibrary" />
+      <Command Name="MyWebAddInCommand"
+               Description="WebAddIn" />
+
+    </Locals>
+
+    <Rules>
+      <Changed Source="[MyExtensibilityURLCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="ExtensibilityURL"
+                  pageParameters="[TheExtensibilityURL]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyFMRadioCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="FMRadio"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyInternetRadioCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="InternetRadio"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyLiveTVCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="LiveTV"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyMoreProgramsCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="MorePrograms"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyMusicAlbumsCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="MusicAlbums"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyMusicArtistsCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="MusicArtists"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyMusicSongsCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="MusicSongs"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyMusicCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="MyMusic"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyPicturesCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="MyPictures"
+                  pageParameters="[ThePicturesFolder]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyPhotoDetailsCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="PhotoDetails"
+                  pageParameters="[APicturePath]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyTVCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="MyTV"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyVideosCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="MyVideos"
+                  pageParameters="[TheVideoFolder]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyRecordedTVCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="RecordedTV"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyRecorderStorageSettingsCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="RecorderStorageSettings"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyScheduledTVRecordingsCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="ScheduledTVRecordings"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MySlideShowCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="SlideShow"
+                  pageParameters="[ThePicturesFolder]"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MySlideshowSettings.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="SlideshowSettings"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyStartCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="Start"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyTVGuideCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="TVGuide"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyVisualizationsCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="Visualizations"
+                  pageParameters="[TheVisualization]"/>
+        </Actions>
+      </Changed>
+      <!-- ManageDisks only works when a DVD changer is attached. -->
+      <Changed Source="[MyManageDisksCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="ManageDisks"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyMovieLibraryCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="MovieLibrary"
+                  pageParameters="null"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[MyWebAddInCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                  pageId="WebAddIn"
+                  pageParameters="[TheWebAddInUrl]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <ctrl:Button Command="[MyExtensibilityURLCommand]"
+                           ButtonLabel="[MyExtensibilityURLCommand.Description]" />
+              <ctrl:Button Command="[MyFMRadioCommand]"
+                           ButtonLabel="[MyFMRadioCommand.Description]" />
+              <ctrl:Button Command="[MyInternetRadioCommand]"
+                           ButtonLabel="[MyInternetRadioCommand.Description]" />
+              <ctrl:Button Command="[MyLiveTVCommand]"
+                           ButtonLabel="[MyLiveTVCommand.Description]" />
+              <ctrl:Button Command="[MyMoreProgramsCommand]"
+                           ButtonLabel="[MyMoreProgramsCommand.Description]" />
+              <ctrl:Button Command="[MyMusicAlbumsCommand]"
+                           ButtonLabel="[MyMusicAlbumsCommand.Description]" />
+              <ctrl:Button Command="[MyMusicArtistsCommand]"
+                           ButtonLabel="[MyMusicArtistsCommand.Description]" />
+              <ctrl:Button Command="[MyMusicSongsCommand]"
+                           ButtonLabel="[MyMusicSongsCommand.Description]" />
+              <ctrl:Button Command="[MyMusicCommand]"
+                           ButtonLabel="[MyMusicCommand.Description]" />
+              <ctrl:Button Command="[MyPicturesCommand]"
+                           ButtonLabel="[MyPicturesCommand.Description]" />
+              <ctrl:Button Command="[MyPhotoDetailsCommand]"
+                           ButtonLabel="[MyPhotoDetailsCommand.Description]" />
+              <ctrl:Button Command="[MyTVCommand]"
+                           ButtonLabel="[MyTVCommand.Description]" />
+            </Children>
+          </Panel>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,.5"
+                               Right="Parent,1"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <ctrl:Button Command="[MyVideosCommand]"
+                           ButtonLabel="[MyVideosCommand.Description]" />
+              <ctrl:Button Command="[MyRecordedTVCommand]"
+                           ButtonLabel="[MyRecordedTVCommand.Description]" />
+              <ctrl:Button Command="[MyRecorderStorageSettingsCommand]"
+                           ButtonLabel="[MyRecorderStorageSettingsCommand.Description]" />
+              <ctrl:Button Command="[MyScheduledTVRecordingsCommand]"
+                           ButtonLabel="[MyScheduledTVRecordingsCommand.Description]" />
+              <ctrl:Button Command="[MySlideShowCommand]"
+                           ButtonLabel="[MySlideShowCommand.Description]" />
+              <ctrl:Button Command="[MySlideshowSettings]"
+                           ButtonLabel="[MySlideshowSettings.Description]" />
+              <ctrl:Button Command="[MyStartCommand]"
+                           ButtonLabel="[MyStartCommand.Description]" />
+              <ctrl:Button Command="[MyTVGuideCommand]"
+                           ButtonLabel="[MyTVGuideCommand.Description]" />
+              <ctrl:Button Command="[MyVisualizationsCommand]"
+                           ButtonLabel="[MyVisualizationsCommand.Description]" />
+              <ctrl:Button Command="[MyManageDisksCommand]"
+                           ButtonLabel="[MyManageDisksCommand.Description]" />
+              <ctrl:Button Command="[MyMovieLibraryCommand]"
+                           ButtonLabel="[MyMovieLibraryCommand.Description]" />
+              <ctrl:Button Command="[MyWebAddInCommand]"
+                           ButtonLabel="[MyWebAddInCommand.Description]" />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

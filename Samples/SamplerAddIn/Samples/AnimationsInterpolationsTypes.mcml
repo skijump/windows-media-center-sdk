@@ -1,0 +1,333 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://mscorlib/System"
+      xmlns:me="Me">
+
+  <!-- This sample demonstrates how to modify the way we interpolate from   -->
+  <!-- one keyframe value to another.                                       -->
+
+  <!-- There are seven supported interpolation types:                       -->
+  <!-- * Linear                                                             -->
+  <!-- * Exponential (Exp)                                                  -->
+  <!-- * Logarithmic (Log)                                                  -->
+  <!-- * S-Curve (SCurve)                                                   -->
+  <!-- * Sine (Sine)                                                        -->
+  <!-- * Cosine (Cosine)                                                    -->
+  <!-- * Simplified Bezier (Bezier)                                         -->
+
+  <!-- An interpolation specified on a keyframe specifies the curve used    -->
+  <!-- between that keyframe value and the next keyframe of the same type.  -->
+  <!-- No interpolation is necessary for the final keyframe.                -->
+
+  <!-- You specify your interpolation type on a Keyframe using the          -->
+  <!-- Interpolation property:                                              -->
+  <!--   <PositionKeyframe Interpolation="Linear"/>                         -->
+  <UI Name="Interpolations">
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      ItemAlignment="Fill"/>
+        </Layout>
+        <Children>
+
+          <!-- This bar represents the starting line. -->
+          <ColorFill Content="Red"
+                     MinimumSize="10,10"/>
+
+          <!-- The track -->
+          <ColorFill Content="DarkGreen"
+                     Layout="VerticalFlow">
+            <LayoutInput>
+              <DockLayoutInput Position="Left"/>
+            </LayoutInput>
+            <Children>
+
+              <!-- Here we have a flow of Horse UIs, each given a position  -->
+              <!-- animation with a different interpolation type.           -->
+
+              <!-- Linear -->
+              <me:Horse Label="Linear">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Linear"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </me:Horse>
+
+
+              <!-- Cosine -->
+              <me:Horse Label="Exp">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Exp"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </me:Horse>
+
+
+              <!-- Log -->
+              <me:Horse Label="Log">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Log"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </me:Horse>
+
+
+              <!-- SCurve -->
+              <me:Horse Label="SCurve">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="SCurve"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </me:Horse>
+
+
+              <!-- Sine -->
+              <me:Horse Label="Sine">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Sine"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </me:Horse>
+
+
+              <!-- Cosine -->
+              <me:Horse Label="Cosine">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Cosine"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </me:Horse>
+
+
+              <!-- Bezier -->
+              <me:Horse Label="Bezier">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="Bezier, 0.2, 0.8"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </me:Horse>
+
+              <!-- Ease In -->
+              <me:Horse Label="EaseIn">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="EaseIn, 1.0, 0.5"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </me:Horse>
+
+              <!-- Ease Out -->
+              <me:Horse Label="EaseOut">
+                <Animation>
+
+                  <Animation Loop="-1">
+                    <Keyframes>
+
+                      <PositionKeyframe Time="0.0"
+                                        Value="0,0,0"
+                                        Interpolation="EaseOut, 1.0, 0.5"/>
+                      <PositionKeyframe Time="2.0"
+                                        Value="400,0,0"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animation>
+              </me:Horse>
+
+
+            </Children>
+          </ColorFill>
+
+          <!-- This bar represents the finishing line. -->
+          <ColorFill Content="Red"
+                     MinimumSize="10,10"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+
+  <!-- This UI displays a horse that animates according to the passed in    -->
+  <!-- animation.                                                           -->
+  <UI Name="Horse">
+    <Properties>
+      <Animation Name="Animation"
+                 Animation="$Required"/>
+      <cor:String Name="Label"
+                  String=""/>
+      <Image Name="Image"
+             Image="resx://Sampler/Sampler.Resources/AnimationsInterpolationsTypesRaceHorse"/>
+    </Properties>
+
+    <Content>
+
+      <Panel Layout="VerticalFlow"
+             MinimumSize="400, 0">
+        <Children>
+
+          <!-- Label of the animation type -->
+          <Text Content="[Label]"
+                Color="White"
+                Font="Arial, 20"/>
+
+          <!-- The horse panel -->
+          <Panel>
+            <Animations>
+
+              <!-- Here we attach the animation that was passed in. -->
+              <Animation Animation="[Animation]"/>
+
+            </Animations>
+            <Children>
+
+              <!-- This is the actual horse graphic, which we will idly     -->
+              <!-- rock in time with the travel animation.                  -->
+              <Graphic Content="[Image]"
+                       MaintainAspectRatio="true"
+                       MaximumSize="100,0">
+                <Animations>
+
+                  <!-- Have the horses wiggle about as they move from left  -->
+                  <!-- to right so that they look more life-like.           -->
+                  <Animation Type="Idle"
+                             Loop="-1"
+                             CenterPointPercent="0.5,0.8,0.0">
+                    <Keyframes>
+
+                      <RotateKeyframe Time="0.00"
+                                      Value="0deg;0,0,1"
+                                      Interpolation="Log"/>
+                      <RotateKeyframe Time="0.25"
+                                      Value="-18deg;0,0,1"
+                                      Interpolation="Exp"/>
+                      <RotateKeyframe Time="0.65"
+                                      Value="10deg;0,0,1"
+                                      Interpolation="SCurve"/>
+                      <RotateKeyframe Time="1.00"
+                                      Value="-8deg;0,0,1"
+                                      Interpolation="SCurve"/>
+                      <RotateKeyframe Time="1.30"
+                                      Value="7deg;0,0,1"
+                                      Interpolation="SCurve"/>
+                      <RotateKeyframe Time="1.50"
+                                      Value="-6deg;0,0,1"
+                                      Interpolation="SCurve"/>
+                      <RotateKeyframe Time="1.75"
+                                      Value="4deg;0,0,1"
+                                      Interpolation="SCurve"/>
+                      <RotateKeyframe Time="2.00"
+                                      Value="0deg;0,0,1"/>
+
+                    </Keyframes>
+                  </Animation>
+
+                </Animations>
+              </Graphic>
+
+            </Children>
+          </Panel>
+
+          <!-- A separator between the horses. -->
+          <ColorFill MinimumSize="500,2"
+                     Content="White"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

@@ -1,0 +1,51 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test the application of various ColorFilter settings on Clip items. 
+       ColorFilter is implemented as a multiplicative operation where the
+       component colors of the filter are multiplied to the base's colors
+           Ex. Yellow=1.0, 1.0, 0.0  Green=0.0, 1.0, 0.0 
+               when multipled = 0.0, 1.0, 0.0 which equals Green.        
+       So in the example, Yellow with a Green ColorFilter results in Green -->
+
+
+  <UI Name="ClipColorFilter">
+    <Content>
+      <ColorFill Content="White"
+                 Layout="VerticalFlow">
+        <Children>
+
+          <me:ClipItem ColorFilterValue="Red"
+                       Description="Yellow Clip with ColorFilter=Red, results in Red"/>
+          <me:ClipItem ColorFilterValue="Green"
+                       Description="Yellow Clip with ColorFilter=Green, results in Green"/>
+          <me:ClipItem ColorFilterValue="Blue"
+                       Description="Yellow Clip with ColorFilter=Blue, results in Black"/>
+
+        </Children>
+      </ColorFill>
+    </Content>
+  </UI>
+
+  <UI Name ="ClipItem">
+    <Properties>
+      <Color Name="ColorFilterValue"
+             Color="Black"/>
+      <cor:String Name="Description"
+                  String="Description"/>
+    </Properties>
+
+    <Content>
+      <Clip Name="ClipItem"
+            ColorFilter="[ColorFilterValue]">
+        <Children>
+          <Text Color="Yellow"
+                Content="[Description]"/>
+        </Children>
+      </Clip>
+    </Content>
+
+  </UI>
+
+</Mcml>

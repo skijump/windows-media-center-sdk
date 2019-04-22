@@ -1,0 +1,248 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- This sample draws a bag of interactive peanuts.                      -->
+
+  <!-- The peanuts are all focusable items and change their look and feel   -->
+  <!-- when focus is given to them.  This is accomplished through the       -->
+  <!-- GainFocus and LoseFocus animation event types.  When set as the Type -->
+  <!-- of an animation, these animations will play when that UI changes key -->
+  <!-- focus ([Input.KeyFocus]).  GainFocus will be played when it changes  -->
+  <!-- to true, and LoseFocus will be played when it changes to false.      -->
+
+  <!-- This UI composes the bag and places a collection of Peanuts.  The    -->
+  <!-- Peanut UI will manage playing the individual peanut animations.      -->
+  <UI Name="GainLoseFocusAnimations">
+
+    <Properties>
+      <!-- These assets compose the bag that peanuts go in. -->
+      <Image Name="PeanutBag-Top"
+             Image="resx://Sampler/Sampler.Resources/AnimationsTypesGainLoseFocusBagTop"/>
+      <Image Name="PeanutBag-Bottom"
+             Image="resx://Sampler/Sampler.Resources/AnimationsTypesGainLoseFocusBagBottom"/>
+
+      <!-- There are 3 different peanut asset variaties so that not all the -->
+      <!-- peanuts look the same.                                           -->
+      <Image Name="Peanut-1"
+             Image="resx://Sampler/Sampler.Resources/AnimationsTypesGainLoseFocusPeanut1"/>
+      <Image Name="Peanut-2"
+             Image="resx://Sampler/Sampler.Resources/AnimationsTypesGainLoseFocusPeanut2"/>
+      <Image Name="Peanut-3"
+             Image="resx://Sampler/Sampler.Resources/AnimationsTypesGainLoseFocusPeanut3"/>
+    </Properties>
+
+    <Content>
+
+      <Panel Layout="Anchor">
+        <Children>
+
+          <!-- Anchor a description of the sample just below the peanut bag. -->
+          <Text Content="Hover your mouse over peanuts to give them focus and cause an animation to play.  Use the left and right directional arrows to move through peanuts."
+                Font="Arial, 20"
+                Color="White"
+                WordWrap="true">
+            <LayoutInput>
+              <AnchorLayoutInput Left="PeanutBag,-0.25"
+                                 Right="PeanutBag,1.25"
+                                 Top="PeanutBag,1, 5"/>
+            </LayoutInput>
+          </Text>
+
+          <!-- This is the top layer of the peanut bag that will display on -->
+          <!-- top of the peanuts.  Anchor it to the bottom peanut bag so   -->
+          <!-- that the images are the same size.                           -->
+          <Graphic Content="[PeanutBag-Top]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="PeanutBag,0"
+                                 Right="PeanutBag,1"
+                                 Top="PeanutBag,0"
+                                 Bottom="PeanutBag,1"/>
+            </LayoutInput>
+          </Graphic>
+
+
+          <!-- The following are all peanuts anchored to various points  -->
+          <!-- towards the top of the bag.  They are roughly arranged in -->
+          <!-- two rows and placed left to right.                        -->
+
+          <!-- Front row of peanuts -->
+
+          <me:Peanut Image="[Peanut-1]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,20"
+                                 Left="PeanutBag,0.20"/>
+            </LayoutInput>
+          </me:Peanut>
+
+          <me:Peanut Image="[Peanut-2]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,15"
+                                 Right="PeanutBag,0.60"/>
+            </LayoutInput>
+          </me:Peanut>
+
+          <me:Peanut Image="[Peanut-3]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,20"
+                                 Right="PeanutBag,0.85"/>
+            </LayoutInput>
+          </me:Peanut>
+
+          <!-- Back row of peanuts -->
+
+          <me:Peanut Image="[Peanut-1]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,-20"
+                                 Left="PeanutBag,0.10"/>
+            </LayoutInput>
+          </me:Peanut>
+
+          <me:Peanut Image="[Peanut-2]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,-5"
+                                 Left="PeanutBag,0.15"/>
+            </LayoutInput>
+          </me:Peanut>
+
+          <me:Peanut Image="[Peanut-3]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,-15"
+                                 Left="PeanutBag,0.30"/>
+            </LayoutInput>
+          </me:Peanut>
+
+          <me:Peanut Image="[Peanut-2]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,-10"
+                                 Left="PeanutBag,0.40"/>
+            </LayoutInput>
+          </me:Peanut>
+
+          <me:Peanut Image="[Peanut-3]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,-25"
+                                 Right="PeanutBag,0.70"/>
+            </LayoutInput>
+          </me:Peanut>
+
+          <me:Peanut Image="[Peanut-1]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,5"
+                                 Right="PeanutBag,0.80"/>
+            </LayoutInput>
+          </me:Peanut>
+
+          <me:Peanut Image="[Peanut-2]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="PeanutBag,0,0"
+                                 Right="PeanutBag,0.90"/>
+            </LayoutInput>
+          </me:Peanut>
+
+
+          <!-- This is the base layer of the peanut bag that will display   -->
+          <!-- underneath the peanuts.                                      -->
+          <Graphic Name="PeanutBag"
+                   Content="[PeanutBag-Bottom]"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+
+  <!-- This peanut UI contains one Graphic that paints the peanuts and an -->
+  <!-- animation that will play when the peanut gains and loses focus.    -->
+  <UI Name="Peanut">
+
+    <Properties>
+      <Image Name="Image"
+             Image="$Required"/>
+    </Properties>
+
+    <Rules>
+      <!-- Make this UI key interactive so that we can give it focus. -->
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+    </Rules>
+
+    <Content>
+
+      <Graphic Content="[Image]"
+               MouseInteractive="true">
+        <Animations>
+
+          <!-- Played when the peanut gaines key focus, this animation will -->
+          <!-- move the peanut up in Y, grow in scale, and wiggle a bit.    -->
+          <!-- It will leave the scale and position at non-Final            -->
+          <!-- coordinates, relying on a paired LoseFocus animation to      -->
+          <!-- return them to Final.                                        -->
+          <Animation Type="GainFocus"
+                     CenterPointPercent="0.5, 0.6, 0.5">
+            <Keyframes>
+              <ScaleKeyframe Time="0.00"
+                             Value="1,1,1"
+                             RelativeTo="Current"
+                             Interpolation="SCurve"/>
+              <ScaleKeyframe Time="0.15"
+                             Value="1.1,1.1,1.1"
+                             Interpolation="SCurve,0.5"/>
+
+              <PositionKeyframe Time="0.00"
+                                Value="0,0,0"
+                                RelativeTo="Current"
+                                Interpolation="SCurve,0.5"/>
+              <PositionKeyframe Time="0.15"
+                                Value="0,-50,0"
+                                Interpolation="SCurve,0.5"/>
+
+              <RotateKeyframe Time="0.00"
+                              Value="0deg;0,0,1"
+                              RelativeTo="Current"
+                              Interpolation="SCurve,0.5"/>
+              <RotateKeyframe Time="0.10"
+                              Value="-10deg;0,0,1"
+                              Interpolation="SCurve,0.5"/>
+              <RotateKeyframe Time="0.25"
+                              Value="8deg;0,0,1"
+                              Interpolation="SCurve,0.5"/>
+              <RotateKeyframe Time="0.45"
+                              Value="-5deg;0,0,1"
+                              Interpolation="SCurve,0.5"/>
+              <RotateKeyframe Time="0.70"
+                              Value="3deg;0,0,1"
+                              Interpolation="SCurve,0.5"/>
+              <RotateKeyframe Time="1.00"
+                              Value="0deg;0,0,1"/>
+            </Keyframes>
+          </Animation>
+
+          <!-- Played when the peanut loses key focus, this animation will -->
+          <!-- return its scale and position to the proper place.          -->
+          <Animation Type="LoseFocus"
+                     CenterPointPercent="0.5, 0.6, 0.5">
+            <Keyframes>
+              <ScaleKeyframe Time="0.00"
+                             Value="1,1,1"
+                             RelativeTo="Current"
+                             Interpolation="Exp"/>
+              <ScaleKeyframe Time="0.40"
+                             Value="1,1,1"/>
+
+              <PositionKeyframe Time="0.00"
+                                Value="0,0,0"
+                                RelativeTo="Current"
+                                Interpolation="Exp, 0.5"/>
+              <PositionKeyframe Time="0.40"
+                                Value="0,0,0"/>
+            </Keyframes>
+          </Animation>
+
+        </Animations>
+      </Graphic>
+
+    </Content>
+  </UI>
+
+</Mcml>

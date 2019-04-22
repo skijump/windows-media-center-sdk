@@ -1,0 +1,109 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:me="Me">
+
+  <!-- The Scroller ViewItem enables scrolling of arbitrary content that   -->
+  <!-- that can't fit within the space provided. A Scroller may only have  -->
+  <!-- a single child.                                                     -->
+
+  <!-- The simplest use of Scroller is to put it in your UI's content with -->
+  <!-- a set of focusable (key-interactive) children. By default, the      -->
+  <!-- Scroller will keep the descendent with focus always in view.        -->
+
+  <!-- The example shows the use of Scrolling in focus-based mode. It does -->
+  <!-- nothing more than keep descendents in view. It doesn't handle keys  -->
+  <!-- like page-up/page-down/home/end/etc. Key handling in focus and      -->
+  <!-- non-focus scrolling scenarios are shown in other samples.           -->
+
+  <!-- The example also shows the Orientation property and the FadeSize    -->
+  <!-- property. A negative fade size means that fading of Scroller        -->
+  <!-- happens *outside* of the Scroller. A negative fade size is used     -->
+  <!-- here in combination of the use of padding on the parent to give the -->
+  <!-- best clipping effect. A fade-size of 0 means "no-clip". For a hard  -->
+  <!-- clip on content, use a fade size of 1.                              -->
+
+  <UI Name="Scroller">
+
+    <Content>
+      <ColorFill Content="PaleGoldenrod"
+                 Padding="10,10,10,10"
+                 MaximumSize="0,410">
+        <Children>
+
+          <!-- Really simple use of Scroller. -->
+          <Scroller Orientation="Vertical"
+                    FadeSize="-5">
+            <Children>
+              <Panel Layout="VerticalFlow">
+                <Children>
+                  <me:ListItem Description="Test Item 00"/>
+                  <me:ListItem Description="Test Item 01"/>
+                  <me:ListItem Description="Test Item 02"/>
+                  <me:ListItem Description="Test Item 03"/>
+                  <me:ListItem Description="Test Item 04"/>
+                  <me:ListItem Description="Test Item 05"/>
+                  <me:ListItem Description="Test Item 06"/>
+                  <me:ListItem Description="Test Item 07"/>
+                  <me:ListItem Description="Test Item 08"/>
+                  <me:ListItem Description="Test Item 09"/>
+                  <me:ListItem Description="Test Item 10"/>
+                  <me:ListItem Description="Test Item 11"/>
+                  <me:ListItem Description="Test Item 12"/>
+                  <me:ListItem Description="Test Item 13"/>
+                  <me:ListItem Description="Test Item 14"/>
+                  <me:ListItem Description="Test Item 15"/>
+                  <me:ListItem Description="Test Item 16"/>
+                  <me:ListItem Description="Test Item 17"/>
+                  <me:ListItem Description="Test Item 18"/>
+                  <me:ListItem Description="Test Item 19"/>
+                  <me:ListItem Description="Test Item 20"/>
+                  <me:ListItem Description="Test Item 21"/>
+                  <me:ListItem Description="Test Item 22"/>
+                  <me:ListItem Description="Test Item 23"/>
+                  <me:ListItem Description="Test Item 24"/>
+                  <me:ListItem Description="Test Item 25"/>
+                </Children>
+              </Panel>
+            </Children>
+          </Scroller>
+
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+
+  <!-- A UI that is key-interactive for demonstrating the Scroller. -->
+  <UI Name="ListItem">
+    <Properties>
+      <cor:String Name="Description"
+                  String="null"/>
+    </Properties>
+
+    <Rules>
+
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Color]"
+               Value="Firebrick"/>
+          <Set Target="[Label.BackColor]"
+               Value="Silver"/>
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+      <Text Name="Label"
+            Content="[Description]"
+            Font="Verdana,25"
+            Color="MediumSlateBlue"
+            BackColor="Transparent"/>
+    </Content>
+  </UI>
+
+</Mcml>

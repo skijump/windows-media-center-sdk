@@ -1,0 +1,76 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:host="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- The MediaContext object is only populated on invocation of a More   -->
+  <!-- With This integration location; This sample will only work in that  -->
+  <!-- context (i.e., won't work unless launched with More With This.      -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <host:AddInHost Name="AddInHost"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[MyTitle.PropertyValue]"
+               Source="[AddInHost.MediaContext!coll:IDictionary.#Title.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaContext!coll:IDictionary.#Title.ToString]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[MyMPAARating.PropertyValue]"
+               Source="[AddInHost.MediaContext!coll:IDictionary.#MPAARating.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaContext!coll:IDictionary.#MPAARating.ToString]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[MyDuration.PropertyValue]"
+               Source="[AddInHost.MediaContext!coll:IDictionary.#Duration.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaContext!coll:IDictionary.#Duration.ToString]"/>
+        </Conditions>
+      </Binding>
+      <Binding Target="[MyUri.PropertyValue]"
+               Source="[AddInHost.MediaContext!coll:IDictionary.#Uri.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaContext!coll:IDictionary.#Uri.ToString]"/>
+        </Conditions>
+      </Binding>
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Center">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <ctrl:PropertyAndValue Name="MyTitle"
+                                     PropertyName="Title"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyMPAARating"
+                                     PropertyName="MPAARating"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyDuration"
+                                     PropertyName="Duration"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyUri"
+                                     PropertyName="Uri"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

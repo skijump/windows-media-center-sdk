@@ -1,0 +1,62 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:sys="assembly://System/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- This sample should be loaded in the Preview Tool running within     -->
+  <!-- Windows Media Center in order to launch the Sample Explorer.        -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost" />
+      <Command Name="MyCommand"
+               Description="LaunchEntryPoint" />
+      <coll:ArrayList Name="MyParameterList"/>
+      <cor:String Name="MyParameter1"
+                  String="MyParameter1"/>
+      <cor:String Name="MyParameter2"
+                  String="MyParameter2"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[MyCommand.Invoked]">
+        <Actions>
+          <Set Target="[MyParameterList.Add]"
+               Value="[MyParameter1]"
+               ExclusiveApply="false"
+               InvokePolicy="Synchronous"/>
+          <Set Target="[MyParameterList.Add]"
+               Value="[MyParameter2]"
+               ExclusiveApply="false"
+               InvokePolicy="Synchronous"/>
+          <!-- These are the GUIDs for the Sampler application. -->
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.LaunchEntryPoint]"
+                  appId="{bce681ec-a838-4bf3-a124-97674b74851b}"
+                  entryPointId="{7f1e2adf-5006-44fb-8f3d-095e635ab443}"
+                  parameters="[MyParameterList.ToArray]"
+                  InvokePolicy="Synchronous" />
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:Button Command="[MyCommand]"
+                       ButtonLabel="[MyCommand.Description]"/>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,282 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:me="Me">
+
+  <!-- This sample demonstrates how to lock focus in a scrolling list to   -->
+  <!-- a particular position (for example, center locked).                 -->
+
+  <!-- We can control focus locking via the ScrollingData object           -->
+  <!-- (discussed in the List Scrolling sample).                           -->
+
+  <!-- LockedPosition defines what position within the scroll space we     -->
+  <!-- lock focus to.  A value of 0.5 would be in the center; 0.0 would be -->
+  <!-- the left (or top) end; 1.0 would be the right (or bottom) end.      -->
+
+  <!-- LockedAlignment defines what part of the focus we will align with   -->
+  <!-- the LockedPosition.  As with LockedPosition the values range from   -->
+  <!-- 0.0 to 1.0.                                                         -->
+
+  <!-- The following markup will display three scrolling lists.  The only  -->
+  <!-- difference between the lists will be in their focus locking.        -->
+  <!-- * The first list will be center locked (the center of the focus is  -->
+  <!--   aligned to the center position within the scroller)               -->
+  <!-- * The second list will be left locked (the left edge of the focus   -->
+  <!--   is aligned to the left edge of the scroller)                      -->
+  <!-- * The third list will be right locked (the right edge of the focus  -->
+  <!--   is aligned to the right edge of the scroller)                     -->
+
+  <UI Name="FocusLocking">
+
+    <Locals>
+
+      <!-- The list that we will be repeating -->
+      <ArrayListDataSet Name="List">
+        <Source>
+          <cor:String String="A"/>
+          <cor:String String="B"/>
+          <cor:String String="C"/>
+          <cor:String String="D"/>
+          <cor:String String="E"/>
+          <cor:String String="F"/>
+          <cor:String String="G"/>
+          <cor:String String="H"/>
+          <cor:String String="I"/>
+          <cor:String String="J"/>
+          <cor:String String="K"/>
+          <cor:String String="L"/>
+          <cor:String String="M"/>
+          <cor:String String="N"/>
+          <cor:String String="O"/>
+          <cor:String String="P"/>
+          <cor:String String="Q"/>
+          <cor:String String="R"/>
+          <cor:String String="S"/>
+          <cor:String String="T"/>
+          <cor:String String="U"/>
+          <cor:String String="V"/>
+          <cor:String String="W"/>
+          <cor:String String="X"/>
+          <cor:String String="Y"/>
+          <cor:String String="Z"/>
+        </Source>
+      </ArrayListDataSet>
+
+    </Locals>
+
+    <Content>
+
+      <Panel Layout="Anchor">
+        <Children>
+
+          <!-- Our three lists -->
+          <Panel Layout="VerticalFlow"
+                 Navigation="Column">
+            <Children>
+
+              <!-- A center locked list -->
+
+              <Text Content="1) Center Locked"
+                    Color="White"
+                    Font="Tahoma,20"/>
+
+              <me:ScrollingList Content="[List]">
+                <!-- Construct a ScrollingData with position and alignment -->
+                <!-- centered                                              -->
+                <ScrollingData>
+                  <ScrollingData LockedPosition="0.5"
+                                 LockedAlignment="0.5"/>
+                </ScrollingData>
+              </me:ScrollingList>
+
+
+              <!-- A left locked list -->
+
+              <Text Content="2) Left Locked"
+                    Color="White"
+                    Font="Tahoma,20"
+                    Margins="0,10,0,0"/>
+
+              <me:ScrollingList Content="[List]">
+                <!-- Construct a ScrollingData with position and alignment -->
+                <!-- set to the left edges                                 -->
+                <ScrollingData>
+                  <ScrollingData LockedPosition="0.0"
+                                 LockedAlignment="0.0"/>
+                </ScrollingData>
+              </me:ScrollingList>
+
+
+              <!-- A right locked list -->
+
+              <Text Content="3) Right Locked"
+                    Color="White"
+                    Font="Tahoma,20"
+                    Margins="0,10,0,0"/>
+
+              <me:ScrollingList Content="[List]">
+                <!-- Construct a ScrollingData with position and alignment -->
+                <!-- set to the left edges                                 -->
+                <ScrollingData>
+                  <ScrollingData LockedPosition="1.0"
+                                 LockedAlignment="1.0"/>
+                </ScrollingData>
+              </me:ScrollingList>
+
+            </Children>
+          </Panel>
+
+          <!-- Display colored strips along the 3 places where we will be  -->
+          <!-- focus locking.                                              -->
+
+          <!-- A marker along the center line -->
+          <ColorFill Content="0.1,1.0,1.0,1.0">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0.5,-15"
+                                 Right="Parent,0.5,15"
+                                 Top="Parent,0"
+                                 Bottom="Parent,1"/>
+            </LayoutInput>
+          </ColorFill>
+
+          <!-- A marker along the left edge -->
+          <ColorFill Content="0.1,1.0,1.0,1.0">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0,30"
+                                 Right="Parent,0,60"
+                                 Top="Parent,0"
+                                 Bottom="Parent,1"/>
+            </LayoutInput>
+          </ColorFill>
+
+          <!-- A marker along the right edge -->
+          <ColorFill Content="0.1,1.0,1.0,1.0">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,1,-60"
+                                 Right="Parent,1,-30"
+                                 Top="Parent,0"
+                                 Bottom="Parent,1"/>
+            </LayoutInput>
+          </ColorFill>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+
+  <!-- This is our list of scrolling content -->
+  <UI Name="ScrollingList">
+
+    <Properties>
+
+      <!-- The content we want to scroll -->
+      <ArrayListDataSet Name="Content"
+                        ArrayListDataSet="$Required"/>
+
+      <!-- Scrolling state that will be preconfigured with the desired     -->
+      <!-- locking behavior.                                               -->
+      <ScrollingData Name="ScrollingData"
+                     ScrollingData="$Required"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- The ScrollingHandler which reacts to user keyboard input. -->
+      <!-- Associate it with our scrolling data.                     -->
+      <!-- NOTE: HandlerStage must be "Bubbled".                     -->
+      <ScrollingHandler Name="ScrollingHandler"
+                        ScrollingData="[ScrollingData]"
+                        HandlerStage="Bubbled"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- Give our Repeater to ScrollingData. -->
+      <Default Target="[ScrollingData.Repeater]"
+               Value="[ListRepeater]"/>
+
+    </Rules>
+
+    <Content>
+
+      <!-- The Scroller -->
+      <Scroller Orientation="Horizontal"
+                ScrollingData="[ScrollingData]"
+                Navigation="ContainHorizontal">
+        <Children>
+
+          <!-- The Repeater - a direct child of the Scroller -->
+          <Repeater Name="ListRepeater"
+                    Source="[Content]">
+            <Layout>
+              <FlowLayout Orientation="Horizontal"
+                          Spacing="10,0"
+                          ItemAlignment="Center"/>
+            </Layout>
+            <Content>
+
+              <!-- The item to repeat -->
+              <me:ListItem Description="[RepeatedItem!cor:String]"/>
+
+            </Content>
+          </Repeater>
+
+        </Children>
+      </Scroller>
+
+    </Content>
+
+  </UI>
+
+  <!-- A UI that is key-interactive for demonstrating the Scroller. -->
+  <!-- It is what is used within the Repeater's Content for the     -->
+  <!-- list items.                                                  -->
+  <UI Name="ListItem">
+    <Properties>
+      <cor:String Name="Description"
+                  String="$Required"/>
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Image.Content]"
+               Value="resx://Sampler/Sampler.Resources/ScrollingLockingYellowStar"/>
+          <Set Target="[Label.Color]"
+               Value="White"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+
+          <Graphic Name="Image"
+                   Content="resx://Sampler/Sampler.Resources/ScrollingLockingPurpleStar"
+                   MinimumSize="90,95"/>
+
+          <Text Name="Label"
+                Content="[Description]"
+                Color="SlateGray"
+                Font="Tahoma,24"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

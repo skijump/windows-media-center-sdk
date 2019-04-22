@@ -1,0 +1,36 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting">
+
+  <UI Name="Test">
+
+    <Properties>
+      <Color Name="MyColor"
+             Color="White"/>
+      <addin:HistoryOrientedPageSession Name="Session"
+                                        HistoryOrientedPageSession="$Required" />
+    </Properties>
+
+    <Locals>
+      <cor:String Name="MyString"
+                  String="Hello"/>
+    </Locals>
+
+    <Rules>
+      <Default Target="[MyText.Content]"
+               Value="[MyString]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Text Name="MyText"
+                Color="[MyColor]"
+                Font="Calibri, 24"/>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

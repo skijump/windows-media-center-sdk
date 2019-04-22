@@ -1,0 +1,145 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:ctrl="http://retrosight.com/samples/windowsmediacentersdk/6/Controls.mcml">
+
+  <UI Name="Default">
+
+    <!-- The Response Headers is the fundamental piece of data           -->
+    <!-- used with Data Access Model Items. It is what will ultimately   -->
+    <!-- be bound to the content (view items) in the UI.                 -->
+
+    <!-- You can use GetDataFromResource with a web service to request   -->
+    <!-- response headers only without a response document being         -->
+    <!-- returned - by using HEAD as request method. This sample         -->
+    <!-- demonstrates you can test the various status codes and response -->
+    <!-- headers without actually binding data.                          -->
+
+    <!-- Web samples are designed to work when loaded       -->
+    <!-- via the HTTP:// or HTTPS:// protocol. Generally    -->
+    <!-- speaking, opening these samples using FILE:// will -->
+    <!-- not produce the desired results.                   -->
+
+    <Locals>
+      <!-- Construct Data Access Model Item -->
+      <da:RemoteResourceUri Name="MyRemoteResourceUri"/>
+      <da:XmlRemoteResource Name="MyXmlRemoteResource">
+        <Mappings>
+          <da:XmlRemoteValue Name="Title"
+                             Source="/feed/title" />
+        </Mappings>
+      </da:XmlRemoteResource>
+      <EditableText Name="MyEditableText"
+                    Value="http://retrosight.com/samples/windowsmediacentersdk/6/WebDataResponseDocumentData01.xml"/>
+      <Command Name="MyCommand1"
+               Description="Get Data From Resource"/>
+      <Command Name="MyCommand2"
+               Description="Show Response Headers"/>
+      <ArrayListDataSet Name="ResponseKeys"/>
+      <ArrayListDataSet Name="ResponseValues"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[MyRemoteResourceUri.FullString]"
+               Source="[MyEditableText.Value.ToString]" />
+      <!-- Invoke data request, using method HEAD -->
+      <Changed Source="[MyCommand1.Invoked]">
+        <Actions>
+          <Set Target="[MyXmlRemoteResource.RequestUri]"
+               Value="[MyRemoteResourceUri]"/>
+          <Set Target="[MyXmlRemoteResource.RequestMethod]"
+               Value="HEAD"/>
+          <Invoke Target="[MyXmlRemoteResource.GetDataFromResource]"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <!-- Fetch response headers -->
+      <Changed Source="[MyCommand2.Invoked]">
+        <Actions>
+          <Invoke Target="[ResponseKeys.Clear]"/>
+          <Invoke Target="[ResponseValues.Clear]"/>
+          <Invoke Target="[ResponseKeys.CopyFrom]"
+                  source="[MyXmlRemoteResource.ResponseHeaders.Keys]"/>
+          <Invoke Target="[ResponseValues.CopyFrom]"
+                  source="[MyXmlRemoteResource.ResponseHeaders.Values]"/>
+        </Actions>
+      </Changed>
+      <!-- Binding status code with view items -->
+      <Changed Source="[MyXmlRemoteResource.ResponseStatusDescription]">
+        <Conditions>
+          <IsValid Source="[MyXmlRemoteResource.ResponseStatusDescription]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[MyResponseStatusDescription.PropertyValue]"
+               Value="[MyXmlRemoteResource.ResponseStatusDescription]"/>
+        </Actions>
+      </Changed>
+      <Binding Target="[MyStatus.PropertyValue]"
+               Source="[MyXmlRemoteResource.Status.ToString]" />
+      <Binding Target="[MyResponseStatusCode.PropertyValue]"
+               Source="[MyXmlRemoteResource.ResponseStatusCode.ToString]" />
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <!-- controls -->
+              <ctrl:Editbox EditableText="[MyEditableText]"
+                            LabelName="Uri" />
+              <ctrl:Button Command="[MyCommand1]"
+                           ButtonLabel="[MyCommand1.Description]" />
+              <ctrl:Button Command="[MyCommand2]"
+                           ButtonLabel="[MyCommand2.Description]" />
+              <!-- display status -->
+              <ctrl:PropertyAndValue Name="MyStatus"
+                                     PropertyName="Status"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyResponseStatusCode"
+                                     PropertyName="Response Status Code"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyResponseStatusDescription"
+                                     PropertyName="Response Status Description"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+          <!-- Display response headers using repeater -->
+          <Panel Layout="HorizontalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.5"
+                               Right="Parent,1"
+                               Vertical="Center" />
+            </LayoutInput>
+            <Children>
+              <Repeater Layout="VerticalFlow"
+                        Source="[ResponseKeys]">
+                <Content>
+                  <Text Content="[RepeatedItem!cor:String]"
+                        Color="White"
+                        Font="Calibri, 10"/>
+                </Content>
+              </Repeater>
+              <Repeater Layout="VerticalFlow"
+                        Source="[ResponseValues]">
+                <Content>
+                  <Text Content="[RepeatedItem!cor:String]"
+                        Color="White"
+                        Font="Calibri, 10"/>
+                </Content>
+              </Repeater>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

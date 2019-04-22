@@ -1,0 +1,21 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:styles="resx://Sampler/Sampler.Resources/Styles">
+
+  <UI Name="GroupHeader">
+
+    <Properties>
+      <cor:String Name="GroupName"
+                  String="Test" />
+    </Properties>
+
+
+    <Content>
+      <Text Name="MyText" Content="[GroupName]"
+            Font="font://styles:Text"
+            Color="color://styles:GroupHeader"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

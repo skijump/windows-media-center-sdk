@@ -1,0 +1,53 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <!-- This example is how you would set SingleInstance from a web         -->
+  <!-- application. A local assembly would use managed code (C#) to        -->
+  <!-- accomplish the same task.                                           -->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <cor:Random Name="Random"/>
+      <cor:Int32 Name="Value"/>
+    </Locals>
+
+    <Rules>
+
+      <Default Target="[AddInHost.ApplicationContext.SingleInstance]"
+               Value="True" />
+
+      <Binding Target="[Label.Content]"
+               Source="[Value.ToString]" />
+
+      <Rule>
+        <Actions>
+          <!-- A random number so we can easily check to see if -->
+          <!-- we are returning to the same application instance.-->
+          <Invoke Target="[Random.Next]"
+                  maxValue="100000"
+                  ResultTarget="[Value]" />
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Text Name="Label"
+                Color="White" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

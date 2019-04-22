@@ -1,0 +1,26 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <UI Name="Default">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <Text Content="Text with Color=White"
+                Color="White"/>
+          <Text Content="Text with Color=Red"
+                Color="Red"/>
+          <Text Content="Text with Color=Blue"
+                Color="Blue"/>
+          <Text Content="Text with Color=Green"
+                Color="Green"/>
+          <Text Content="Text with Color=Yellow"
+                Color="Yellow"/>
+          <Text Content="Text with Color=100,100,100 (RGB)"
+                Color="100,100,100" />
+          <Text Content="Text with default color (black)."/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

@@ -1,0 +1,118 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MScorLib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls"
+      xmlns:header="resx://Sampler/Sampler.Resources/Header"
+      xmlns:a="assembly://Sampler/Sampler"
+      xmlns:me="Me">
+
+  <UI Name="Default">
+
+    <Properties>
+      <addin:HistoryOrientedPageSession Name="Session"
+                                        HistoryOrientedPageSession="$Required" />
+      <ArrayListDataSet Name="Categories"
+                        ArrayListDataSet="$Required" />
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <Environment Name="Environment"/>
+      <ScrollingHandler Name="ScrollingHandler"
+                        HandlerStage="Bubbled"/>
+      <ScrollingData Name="ScrollingData" />
+    </Locals>
+
+    <Rules>
+      <Default Target="[ScrollingHandler.ScrollingData]"
+               Value="[ScrollingData]"/>
+      <Default Target="[ScrollingData.Repeater]"
+               Value="[ListRepeater]"/>
+
+    </Rules>
+
+    <Content>
+      <Panel Name="MainPanel"
+             Layout="Form">
+        <Children>
+          <header:Default Session="[Session]" Title="Categories">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0" Top="Parent,0"/>
+            </LayoutInput>
+          </header:Default>
+          <Panel>
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.05"
+                               Top="Parent,.25"
+                               Right="Parent,0.95"
+                               Bottom="Parent,.75"/>
+            </LayoutInput>
+            <Children>
+              <Scroller Orientation="Horizontal"
+                        FadeSize="-30"
+                        ScrollingData="[ScrollingData]">
+                <Children>
+                  <Repeater Name="ListRepeater"
+                            Source="[Categories]">
+                    <Layout>
+                      <GridLayout Orientation="Vertical"
+                                  AllowWrap="true"
+                                  Spacing="20,10"/>
+                    </Layout>
+                    <Content>
+                      <me:CategoryButton Label="[RepeatedItem!cor:String]" Sampler="[Sampler]"/>
+                    </Content>
+                    <Animations>
+                      <Animation Type="Move">
+                        <Keyframes>
+                          <PositionKeyframe Time="0"
+                                            Value="0,0,0"
+                                            RelativeTo="Current"/>
+                          <PositionKeyframe Time=".2"
+                                            Value="0,0,0"/>
+                        </Keyframes>
+                      </Animation>
+                    </Animations>
+                  </Repeater>
+                </Children>
+              </Scroller>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+    
+  </UI>
+
+  <UI Name="CategoryButton">
+    
+    <Properties>
+      <cor:String Name="Label"
+                  String="$Required" />
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+
+    <Locals>
+      <Command Name="PageNavigation" />
+    </Locals>
+
+    <Rules>
+      <Changed Source="[PageNavigation.Invoked]">
+        <Actions>
+          <Invoke Target="[Sampler.NavigateToSamples]"
+                  CategoryName="[Label]" />
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <ctrl:Button Command="[PageNavigation]"
+                   ButtonLabel="[Label]"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

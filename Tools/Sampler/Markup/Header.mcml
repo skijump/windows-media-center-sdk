@@ -1,0 +1,62 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls"
+      xmlns:styles="resx://Sampler/Sampler.Resources/Styles"
+      xmlns:cor="assembly://MScorLib/System">
+
+  <UI Name="Default">
+
+    <Properties>
+      <addin:HistoryOrientedPageSession Name="Session"
+                                        HistoryOrientedPageSession="$Required" />
+      <cor:String Name="Title"
+                  String="Page Title" />
+      <cor:String Name="SamplerName"
+                  String="Windows Media Center SDK Sample Explorer" />
+    </Properties>
+
+    <Locals>
+      <Command Name="GoToMainMenu"
+               Description="resx://Sampler/Sampler.Resources/GoToMainMenu" />
+    </Locals>
+
+    <Rules>
+
+      <Changed Source="[GoToMainMenu.Invoked]">
+        <Actions>
+          <Navigate Source="@resx://Sampler/Sampler.Resources/Default"
+                    Session="[Session]" />
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Text Color="White"
+                Font="font://styles:HeaderText"
+                Content="[Title]"
+                Alpha="0.5">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,.05"
+                               Top="Parent,0.1"/>
+            </LayoutInput>
+          </Text>
+          <Text Color="White"
+                Font="font://styles:HeaderText"
+                Content="[SamplerName]"
+                Alpha="0.5">
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,.95"
+                               Top="Parent,0.1"/>
+            </LayoutInput>
+          </Text>
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

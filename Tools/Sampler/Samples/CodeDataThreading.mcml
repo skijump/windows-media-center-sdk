@@ -1,0 +1,422 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:c="assembly://Sampler,Version=7.0.2009.0228,Culture=Neutral,PublicKeyToken=27f898ecd1eb808a/Sampler.CodeData.Threading"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls"
+      xmlns:me="Me">
+
+  <UI Name="Threading">
+    <Properties>
+
+      <!-- This is the model item that we will use to look for         -->
+      <!-- prime numbers.  It does the search on a background thread   -->
+      <!-- and fires notifications to the app thread so we can update  -->
+      <!-- our UI.                                                     -->
+
+      <!-- We declare it as a property rather than a local so that our -->
+      <!-- InvokeCommands below can reference it.                      -->
+      <c:PrimeFinder Name="PrimeFinder"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- These are commands that we will use to control the  -->
+      <!-- operation of the PrimeFinder                        -->
+      <InvokeCommand Name="StartCommand"
+                     Description="Start"
+                     Target="[PrimeFinder.Start]"/>
+      <InvokeCommand Name="StopCommand"
+                     Description="Stop"
+                     Target="[PrimeFinder.Stop]"/>
+      <InvokeCommand Name="ResetCommand"
+                     Description="Reset"
+                     Target="[PrimeFinder.Reset]"/>
+
+      <!-- This is a timer that we use for refreshing our elapsed time. -->
+      <Timer Name="ElapsedTimer"
+             Interval="500"/>
+
+      <!-- Declarations for common properties that we use in multiple places. -->
+      <Font Name="TextFont"
+            Font="Courier, 18"/>
+      <Color Name="TextColor"
+             Color="Black"/>
+      <Color Name="OutlineColor"
+             Color="DimGray"/>
+
+    </Locals>
+
+    <Rules>
+      <!-- When our update timer ticks, update the elapsed time display. -->
+      <Changed Source="[ElapsedTimer.Tick]">
+        <Actions>
+          <Set Target="[TotalTimeSpent.Content]"
+               Value="[PrimeFinder.ElapsedTime]">
+            <Transformer>
+              <TimeSpanTransformer Format="Long"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Changed>
+
+      <!-- When the finder is started/stopped, enable/disable our update timer -->
+      <Condition Source="[PrimeFinder.Status]"
+                 SourceValue="Stopped"
+                 Target="[ElapsedTimer.Enabled]"
+                 Value="false"/>
+      <Condition Source="[PrimeFinder.Status]"
+                 SourceValue="Started"
+                 Target="[ElapsedTimer.Enabled]"
+                 Value="true"/>
+
+      <!-- Change the color of the status text depending on the actual status -->
+      <Condition Source="[PrimeFinder.Status]"
+                 SourceValue="Stopped"
+                 Target="[Status.Color]"
+                 Value="DarkRed"/>
+      <Condition Source="[PrimeFinder.Status]"
+                 SourceValue="PendingStop"
+                 Target="[Status.Color]"
+                 Value="Yellow"/>
+      <Condition Source="[PrimeFinder.Status]"
+                 SourceValue="Started"
+                 Target="[Status.Color]"
+                 Value="LawnGreen"/>
+
+      <!-- Bind the finder's status value to our display text -->
+      <Binding Source="[PrimeFinder.Status.ToString]"
+               Target="[Status.Content]"/>
+
+      <!-- Format our text for the candidate we're currently testing -->
+      <Binding Source="[PrimeFinder.CurrentCandidate]"
+               Target="[CurrentCandidate.Content]">
+        <Transformer>
+          <FormatTransformer Format="Current Candidate: {0:N0}"/>
+        </Transformer>
+      </Binding>
+
+      <!-- Format our text for the number of primes found so far -->
+      <Binding Source="[PrimeFinder.Primes.Count]"
+               Target="[PrimesFound.Content]">
+        <Transformer>
+          <FormatTransformer Format="Primes Found: {0:N0}"/>
+        </Transformer>
+      </Binding>
+
+      <!-- We re-use the same button for Stop and Reset.                                         -->
+      <!-- If the finder is started, change it to Stop, and if it's stopped, change it to Reset. -->
+      <Condition Source="[PrimeFinder.Status]"
+                 SourceValue="Stopped"
+                 Target="[StopReset.Command]"
+                 Value="[ResetCommand]"/>
+      <Condition Source="[PrimeFinder.Status]"
+                 SourceValue="Started"
+                 Target="[StopReset.Command]"
+                 Value="[StopCommand]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+
+          <!-- Selection marker that will anchor itself to the current focus. -->
+          <me:FocusSelector>
+            <LayoutInput>
+              <FormLayoutInput Left="Focus,0,-3"
+                               Right="Focus,1,3"
+                               Top="Focus,0,-3"
+                               Bottom="Focus,1,3"
+                               ContributesToHeight="false"
+                               ContributesToWidth="false"/>
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:SizeAnimation"/>
+              <Animation Animation="animation://me:MoveAnimation"/>
+            </Animations>
+          </me:FocusSelector>
+
+
+          <!-- Header Area -->
+          <ColorFill Content="[OutlineColor]"
+                     Name="Header"
+                     Padding="3,3,3,3">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,1"
+                               Top="Parent,0"/>
+            </LayoutInput>
+            <Children>
+
+              <ColorFill Content="CadetBlue"
+                         Layout="VerticalFlow">
+                <Children>
+
+                  <!-- Descriptive Text -->
+                  <Text  WordWrap="true"
+                         Color="[TextColor]"
+                         Font="Segoe,16"
+                         Margins="5,5,5,5"
+                         Content="Almost all MCML APIs are strictly single-threaded.  This sample shows how to use Application.DeferredInvokeOnWorkerThread and Application.DeferredInvoke to perform work on a background thread, and surface the results to the Application thread.  Primes are searched for on a background thread, and the results and status are sent back to the main Application thread."/>
+
+                  <!-- Separator -->
+                  <Panel Layout="Fill"
+                         MaximumSize="0,3">
+                    <Children>
+                      <ColorFill Name="Separator"
+                                 Content="[OutlineColor]"/>
+                    </Children>
+                  </Panel>
+
+                  <!-- Bottom Header Panel -->
+                  <Panel Margins="5,5,5,5"
+                         Layout="VerticalFlow">
+                    <Children>
+
+                      <!-- Current Candidate -->
+                      <Text Name="CurrentCandidate"
+                            Font="[TextFont]"
+                            Color="[TextColor]"/>
+                      <Panel Layout="HorizontalFlow">
+                        <Children>
+
+                          <Text Font="[TextFont]"
+                                Color="[TextColor]"
+                                Content="Elapsed time on worker thread:"/>
+                          <Text Name="TotalTimeSpent"
+                                Font="[TextFont]"
+                                Color="[TextColor]"/>
+
+                        </Children>
+                      </Panel>
+
+                      <!-- Status panel-->
+                      <Panel>
+                        <Layout>
+                          <FlowLayout Orientation="Horizontal"/>
+                        </Layout>
+                        <Children>
+
+                          <Text Content="Status:"
+                                Font="[TextFont]"
+                                Color="[TextColor]"/>
+                          <Text Name="Status"
+                                Font="[TextFont]"/>
+
+                        </Children>
+                      </Panel>
+
+                      <!-- Number of primes found -->
+                      <Text Name="PrimesFound"
+                            Font="[TextFont]"
+                            Color="[TextColor]"/>
+
+                      <!-- Buttons -->
+                      <Panel>
+                        <Layout>
+                          <FlowLayout Spacing="5,5"
+                                      Orientation="Horizontal"/>
+                        </Layout>
+                        <Children>
+
+                          <ctrl:Button Name="Start"
+                                       Command="[StartCommand]"
+                                       LabelFont="[TextFont]"
+                                       ButtonLabel="[StartCommand.Description]"/>
+                          <ctrl:Button Name="StopReset"
+                                       Command="[StopCommand]"
+                                       LabelFont="[TextFont]"
+                                       ButtonLabel="[StopCommand.Description]"/>
+                        </Children>
+                      </Panel>
+
+                    </Children>
+                  </Panel>
+
+                </Children>
+              </ColorFill>
+
+            </Children>
+          </ColorFill>
+
+          <!-- Content area -->
+          <Scroller Orientation="Horizontal">
+            <LayoutInput>
+              <FormLayoutInput Top="Header,1,10"
+                               Bottom="Parent,1"
+                               Left="Parent,0"
+                               Right="Parent,1"/>
+            </LayoutInput>
+            <Children>
+
+              <!-- Repeater for our list of primes found -->
+              <Repeater Source="[PrimeFinder.Primes]"
+                        DiscardOffscreenVisuals="true">
+                <Layout>
+                  <FlowLayout AllowWrap="true"
+                              Orientation="Vertical"
+                              Spacing="0,25"/>
+                </Layout>
+                <Animations>
+                  <Animation Animation="animation://me:MoveAnimation"/>
+                </Animations>
+                <Content>
+
+                  <!-- The UI that will be repeated for each item in our list - -->
+                  <me:PrimeNumber Prime="[RepeatedItem!cor:UInt64]"
+                                  TextFont="[TextFont]">
+                    <Animations>
+                      <Animation Animation="animation://me:ShowAnimation"/>
+                    </Animations>
+                  </me:PrimeNumber>
+
+                </Content>
+              </Repeater>
+
+            </Children>
+          </Scroller>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+  <!-- This UI is used to display a number -->
+  <UI Name="PrimeNumber">
+    <Properties>
+      <Font Name="TextFont"
+            Font="$Required"/>
+      <cor:UInt64 Name="Prime"/>
+    </Properties>
+
+    <Rules>
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+      <Default Target="[Value.Content]"
+               Value="[Prime]">
+        <Transformer>
+          <FormatTransformer Format="{0:N0}"/>
+        </Transformer>
+      </Default>
+
+    </Rules>
+
+
+    <Content>
+      <Text Name="Value"
+            Color="LightGreen"
+            Font="[TextFont]"/>
+    </Content>
+  </UI>
+
+
+  <!-- This UI uses an Anchor Layout to display an outline around the current -->
+  <!-- focus rectangle                                                        -->
+  <UI Name="FocusSelector">
+    <Properties>
+      <Color Name="OutlineColor"
+             Color="DarkRed"/>
+    </Properties>
+
+    <Content>
+      <Panel Layout="Anchor">
+        <Children>
+          <!-- Top -->
+          <ColorFill Content="[OutlineColor]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Parent,0"
+                                 Left="Parent,0"
+                                 Right="Parent,1"
+                                 Bottom="Parent,0,3" />
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:SizeAnimation"/>
+              <Animation Animation="animation://me:MoveAnimation"/>
+            </Animations>
+          </ColorFill>
+
+          <!-- Bottom -->
+          <ColorFill Content="[OutlineColor]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Parent,1,-3"
+                                 Left="Parent,0"
+                                 Right="Parent,1"
+                                 Bottom="Parent,1" />
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:SizeAnimation"/>
+              <Animation Animation="animation://me:MoveAnimation"/>
+            </Animations>
+          </ColorFill>
+
+          <!-- Left -->
+          <ColorFill Content="[OutlineColor]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Parent,0"
+                                 Left="Parent,0"
+                                 Right="Parent,0,3"
+                                 Bottom="Parent,1" />
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:SizeAnimation"/>
+              <Animation Animation="animation://me:MoveAnimation"/>
+            </Animations>
+          </ColorFill>
+
+          <!-- Right -->
+          <ColorFill Content="[OutlineColor]">
+            <LayoutInput>
+              <AnchorLayoutInput Top="Parent,0"
+                                 Left="Parent,1,-3"
+                                 Right="Parent,1"
+                                 Bottom="Parent,1" />
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:SizeAnimation"/>
+              <Animation Animation="animation://me:MoveAnimation"/>
+            </Animations>
+          </ColorFill>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- Common Animations -->
+
+  <Animation Name="ShowAnimation"
+             Type="Show">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0"
+                     Value="0"/>
+      <AlphaKeyframe Time=".1"
+                     Value="1.0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="MoveAnimation"
+             Type="Move">
+    <Keyframes>
+      <PositionKeyframe Time="0.0"
+                        Value="0,0,0"
+                        RelativeTo="Current"
+                        Interpolation="SCurve, 0.5"/>
+      <PositionKeyframe Time=".25"
+                        Value="0,0,0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="SizeAnimation"
+             Type="Size">
+    <Keyframes>
+      <SizeKeyframe Time="0.0"
+                    Value="0,0,0"
+                    RelativeTo="Current"
+                    Interpolation="SCurve, 0.5"/>
+      <SizeKeyframe Time=".25"
+                    Value="0,0,0"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

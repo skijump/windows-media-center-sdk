@@ -1,0 +1,64 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Condition rules are used to compare a value against a Source and -->
+  <!-- set a Target value if the comparison results in a match.         -->
+
+  <!-- Conditions support a variety of comparison operators through     -->
+  <!-- the ConditionOp property: Equals, NotEquals, GreaterThan,        -->
+  <!-- LessThan, and ChangedTo. Equals is the default if a ConditionOp  -->
+  <!-- value is not provided.                                           -->
+
+  <!-- This UI contains child UIs which show the usage of Condition     -->
+  <!-- rules. Different text is displayed depending on the value.       -->
+  <UI Name="Condition">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:ValueDisplayer Value="8"/>
+          <me:ValueDisplayer Value="0"/>
+          <me:ValueDisplayer Value="4"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="ValueDisplayer">
+
+    <!-- UI Value property. -->
+    <Properties>
+      <cor:Int32 Name="Value"/>
+    </Properties>
+
+    <Rules>
+
+      <!-- Compare value against the number 4. Update the Target accordingly. -->
+      <Condition Source="[Value]"
+                 SourceValue="4"
+                 Target="[Label.Content]"
+                 Value="The number 4 IS my favorite number!"/>
+
+      <Condition Source="[Value]"
+                 ConditionOp="GreaterThan"
+                 SourceValue="4"
+                 Target="[Label.Content]"
+                 Value="This is GREATER than 4. That's not my favorite number!"/>
+
+      <Condition Source="[Value]"
+                 ConditionOp="LessThan"
+                 SourceValue="4"
+                 Target="[Label.Content]"
+                 Value="This is LESS than 4. That's not my favorite number!"/>
+    </Rules>
+
+    <Content>
+
+      <Text Name="Label"
+            Color="Aquamarine"/>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

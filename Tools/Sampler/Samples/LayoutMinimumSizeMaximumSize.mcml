@@ -1,0 +1,68 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- MinimumSize and MaximumSize are properties that exist on every     -->
+  <!-- ViewItem for the purpose of forcing the layout to meet certain     -->
+  <!-- sizing requirements.                                               -->
+
+  <!-- Forcing sizes is necessary in many UI scenarios. However, it is    -->
+  <!-- important to understand the implications of forcing sizes because  -->
+  <!-- doing so can impact the ability to display different languages for -->
+  <!-- text in a UI. Use care when setting these properties. It should be -->
+  <!-- rare to need to hard-code both a minimum and maximum size.         -->
+
+  <!-- When a zero value is specified for either width or height in       -->
+  <!-- the minimum or maximum size, it means "unspecified."               -->
+
+  <!-- NOTE: It is possible to "overconstrain" and configure a maximum    -->
+  <!-- size that is smaller than the specified minimum size (or vice      -->
+  <!-- versa). In this situation, the ViewItem will not be displayed      -->
+  <!-- since it cannot meet the constraints.                              -->
+
+  <!-- This sample demonstrates various minimum and maximum size settings.-->
+
+  <UI Name="MinimumSizeMaximumSize">
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="20,0"/>
+        </Layout>
+
+        <Children>
+
+          <!-- No min or max specified. -->
+          <Text Content="MinimumSize and MaximumSize"
+                Color="Navy"
+                BackColor="Silver"/>
+
+          <!-- Force to at least 800 wide. -->
+          <Text Content="MinimumSize and MaximumSize"
+                MinimumSize="800,0"
+                Color="Navy"
+                BackColor="Silver"/>
+
+          <!-- Force to maximum of 200 wide. -->
+          <Text Content="MinimumSize and MaximumSize"
+                MaximumSize="200,0"
+                Color="Navy"
+                BackColor="Silver"/>
+
+          <!-- Overconstrained: Force to mimum of 800 and maximum of 200 -->
+          <!-- wide. Will not be shown.                                  -->
+          <Text Content="MinimumSize and MaximumSize"
+                MinimumSize="800,0"
+                MaximumSize="200,0"
+                Color="Navy"
+                BackColor="Silver"/>
+
+        </Children>
+
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

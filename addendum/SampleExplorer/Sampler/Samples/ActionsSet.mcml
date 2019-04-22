@@ -1,0 +1,63 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Set actions are used in expanded rule syntax primarily for        -->
+  <!-- setting properties.                                               -->
+
+  <!-- Set action Targets can be 1) properties, 2) single parameter      -->
+  <!-- methods, or 3) dictionaries.                                      -->
+
+  <!-- This UI display child UI objects that demonstrate the use of the  -->
+  <!-- Set action. Different text and color values are chosen for        -->
+  <!-- display based on the value passed in.                             -->
+  <UI Name="SetAction">
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+              <me:ValueDisplayer Value="8"/>
+              <me:ValueDisplayer Value="4"/>
+              <me:ValueDisplayer Value="0"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name="ValueDisplayer">
+
+    <Properties>
+      <cor:Int32 Name="Value"/>
+    </Properties>
+
+    <Rules>
+      <!-- When this rule no longer applies (i.e. the Value is 4),  -->
+      <!-- the Label Content and Color values will return to their  -->
+      <!-- initially specified values.                              -->
+
+      <!-- For the following Condition rule, a list of Actions will -->
+      <!-- be specified so that multiple Set actions can be used on -->
+      <!-- multiple Targets.                                        -->
+
+      <!-- The Condition, Binding, and Default convenience rules    -->
+      <!-- all have a built-in Set action.                          -->
+      <Condition Source="[Value]"
+                 ConditionOp="NotEquals"
+                 SourceValue="4">
+        <Actions>
+          <Set Target="[Label.Content]"
+               Value="The number is not equal to 4."/>
+          <Set Target="[Label.Color]"
+               Value="Red"/>
+        </Actions>
+      </Condition>
+    </Rules>
+
+    <Content>
+      <Text Name="Label"
+            Content="The number is equal to 4."
+            Color="White"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

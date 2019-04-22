@@ -1,0 +1,80 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:ctl="resx://Sampler/Sampler.Resources/ControlsSimpleButton">
+
+  <!-- InvokeCommand, like the Invoke action, is a powerful tool that  -->
+  <!-- enables the ability to call any method on any object. It        -->
+  <!-- supports methods with any number of parameters and return       -->
+  <!-- result handling.                                                -->
+
+  <!-- InvokeCommands can be used wherever Commands are accepted       -->
+  <!-- (typically in Buttons). They are a great way to interact with   -->
+  <!-- backing data/code objects when a user clicks on something.      -->
+
+  <!-- Like all tags used in Rules, InvokeCommands will reevaluate any -->
+  <!-- object-paths that are in use whenever the command is invoked.   -->
+  <!-- This way, storage maintained by the UI can change and be        -->
+  <!-- transferred to the method that InvokeCommand is calling.        -->
+
+  <!-- This UI demonstrates InvokeCommand. The .NET "Random" object is -->
+  <!-- used by calling "Next" and passing in a maximum value. Every    -->
+  <!-- parameter passed to the method is referenced by name (in this   -->
+  <!-- case, the parameter name is "maxValue"). The parameter names    -->
+  <!-- must match exactly with the actual method signature (which      -->
+  <!-- means case matters. The result of the Next method will be       -->
+  <!-- placed in the "Value" local variable (which is bound to a Text  -->
+  <!-- box).                                                           -->
+
+  <UI Name="InvokeCommand">
+
+    <!-- Random number generator and the current value. -->
+    <Locals>
+      <cor:Random Name="Random"/>
+      <cor:Int32 Name="Value"/>
+    </Locals>
+
+    <Rules>
+      <!-- Value is bound to the Text's content. -->
+      <Binding Source="[Value.ToString]"
+               Target="[Label.Content]"/>
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      ItemAlignment="Center"/>
+        </Layout>
+
+        <Children>
+
+          <!-- Where value is displayed. -->
+          <Text Name="Label"
+                Color="White"
+                Font="Verdana,80"/>
+
+          <!-- This is the Button. It has a property called "Command" that -->
+          <!-- accepts any Command.                                        -->
+          <ctl:SimpleButton>
+            <Command>
+
+              <!-- InvokeCommand will call the "Next" method on Random.   -->
+              <!-- "maxValue" is the only parameter and is hardcoded. The -->
+              <!-- return result of Next will be placed in the "Value"    -->
+              <!-- local (which is bound to the Text's content).          -->
+              <InvokeCommand Description="Click to generate a random number!"
+                             Target="[Random.Next]"
+                             maxValue="100000"
+                             ResultTarget="[Value]"/>
+            </Command>
+          </ctl:SimpleButton>
+
+        </Children>
+
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

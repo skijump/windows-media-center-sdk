@@ -1,0 +1,213 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorlib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:ctrl="resx://Sampler/Sampler.Resources/Controls"
+      xmlns:a="assembly://Sampler/Sampler">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+
+  <UI Name="Default">
+
+    <Properties>
+      <a:Sampler Name="Sampler"
+                 Sampler="$Required" />
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <cor:String Name="MediaPath"
+                  String=""/>
+      <EditableText Name="UriToMedia"/>
+      <Command Name="StartPlayback"
+               Description="Start Playback" />
+    </Locals>
+
+    <Rules>
+
+      <Default Value="[Sampler.LocalContentAudio01]"
+               Target="[UriToMedia.Value]" />
+
+      <Changed Source="[StartPlayback.Invoked]">
+        <Actions>
+          <Set Target="[MediaPath]"
+               Value="[UriToMedia.Value]"
+               InvokePolicy="Synchronous"/>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Audio"
+                  media="[MediaPath]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+
+      <Binding Target="[MyAlbumArtist.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#AlbumArtist.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#AlbumArtist.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyAlbumTitle.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#AlbumTitle.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#AlbumTitle.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyGenre.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Genre.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Genre.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyLabel.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Label.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Label.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyProductionCompany.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#ProductionCompany.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#ProductionCompany.ToString]"/>
+        </Conditions>
+      </Binding>
+      
+      <Binding Target="[MyReleaseDate.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#ReleaseDate.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#ReleaseDate.ToString]"/>
+        </Conditions>
+      </Binding>
+      
+      <Binding Target="[MyTrackArtist.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackArtist.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackArtist.ToString]"/>
+        </Conditions>
+      </Binding>
+      
+      <Binding Target="[MyTrackComposer.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackComposer.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackComposer.ToString]"/>
+        </Conditions>
+      </Binding>
+      
+      <Binding Target="[MyTrackDuration.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackDuration.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackDuration.ToString]"/>
+        </Conditions>
+      </Binding>
+      
+      <Binding Target="[MyTrackNumber.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackNumber.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackNumber.ToString]"/>
+        </Conditions>
+      </Binding>
+      
+      <Binding Target="[MyTrackTitle.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackTitle.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#TrackTitle.ToString]"/>
+        </Conditions>
+      </Binding>
+
+      <Binding Target="[MyURI.PropertyValue]"
+               Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Uri.ToString]">
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.MediaMetadata!coll:IDictionary.#Uri.ToString]"/>
+        </Conditions>
+      </Binding>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Form">
+        <Children>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <ctrl:Button Command="[StartPlayback]"
+                           ButtonLabel="[StartPlayback.Description]"/>
+              <ctrl:Editbox EditableText="[UriToMedia]"
+                            LabelName="Media Uri" />
+            </Children>
+          </Panel>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0.5"
+                               Right="Parent,1"
+                               Vertical="Center" />
+            </LayoutInput>
+            <Children>
+              <ctrl:PropertyAndValue Name="MyAlbumArtist"
+                                     PropertyName="AlbumArtist"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyAlbumTitle"
+                                     PropertyName="AlbumTitle"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyGenre"
+                                     PropertyName="Genre"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyLabel"
+                                     PropertyName="Label"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyProductionCompany"
+                                     PropertyName="ProductionCompany"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyReleaseDate"
+                                     PropertyName="ReleaseDate"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyTrackArtist"
+                                     PropertyName="TrackArtist"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyTrackComposer"
+                                     PropertyName="TrackComposer"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyTrackDuration"
+                                     PropertyName="TrackDuration"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyTrackNumber"
+                                     PropertyName="TrackNumber"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyTrackTitle"
+                                     PropertyName="TrackTitle"
+                                     PropertyValue="" />
+              <ctrl:PropertyAndValue Name="MyURI"
+                                     PropertyName="URI"
+                                     PropertyValue="" />
+            </Children>
+          </Panel>
+
+          <NowPlaying ShowFullMetadata="OnFocus"
+                      SnapToDefaultPosition="true">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Bottom="Parent,1"/>
+            </LayoutInput>
+          </NowPlaying>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

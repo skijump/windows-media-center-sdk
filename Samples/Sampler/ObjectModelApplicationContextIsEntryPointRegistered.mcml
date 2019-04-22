@@ -1,0 +1,59 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:ctrl="file://Controls.mcml">
+
+  <!-- *** Windows Media Center Required *** -->
+  <!-- This sample will only display correctly if run within Windows Media -->
+  <!-- Center. Loading in the standalone MCML Preview Tool will result in  -->
+  <!-- an markup load error or a runtime error.                            -->
+  
+  <!-- IsEntryPointRegistered will only return true if called from the     -->
+  <!-- application which contains the entrypoint. If the application is    -->
+  <!-- not associated with the entrypoint the result will be false.        -->
+  <!-- This keeps random apps from sniffing for the presence of other apps.-->
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost" />
+      <Command Name="MyIsEntryPointRegisteredCommand"
+               Description="IsEntryPointRegistered" />
+      <cor:String Name="MyEntryPointID"
+                  String="{110FDB8C-25F3-4BC2-BB1D-A393E952B8A9}"/>
+      <cor:Boolean Name="MyIsRegistered"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[MyIsEntryPointRegisteredCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.ApplicationContext.IsEntryPointRegistered]"
+                  guidEntryPoint="[MyEntryPointID!cor:Guid]"
+                  ResultTarget="[MyIsRegistered]" />
+        </Actions>
+      </Changed>
+      <Binding Target="[MyProperty.PropertyValue]"
+               Source="[MyIsRegistered.ToString]">
+        <Conditions>
+          <IsValid Source="[MyIsRegistered]" />
+        </Conditions>
+      </Binding>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <ctrl:Button Command="[MyIsEntryPointRegisteredCommand]"
+                       ButtonLabel="[MyIsEntryPointRegisteredCommand.Description]"/>
+          <ctrl:PropertyAndValue Name="MyProperty"
+                                 PropertyName="MCMLPad Registered"
+                                 PropertyValue="" />
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

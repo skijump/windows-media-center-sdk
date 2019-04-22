@@ -1,0 +1,55 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test the application of various FadeSize settings on Clip items. 
+       FadeSize sets the Size of the clip fade. -->
+
+  <UI Name="ClipFadeSize">
+    <Content>
+      <Panel Layout="VerticalFlow" >
+        <Children>
+
+          <me:ClipItem FadeSize="-50"
+                       Description="Clip with FadeSize=-50"/>
+          <me:ClipItem FadeSize="0"
+                       Description="Clip with FadeSize=0"/>
+          <me:ClipItem FadeSize="50"
+                       Description="Clip with FadeSize=50"/>
+          <me:ClipItem FadeSize="100"
+                       Description="Clip with FadeSize=100"/>
+          <me:ClipItem FadeSize="150"
+                       Description="Clip with FadeSize=150"/>
+          <me:ClipItem FadeSize="200"
+                       Description="Clip with FadeSize=200"/>
+
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <UI Name ="ClipItem">
+    <Properties>
+      <cor:Single Name="FadeSize"
+                  Single="0"/>
+      <cor:String Name="Description"
+                  String="Description"/>
+    </Properties>
+
+    <Content>
+      <Clip Name="ClipItem"
+            FadeSize="[FadeSize]"
+            ColorMask="Red"
+            MaximumSize="400,0">
+        <Children>
+          <Text Color="White"
+                Content="[Description]"
+                HorizontalAlignment="Center"/>
+        </Children>
+      </Clip>
+    </Content>
+
+  </UI>
+
+</Mcml>

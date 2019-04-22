@@ -1,0 +1,227 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:me="Me">
+
+  <!-- Host is a frequently used view item even though you typically won't -->
+  <!-- see it show up in markup as "<Host>". Any child UI placed within    -->
+  <!-- the Content of a UI is actually, in fact, a Host view item.         -->
+
+  <!-- For example, when this very common type of markup is specified:     -->
+
+  <!-- <Mcml xmlns:ctl="res://McmlSampler!Controls.SimpleButton.mcml">    -->
+  <!--   ...                                                               -->
+  <!--   <ctl:SimpleButton Command="[Command]"/>                           -->
+
+  <!-- In reality, it is actually:                                         -->
+
+  <!--   <Host                                                             -->
+  <!-- Source="res://McmlSampler!Controls.SimpleButton.mcml#SimpleButton" -->
+  <!--   Command="[Command]"/>                                             -->
+
+  <!-- Access the Source property on a Host at runtime enables the ability -->
+  <!-- to dynamically swap out child UIs at runtime.                       -->
+
+  <!-- NOTE: Unless dynamic Source swapping is intended, it's never        -->
+  <!-- recommended to use the full Host syntax. When the full Host syntax  -->
+  <!-- is used, all parse-time validation is lost for that Host (such as   -->
+  <!-- source and parameter type validation) as well as load time          -->
+  <!-- Host Source optimizations.                                          -->
+
+  <!-- This sample demonstrates how to dynamically switch Host Sources. In -->
+  <!-- this case, an "inline-editbox" is shown. Inline editing is when a   -->
+  <!-- static (non-editable) piece of text is presented, then, when the    -->
+  <!-- user selects the text, it becomes editable. It's possible to        -->
+  <!-- accomplish a UI like this by showing and hiding pieces of existing  -->
+  <!-- UI. However, that's not very efficient when there are many          -->
+  <!-- instances of the UI. Another negative of showing/hiding, is the     -->
+  <!-- markup is actually more complex then it is if swapping Sources is   -->
+  <!-- used.                                                               -->
+
+  <UI Name="HostViewItem">
+
+    <Locals>
+
+      <!-- Test data. -->
+      <EditableText Name="Name"
+                    Value="Anonymous"/>
+      <EditableText Name="Address"
+                    Value="My Street"/>
+      <EditableText Name="City"
+                    Value="My City"/>
+      <EditableText Name="State"
+                    Value="My State"/>
+      <EditableText Name="Zip"
+                    Value="My ZIP code"/>
+      <EditableText Name="Telephone"
+                    Value="555-1212"/>
+      <EditableText Name="EMail"
+                    Value="none"/>
+
+    </Locals>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="10,0"/>
+        </Layout>
+
+        <Children>
+
+          <Text Content="Click on a field to edit:"
+                Color="Gold"/>
+
+          <!-- Here are the instances of our "InlineEdit" UIs that show -->
+          <!-- Host Source swapping in action.                          -->
+          <me:InlineEdit EditableText="[Name]"/>
+          <me:InlineEdit EditableText="[Address]"/>
+          <me:InlineEdit EditableText="[City]"/>
+          <me:InlineEdit EditableText="[State]"/>
+          <me:InlineEdit EditableText="[Zip]"/>
+          <me:InlineEdit EditableText="[Telephone]"/>
+          <me:InlineEdit EditableText="[EMail]"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+  <!-- InlineEdit presents a piece of non-editable text and switches to -->
+  <!-- an editable UI when the user clicks on the text. It demonstrates -->
+  <!-- dynamic Host Source swapping. A simple button is used first,     -->
+  <!-- then, when selected, it is switched to a simple editbox. Both    -->
+  <!-- the button and editbox are preexisting controls defined outside  -->
+  <!-- of this UI.                                                      -->
+  <UI Name="InlineEdit">
+
+    <Properties>
+      <!-- InlineEdit uses a standard EditableText. -->
+      <EditableText Name="EditableText"
+                    Value="Default"/>
+    </Properties>
+
+    <Locals>
+      <!-- The button notifies us about a click via a Command. -->
+      <Command Name="Command"/>
+    </Locals>
+
+    <Rules>
+
+      <!-- The button displays what is in the Command's Description    -->
+      <!-- property. Bind the EditableText's value to the Description. -->
+      <Binding Source="[EditableText.Value]"
+               Target="[Command.Description]"/>
+
+      <!-- When the button is clicked, switch to the editbox and give it -->
+      <!-- focus.                                                        -->
+      <Changed Source="[Command.Invoked]">
+        <Actions>
+          <Set Target="[Host.Source]"
+               Value="file://ControlsSimpleEditbox.mcml#SimpleEditbox"/>
+          <Invoke Target="[Host.NavigateInto]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Only when the text is submitted, issue a navigate into. This -->
+      <!-- will give focus the button we are switching back to.         -->
+      <Changed Source="[EditableText.Submitted]">
+        <Actions>
+          <Invoke Target="[Host.NavigateInto]"/>
+        </Actions>
+      </Changed>
+
+      <!-- If the EditableText is "submitted" (the user presses enter in -->
+      <!-- the editbox, or, if the editbox loses focus, switch back to   -->
+      <!-- the button.                                                   -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Modified Source="[EditableText.Submitted]"/>
+          <Equality Source="[Input.DeepKeyFocus]"
+                    ConditionOp="ChangedTo"
+                    Value="false"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Host.Source]"
+               Value="file://ControlsSimpleButton.mcml#SimpleButton"/>
+        </Actions>
+      </Rule>
+
+      <!-- By default, the UI is a button. -->
+      <Default Target="[Host.Source]"
+               Value="file://ControlsSimpleButton.mcml#SimpleButton"/>
+
+    </Rules>
+
+    <Content>
+
+      <!-- This is the Host that will be switched. Notice that the full  -->
+      <!-- Host syntax isn't used here. This is because, when doing a    -->
+      <!-- switch, you want to define the "common interface" (i.e. the   -->
+      <!-- set of properties) that all the UIs that will be used here    -->
+      <!-- require.                                                      -->
+
+      <!-- Even though the button doesn't take an EditableText property  -->
+      <!-- and the editbox doesn't take a Button property, UIs will      -->
+      <!-- ignore any property that isn't in their property list (except -->
+      <!-- during load-time where parser validation makes these types of -->
+      <!-- checks and reports them as errors). Since these property      -->
+      <!-- values are persisted between Source switches, data can be     -->
+      <!-- shared between the hosted UIs.                                -->
+
+      <!-- During development of your switchable Hosts, use the          -->
+      <!-- ThrowOnLoadError property and set to 'false'. It makes it     -->
+      <!-- easier to develop this type of UI since changing Sources at   -->
+      <!-- runtime that are invalid will cause exceptions.               -->
+      <me:Switcher Name="Host"
+                   EditableText="[EditableText]"
+                   Command="[Command]"
+                   ThrowOnLoadError="false"
+                   MinimumSize="325,0"
+                   MaximumSize="325,0">
+
+        <!-- Add some effects between the switching UIs. -->
+        <Animations>
+          <Animation Type="ContentChangeShow"
+                     CenterPointPercent=".5,.5,0">
+            <Keyframes>
+              <RotateKeyframe Time="0"
+                              Value="90deg;1,0,0"/>
+              <RotateKeyframe Time=".15"
+                              Value="90deg;1,0,0"/>
+              <RotateKeyframe Time=".3"
+                              Value="0deg;1,0,0"/>
+            </Keyframes>
+          </Animation>
+          <Animation Type="ContentChangeHide"
+                     CenterPointPercent=".5,.5,0">
+            <Keyframes>
+              <RotateKeyframe Time="0"
+                              Value="0deg;1,0,0"/>
+              <RotateKeyframe Time=".15"
+                              Value="-90deg;1,0,0"/>
+            </Keyframes>
+          </Animation>
+        </Animations>
+
+      </me:Switcher>
+
+    </Content>
+
+  </UI>
+
+  <!-- Defines the common property set for all the UIs that we are -->
+  <!-- switching between. Editbox takes an EditableText and Button -->
+  <!-- takes a Command. The parser will make sure these properties -->
+  <!-- are set (i.e. $Required).                                   -->
+  <UI Name="Switcher">
+    <Properties>
+      <EditableText Name="EditableText"
+                    EditableText="$Required"/>
+      <Command Name="Command"
+               Command="$Required"/>
+    </Properties>
+  </UI>
+
+</Mcml>

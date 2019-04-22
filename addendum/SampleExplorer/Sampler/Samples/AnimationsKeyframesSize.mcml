@@ -1,0 +1,46 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <!-- This sample demonstrates how to animate an item's size.              -->
+  <!-- We build an Animation object and add it to the item's Animations     -->
+  <!-- collection.  We populate that Animation object with two or more      -->
+  <!-- keyframes, starting at time "0.0".                                   -->
+  <UI Name="SizeKeyframe">
+
+    <Content>
+
+      <!-- The target of the animation... -->
+      <Graphic Name="MyGraphic"
+               Content="resx://Sampler/Sampler.Resources/FourBoxGraphicSmall">
+        <Animations>
+
+          <!-- Create an animation that will loop forever. -->
+          <Animation Loop="-1">
+            <Keyframes>
+
+              <!-- Start in the "neutral" size -->
+              <SizeKeyframe Time="0.0"
+                            Value="50,100,0"/>
+
+              <!-- Become smaller... -->
+              <SizeKeyframe Time="1.0"
+                            Value="25,50,0"/>
+
+              <!-- Become larger...  -->
+              <SizeKeyframe Time="3.0"
+                            Value="100,200,0"/>
+
+              <!-- Back to the "neutral" size  -->
+              <SizeKeyframe Time="4.0"
+                            Value="50,100,0"/>
+
+            </Keyframes>
+          </Animation>
+
+        </Animations>
+      </Graphic>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

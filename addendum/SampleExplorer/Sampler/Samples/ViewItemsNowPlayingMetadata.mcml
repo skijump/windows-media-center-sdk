@@ -1,0 +1,83 @@
+﻿<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Test the NowPlaying View Item-->
+
+  <UI Name="NowPlaying">
+    <Locals>
+      <FormatTransformer Name="Transformer"/>
+      <ClickHandler Name="Clicker"/>
+
+      <!-- Possible MetadataVisibility settings to cycle through -->
+      <Choice Name="MDState"
+              DefaultIndex="0"
+              Wrap="true" >
+        <Options>
+          <MetadataVisibility MetadataVisibility="Always"/>
+          <MetadataVisibility MetadataVisibility="Never"/>
+          <MetadataVisibility MetadataVisibility="OnFocus"/>
+          <MetadataVisibility MetadataVisibility="Default"/>
+        </Options>
+      </Choice>
+    </Locals>
+
+
+    <!-- Rules to control the ShowFullMetadata Cycle button -->
+    <Rules>
+      <Rule>
+        <Conditions>
+          <Modified Source="[Clicker.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Button.BackColor]"
+               Value="Green"/>
+          <Invoke Target="[MDState.NextValue]"/>
+          <Set Target="[PiP.ShowFullMetadata]"
+               Value="[MDState.Chosen!MetadataVisibility]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Display current status on the page -->
+      <Binding Source="[PiP.ShowFullMetadata]"
+               Target="[ShowFullMetadata.Content]"
+               Transformer="[Transformer]"/>
+    </Rules>
+
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Panel Layout="VerticalFlow">
+
+            <Children>
+
+              <NowPlaying Name="PiP"
+                          MinimumSize="600,300"/>
+
+              <Text Name="Button"
+                    Content="Cycle ShowFullMetadata"
+                    Color="Yellow"
+                    BackColor="Blue"
+                    MouseInteractive="true"
+                    Margins="0,0,0,25"/>
+
+              <Panel Layout="HorizontalFlow">
+                <Children>
+                  <Text Content="ShowFullMetadata = "
+                        Color="Yellow"/>
+                  <Text Name="ShowFullMetadata"
+                        Content="unknown"
+                        Color="Yellow"/>
+                </Children>
+              </Panel>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+</Mcml>

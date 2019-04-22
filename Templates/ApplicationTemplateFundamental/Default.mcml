@@ -1,0 +1,29 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System">
+
+  <UI Name="Default">
+
+    <Properties>
+      <Color Name="MyColor"
+             Color="White"/>
+    </Properties>
+
+    <Locals>
+      <cor:String Name="MyString"
+                  String="Hello"/>
+    </Locals>
+
+    <Rules>
+      <Default Target="[MyText.Content]"
+               Value="[MyString]"/>
+    </Rules>
+
+    <Content>
+      <Text Name="MyText"
+            Color="[MyColor]"
+            Font="Calibri, 24"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

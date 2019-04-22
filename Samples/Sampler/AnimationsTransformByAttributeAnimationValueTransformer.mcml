@@ -1,0 +1,101 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://mscorlib/System">
+
+  <!-- This sample demonstrates how to use a TransformByAttributeAnimation  -->
+  <!-- to create index-driven animation transformations.                    -->
+  <UI Name="TransformByAttributeAnimationWithTransformer">
+
+    <Properties>
+
+      <!-- This TransformByAttributeAnimation object will apply the Source  -->
+      <!-- animation differently to each item dependent on its index.  Each -->
+      <!-- item's Value will by magnified more than the previous.           -->
+
+      <!-- Given a Magnitude of 1.0, but with the indices offset by 3 and   -->
+      <!-- made absolute, this pattern should result:                       -->
+      <!--   Index 0:  Value is multiplied by 4.0                           -->
+      <!--   Index 1:  Value is multiplied by 3.0                           -->
+      <!--   Index 2:  Value is multiplied by 2.0                           -->
+      <!--   Index 3:  Value is unchanged (1.0)                             -->
+      <!--   Index 4:  Value is multiplied by 2.0                           -->
+      <!--   Index 5:  Value is multiplied by 3.0                           -->
+      <!--   Index 6:  Value is multiplied by 5.0                           -->
+      <TransformByAttributeAnimation Name="IndexAnimation"
+                                     Attribute="Index"
+                                     Magnitude="1.0">
+        <ValueTransformer>
+          <MathTransformer Absolute="true"
+                           Subtract="3"/>
+        </ValueTransformer>
+        <Source>
+
+          <!-- This is our reference animation.  We will be magnifying the  -->
+          <!-- Value based on index, so its important to have a Value that  -->
+          <!-- grows well.  In this case its a rotation, and each item in   -->
+          <!-- list will rotate slightly more.                              -->
+          <Animation Loop="-1"
+                     CenterPointPercent="0.5,0.5,0.0">
+            <Keyframes>
+
+              <RotateKeyframe Time="0.0"
+                              Value="0deg;0,0,1"
+                              Interpolation="SCurve"/>
+              <RotateKeyframe Time="1.0"
+                              Value="360deg;0,0,1"
+                              Interpolation="SCurve"/>
+              <RotateKeyframe Time="2.0"
+                              Value="0deg;0,0,1"
+                              Interpolation="SCurve"/>
+
+            </Keyframes>
+          </Animation>
+
+        </Source>
+      </TransformByAttributeAnimation>
+
+    </Properties>
+
+    <Locals>
+      <!-- Our data source defines the number of objects that we are      -->
+      <!-- going to repeat.                                               -->
+      <ArrayListDataSet Name="MyArrayListDataSet">
+        <Source>
+          <cor:String String="#1"/>
+          <cor:String String="#2"/>
+          <cor:String String="#3"/>
+          <cor:String String="#4"/>
+          <cor:String String="#5"/>
+          <cor:String String="#6"/>
+          <cor:String String="#7"/>
+        </Source>
+      </ArrayListDataSet>
+    </Locals>
+
+    <Content>
+
+      <!-- Flow out a data-driven list of graphics. -->
+      <Repeater Source="[MyArrayListDataSet]">
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      Spacing="30,0"/>
+        </Layout>
+        <Content>
+
+          <Graphic Name="MyGraphic"
+                   Content="file://FourBoxGraphicSmall.png">
+            <Animations>
+
+              <!-- Hook up our index-driven transformation, -->
+              <TransformByAttributeAnimation TransformByAttributeAnimation="[IndexAnimation]"/>
+
+            </Animations>
+          </Graphic>
+
+        </Content>
+      </Repeater>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

@@ -1,0 +1,16 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <Aggregate Source="file://ControlsButton.mcml"/>
+  <Aggregate Source="file://ControlsEditbox.mcml"/>
+  <Aggregate Source="file://ControlsPropertyAndValue.mcml"/>
+  <Aggregate Source="file://ControlsGroupHeader.mcml"/>
+
+  <UI Name="Default">
+
+    <Content>
+      <Text Content="No visuals -- see MarkupAggregates.mcml for more information."
+            Color="White" />
+    </Content>
+  </UI>
+
+</Mcml>

@@ -1,0 +1,103 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <!-- Key Focus                                                             -->
+
+  <!-- The Main UI constructs a grid of focusable items and instruction      -->
+  <!-- text.  ItemRow is a simple helper UI that creates a row of            -->
+  <!-- KeyFocusIndicators.  KeyFocusIndicator is the interesting UI for      -->
+  <!-- this sample.  It demonstrates the use of the Input.KeyFocus property. -->
+
+  <!-- Creates a grid of focusable items and instruction text.               -->
+  <UI Name="Main">
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical"
+                      Spacing="5,0"
+                      ItemAlignment="Center"/>
+        </Layout>
+        <Children>
+          <me:ItemRow/>
+          <me:ItemRow/>
+          <me:ItemRow/>
+          <Text Content="Use the arrow keys to move key focus among the items"
+                Color="White"
+                Margins="0,30,0,0"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- Helper UI for creating a row of key focusable items. -->
+  <UI Name="ItemRow">
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Horizontal"
+                      Spacing="5,0"/>
+        </Layout>
+        <Children>
+          <me:KeyFocusIndicator MinimumSize="150,45"/>
+          <me:KeyFocusIndicator MinimumSize="150,45"/>
+          <me:KeyFocusIndicator MinimumSize="150,45"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+  <!-- An item that changes outline color when it has key focus -->
+  <UI Name="KeyFocusIndicator">
+
+    <Properties>
+      <cor:String Name="Text"
+                  String=""/>
+      <Size Name="MinimumTileSize"
+            Size="100,100"/>
+    </Properties>
+
+    <Rules>
+
+      <!-- Input.KeyInteractive determines whether this UI can receive key  -->
+      <!-- focus. It is set to false by default, so this sample sets it to  -->
+      <!-- true, which enables it to receive key focus.                     -->
+      <Default Target="[Input.KeyInteractive]"
+               Value="true"/>
+
+      <!-- Input.KeyFocus is true when the UI has key focus.  This means  -->
+      <!-- that the UI will receive direct keyboard or remote control     -->
+      <!-- input.  When it receives key focus, the outline color will     -->
+      <!-- change to Firebrick to give a visual cue.                      -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Outline.Content]"
+               Value="Firebrick"/>
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+
+      <ColorFill Name="Outline"
+                 Content="Green"
+                 Padding="5,5,5,5">
+        <Children>
+
+          <ColorFill Content="LawnGreen"
+                     MinimumSize="[MinimumTileSize]"
+                     Alpha=".75"
+                     Padding="3,3,3,3">
+            <Children>
+              <Text Content="[Text]"/>
+            </Children>
+          </ColorFill>
+        </Children>
+
+      </ColorFill>
+
+    </Content>
+  </UI>
+</Mcml>
