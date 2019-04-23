@@ -1,0 +1,153 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+   xmlns:sys="assembly://mscorlib/System"
+   xmlns:me="Me">
+
+  <UI Name="Move">
+
+    <Locals>
+      <!-- A ListDataSet that handles content / order change events -->
+      <ArrayListDataSet Name="MyList">
+        <Source>
+          <sys:String String="a"/>
+          <sys:String String="b"/>
+          <sys:String String="c"/>
+          <sys:String String="d"/>
+          <sys:String String="e"/>
+          <sys:String String="f"/>
+          <sys:String String="g"/>
+          <sys:String String="h"/>
+          <sys:String String="i"/>
+          <sys:String String="j"/>
+          <sys:String String="k"/>
+          <sys:String String="l"/>
+          <sys:String String="m"/>
+          <sys:String String="n"/>
+          <sys:String String="o"/>
+          <sys:String String="p"/>
+          <sys:String String="q"/>
+          <sys:String String="r"/>
+          <sys:String String="s"/>
+          <sys:String String="t"/>
+          <sys:String String="u"/>
+          <sys:String String="v"/>
+          <sys:String String="w"/>
+          <sys:String String="x"/>
+          <sys:String String="y"/>
+          <sys:String String="z"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <!-- A timer that fires every now and then to kick off a move event. -->
+      <Timer Name="Timer" Interval="100" AutoRepeat="true" Enabled="true"/>
+
+      <!-- Values that hold the old and new index to used with the Move() method -->
+      <!-- to affect the position of individual items in the ArrayListDataSet. -->
+      <sys:Int32 Name="OldIndex" Int32="0"/>
+      <sys:Int32 Name="NewIndex" Int32="0"/>
+
+      <!-- A random used to generate values for OldIndex and NewIndex. -->
+      <sys:Random Name="RandomGenerator"/>
+    </Locals>
+
+    <Rules>
+      <!-- A rule that evaluates for each tick of the timer. -->
+      <Changed Source="[Timer.Tick]">
+        <Actions>
+          <!-- Generate a random start and end index -->
+          <Invoke Target="[RandomGenerator.Next]" maxValue="[MyList.Count]" ResultTarget="[OldIndex]" ExclusiveApply="false"/>
+          <Invoke Target="[RandomGenerator.Next]" maxValue="[MyList.Count]" ResultTarget="[NewIndex]" ExclusiveApply="false"/>
+
+          <!-- Invoke the Move() method which will modify the order -->
+          <!-- of the ArrayListDataSet -->
+          <Invoke Target="[MyList.Move]" oldIndex="[OldIndex]" newIndex="[NewIndex]"/>
+
+          <!-- View the changes made to the indexes using a tool like DebugView to view. -->
+          <!-- See http://www.microsoft.com/technet/sysinternals/utilities/debugview.mspx -->
+          <DebugTrace Message="Moving from from {0} to {1}">
+            <Params>
+              <ObjectPath ObjectPath="[OldIndex]"/>
+              <ObjectPath ObjectPath="[NewIndex]"/>
+            </Params>
+          </DebugTrace>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Repeater Source="[MyList]" Layout="HorizontalFlow" CenterPointPercent="0.5,0.5,1">
+        <Content>
+          <!-- The UI used for our item, passing in the Index and value from -->
+          <!-- the ArrayListDataSet. -->
+          <me:Item Index="[RepeatedItemIndex]" Value="[RepeatedItem!sys:String]">
+            <Animations>
+              <!-- Each time the index changes for the ArrayListDataItem -->
+              <!-- run this animation. Depending on the timer interval this can have -->
+              <!-- a cumulative effect as the animation is applied across the range -->
+              <!-- determined by the random number generator for OldIndex and NewIndex. -->
+              <!-- A timer interval of 100 or less demonstrates this effect well. -->
+              <Animation Type="Move">
+                <Keyframes>
+                  <PositionKeyframe Time="0.00" RelativeTo="Current" Interpolation="SCurve"/>
+                  <PositionKeyframe Time="0.15" RelativeTo="Current" Value="0,-20,0"/>
+                  <PositionKeyframe Time="0.35" RelativeTo="Final" Value="0,-20,0"/>
+                  <PositionKeyframe Time="0.50" RelativeTo="Final" Interpolation="SCurve"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </me:Item>
+        </Content>
+        <Animations>
+          <Animation Loop="-1">
+            <Keyframes>
+              <RotateKeyframe Time="0.0" Value="0deg;0,0,0" Interpolation="Exp" RelativeTo="Current" />
+              <RotateKeyframe Time="20.0" Value="360deg;0,0,0" RelativeTo="Current" />
+            </Keyframes>
+          </Animation>
+        </Animations>
+      </Repeater>
+    </Content>
+  </UI>
+
+  <UI Name="Item">
+
+    <Properties>
+      <!-- These are set as each item is created in the repeater. -->
+      <Index Name="Index" Index="$Required"/>
+      <sys:String Name="Value" String="$Required"/>
+    </Properties>
+
+    <Rules>
+      <!-- Bind the index. Note when the index changes we see the change reflected -->
+      <!-- in the visuals without any explicit code setting the value. -->
+      <Binding Source="[Index.Value.ToString]" Target="[IndexLabel.Content]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <!-- The text from the ArrayListDataSet which is repeated. -->
+          <Text Content="[Value]" Color="White" Font="Consolas, 36"/>
+          <!-- The index of the item in the ArrayListDataSet. -->
+          <Text Name="IndexLabel" Color="Gray" Font="Consolas, 24">
+            <Animations>
+              <!-- Each time the index changes animate the number beneath the text. -->
+              <!-- Like the other animation this can have a cumulative effect -->
+              <!-- as the timer interval is lowered. -->
+              <Animation Type="ContentChangeHide">
+                <Keyframes>
+                  <PositionKeyframe Time="0.00" RelativeTo="Current" Interpolation="Log"/>
+                  <PositionKeyframe Time="0.50" RelativeTo="Current" Value="0,100,0"/>
+                  <AlphaKeyframe Time="0.00" RelativeTo="Current" Interpolation="Log"/>
+                  <AlphaKeyframe Time="0.50" RelativeTo="Current" Value="0"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Text>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>
+

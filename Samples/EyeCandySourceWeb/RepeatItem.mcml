@@ -1,0 +1,41 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:c="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Controls.mcml"
+      xmlns:styles="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Styles.mcml">
+
+  <UI Name="RepeatItem">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <Command Name="MyCommand"/>
+    </Locals>
+
+    <Properties>
+      <cor:String Name="Text"
+                  String="$Required"/>
+    </Properties>
+
+    <Rules>
+      <Binding Target="[MyCommand.Description]"
+               Source="[Text]"/>
+
+      <Changed Source="[MyCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.Dialog]"
+                  text="[Text]"
+                  caption="Which button...?"
+                  buttons="OK"
+                  timeout="0"
+                  isModal="true"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <c:Button Name="Button"
+                Model="[MyCommand]"
+                Image="image://styles:ButtonNonFocusImage"/>
+    </Content>
+  </UI>
+</Mcml>

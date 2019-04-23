@@ -1,0 +1,69 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:c="resx://EyeCandy/EyeCandy.Resources/Controls"
+	  xmlns:soup="resx://EyeCandy/EyeCandy.Resources/AlphabetSoup"
+      	xmlns:styles="resx://EyeCandy/EyeCandy.Resources/Styles"
+      xmlns:move="resx://EyeCandy/EyeCandy.Resources/Move"
+      xmlns:b="resx://EyeCandy/EyeCandy.Resources/Background">
+
+  <UI Name="Test">
+
+    <Locals>
+      <Command Name="Command" Description="Button Test"/>
+      <Command Name="Command2" Description="A"/>
+    </Locals>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Panel>
+            <Layout>
+              <FlowLayout Orientation="Vertical" Spacing="4,0"/>
+            </Layout>
+            <Children>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command2]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+              <c:Button Model="[Command]" Image="image://styles:ButtonNonFocusImage"/>
+            </Children>
+          </Panel>
+          <Panel>
+            <Children>
+              <soup:Main/>
+              <!--<soup:Main/>-->
+              <!--<soup:Main/>
+              <soup:Main/>-->
+            </Children>
+          </Panel>
+
+          <Panel Layout="Center">
+            <Children>
+              <move:Move/>
+            </Children>
+          </Panel>
+          
+          <Panel>
+            <Children>
+              <Video Layout="Fill"/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="Center">
+            <Children>
+              <b:Background/>
+            </Children>
+          </Panel>
+          
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+</Mcml>

@@ -1,0 +1,239 @@
+<Mcml
+  xmlns="http://schemas.microsoft.com/2006/mcml"
+  xmlns:sys="assembly://mscorlib/System"
+  xmlns:styles="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Styles.mcml"
+  xmlns:me="Me">
+
+  <UI Name="Button">
+    <Properties>
+      <!-- The action that will be invoked when this button is pressed -->
+      <ICommand Name="Model"
+                ICommand="$Required"/>
+
+      <!-- Button label properties -->
+      <Color Name="TextColor"
+             Color="color://styles:Text.Active"/>
+      <Color Name="TextFocusColor"
+             Color="color://styles:Text.Negative"/>
+      <Color Name="TextSelectedColor"
+             Color="color://styles:Text.Copy"/>
+      <Font Name="TextFont"
+            Font="font://styles:SecondaryText"/>
+      <Inset Name="TextMargins"
+             Inset="8,-2,8,2"/>
+      <sys:Boolean Name="CenterText"
+                   Boolean="false"/>
+
+      <!-- Tile metrics -->
+      <Size Name="TileMinSize"
+            Size="150,32"/>
+      <Size Name="TileMaxSize"
+            Size="150,32"/>
+
+      <!-- Images -->
+      <Image Name="Image"
+             Image="null"/>
+      <Image Name="FocusImage"
+             Image="image://styles:ButtonFocusImage"/>
+    </Properties>
+
+    <Locals>
+      <!-- Make this button clickable -->
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+
+    <Rules>
+      <!-- Bind the button's label and command-->
+      <Default Target="[Input.MakeTopmostOnFocus]"
+               Value="true"/>
+
+      <Binding Source="[Model.Description]"
+               Target="[Label.Content]"/>
+      <Binding Source="[Model]"
+               Target="[Clicker.Command]"/>
+
+      <!-- Pressed styling -->
+      <Condition Source="[Clicker.Clicking]"
+                 SourceValue="true">
+        <Actions>
+          <PlayAnimation Target="[Background]"
+                         Animation="animation://me:ButtonPress"/>
+        </Actions>
+      </Condition>
+
+      <!-- Focused styling -->
+      <Condition Source="[Input.KeyFocus]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]"
+               Value="[FocusImage]"/>
+          <Set Target="[Label.Color]"
+               Value="[TextFocusColor]"/>
+          <PlaySound Sound="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/AquaHover.wav"/>
+        </Actions>
+      </Condition>
+
+      <!-- Selected styling -->
+      <Condition Source="[Model.Selected]"
+                 SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Color]"
+               Value="[TextSelectedColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Hook up dynamic text style properties. -->
+      <Binding Source="[TextColor]"
+               Target="[Label.Color]"/>
+      <Binding Source="[TextFont]"
+               Target="[Label.Font]"/>
+      <Binding Source="[TextMargins]"
+               Target="[Label.Margins]"/>
+
+      <!-- Change the layout if using the "center" option -->
+      <Condition Source="[CenterText]"
+                 SourceValue="true"
+                 Target="[Background.Layout]"
+                 Value="Center"/>
+
+      <!-- Accessibility -->
+      <Binding Target="[Accessible.IsPressed]"
+               Source="[Clicker.Clicking]"/>
+      <Binding Target="[Accessible.IsFocusable]"
+               Source="[Input.KeyInteractive]"/>
+      <Binding Target="[Accessible.IsFocused]"
+               Source="[Input.KeyFocus]"/>
+      <Binding Target="[Accessible.Name]"
+               Source="[Model.Description]"/>
+      <Default Target="[Accessible.DefaultActionCommand]"
+               Value="[Model]"/>
+      <Default Target="[Accessible.DefaultAction]"
+               Value="Press"/>
+      <Default Target="[Accessible.Role]"
+               Value="PushButton"/>
+    </Rules>
+
+    <Content>
+      <!-- Background -->
+      <Graphic Name="Background"
+               Content="[Image]"
+               SizingPolicy="SizeToChildren"
+               MinimumSize="[TileMinSize]"
+               MaximumSize="[TileMaxSize]"
+               Alpha="0.7">
+
+        <Animations>
+          <Animation Animation="animation://me:ButtonFocus"/>
+          <Animation Animation="animation://me:ButtonNoFocus"/>
+        </Animations>
+
+        <Children>
+
+          <!-- Label -->
+          <Text Name="Label"
+                Font="[TextFont]"
+                Color="[TextColor]"
+                Margins="[TextMargins]"/>
+
+        </Children>
+      </Graphic>
+    </Content>
+  </UI>
+
+
+  <!-- Animations -->
+  <Animation Name="ButtonPress"
+             Loop="0"
+             CenterPointPercent="0.5,0.5,1.0">
+    <Keyframes>
+      <ScaleKeyframe    Time="0.00"
+                        RelativeTo="Current"
+                        Interpolation="Log"/>
+      <ScaleKeyframe    Time="0.30"
+                        RelativeTo="Current"
+                        Value="1.2,1.2,1.0"
+                        Interpolation="SCurve"/>
+      <ScaleKeyframe    Time="0.40"
+                        RelativeTo="Current"
+                        Value="0.8,0.8,1.0"
+                        Interpolation="SCurve"/>
+      <ScaleKeyframe    Time="0.50"
+                        RelativeTo="Current"
+                        Value="1.1,1.1,1.0"/>
+      <ScaleKeyframe    Time="0.55"
+                        RelativeTo="Current"
+                        Value="0.9,0.9,1.0"/>
+      <ScaleKeyframe    Time="0.60"
+                        RelativeTo="Current"
+                        Value="1.0,1.0,1.0"/>
+
+      <PositionKeyframe Time="0.0"
+                        RelativeTo="Current"/>
+      <PositionKeyframe Time="0.1"
+                        Value="0,0,-1"/>
+      <PositionKeyframe Time="0.55"
+                        Value="0,0,-1"/>
+      <PositionKeyframe Time="0.6"
+                        Value="0,0,0"/>
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="ButtonFocus"
+             Loop="0"
+             CenterPointPercent="0.5,0.5,1.0"
+             Type="GainFocus">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0"
+                     Value="0.7"
+                     RelativeTo="Absolute"
+                     Interpolation="Linear"/>
+      <AlphaKeyframe Time="0.4"
+                     Value="1.0"
+                     RelativeTo="Absolute"
+                     Interpolation="Linear"/>
+
+      <RotateKeyframe Time="0.0"
+                      Value="0deg;1,1,0"
+                      Interpolation="Linear"
+                      RelativeTo="Absolute" />
+      <RotateKeyframe Time="0.4"
+                      Value="360deg;1,1,0"
+                      RelativeTo="Absolute" />
+
+      <ScaleKeyframe Time="0.0"
+                     RelativeTo="Current"/>
+      <ScaleKeyframe Time="0.4"
+                     Value="1.5,1.5,1.0"/>
+
+    </Keyframes>
+  </Animation>
+
+  <Animation Name="ButtonNoFocus"
+             Loop="0"
+             CenterPointPercent="0.5,0.5,1.0"
+             Type="LoseFocus">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0"
+                     Value="1.0"
+                     RelativeTo="Absolute"
+                     Interpolation="Linear"/>
+      <AlphaKeyframe Time="0.4"
+                     Value=".7"
+                     RelativeTo="Absolute"/>
+
+      <RotateKeyframe Time="0.0"
+                      Value="0deg;1,1,0"
+                      Interpolation="Linear"
+                      RelativeTo="Absolute" />
+      <RotateKeyframe Time="0.4"
+                      Value="-360deg;1,1,0"
+                      RelativeTo="Absolute" />
+
+      <ScaleKeyframe Time="0.00"
+                     RelativeTo="Current"/>
+      <ScaleKeyframe Time="0.4"
+                     Value="1.0,1.0,1.0"/>
+    </Keyframes>
+  </Animation>
+
+</Mcml>

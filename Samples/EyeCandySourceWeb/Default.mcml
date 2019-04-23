@@ -1,0 +1,191 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:s="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Styles.mcml"
+      xmlns:r="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/RepeatItem.mcml"
+      xmlns:soup="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/AlphabetSoup.mcml"
+      xmlns:move="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Move.mcml"
+      xmlns:b="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Background.mcml">
+
+  <UI Name="Default">
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+    </Locals>
+
+    <Properties>
+      <Color Name="BackgroundColor"
+             Color="color://s:BackgroundColor"/>
+      <cor:String Name="WebMediaPath"
+                  String="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Phelps400mIndividualMedley.wmv"/>
+    </Properties>
+
+    <Rules>
+      <Rule>
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                  mediaType="Video"
+                  media="[WebMediaPath]"
+                  addToQueue="false"
+                  InvokePolicy="Synchronous"/>
+
+        </Actions>
+      </Rule>
+    </Rules>
+
+    <Content>
+      <ColorFill Content="[BackgroundColor]"
+                 Layout="Center">
+        <Children>
+
+          <Repeater>
+            <Source>
+              <cor:String String="Alpha"/>
+              <cor:String String="Bravo"/>
+              <cor:String String="Charlie"/>
+              <cor:String String="Delta"/>
+              <cor:String String="Echo"/>
+              <cor:String String="Foxtrot"/>
+              <cor:String String="Golf"/>
+              <cor:String String="Hotel"/>
+              <cor:String String="India"/>
+              <cor:String String="Juliet"/>
+            </Source>
+            <Layout>
+              <FlowLayout Orientation="Vertical"
+                          Spacing="4,0"/>
+            </Layout>
+            <Content>
+              <r:RepeatItem Text="[RepeatedItem!cor:String]" />
+            </Content>
+
+          </Repeater>
+
+          <Panel Layout="Center">
+            <Children>
+              <move:Move/>
+            </Children>
+          </Panel>
+
+          <Panel Layout="Anchor">
+            <Children>
+              <Video CenterPointPercent="0.5,0.5,0.5">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0"
+                                     Right="Parent,0.5"
+                                     Top="Parent,0"
+                                     Bottom="Parent,0.5"/>
+                </LayoutInput>
+                <Animations>
+                  <Animation Loop="-1">
+                    <Keyframes>
+                      <RotateKeyframe Time="0.0"
+                                      Value="0deg;0,0,0"
+                                      Interpolation="Linear"
+                                      RelativeTo="Current" />
+                      <RotateKeyframe Time="1.0"
+                                      Value="360deg;0,0,0"
+                                      RelativeTo="Current" />
+
+                      <AlphaKeyframe Time="0.0"
+                                     Value="0"
+                                     Interpolation="Linear"
+                                     RelativeTo="Current" />
+                      <AlphaKeyframe Time="1.0"
+                                     Value="1"
+                                     Interpolation="Linear"
+                                     RelativeTo="Current" />
+                      <AlphaKeyframe Time="2.0"
+                                     Value="0"
+                                     RelativeTo="Current" />
+
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+
+              </Video>
+
+              <Video CenterPointPercent="0.5,0.5,0.5">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0.5"
+                                     Right="Parent,1"
+                                     Top="Parent,0.5"
+                                     Bottom="Parent,1"/>
+                </LayoutInput>
+                <Animations>
+                  <Animation Loop="-1">
+                    <Keyframes>
+                      <AlphaKeyframe Time="0.0"
+                                     Value="0"
+                                     Interpolation="Linear"
+                                     RelativeTo="Current" />
+                      <AlphaKeyframe Time="10.0"
+                                     Value="1"
+                                     Interpolation="Linear"
+                                     RelativeTo="Current" />
+                      <AlphaKeyframe Time="20.0"
+                                     Value="0"
+                                     RelativeTo="Current" />
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+
+              </Video>
+
+              <Video CenterPointPercent="0.5,0.5,0.5">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0"
+                                     Right="Parent,0.5"
+                                     Top="Parent,0.5"
+                                     Bottom="Parent,1"/>
+                </LayoutInput>
+                <Animations>
+                  <Animation Loop="-1">
+                    <Keyframes>
+                      <ScaleKeyframe Time="0.0"
+                                     Value="1,1,0"
+                                     Interpolation="Linear"
+                                     RelativeTo="Current" />
+                      <ScaleKeyframe Time="10.0"
+                                     Value="2,2,0"
+                                     Interpolation="Linear"
+                                     RelativeTo="Current" />
+                      <ScaleKeyframe Time="20"
+                                     Value="1,1,0"
+                                     RelativeTo="Current" />
+                    </Keyframes>
+                  </Animation>
+                </Animations>
+
+              </Video>
+
+              <Video CenterPointPercent="0.5,0.5,0.5">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent,0.5"
+                                     Right="Parent,1.0"
+                                     Top="Parent,0.0"
+                                     Bottom="Parent,0.5"/>
+                </LayoutInput>
+              </Video>
+
+            </Children>
+          </Panel>
+          <Panel>
+            <Children>
+              <soup:Main/>
+              <!--<soup:Main/>-->
+            </Children>
+          </Panel>
+
+          <Panel Layout="Center">
+            <Children>
+              <b:Background/>
+            </Children>
+          </Panel>
+
+        </Children>
+      </ColorFill>
+    </Content>
+
+  </UI>
+</Mcml>

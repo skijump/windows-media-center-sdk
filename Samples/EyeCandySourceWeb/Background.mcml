@@ -1,0 +1,137 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml">
+  <UI Name="Background">
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Graphic Content="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Background4.png"
+                   Scale="12,12,0"
+                   CenterPointPercent="0.5,0.5,0"
+                   Rotation="45deg;0,0,1">
+            <Animations>
+              <Animation Loop="-1">
+                <Keyframes>
+                  <PositionKeyframe Time="0"
+                                    Value="0,0,0"
+                                    Interpolation="Sine"/>
+                  <PositionKeyframe Time="20"
+                                    Value="-200,-200,0"
+                                    Interpolation="Cosine"/>
+                  <PositionKeyframe Time="40"
+                                    Value="0,0,0"
+                                    Interpolation="Sine"/>
+                  <PositionKeyframe Time="60"
+                                    Value="200,200,0"
+                                    Interpolation="Cosine"/>
+                  <PositionKeyframe Time="80"
+                                    Value="0,0,0"/>
+                  <RotateKeyframe Time="0"
+                                  Value="0deg;0,0,1"/>
+                  <RotateKeyframe Time="120"
+                                  Value="360deg;0,0,1"/>
+                  <AlphaKeyframe Time="0"
+                                 Value="0"/>
+                  <AlphaKeyframe Time="14"
+                                 Value=".1"/>
+                  <AlphaKeyframe Time="28"
+                                 Value="0"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Graphic>
+          <Graphic Content="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Background3.png"
+                   Scale="12,12,0"
+                   CenterPointPercent="0.5,0.5,0"
+                   Alpha=".05">
+            <Animations>
+              <Animation Loop="-1">
+                <Keyframes>
+
+                  <PositionKeyframe Time="0"
+                                    Value="0,0,0"
+                                    Interpolation="Sine"/>
+                  <PositionKeyframe Time="20"
+                                    Value="200,200,0"
+                                    Interpolation="Cosine"/>
+                  <PositionKeyframe Time="40"
+                                    Value="0,0,0"
+                                    Interpolation="Sine"/>
+                  <PositionKeyframe Time="60"
+                                    Value="-200,-200,0"
+                                    Interpolation="Cosine"/>
+                  <PositionKeyframe Time="80"
+                                    Value="0,0,0"/>
+
+                  <RotateKeyframe Time="0"
+                                  Value="0deg;0,0,1"/>
+                  <RotateKeyframe Time="100"
+                                  Value="360deg;0,0,1"/>
+
+                  <ScaleKeyframe Time="0"
+                                 Value="1,1,0"/>
+                  <ScaleKeyframe Time="25"
+                                 Value="1.5,1.5,0"/>
+                  <ScaleKeyframe Time="50"
+                                 Value="1,1,0"/>
+
+                  <AlphaKeyframe Time="0"
+                                 Value=".05"
+                                 Interpolation="Cosine"/>
+                  <AlphaKeyframe Time="5"
+                                 Value="0"
+                                 Interpolation="Sine"/>
+                  <AlphaKeyframe Time="10"
+                                 Value=".05"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Graphic>
+          <Graphic Content="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Background2.png"
+                   Scale="12,12,0"
+                   CenterPointPercent="0.5,0.5,0"
+                   Alpha=".05">
+            <Animations>
+              <Animation Loop="-1">
+                <Keyframes>
+                  <PositionKeyframe Time="0"
+                                    Value="0,0,0"
+                                    Interpolation="Sine"/>
+                  <PositionKeyframe Time="30"
+                                    Value="200,400,0"
+                                    Interpolation="Cosine"/>
+                  <PositionKeyframe Time="60"
+                                    Value="0,0,0"
+                                    Interpolation="Sine"/>
+                  <PositionKeyframe Time="90"
+                                    Value="-400,-200,0"
+                                    Interpolation="Cosine"/>
+                  <PositionKeyframe Time="120"
+                                    Value="0,0,0"/>
+                  <RotateKeyframe Time="0"
+                                  Value="0deg;0,0,1"/>
+                  <RotateKeyframe Time="97"
+                                  Value="-360deg;0,0,1"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Graphic>
+          <Graphic Content="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Background1.png"
+                   Scale="12,12,0"
+                   CenterPointPercent="0.5,0.5,0">
+            <Animations>
+              <Animation Loop="-1">
+                <Keyframes>
+                  <AlphaKeyframe Time="0"
+                                 Value=".6"/>
+                  <AlphaKeyframe Time="5"
+                                 Value="0.45"/>
+                  <AlphaKeyframe Time="10"
+                                 Value=".6"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Graphic>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

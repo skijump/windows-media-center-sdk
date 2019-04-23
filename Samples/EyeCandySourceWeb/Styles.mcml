@@ -1,0 +1,29 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml">
+
+  <Color Name="FocusColor"
+         Color="Yellow"/>
+  <Color Name="NonFocusColor"
+         Color="Firebrick"/>
+  <Color Name="SelectedColor"
+         Color="Green"/>
+  <Color Name="BackgroundColor"
+         Color="Black"/>
+
+  <Color Name="Text.Copy"
+         Color="255,255,255,255"/>
+  <Color Name="Text.Active"
+         Color="128,255,255,255"/>
+  <Color Name="Text.Negative"
+         Color="255,54,57,9"/>
+
+  <Font Name="SecondaryText"
+        Font="Calibri,18"/>
+
+  <Image Name="ButtonFocusImage"
+         Source="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/ButtonFocus.png"
+         NineGrid="4,4,4,4"/>
+  <Image Name="ButtonNonFocusImage"
+         Source="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/ButtonNonFocus.png"
+         NineGrid="4,4,4,4"/>
+
+</Mcml>

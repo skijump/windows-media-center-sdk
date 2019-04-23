@@ -1,0 +1,31 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+	  xmlns:cor="assembly://MsCorLib/System"
+	  xmlns:a="assembly://EyeCandy/EyeCandy"
+	  xmlns:c="resx://EyeCandy/EyeCandy.Resources/Controls"
+      xmlns:styles="resx://EyeCandy/EyeCandy.Resources/Styles">
+
+  <UI Name="RepeatItem">
+    <Properties>
+      <a:Application Name="Application" Application="$Required"/>
+      <cor:String Name="Text" String="$Required"/>
+    </Properties>
+
+    <Locals>
+      <Command Name="MyCommand"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[MyCommand.Description]" Source="[Text]"/>
+
+      <Changed Source="[MyCommand.Invoked]">
+        <Actions>
+          <Invoke Target="[Application.DialogTest]" strClickedText="[Text]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <c:Button Name="Button" Model="[MyCommand]" Image="image://styles:ButtonNonFocusImage"/>
+    </Content>
+  </UI>
+</Mcml>

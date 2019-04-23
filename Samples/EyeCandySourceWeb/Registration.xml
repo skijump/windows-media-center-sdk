@@ -1,0 +1,11 @@
+<application title="EyeCandy"
+             id="{cf70220c-9750-4f1a-b5dd-12086a6c01d1}">
+  <entrypoint id="{e656139e-6260-4d5b-9a50-9634fd09cdae}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              context="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Default.mcml"
+              title="EyeCandy"
+              description="Demo the animation and rendering capabilities of the Media Center platform."
+              ImageUrl="http://jolt-media/scratch2/charlieo/WindowsMediaCenter/EyeCandy/Application.png">
+    <category category="More Programs"/>
+  </entrypoint>
+</application>

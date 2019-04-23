@@ -1,0 +1,9 @@
+﻿<application title="EyeCandy" id="{67d6b566-3a00-4d34-8dfe-ebaa8174c106}">
+	<entrypoint id="{6624a894-0daa-480d-9d37-2c5c1c0bf292}"
+				addin="EyeCandy.MyAddIn, EyeCandy,Culture=Neutral,Version=1.0.0.0,PublicKeyToken=372be091ff577be5"
+				title="EyeCandy"
+				description="Demo the animation and rendering capabilities of the Media Center platform."
+				ImageUrl=".\Application.png">
+		<category category="More Programs"/>
+	</entrypoint>
+</application>
