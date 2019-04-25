@@ -6,4 +6,5 @@ The Windows Media Center SDK for Windows 7 was designed to run on Windows 7 Home
 
 ## <a name="license"></a>What is the license for this project?
 
-See the original [End User License Agreement (EULA)](docs/source/Eula.txt) and [redistribution information](docs/source/redist.txt).
+* See the original [End User License Agreement (EULA)](docs/source/Eula.txt) and [redistribution information](docs/source/redist.txt).
+* Items in the `/addendum` folder were never a part of the official SDK and were made available separately - see the original [readme.txt](addendum/Readme.txt) for those resources. A few more items have been added to that collection -- will likely attach the MIT license to them at some point.
