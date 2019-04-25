@@ -1,6 +1,6 @@
 # Windows Media Center SDK for Windows 7
 
-The official Windows Media Center SDK for Windows 7 documentation is on the Microsoft site is [here](https://docs.microsoft.com/en-us/previous-versions/windows/desktop/windows-media-center-sdk/).
+The official Windows Media Center SDK for Windows 7 documentation is on the Microsoft site [here](https://docs.microsoft.com/en-us/previous-versions/windows/desktop/windows-media-center-sdk/).
 
 Preserving a bit of history for the diaspora that created Windows Media Center (the 'eHome' team at Microsoft) and the fans that still use since the actual installer has gone missing from the original download link.
 
