@@ -1,0 +1,8 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+
+  <Color Name="MyColor"
+         Color="White"/>
+  <Font Name="MyFont"
+        Font="Calibri,16"/>
+
+</Mcml>

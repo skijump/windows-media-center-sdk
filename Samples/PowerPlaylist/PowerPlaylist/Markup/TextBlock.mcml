@@ -1,0 +1,26 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:styles="resx://PowerPlaylist/PowerPlaylist.Resources/Styles">
+
+  <UI Name="TextBlock">
+
+    <Properties>
+      <cor:String Name="Text"
+                  String="$Required" />
+    </Properties>
+
+    <Rules>
+      <Default Target="[MyText.Content]"
+               Value="[Text]"/>
+    </Rules>
+
+    <Content>
+      <Text Name="MyText"
+            Color="color://styles:MyColor"
+            Font="font://styles:MyFont"
+            WordWrap="true" />
+    </Content>
+
+  </UI>
+
+</Mcml>

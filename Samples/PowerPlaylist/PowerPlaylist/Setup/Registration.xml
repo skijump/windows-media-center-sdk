@@ -1,0 +1,53 @@
+﻿<application title="PowerPlaylist"
+             id="{94761D39-3AAF-4c54-A2D3-CBDA27D2229C}"
+             StartMenuStripTitle="PowerPlaylist 2"
+             StartMenuStripCategory="Custom Start Menu\PowerPlaylist 2">
+  <entrypoint id="{30F10141-61F8-45b1-B369-1B508D080BD7}"
+              addin="PowerPlaylist.MyAddIn, PowerPlaylist,Culture=Neutral,Version=2.0.0.0,PublicKeyToken=57473fb6bbfb5f4c"
+              title="PowerPlaylist"
+              description="PowerPlaylist creates custom audio, slideshow and visualization combinations on your Start Menu."
+              ImageUrl="powerplaylist.png"
+              StartMenuStripTitle="PowerPlaylist">
+    <category category="More Programs"/>
+  </entrypoint>
+  <entrypoint id="{DFD75E76-7530-4d0d-A126-71863200A556}"
+              addin="PowerPlaylist.MyAddIn, PowerPlaylist,Culture=Neutral,Version=2.0.0.0,PublicKeyToken=57473fb6bbfb5f4c"
+              title="audio only"
+              imageURL="audio.png"
+              inactiveImageURL="audio.png">
+    <category category="Custom Start Menu\PowerPlaylist 2"
+              order="0"/>
+  </entrypoint>
+  <entrypoint id="{B9B49DBF-FB85-4a80-BEB7-5732C4BA849E}"
+              addin="PowerPlaylist.MyAddIn, PowerPlaylist,Culture=Neutral,Version=2.0.0.0,PublicKeyToken=57473fb6bbfb5f4c"
+              title="slideshow only"
+              imageURL="slideshow.png"
+              inactiveImageURL="slideshow.png">
+    <category category="Custom Start Menu\PowerPlaylist 2"
+              order="1"/>
+  </entrypoint>
+  <entrypoint id="{4A03B055-EEA0-466f-B4FD-AE72D41FDB02}"
+              addin="PowerPlaylist.MyAddIn, PowerPlaylist,Culture=Neutral,Version=2.0.0.0,PublicKeyToken=57473fb6bbfb5f4c"
+              title="audio + slideshow"
+              imageURL="audioandslideshow.png"
+              inactiveImageURL="audioandslideshow.png">
+    <category category="Custom Start Menu\PowerPlaylist 2"
+              order="2"/>
+  </entrypoint>
+  <entrypoint id="{F8216194-C5C8-4fc8-98B8-B33EF15B36AA}"
+              addin="PowerPlaylist.MyAddIn, PowerPlaylist,Culture=Neutral,Version=2.0.0.0,PublicKeyToken=57473fb6bbfb5f4c"
+              title="audio + visualization"
+              imageURL="audioandvisualization.png"
+              inactiveImageURL="audioandvisualization.png">
+    <category category="Custom Start Menu\PowerPlaylist 2"
+              order="3"/>
+  </entrypoint>
+  <entrypoint id="{9580A0B8-F06F-4422-94D2-4AAE0A26B3B3}"
+              addin="PowerPlaylist.MyAddIn, PowerPlaylist,Culture=Neutral,Version=2.0.0.0,PublicKeyToken=57473fb6bbfb5f4c"
+              title="audio + slideshow + visualization"
+              imageURL="audioandslideshow.png"
+              inactiveImageURL="audioandslideshow.png">
+    <category category="Custom Start Menu\PowerPlaylist 2"
+              order="4"/>
+  </entrypoint>
+</application>

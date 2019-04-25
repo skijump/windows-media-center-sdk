@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual C# Express 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerPlaylistEditor", "PowerPlaylistEditor.csproj", "{3D629BE7-1167-42B8-8F54-69AC6E544E41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D629BE7-1167-42B8-8F54-69AC6E544E41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D629BE7-1167-42B8-8F54-69AC6E544E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D629BE7-1167-42B8-8F54-69AC6E544E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D629BE7-1167-42B8-8F54-69AC6E544E41}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

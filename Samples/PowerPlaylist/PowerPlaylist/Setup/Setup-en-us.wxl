@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright Microsoft Corporation -->
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+
+	<String Id="LaunchCondition_AdminPrivs">You must have Administrative rights on this machine to install [ProductName].</String>
+	<String Id="LaunchCondition_LaterVersion">A later version of [ProductName] is already installed.</String>
+	<String Id="LaunchCondition_WrongOSVersion">[ProductName] was not designed for this version of Windows Media Center.</String>
+
+	<String Id="Property_ArpHelpLink">http://www.codeplex.com/powerplaylist/</String>
+	<String Id="Property_ArpUrlInfoAbout">http://www.codeplex.com/powerplaylist/</String>
+	<String Id="Property_ProductLanguage">1033</String>
+	<String Id="Property_ProductName">PowerPlaylist 2</String>
+	<String Id="Property_CompanyName">Microsoft</String>
+
+	<String Id="PowerPlaylist_Shortcut_Title">PowerPlaylist 2 Editor</String>
+	<String Id="PowerPlaylist_Shortcut_Description">Select to launch the PowerPlaylist Editor.</String>
+
+	<String Id="Package_Description">PowerPlaylist</String>
+	<String Id="Package_Comments">This Installer database contains the logic and data required to install PowerPlaylist.</String>
+
+</WixLocalization>

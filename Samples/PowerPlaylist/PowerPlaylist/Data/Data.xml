@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright Microsoft Corporation -->
+<dataroot>
+  <Table>
+    <ID>1</ID>
+    <Audio>C:\Users\Public\Music\PowerPlaylist\PowerPlaylist1.wpl</Audio>
+    <SlideshowFolder></SlideshowFolder>
+    <Visualization></Visualization>
+    <HideTile>false</HideTile>
+  </Table>
+  <Table>
+    <ID>2</ID>
+    <Audio></Audio>
+    <SlideshowFolder>C:\Users\Public\Pictures\PowerPlaylist</SlideshowFolder>
+    <Visualization></Visualization>
+    <HideTile>false</HideTile>
+  </Table>
+  <Table>
+    <ID>3</ID>
+    <Audio>C:\Users\Public\Music\PowerPlaylist\PowerPlaylist3.wpl</Audio>
+    <SlideshowFolder>C:\Users\Public\Pictures\PowerPlaylist</SlideshowFolder>
+    <Visualization></Visualization>
+    <HideTile>false</HideTile>
+  </Table>
+  <Table>
+    <ID>4</ID>
+    <Audio>C:\Users\Public\Music\PowerPlaylist\PowerPlaylist4.wpl</Audio>
+    <SlideshowFolder></SlideshowFolder>
+    <Visualization>Battery</Visualization>
+    <HideTile>false</HideTile>
+  </Table>
+  <Table>
+    <ID>5</ID>
+    <Audio>C:\Users\Public\Music\PowerPlaylist\PowerPlaylist5.wpl</Audio>
+    <SlideshowFolder>C:\Users\Public\Pictures\PowerPlaylist</SlideshowFolder>
+    <Visualization>Alchemy:Random</Visualization>
+    <HideTile>false</HideTile>
+  </Table>
+</dataroot>

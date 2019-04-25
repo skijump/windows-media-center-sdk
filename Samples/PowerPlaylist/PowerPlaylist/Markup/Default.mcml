@@ -1,0 +1,49 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:ctl="resx://PowerPlaylist/PowerPlaylist.Resources/TextBlock">
+
+  <UI Name="Default">
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Layout="VerticalFlow"
+                 Margins="20,20,20,20">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0"
+                               Right="Parent,.5"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <ctl:TextBlock Text="PowerPlaylist adds a custom Start Menu strip to Windows Media Center with five tiles. Each tile represents an audio + slideshow combination which will start when the tile is selected." />
+              <Graphic Content="resx://PowerPlaylist/PowerPlaylist.Resources/PowerPlaylist2EditorStartMenuLocation"
+                       MaintainAspectRatio="true"
+                       MaximumSize="500,500"
+                       Padding="0,20,0,0" />
+              <ctl:TextBlock Text="Step 1: Start the PowerPlaylist 2 Editor from your Windows Start Menu." />
+            </Children>
+          </Panel>
+          <Panel Layout="VerticalFlow"
+                 Margins="20,20,20,20">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,.5"
+                               Right="Parent,1"
+                               Vertical="Center"/>
+            </LayoutInput>
+            <Children>
+              <Graphic Content="resx://PowerPlaylist/PowerPlaylist.Resources/PowerPlaylist2EditorScreenshot"
+                       MaintainAspectRatio="true"
+                       MaximumSize="500,500" />
+              <ctl:TextBlock Text="Step 2: Edit the various fields to point to your content. See Readme.txt for more information." />
+              <Graphic Content="resx://PowerPlaylist/PowerPlaylist.Resources/PowerPlaylist2Screenshot"
+                       MaintainAspectRatio="true"
+                       MaximumSize="500,500" />
+              <ctl:TextBlock Text="Step 3: Launch Windows Media Center, navigate to the PowerPlaylist menu (you might have changed the name in the editor) and select the tile you wish to launch." />
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+</Mcml>

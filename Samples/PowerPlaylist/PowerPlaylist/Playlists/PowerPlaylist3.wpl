@@ -1,0 +1,11 @@
+<?wpl version="1.0"?>
+<smil>
+  <body>
+    <seq>
+      <media src="..\..\..\Public\Music\PowerPlaylist\Audio03.mp3"
+             cid="{E6F25DE6-2396-4978-A104-7852ADEFE6B4}"
+             tid="{425D65ED-D194-42d0-BC0B-C3A1879EF937}"/>
+      <media src="..\..\..\Public\Music\PowerPlaylist\Audio01.mp3"/>
+    </seq>
+  </body>
+</smil>

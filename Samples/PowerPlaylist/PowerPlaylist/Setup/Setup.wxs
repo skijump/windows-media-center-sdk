@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright Microsoft Corporation -->
+
+<!-- To troubleshoot installation problems run the MSI -->
+<!-- from a command prompt with Administrator          -->
+<!-- privileges using the following:                   -->
+
+<!--      msiexec /i setup.msi /l*v MyMSILog.txt       -->
+
+<!-- and examine the resulting log file.               -->
+
+<!-- These variables define the Windows Installer product version, product code and upgrade code. They   -->
+<!-- will be used later on in this file.                                                                 -->
+<?define Property_ProductVersion = "2.0.0.0" ?>
+<?define Property_ProductCode = "8BD04C3A-EAB9-4cee-BD31-645770A96C56" ?>
+<?define Property_UpgradeCode = "56287269-694A-4877-A4C7-C9ED1B8BF6A5" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="$(var.Property_ProductCode)"
+           UpgradeCode="$(var.Property_UpgradeCode)"
+           Name="!(loc.Property_ProductName)"
+           Language="!(loc.Property_ProductLanguage)"
+           Version="$(var.Property_ProductVersion)"
+           Manufacturer="!(loc.Property_CompanyName)">
+
+    <Package Description="!(loc.Package_Description)"
+             Comments="!(loc.Package_Comments)"
+             InstallerVersion="200"
+             Compressed="yes" />
+
+    <!-- This information enables Windows Installer major upgrade functionality so users can seamlessly  -->
+    <!-- install a new version of the product and have the old version automatically uninstall behind    -->
+    <!-- the scenes. See the following topic in the MSDN Library for additional information:             -->
+    <!-- http://msdn.microsoft.com/library/default.asp?url=/library/en-us/msi/setup/major_upgrades.asp   -->
+    <Upgrade Id="$(var.Property_UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.Property_ProductVersion)"
+                      OnlyDetect="yes"
+                      Property="NEWERVERSIONDETECTED" />
+      <UpgradeVersion Minimum="1.0.0.0"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.Property_ProductVersion)"
+                      IncludeMaximum="no"
+                      Property="OLDERVERSIONBEINGUPGRADED" />
+    </Upgrade>
+
+    <!-- This is the EULA Windows Media Center will display during setup.  It should be in plain text    -->
+    <!-- format. This file is NOT displayed within the standard setup wizard for mouse and keyboard.     -->
+    <!-- That file (License.rtf) is defined within the <WixVariable> element below.                      -->
+    <Binary Id="License.txt"
+            SourceFile="..\setup\License.txt" />
+    <Binary Id="LicenseAccessible.txt"
+            SourceFile="..\setup\LicenseAccessible.txt" />
+
+    <!-- This custom action prevents users from installing if a newer version of this product is already -->
+    <!-- installed on the system. This is a part of Windows Installer major upgrade functionality.       -->
+    <CustomAction Id="CA_BlockOlderVersionInstall"
+                  Error="!(loc.LaunchCondition_LaterVersion)" />
+
+    <!-- This custom action prevents users from installing this product on unsupported operating system  -->
+    <!-- versions. The conditions that are checked for operating system version are defined below.       -->
+    <CustomAction Id="CA_ErrWrongWindowsVersion"
+                  Error="!(loc.LaunchCondition_WrongOSVersion)" />
+
+    <!-- This condition adds an item to the LaunchCondition table of the MSI to block a user from        -->
+    <!-- installing this product unless they have administrative privileges on the system.               -->
+    <Condition Message="!(loc.LaunchCondition_AdminPrivs)">
+      <![CDATA[Privileged]]>
+    </Condition>
+
+    <!-- This is a list of directories that are used by this product as installation locations or custom -->
+    <!-- action file search locations.                                                                   -->
+    <Directory Id="TARGETDIR"
+               Name="SourceDir">
+      <Directory Id="WindowsFolder"
+                 Name="WINDOWS">
+        <Directory Id="EhomeFolder"
+                   Name="eHome"/>
+      </Directory>
+      <Directory Id="ProgramFilesFolder"
+                 Name="Program Files">
+        <Directory Id="Microsoft"
+                   Name="Microsoft">
+          <Directory Id="APPROOTDIRECTORY"
+                     Name="PowerPlaylist2"/>
+        </Directory>
+      </Directory>
+      <Directory Id="CommonAppDataFolder"
+                 Name="ComAppDt">
+        <Directory Id="AppDataCompany"
+                   Name="Microsoft">
+          <Directory Id="AppData"
+                     Name="PowerPlaylist2">
+            <Directory Id="PowerPlaylistData"
+                       Name="Data"/>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="Users"
+                 Name="Users">
+        <Directory Id="Public"
+                   Name="Public">
+          <Directory Id="WIX_DIR_COMMON_PICTURES"
+                     Name="Pictures">
+            <Directory Id="PowerPlaylistPictures"
+                       Name="PowerPlaylist"/>
+          </Directory>
+          <Directory Id="WIX_DIR_COMMON_MUSIC"
+                     Name="Music">
+            <Directory Id="PowerPlaylistMusic"
+                       Name="PowerPlaylist"/>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="StartMenuFolder"
+                 Name="StrtFldr">
+        <Directory Id="ProgramMenuFolder"
+                   Name="PrgFldr">
+          <Directory Id="PowerPlaylistProgramsFolder"
+                     Name="PowerPlaylist2"/>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- This is a list of all components installed as a part of this product. A component is the        -->
+    <!-- smallest atomic unit of installation in Windows Installer. Each component must have a unique    -->
+    <!-- GUID. In general, it is recommended that each file be installed by a separate component in      -->
+    <!-- order to avoid reference counting problems and make future servicing of this product easier.    -->
+    <!-- Each component is listed as a child of the DirectoryRef that represents the directory that      -->
+    <!-- the file it contains will install to.                                                           -->
+    <DirectoryRef Id="APPROOTDIRECTORY">
+      <Component Id="PowerPlaylist.dll"
+                 Guid="5AC69338-79F3-4c14-9406-0A29985B2AC2"
+                 DiskId="1">
+        <File Id="PowerPlaylist.dll"
+              Name="PowerPlaylist.dll"
+              KeyPath="yes"
+              Source="..\bin\$(var.BuildType)\PowerPlaylist.dll"
+              Checksum="yes"
+              Vital="yes"
+              Assembly=".net"/>
+      </Component>
+      <Component Id="PowerPlaylistEditor.exe"
+                 Guid="CED838CF-7C1D-4348-A582-90730CDA21C1"
+                 DiskId="1">
+        <File Id="PowerPlaylistEditor.exe"
+              Name="PowerPlaylistEditor.exe"
+              KeyPath="yes"
+              Source="..\..\PowerPlaylistEditor\bin\Debug\PowerPlaylistEditor.exe"
+              Checksum="yes" />
+      </Component>
+      <Component Id="Registration.xml"
+                 Guid="9CE09607-6064-4d61-AE1B-512FC1848C7B"
+                 DiskId="1">
+        <File Id="Registration.xml"
+              Name="Registration.xml"
+              Source="..\Setup\Registration.xml"
+              Checksum="no" />
+      </Component>
+      <Component Id="Readme.txt"
+                 Guid="17B56881-8BA5-4bf8-AB8B-3A7E510623EA"
+                 DiskId="1">
+        <File Id="Readme.txt"
+              Name="Readme.txt"
+              Source="..\Setup\Readme.txt"
+              Checksum="no" />
+      </Component>
+      <Component Id="audio.png"
+                 Guid="8CD4CB4B-5235-45f5-8C66-8908CE5CFF18"
+                 DiskId="1">
+        <File Id="audio.png"
+              Name="audio.png"
+              Source="..\Images\audio.png"
+              Checksum="no" />
+      </Component>
+      <Component Id="audioandslideshow.png"
+                 Guid="4449AE3D-D913-4c24-BA1E-8864D20E3972"
+                 DiskId="1">
+        <File Id="audioandslideshow.png"
+              Name="audioandslideshow.png"
+              Source="..\Images\audioandslideshow.png"
+              Checksum="no" />
+      </Component>
+      <Component Id="audioandvisualization.png"
+                 Guid="D4D05FD2-4E37-48e7-97F3-82B094D7FFFD"
+                 DiskId="1">
+        <File Id="audioandvisualization.png"
+              Name="audioandvisualization.png"
+              Source="..\Images\audioandvisualization.png"
+              Checksum="no" />
+      </Component>
+      <Component Id="powerplaylist.png"
+                 Guid="7B1BE25F-85CF-4106-8355-4A7EFF094CF6"
+                 DiskId="1">
+        <File Id="powerplaylist.png"
+              Name="powerplaylist.png"
+              Source="..\Images\powerplaylist.png"
+              Checksum="no" />
+      </Component>
+      <Component Id="slideshow.png"
+                 Guid="33366D4E-7344-4e61-971B-D515F88CA38A"
+                 DiskId="1">
+        <File Id="slideshow.png"
+              Name="slideshow.png"
+              Source="..\Images\slideshow.png"
+              Checksum="no" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="PowerPlaylistData">
+      <Component Id="Data.xml"
+                 Guid="F86BDA0B-9599-4251-B248-DD8C26B6C1BB"
+                 DiskId="1">
+        <File Id="Data.xml"
+              Name="Data.xml"
+              Source="..\Data\Data.xml"
+              Checksum="no" />
+        <RegistryKey Root="HKLM"
+                     Key="Software\Microsoft\PowerPlaylist2">
+          <RegistryValue Name="DataLocation"
+                         Type="string"
+                         Value="[PowerPlaylistData]"/>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="PowerPlaylistMusic">
+      <Component Id="Audio01.mp3"
+                 Guid="A074C630-3BA0-4cf7-AB8A-905C64787BDC"
+                 DiskId="1">
+        <File Id="Audio01.mp3"
+              Name="Audio01.mp3"
+              Source="..\Music\Audio01.mp3"
+              Checksum="no" />
+      </Component>
+      <Component Id="Audio02.mp3"
+                 Guid="D506356D-3C74-4262-913E-F2A487D10728"
+                 DiskId="1">
+        <File Id="Audio02.mp3"
+              Name="Audio02.mp3"
+              Source="..\Music\Audio02.mp3"
+              Checksum="no" />
+      </Component>
+      <Component Id="Audio03.mp3"
+                 Guid="D31CAA9E-32E4-4a2c-BF95-2CE402634629"
+                 DiskId="1">
+        <File Id="Audio03.mp3"
+              Name="Audio03.mp3"
+              Source="..\Music\Audio03.mp3"
+              Checksum="no" />
+      </Component>
+      <Component Id="PowerPlaylist1.wpl"
+                 Guid="5609162E-4E45-43fb-86BE-7642B950D01D"
+                 DiskId="1">
+        <File Id="PowerPlaylist1.wpl"
+              Name="PowerPlaylist1.wpl"
+              Source="..\Playlists\PowerPlaylist1.wpl"
+              Checksum="no" />
+      </Component>
+      <Component Id="PowerPlaylist2.wpl"
+                 Guid="9985E448-C2CE-41a7-8FB5-4DF38DDBBB20"
+                 DiskId="1">
+        <File Id="PowerPlaylist2.wpl"
+              Name="PowerPlaylist2.wpl"
+              Source="..\Playlists\PowerPlaylist2.wpl"
+              Checksum="no" />
+      </Component>
+      <Component Id="PowerPlaylist3.wpl"
+                 Guid="ED1546C7-3AF8-4f2f-AEC8-5C639CF1D5A7"
+                 DiskId="1">
+        <File Id="PowerPlaylist3.wpl"
+              Name="PowerPlaylist3.wpl"
+              Source="..\Playlists\PowerPlaylist3.wpl"
+              Checksum="no" />
+      </Component>
+      <Component Id="PowerPlaylist4.wpl"
+                 Guid="5AB9AA13-3E76-4fec-ADF6-749C94695699"
+                 DiskId="1">
+        <File Id="PowerPlaylist4.wpl"
+              Name="PowerPlaylist4.wpl"
+              Source="..\Playlists\PowerPlaylist4.wpl"
+              Checksum="no" />
+      </Component>
+      <Component Id="PowerPlaylist5.wpl"
+                 Guid="2E42C84F-C122-483c-8097-D8BE37DA405A"
+                 DiskId="1">
+        <File Id="PowerPlaylist5.wpl"
+              Name="PowerPlaylist5.wpl"
+              Source="..\Playlists\PowerPlaylist5.wpl"
+              Checksum="no" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="PowerPlaylistPictures">
+      <Component Id="Photo01.jpg"
+                 Guid="79274B90-DF6B-4df9-86F5-A78B89075A60"
+                 DiskId="1">
+        <File Id="Photo01.jpg"
+              Name="Photo01.jpg"
+              Source="..\Pictures\Photo01.jpg"
+              Checksum="no" />
+      </Component>
+      <Component Id="Photo02.jpg"
+                 Guid="79436A37-B8D5-428a-A2CA-9674D059A850"
+                 DiskId="1">
+        <File Id="Photo02.jpg"
+              Name="Photo02.jpg"
+              Source="..\Pictures\Photo02.jpg"
+              Checksum="no" />
+      </Component>
+      <Component Id="Photo03.jpg"
+                 Guid="EC6035FD-B774-4fc5-B352-B6B4FF5F77CC"
+                 DiskId="1">
+        <File Id="Photo03.jpg"
+              Name="Photo03.jpg"
+              Source="..\Pictures\Photo03.jpg"
+              Checksum="no" />
+      </Component>
+      <Component Id="Photo04.jpg"
+                 Guid="F576F5A9-BF41-4cf9-8680-A2F465888550"
+                 DiskId="1">
+        <File Id="Photo04.jpg"
+              Name="Photo04.jpg"
+              Source="..\Pictures\Photo04.jpg"
+              Checksum="no" />
+      </Component>
+      <Component Id="Photo05.jpg"
+                 Guid="322DC5AB-970C-4c7c-B499-F39598AA93F1"
+                 DiskId="1">
+        <File Id="Photo05.jpg"
+              Name="Photo05.jpg"
+              Source="..\Pictures\Photo05.jpg"
+              Checksum="no" />
+      </Component>
+      <Component Id="Photo06.jpg"
+                 Guid="23FB885F-A2F3-4885-8F26-FEBDCA3222FE"
+                 DiskId="1">
+        <File Id="Photo06.jpg"
+              Name="Photo06.jpg"
+              Source="..\Pictures\Photo06.jpg"
+              Checksum="no" />
+      </Component>
+      <Component Id="Photo07.jpg"
+                 Guid="875F05CC-E227-4b81-A074-8708C2EDC7AE"
+                 DiskId="1">
+        <File Id="Photo07.jpg"
+              Name="Photo07.jpg"
+              Source="..\Pictures\Photo07.jpg"
+              Checksum="no" />
+      </Component>
+      <Component Id="Photo08.jpg"
+                 Guid="54DCCACC-BBCD-486e-BEF3-FE274E223C10"
+                 DiskId="1">
+        <File Id="Photo08.jpg"
+              Name="Photo08.jpg"
+              Source="..\Pictures\Photo08.jpg"
+              Checksum="no" />
+      </Component>
+      <Component Id="Photo09.jpg"
+                 Guid="23801FCA-4C67-4fe7-B1C4-83394B7EE4E5"
+                 DiskId="1">
+        <File Id="Photo09.jpg"
+              Name="Photo09.jpg"
+              Source="..\Pictures\Photo09.jpg"
+              Checksum="no" />
+      </Component>
+      <Component Id="Photo10.jpg"
+                 Guid="924E0963-2EA3-4fb3-8D73-6DB6212FBF46"
+                 DiskId="1">
+        <File Id="Photo10.jpg"
+              Name="Photo10.jpg"
+              Source="..\Pictures\Photo10.jpg"
+              Checksum="no" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="PowerPlaylistProgramsFolder">
+      <Component Id="PowerPlaylistEditorShortcut"
+                 Guid="2A1E2495-309F-46fe-BBFE-1ECE35E8B04A"
+                 DiskId="1">
+        <RemoveFolder Id="PowerPlaylistProgramsFolder"
+                      On="uninstall"/>
+        <RegistryKey Root="HKCU"
+                     Key="Software\Microsoft\PowerPlaylist2"
+                     Action="createAndRemoveOnUninstall">
+          <RegistryValue Name="Installed"
+                         Type="integer"
+                         Value="1"/>
+        </RegistryKey>
+        <Shortcut Id="PowerPlaylist_StartMenu_Shortcut"
+                  Name="!(loc.PowerPlaylist_Shortcut_Title)"
+                  Description="!(loc.PowerPlaylist_Shortcut_Description)"
+                  Directory="PowerPlaylistProgramsFolder"
+                  Target="[APPROOTDIRECTORY]PowerPlaylistEditor.exe" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- This is a list of features that are installed as a part of this product. In this case, there is -->
+    <!-- only one feature. Each feature contains a list of components that it will install. Features can -->
+    <!-- can be displayed and allow user selection in setup UI if desired.                               -->
+    <Feature Id="APPROOTFEATURE"
+             Title="PowerPlaylist"
+             Level="1">
+      <ComponentRef Id="PowerPlaylist.dll" />
+      <ComponentRef Id="PowerPlaylistEditor.exe" />
+      <ComponentRef Id="Registration.xml" />
+      <ComponentRef Id="audio.png" />
+      <ComponentRef Id="audioandslideshow.png" />
+      <ComponentRef Id="audioandvisualization.png" />
+      <ComponentRef Id="powerplaylist.png" />
+      <ComponentRef Id="slideshow.png" />
+      <ComponentRef Id="Data.xml"/>
+      <ComponentRef Id="PowerPlaylist1.wpl"/>
+      <ComponentRef Id="PowerPlaylist2.wpl"/>
+      <ComponentRef Id="PowerPlaylist3.wpl"/>
+      <ComponentRef Id="PowerPlaylist4.wpl"/>
+      <ComponentRef Id="PowerPlaylist5.wpl"/>
+      <ComponentRef Id="PowerPlaylistEditorShortcut"/>
+      <ComponentRef Id="Readme.txt"/>
+      <ComponentRef Id="Audio01.mp3"/>
+      <ComponentRef Id="Audio02.mp3"/>
+      <ComponentRef Id="Audio03.mp3"/>
+      <ComponentRef Id="Photo01.jpg"/>
+      <ComponentRef Id="Photo02.jpg"/>
+      <ComponentRef Id="Photo03.jpg"/>
+      <ComponentRef Id="Photo04.jpg"/>
+      <ComponentRef Id="Photo05.jpg"/>
+      <ComponentRef Id="Photo06.jpg"/>
+      <ComponentRef Id="Photo07.jpg"/>
+      <ComponentRef Id="Photo08.jpg"/>
+      <ComponentRef Id="Photo09.jpg"/>
+      <ComponentRef Id="Photo10.jpg"/>
+    </Feature>
+
+    <!-- The media table defines the location that the MSI will look to find source files during         -->
+    <!-- installation or repair scenarios. In this case, the source files are in a cab file that will be -->
+    <!-- embedded directly into the MSI at build time.                                                   -->
+    <Media Id="1"
+           Cabinet="Application.cab"
+           EmbedCab="yes" />
+
+    <!-- These custom actions are used to register the application with Media Center using the utility   -->
+    <!-- RegisterMceApp.exe that is installed as a part of the Windows Media Center feature. Each custom -->
+    <!-- action is defined as a pair in order to leverage the WiX QtExec custom action to suppress the   -->
+    <!-- pop-up UI that would ordinarily appear when running RegisterMceApp.exe. Registering a Windows   -->
+    <!-- Media Center application will fail if it is already registered, so this setup will first        -->
+    <!-- unregister the application and then attempt to re-register it. This setup ignores the return    -->
+    <!-- code from the unregistration custom action but checks the return code of the registration       -->
+    <!-- action. If registration fails, setup will fail and roll back. These custom actions use the      -->
+    <!-- REGISTERMCEAPP property that is defined below in order to find the exact location of the file   -->
+    <!-- RegisterMceApp.exe on the system.                                                               -->
+    <CustomAction Id="CA_RegisterMceApp_Unregister_Install_Cmd"
+                  Property="CA_RegisterMceApp_Unregister_Install"
+                  Value="&quot;[REGISTERMCEAPP]&quot; /u /allusers &quot;[#Registration.xml]&quot;"/>
+    <CustomAction Id="CA_RegisterMceApp_Unregister_Uninstall_Cmd"
+                  Property="CA_RegisterMceApp_Unregister_Uninstall"
+                  Value="&quot;[REGISTERMCEAPP]&quot; /u /allusers &quot;[#Registration.xml]&quot;"/>
+    <CustomAction Id="CA_RegisterMceApp_Register_Cmd"
+                  Property="CA_RegisterMceApp_Register"
+                  Value="&quot;[REGISTERMCEAPP]&quot; /allusers &quot;[#Registration.xml]&quot;"/>
+    <CustomAction Id="CA_RegisterMceApp_Rollback_Cmd"
+                  Property="CA_RegisterMceApp_Rollback"
+                  Value="&quot;[REGISTERMCEAPP]&quot; /u /allusers &quot;[#Registration.xml]&quot;"/>
+
+    <CustomAction Id="CA_RegisterMceApp_Unregister_Install"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec"
+                  Execute="deferred"
+                  Return="ignore"
+                  Impersonate="no"/>
+    <CustomAction Id="CA_RegisterMceApp_Unregister_Uninstall"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec"
+                  Execute="deferred"
+                  Return="ignore"
+                  Impersonate="no"/>
+    <CustomAction Id="CA_RegisterMceApp_Register"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec"
+                  Execute="deferred"
+                  Return="check"
+                  Impersonate="no"/>
+    <CustomAction Id="CA_RegisterMceApp_Rollback"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec"
+                  Execute="rollback"
+                  Return="ignore"
+                  Impersonate="no"/>
+
+    <!-- The InstallExecuteSequence table describes the order that actions will be executed during       -->
+    <!-- installation, repair and uninstall of this product.                                             -->
+    <InstallExecuteSequence>
+      <Custom Action="CA_BlockOlderVersionInstall"
+              After="FindRelatedProducts">
+        <![CDATA[NEWERVERSIONDETECTED]]>
+      </Custom>
+      <RemoveExistingProducts After="InstallInitialize" />
+      <LaunchConditions After="AppSearch"/>
+      <Custom Action="CA_ErrWrongWindowsVersion"
+              Before="CostInitialize"><![CDATA[(NOT VersionNT >= 601 OR NOT REGISTERMCEAPP) AND NOT Installed]]></Custom>
+      <Custom Action="CA_RegisterMceApp_Unregister_Install_Cmd"
+              After="CostFinalize">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Unregister_Uninstall_Cmd"
+              After="CA_RegisterMceApp_Unregister_Install_Cmd">
+        <![CDATA[REMOVE AND ($Registration.xml = 2)]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Register_Cmd"
+              After="CA_RegisterMceApp_Unregister_Uninstall_Cmd">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Rollback_Cmd"
+              After="CA_RegisterMceApp_Register_Cmd">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+
+      <!-- This unregistration custom action must occur before files are removed during uninstall of the -->
+      <!-- product because the custom action requires the registration XML file in order to run          -->
+      <!-- correctly. It is conditioned to only run during uninstall using the REMOVE condition.         -->
+
+      <Custom Action="CA_RegisterMceApp_Unregister_Uninstall"
+              Before="RemoveFiles">
+        <![CDATA[REMOVE AND ($Registration.xml = 2)]]>
+      </Custom>
+
+      <!-- This sequence of actions is important. In order to allow the roll back custom action to run   -->
+      <!-- at the correct time in case the setup fails, it must be scheduled before the other actions    -->
+      <!-- because Windows Installer pushes each action onto a stack and then pops them off of the stack -->
+      <!-- in case of any failure in order to accomplish the roll back.                                  -->
+      <Custom Action="CA_RegisterMceApp_Rollback"
+              After="InstallFiles">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Unregister_Install"
+              After="CA_RegisterMceApp_Rollback">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+      <Custom Action="CA_RegisterMceApp_Register"
+              After="CA_RegisterMceApp_Unregister_Install">
+        <![CDATA[NOT REMOVE]]>
+      </Custom>
+    </InstallExecuteSequence>
+
+    <!-- The InstallUISequence table describes the order that actions will be executed when the user     -->
+    <!-- runs setup in full UI mode. Some actions must be scheduled in the UI and the execute sequence   -->
+    <!-- tables to ensure that they will run regardless of whether the user runs setup in full UI mode   -->
+    <!-- or in reduced UI or silent modes.                                                               -->
+    <InstallUISequence>
+      <Custom Action="CA_BlockOlderVersionInstall"
+              After="FindRelatedProducts">
+        <![CDATA[NEWERVERSIONDETECTED]]>
+      </Custom>
+      <Custom Action="CA_ErrWrongWindowsVersion"
+              Before="CostInitialize"><![CDATA[(NOT VersionNT >= 601 OR NOT REGISTERMCEAPP) AND NOT Installed]]></Custom>
+    </InstallUISequence>
+
+    <!-- These properties define links that will appear in the Add/Remove Programs control panel when    -->
+    <!-- this product is installed on the system.                                                        -->
+    <Property Id="ARPHELPLINK"
+              Value="!(loc.Property_ArpHelpLink)" />
+    <Property Id="ARPURLINFOABOUT"
+              Value="!(loc.Property_ArpUrlInfoAbout)" />
+
+    <!-- This property defines the ALLUSERS property to be 1, which indicates that this product will be  -->
+    <!-- installed per-machine instead of per-user.                                                      -->
+    <Property Id="ALLUSERS">
+      <![CDATA[1]]>
+    </Property>
+
+    <!-- This property uses an AppSearch to attempt to locate the file %windir\eHome\RegisterMceApp.exe  -->
+    <!-- on the system. If it is found, the property is set to the fully qualified path to this file,    -->
+    <!-- and this path is used to call RegisterMceApp.exe in several custom actions listed above to      -->
+    <!-- register this application with Windows Media Center.                                            -->
+    <Property Id="REGISTERMCEAPP"
+              Secure="yes">
+      <DirectorySearch Id="EhomeDirectory"
+                       Path="[WindowsFolder]\ehome">
+        <FileSearch Id="RegisterMceAppExe"
+                    Name="RegisterMceApp.exe" />
+      </DirectorySearch>
+    </Property>
+
+    <!-- This property is used as the default installation directory, and the user can change this path  -->
+    <!-- during setup. The Id must be set to WIXUI_INSTALLDIR and the value must match the directory Id  -->
+    <!-- defined above that represents the root installation directory.                                  -->
+    <Property Id="WIXUI_INSTALLDIR"
+              Value="APPROOTDIRECTORY"/>
+    
+    <!-- These properties are used by the Windows Media Center InstallApplication Method to determine what  -->
+    <!-- license to display to the end user. The Value attribute should match the <Binary> elements above.  -->
+    <!-- Do NOT change the ID of these properties.-->
+    <Property Id="d4276fcf18d5470b97f3fc6c36408694"
+              Value="License.txt"/>
+    <Property Id="aefe520afb0145c1bc61ca0463a29e3c"
+              Value="LicenseAccessible.txt"/>
+
+    <!-- This UIRef element specifies what WiXUI dialog set to use for the setup UI. This package uses   -->
+    <!-- the WixUI_InstallDir dialog set, which provides a welcome page, a license agreement page, a     -->
+    <!-- page to allow changing the installation path, an installation confirmation page, a progress     -->
+    <!-- page and a completion page. Other dialog sets are available in the WiX toolset and are          -->
+    <!-- described in more detail in the WiX documentation.                                              -->
+    <UIRef Id="WixUI_InstallDir"/>
+
+    <!-- In WiX v3.0, this variable is used to override the default license agreement text that is       -->
+    <!-- included in the WixUIExtension with a custom file.                                              -->
+    <WixVariable Id="WixUILicenseRtf"
+                 Value="License.rtf" />
+
+    <!-- Add a reference to the WiX variable for the \users\public\music folder.  -->
+    <!-- This will cause a custom action to be added to setup by the WiX build    -->
+    <!-- process that will compute the exact location of this folder on each end  -->
+    <!-- user's system (because it can vary depending on what drive letter the OS -->
+    <!-- is installed to.                                                         -->
+    <PropertyRef Id="WIX_DIR_COMMON_MUSIC" />
+    <PropertyRef Id="WIX_DIR_COMMON_PICTURES" />
+
+  </Product>
+</Wix>
