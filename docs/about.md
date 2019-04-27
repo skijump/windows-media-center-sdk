@@ -42,7 +42,9 @@ The following list summarizes the changes that have been made to the Windows Med
 ### Improved Application Installation
 
 * Users can now install Windows Media Center applications using a remote control. For more information, see the ApplicationContext.InstallApplication method.
-New Features for Media Center Markup Language (MCML)
+
+### New Features for Media Center Markup Language (MCML)
+
 * Resource groups are supported. A resource group can be used, for example, to pre-load images before displaying a page (see Working with Resource Groups).
 * Relative paths are supported (see Relative Paths for MCML).
 * Persistent and session cookies are supported (see Cookie Support).
@@ -140,8 +142,6 @@ Windows Media Center is extensible, meaning that you can create new applications
 
 * Create a Windows Media Center Presentation Layer application, which is a Microsoft .NET Framework assembly. It extends the functionality of Windows Media Center by using the programming interfaces exposed by the Windows Media Center application object model, the .NET Framework's System namespace, and namespaces that are provided by external assemblies. For more information, see the Programming Guide.
 * Use the click-to-record feature in Windows Media Center applications and external Windows applications. This programmatically directs Windows Media Center to schedule the recording of TV programs. For more information, see Scheduling Recorded TV with Click-To-Record.
-See Also
-* About the Windows Media Center SDK
 
 ## <a name="history-and-versions"></a>History and Versions
 
